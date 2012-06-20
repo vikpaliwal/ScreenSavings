@@ -1,0 +1,52 @@
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.winmd
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\bin\Debug\BackgroundTask.winmd
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\bin\Debug\BackgroundTask.pdb
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\bin\Debug\BackgroundTask.pri
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.pdb
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\priconfig.xml
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\layout.resfiles
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\resources.resfiles
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\pri.resfiles
+c:\users\shah\documents\visual studio 11\Projects\Application1\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\priconfig.xml.intermediate
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\layout.resfiles.intermediate
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\resources.resfiles.intermediate
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\pri.resfiles.intermediate
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\Application1\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\LanguageQualifiers.txt

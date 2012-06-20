@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>GAURAV</Machine>
+    <WindowsUser>gaura_000</WindowsUser>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <RegisteredManifestChecksum>72238C3ECE32082DACA69B55ECF5F1E11136C7AFE7B126126B1B5C39950F9446</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=Shah</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-06-19T20:27:51.451</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
+      <PackagePath>BackgroundTask.winmd</PackagePath>
+      <Modified>2012-06-19T15:18:13.691</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
+      <PackagePath>BackgroundTask.pdb</PackagePath>
+      <Modified>2012-06-19T15:18:13.659</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\css\3dCard-min.css">
+      <PackagePath>css\3dCard-min.css</PackagePath>
+      <Modified>2012-06-19T13:43:16.429</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\css\default.css">
+      <PackagePath>css\default.css</PackagePath>
+      <Modified>2012-06-19T13:59:53.925</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\default.html">
+      <PackagePath>default.html</PackagePath>
+      <Modified>2012-06-19T13:44:35.726</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\accounts.png">
+      <PackagePath>images\accounts.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.976</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\add_new.png">
+      <PackagePath>images\add_new.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.976</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\blueWide.scale-100.png">
+      <PackagePath>images\blueWide.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-05-01T13:57:38.404</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_blue.png">
+      <PackagePath>images\circle_blue.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.945</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_green.png">
+      <PackagePath>images\circle_green.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.945</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_pink.png">
+      <PackagePath>images\circle_pink.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.929</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_purple.png">
+      <PackagePath>images\circle_purple.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.929</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_yellow.png">
+      <PackagePath>images\circle_yellow.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.913</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\commerce1.png">
+      <PackagePath>images\commerce1.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.913</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\commerce2.png">
+      <PackagePath>images\commerce2.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.898</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\facebook.png">
+      <PackagePath>images\facebook.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.835</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\facebook_detail.png">
+      <PackagePath>images\facebook_detail.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.882</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\flikr.png">
+      <PackagePath>images\flikr.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.820</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\ft.png">
+      <PackagePath>images\ft.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.788</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\gmail.png">
+      <PackagePath>images\gmail.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.742</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\Gmail_detail.png">
+      <PackagePath>images\Gmail_detail.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.710</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\groupon.png">
+      <PackagePath>images\groupon.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.663</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\Groupon_detail.png">
+      <PackagePath>images\Groupon_detail.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.804</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\logo.png">
+      <PackagePath>images\logo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-06-19T13:43:16.648</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\mail1.png">
+      <PackagePath>images\mail1.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.632</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\mail2.png">
+      <PackagePath>images\mail2.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.617</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\mail3.png">
+      <PackagePath>images\mail3.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.617</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\news1.png">
+      <PackagePath>images\news1.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.601</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\news2.png">
+      <PackagePath>images\news2.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.585</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\photo1.png">
+      <PackagePath>images\photo1.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.585</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\redWide.scale-100.png">
+      <PackagePath>images\redWide.scale-100.png</PackagePath>
+      <Modified>2012-05-01T13:57:38.419</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\settings.png">
+      <PackagePath>images\settings.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.570</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\setting_bg.png">
+      <PackagePath>images\setting_bg.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.570</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\smalllogo.png">
+      <PackagePath>images\smalllogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-06-19T13:43:16.554</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\social0.png">
+      <PackagePath>images\social0.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.554</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\social1.png">
+      <PackagePath>images\social1.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.538</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\social2.png">
+      <PackagePath>images\social2.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.538</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\splashscreen.png">
+      <PackagePath>images\splashscreen.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-06-19T13:43:16.523</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\storelogo.png">
+      <PackagePath>images\storelogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-06-19T13:43:16.507</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\sun.png">
+      <PackagePath>images\sun.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.507</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\time.png">
+      <PackagePath>images\time.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.460</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\trashcan.png">
+      <PackagePath>images\trashcan.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.460</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\twitter.png">
+      <PackagePath>images\twitter.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.445</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\weather.png">
+      <PackagePath>images\weather.png</PackagePath>
+      <Modified>2012-06-19T13:43:16.445</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\3dCard-min.js">
+      <PackagePath>js\3dCard-min.js</PackagePath>
+      <Modified>2012-06-19T20:40:31.238</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\default.js">
+      <PackagePath>js\default.js</PackagePath>
+      <Modified>2012-06-17T21:26:49.629</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\jquery.js">
+      <PackagePath>js\jquery.js</PackagePath>
+      <Modified>2012-06-19T13:43:17.038</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2012-06-19T14:02:36.830</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResolvedSDKReference Include="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\">
+      <Name>Microsoft.WinJS.1.0.RC</Name>
+      <Version>1.0.8377.0</Version>
+      <Architecture>Neutral</Architecture>
+      <FrameworkIdentity>Name=Microsoft.WinJS.1.0.RC, MinVersion=1.0.8377.0</FrameworkIdentity>
+      <AppxLocation>C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\Microsoft.WinJS.1.0.RC.appx</AppxLocation>
+    </ResolvedSDKReference>
+  </ItemGroup>
+</Project>
