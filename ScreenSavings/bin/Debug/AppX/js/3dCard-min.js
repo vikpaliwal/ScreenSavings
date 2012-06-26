@@ -19,23 +19,8 @@ $(document).ready(function () {
     //removeRandomCards();
 
 
-    //loadData();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     var matrix = createCardArray(5, 4, 4);
-    
+    loadData();
 
     for (var i = 0; i < matrix.length; i++) {
         for (var j = 0; j < matrix[i].length; j++) {
@@ -67,9 +52,7 @@ $(document).ready(function () {
             matrix[lineNum - 1][i][3] += pixels;
             $('#card' + matrix[lineNum - 1][i][0]).css('transform', 'translateY(' + matrix[lineNum - 1][i][2] + 'px) translateZ(' + matrix[lineNum - 1][i][3] + 'px)');
         }
-
     }
-
 
     function pushNewCard(lineNum) {
         //console.log(lineNum);
@@ -102,7 +85,7 @@ $(document).ready(function () {
         } else if (lineNum == 2) {
             $('#card' + cardCount).html('<img src="images/mail1.png" class="card"/>');
         } else if (lineNum == 3) {
-            $('#card' + cardCount).html('<div class="TWIT_content"><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span></div>');
+            $('#card' + cardCount).html('<div class="TWIT_content"><img id="profilePic" class="FB_PIC" src=""></img><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span></div>');
         } else if (lineNum == 4) {
             $('#card' + cardCount).html('<img src="images/commerce1.png" class="card"/>');
         } else if (lineNum == 5) {
@@ -127,7 +110,7 @@ $(document).ready(function () {
                  //$(this).css({ "transform": "translateY(20px)" });
              });
             
-
+         $('.face').click(mouseClickFace);
        // $('#card' + cardCount).css({'transition':'all 500ms linear', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
         
         //
@@ -174,13 +157,13 @@ $(document).ready(function () {
                     myGenericCard.setAttribute("style", "z-index: " + -(j+1) + ";");
 
                     if (i == 0) {
-                        myGenericCard.innerHTML = '<img src="images/photo1.png" class="card"/>';
+                        myGenericCard.innerHTML = '<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="images/rose.jpg"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">New @Reply from Levonmaa</span> </div>'
                     } else if (i == 1) {
                         myGenericCard.innerHTML = '<img src="images/mail1.png" class="card"/>';
                     } else if (i == 2) {
-                        myGenericCard.innerHTML = '<div class="TWIT_content"><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span></div>';
+                        myGenericCard.innerHTML = '<div class="TWIT_content"><img id="profilePic" class="FB_PIC" src=""/><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
                     } else if (i == 3) {
-                        myGenericCard.innerHTML = '<img src="images/commerce1.png" class="card"/>';
+                        myGenericCard.innerHTML = '<div class="GROUPON_content"><img id="profilePic" class="GROUPON_PIC" src=""/><span id="Span13" class="GROUPON_time">11:11</span><span id="Span14" class="GROUPON_title">New @Reply from Levonmaa</span><span id="Span15" class="GROUPON_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
                     } else if (i == 4) {
                         myGenericCard.innerHTML = '<img src="images/news2.png" class="card"/>';
                     }
@@ -225,10 +208,6 @@ $(document).ready(function () {
                 $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][2] + 'px) translateZ(' + matrix[i][j][3] + 'px)');
             }
         }
-
-
-
-
 
         $('.face').each(function (index) {
 
@@ -397,7 +376,7 @@ $(document).ready(function () {
                     //$(this).css({ "transform": "translateY(20px)" });
                 });
 
-
+           
 
 
 
@@ -476,10 +455,8 @@ $(document).ready(function () {
                         hoverLineNum = 0;
                     }
                     scrollCards(hoverLineNum, pixels);
-                });
-                   
-             }
-            
+                });                   
+             }           
 
             
             /*if (direction > 0) {
@@ -526,53 +503,203 @@ $(document).ready(function () {
             */
         });
 
+        $('.face').bind('click', mouseClickFace);
 
 
 
+        var pagePosition = 0;
+        var pageDelta = 190;
+        $('.pan').click(function () {
 
-
-
-
-
-
-
-
+            if ($(this).hasClass('panRight')) {
+                pagePosition += pageDelta;
+                $('#elements').animate({ 'margin-left': pagePosition + 'px' }, 500);
+                $('#element3').animate({ 'border': '1px' }, 500);
+                $('.panRight').animate({ right: '-=' + pageDelta }, 500);
+                $('.panLeft').animate({ left: '+=' + pageDelta }, 500);
+                // $('#page-wrapper').css({"transform":"translateX(" + pagePosition + "px)"});
+            } else if ($(this).hasClass('panLeft')) {
+                pagePosition -= pageDelta;
+                $('#elements').animate({ 'margin-left': pagePosition + 'px' }, 500);
+                $('#element3').animate({ 'border': '1px' }, 500);
+                $('.panRight').animate({ right: '+=' + pageDelta }, 500);
+                $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
+            }
+        });
+       // loadData();
  	}, 3000);
+    Element.prototype.getElementById = function(req) {
+        var elem = this, children = elem.childNodes, i, len, id;
+ 
+        for (i = 0, len = children.length; i < len; i++) {
+            elem = children[i];
+        
+            //we only want real elements
+            if (elem.nodeType !== 1 )
+                continue;
 
+            id = elem.id || elem.getAttribute('id');
+        
+            if (id === req) {
+                return elem;
+            }
+            //recursion ftw
+            //find the correct element (or nothing) within the child node
+            id = elem.getElementById(req);
+
+            if (id)
+                return id;
+        }
+        //no match found, return null
+        return null;
+    }
+    
+    
     function loadData() {
-        /*
-        var urls = [
-            'http://www.example.com/',
-            'http://www.example.org/',
-            'http://www.example.net'
-        ];
-
-        var promises = urls.map(function (url) {
-            return myWebService.get(url);
-        });
-
-        WinJS.Promise.join(promises).then(function () {
-            //do the aggregation here.
-        });
-        */
-        //var resDiv = document.getElementById("divResult");
-/*
-        WinJS.xhr({ url: "http://isscloud.intel.com/gaomin/fb.php" }).done(
+               
+        WinJS.xhr({ url: "http://198.101.207.173/gaomin/fb_json.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
-                    var data = JSON.parse(result);
-                    var d = data;
+                    var data = JSON.parse(result.response);                    
+                    for (i = 0; i < 4; i++) {
+                        var cardDiv = document.getElementById("card" + (i + 8));
+                        var textDiv = cardDiv.getElementById("Span14");
+                        var posterDiv = cardDiv.getElementById("Span15");
+                        var imgDiv = cardDiv.getElementById("profilePic");
+                        var poster = data.facebookPosts[i].posterName;
+                        var details = data.facebookPosts[i].text;
+                        var posterId = data.facebookPosts[i].posterId;
+                        var picUrl = "http://graph.facebook.com/" + posterId + "/picture";
+                        textDiv.innerText = details;
+                        posterDiv.innerText = poster;
+                        imgDiv.src = picUrl;
+                    }
                 }
-            });
-            */
+            });/*
+        WinJS.xhr({ url: "http://isscloud.intel.com/gaomin/groupon_json.php" }).done(
+            function fulfilled(result) {
+                if (result.status === 200) {
+                    var data = JSON.parse(result.response);
+                    for (i = 0; i < 4; i++) {
+                        var cardDiv = document.getElementById("card" + (i + 12));
+                        var textDiv = cardDiv.getElementById("Span14");
+                        var titleDiv = cardDiv.getElementById("Span15");
+                        var imgDiv = cardDiv.getElementById("profilePic");
+                        var title = data.groupons[i].title;
+                        var details = data.groupons[i].detailedText;
+                        var picUrl = data.groupons[i].itemPicUrl;
+                        textDiv.innerText = details;
+                        titleDiv.innerText = title;
+                        imgDiv.src = picUrl;
+                    }
+                }
+            });*/
+        WinJS.xhr({ url: "http://isscloud.intel.com/shilpa/shilpa/flickr.php" }).done(
+            function fulfilled(result) {
+                if (result.status === 200) {
+                    var data = JSON.parse(result.response);
+                    for (i = 0; i < 4; i++) {
+                        var cardDiv = document.getElementById("card" + i);
+                        var textDiv = cardDiv.getElementById("Span14");
+                        var imgDiv = cardDiv.getElementById("profilePic");
+                        var user = data.flickr_feed[i].user;
+                        var photoUrl = data.flickr_feed[i].photo;
+                     //  var picUrl = data.groupons[i].itemPicUrl;
+                        textDiv.innerText = user;
+                        imgDiv.src = photoUrl;
+                      //  imgDiv.src = picUrl;
+                    }
+                }
+            });          
     }
 
+    function mouseClickFace(event) {
 
+        var matrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
 
- 	
-	
+        var overlay = $('<div></div>').prependTo('.fixedlayout').addClass("overlay");
+
+        var newFace = $(this).clone();
+        newFace.attr('id', 'newFace');
+
+        var oldFace = $(this);
+        oldFace.hide();
+
+        var cube = $(this).parent().clone().empty();
+
+        newFace.appendTo(cube);
+        //cube.appendTo(element);
+        cube.appendTo("#page-wrapper");
+        cube.css({ "z-index": "12" });
+        overlay.show();
+        //	var width = $('body').width() * 0.7;
+        var height = $('body').height() * 0.7;
+        var width = height * 1.6;
+        //var value = parseFloat($(cube).css('perspective-origin').split("px ")[0]) - ($(cube).offsetParent().left - 440) + (($('body').width() - width) / 2);
+        //var value = (parseFloat($(cube).css('perspective-origin').split("px ")[0])-114*4.5);
+        var value = $('body').height() / 2 - height / 2 - 114;
+        $('#dump').text(value);
+        var transX = ((parseFloat($(cube).css('perspective-origin').split("px ")[0]) - 114 * 2) * 1.78 - (($('body').width() - width) / 2)) + 114;
+        var transY = value;
+
+        $(newFace).css({
+            "background-color": "rgba(255, 255, 255, 1.0)",
+            "transition": "all 1s ease",
+            "transform": "translateZ(0px) translateY(" + transY + "px) translateX(" + transX + "px) rotateX(0deg)",
+            "height": height + "px",
+            "width": width + "px",
+            "z-index": "999999999",
+        });
+
+        var image = "";
+        if ($(cube).attr('id') == "element1") {
+            image = "images/facebook_detail.png";
+        } else if ($(cube).attr('id') == "element2") {
+            image = "images/Gmail_detail.png";
+        } else if ($(cube).attr('id') == "element4") {
+            image = "images/Groupon_detail.png";
+        }
+
+        if (image.length > 0) {
+            $(newFace).children().remove();
+            var content = $("<img src='" + image + "' />").appendTo($(newFace)).addClass('card');
+        }
+
+        //$('.parentCanvas').css({ "perspective": "350px" });
+        /*    $(newFace).click(function (e) {
+                e.stopPropagation();
+            });
+            */
+        /*$(cube).click(function (e) {
+            $(overlay).trigger('click');
+        });
+        */
+        $(overlay).click(function () {
+            $(newFace).bind("transitionend", function () {
+                //$(oldFace).css({ "transform": "translateZ(" + matrix[14] + "px) translateY(320px) rotateX(0deg)", "background-color": "rgba(255, 255, 255, 1.0)" });
+                $(cube).remove();
+                $(overlay).remove();
+                $(oldFace).show();
+
+            });
+
+            $(newFace).css({
+                "transform": "translateZ(" + matrix[14] + "px) translateY(320px) rotateX(0deg)",
+                "height": "122px",
+                "width": "251px"
+            });
+
+            //  $(overlay).css({ "background-color": "rgba(0, 0, 0, 0)" });
+            //$('.parentCanvas').css({ "perspective": "400px" });
+
+        });
+
+        /*newFace.bind('mousewheel', function (e) {
+            return false;
+        });
+        */
+    }
 });
-
 
 
 

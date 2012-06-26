@@ -533,54 +533,13 @@ transform: translateY(320px) translateZ(130px);
 display: none;
 }
 
-.pans {
-position: fixed;
-top: -530px;
-left: 0px;
-width: 100%;
-height: 100%;
-perspective: 400px;
-z-index: 30;
-}
-
-.pan {
-/*border: 1px solid purple;*/
-width: 780px;
-height: 200%;
-position: absolute;
-}
-
-.panLeft {
-left: -710px;
-/*perspective-origin: 100% -25%;*/
-transform: rotateZ(43deg);
-}
-
-.panRight {
-right: -688px;
-/*perspective-origin: -100% -25%;*/
-transform: rotateZ(-42.6deg);
-}
-
-#elements {
-    display: block;
-    position: absolute;
-    margin: 0px 0px 0px 0px;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-
-}
-
 .overlay {
 	position: absolute;
     top : 0px;
     left : 0px;
 	height: 100%;
 	width: 100%;
-    z-index: 1000;
-    display: none;
-    background-color: rgba(0, 0, 0, 0.4);
-	transition: all 500ms linear;
+	z-index: 11;
+    background-color: "rgba(0, 0, 0, 0)";
+	transition: all 500ms linear
 }

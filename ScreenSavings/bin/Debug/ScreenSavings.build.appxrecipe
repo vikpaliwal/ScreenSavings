@@ -150,6 +150,9 @@
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\weather.png">
       <PackagePath>images\weather.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\rose.jpg">
+      <PackagePath>images\rose.jpg</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
     </AppxPackagedFile>

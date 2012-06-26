@@ -11,13 +11,14 @@ html{
 	overflow: hidden;
     padding: 0px;
     margin: 0px;
-    background-color: #DDD;
-    text-align: left;
+    background-color: red;
+    /*text-align: left;*/
     background-repeat: no-repeat;
     background-position: top center;
-    z-index: 0;
+    z-index: 25;
     width: 100%;
 	height: 100%;
+    border : 2px solid red;
 }
 #page-wrapper{
   position: absolute;
@@ -38,11 +39,10 @@ html{
   height: 100%;
 }
 
-
 .TWIT_content {
   width: 100%;
   height: 100%;
-  background-image: url('../images/social0.png');
+  background-image: url('../images/social2.png');
   background-size: cover;
 }
 
@@ -52,8 +52,34 @@ html{
     top: 500px;
     display: block;
 }
- 
 
+.GROUPON_content {
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/commerce1.png');
+  background-size: cover;
+}
+
+.GROUPON_bgImg {
+    position: absolute;
+    left: 1800px;
+    top: 500px;
+    display: block;
+}
+.FLICKR_content {
+  width: 100%;
+  height: 100%;
+ /* background-image: url('../images/commerce1.png');*/
+  background-size: cover;
+  background-color: #000000;
+}
+
+.FLICKR_bgImg {
+    position: absolute;
+    left: 1800px;
+    top: 500px;
+    display: block;
+}     
 #element1{
   left: 0px;
   z-index: 8;
@@ -156,7 +182,6 @@ html{
     box-shadow: 0px 0px 5px rgba(190,10,253,.9);
 }
 
-
 .face{
   //background-color: rgba(255, 255, 255, 1.0);
   box-shadow: 0px 0px 5px rgba(0,0,0,0.6);
@@ -168,9 +193,7 @@ html{
   color: white;
   margin-left: 50px;
   margin-right: 50px;
-  top: 260px;
-  
-  
+  top: 260px;  
 }
 .card {
 	height: 100%;
@@ -192,14 +215,20 @@ html{
 
 }
 
+.FB_PIC {
+    position: absolute;
+    left: 4px;
+    top: 31px;
+}    
+
 .TWIT_title {
 	color: #000000;
 	font-family: 'Arial Narrow', Arial, sans-serif;
 	font-size: 12px;
 	font-stretch: condensed;
 	position: absolute;
-	left: 11px;
-	top: 40px;
+	left: 61px;
+	top: 30px;
 }
 
 .TWIT_message {
@@ -209,8 +238,72 @@ html{
 	font-stretch: condensed;
 	text-align: left;
 	position: absolute;
-	left: 11px;
-	top: 82px;
+	left: 61px;
+	top: 92px;
+}
+.GROUPON_time {
+	color: #C6C6C6;
+	font-family: 'Arial Narrow', sans-serif;
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
+.GROUPON_PIC {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 4px;
+    top: 31px;
+}    
+
+.GROUPON_title {
+	color: #000000;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+	font-size: 12px;
+	font-stretch: condensed;
+	position: absolute;
+	left: 61px;
+	top: 30px;
+}
+
+.GROUPON_message {
+	color: #000000;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+	font-size: 11px;
+	font-stretch: condensed;
+	text-align: left;
+	position: absolute;
+	left: 61px;
+	top: 92px;
+}
+
+.FLICKR_time {
+	color: #FFFFFF;
+	font-family: 'Arial Narrow', sans-serif;
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
+.FLICKR_PIC {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 31px;
+}    
+
+.FLICKR_title {
+	color: #FFFFFF;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+	font-size: 12px;
+	font-stretch: condensed;
+	position: absolute;
+	left: 10px;
+	top: 2px;
 }
 
 #time{
@@ -225,7 +318,6 @@ html{
 	top: 0px;
 	z-index: 10;
 }
-
 
 .row1 {
  margin-left: -270px;
@@ -264,20 +356,17 @@ margin-left: 33px;
 width: 154px;
 margin-left: 16px;
 //transform: translateZ(100px);
-
 }
 .bgFour {
 //border: 1px solid blue;
 width: 158px;
 margin-left: 8px;
-
 }
 .bgFive {
 //border: 1px solid blue;
 width: 152px;
 margin-left: -4px;
 }
-
 
 .name1-2d {
 position: absolute;
@@ -289,7 +378,7 @@ transform: translateY(680px) translateX(0px);
 transition: transform 500ms linear;
 }
 .name2-2d {
-    position:absolute;
+position:absolute;
 font-family: Arial,Helvetica,sans-serif;
 font-size: 20px;
 font-weight:900;
@@ -298,7 +387,7 @@ transform: translateY(680px) translateX(0px);
 transition: transform 500ms linear;
 }
 .name3-2d {
-    position: absolute;
+position: absolute;
 font-family: Arial,Helvetica,sans-serif;
 font-size: 20px;
 font-weight:900;
@@ -442,4 +531,55 @@ z-index: 9999999999;
 transition: transform 500ms linear;
 transform: translateY(320px) translateZ(130px);
 display: none;
+}
+
+.pans {
+position: fixed;
+top: -530px;
+left: 0px;
+width: 100%;
+height: 100%;
+perspective: 400px;
+z-index: 30;
+}
+
+.pan {
+/*border: 1px solid purple;*/
+width: 780px;
+height: 200%;
+position: absolute;
+}
+
+.panLeft {
+left: -710px;
+/*perspective-origin: 100% -25%;*/
+transform: rotateZ(43deg);
+}
+
+.panRight {
+right: -688px;
+/*perspective-origin: -100% -25%;*/
+transform: rotateZ(-42.6deg);
+}
+
+#elements {
+    display: block;
+    position: absolute;
+    margin: 0px 0px 0px 0px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;    
+}
+
+.overlay {
+	position: absolute;
+    top : 0px;
+    left : 0px;
+	height: 100%;
+	width: 100%;
+    z-index: 1000;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+	transition: all 500ms linear;
 }

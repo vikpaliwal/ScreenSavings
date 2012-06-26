@@ -27,7 +27,6 @@
             	<img src="images/time.png" id="time" />
 	<img src="images/weather.png" id="weather" />
     <div id="page-wrapper">
-        <span id="elements">
   		<div id="element1" class="parentCanvas">
 			<div class="bgPerspective bgOne"></div>
 			<div id="line1id" class="linePerspective line1"></div>
@@ -125,11 +124,8 @@
 		</div>
 		</div>
 	</div>
-            -->
-    <div class="pans parentCanvas">
-        <div class="panLeft pan"></div>
-        <div class="panRight pan"></div>
-    </div>
+           
+	<div class="overlay"></div> -->
 
     <!-- Images that need to be loaded go here -->
     <span class="TWIT_bgImg"><img src="/images/social2.png"/></span>
