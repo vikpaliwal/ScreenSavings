@@ -99,6 +99,7 @@
     <None Include="ScreenSavings_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="LiveSDKHTML, Version=5.0" />
     <SDKReference Include="Microsoft.WinJS.1.0.RC, Version=1.0" />
   </ItemGroup>
   <ItemGroup>

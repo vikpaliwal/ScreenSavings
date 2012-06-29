@@ -5,7 +5,7 @@
     <WindowsUser>gaura_000</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>6EFE8C53514740C3BE299916A478E09770F60236C6AECFB030CF2E252C15703E</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>C492A2971E57D6C9806C915F912CC3269C57B3813F5892470DC973BA965DABB3</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
     <RegisteredPackageID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640</RegisteredPackageID>
@@ -16,7 +16,7 @@
     <AppXManifest Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-25T18:14:12.144</Modified>
+      <Modified>2012-06-28T10:40:49.810</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -28,9 +28,45 @@
       <PackagePath>BackgroundTask.pdb</PackagePath>
       <Modified>2012-06-22T12:01:16.102</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_Black.png</PackagePath>
+      <Modified>2012-05-21T05:56:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_White.png</PackagePath>
+      <Modified>2012-05-21T05:56:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_Black.png</PackagePath>
+      <Modified>2012-05-21T05:56:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_White.png</PackagePath>
+      <Modified>2012-05-21T05:56:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png</PackagePath>
+      <Modified>2012-05-21T05:56:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_White.png</PackagePath>
+      <Modified>2012-05-21T05:56:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_Black.png</PackagePath>
+      <Modified>2012-05-21T05:56:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_White.png</PackagePath>
+      <Modified>2012-05-21T05:56:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
+      <PackagePath>LiveSDKHTML\js\wl.js</PackagePath>
+      <Modified>2012-05-22T06:22:12.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
-      <Modified>2012-06-26T15:52:04.529</Modified>
+      <Modified>2012-06-27T18:48:41.312</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\css\default.css">
       <PackagePath>css\default.css</PackagePath>
@@ -38,7 +74,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2012-06-26T15:43:08.425</Modified>
+      <Modified>2012-06-28T10:40:02.063</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
@@ -207,7 +243,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2012-06-26T15:45:27.325</Modified>
+      <Modified>2012-06-28T11:40:28.133</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
@@ -219,7 +255,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2012-06-25T18:14:11.865</Modified>
+      <Modified>2012-06-28T10:40:49.372</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

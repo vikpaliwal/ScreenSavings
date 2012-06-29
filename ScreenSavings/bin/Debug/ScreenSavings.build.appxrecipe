@@ -19,6 +19,33 @@
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
       <PackagePath>BackgroundTask.pdb</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_Black.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_White.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_Black.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_White.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_White.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_Black.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_Black.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_White.png">
+      <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_White.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
+      <PackagePath>LiveSDKHTML\js\wl.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
     </AppxPackagedFile>

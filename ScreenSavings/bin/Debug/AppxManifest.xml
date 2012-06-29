@@ -54,5 +54,6 @@
     <build:Item Name="OperatingSystem" Version="6.2.8400.0 (winmain_win8rc.120518-1423)" />
     <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="11.0.50522.1" />
     <build:Item Name="MakePri.exe" Version="6.2.8400.0 (winmain_win8rc.120518-1423)" />
+    <build:Item Name="LiveSDKHTML" Version="5.0" />
   </build:Metadata>
 </Package>

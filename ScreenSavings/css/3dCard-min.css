@@ -583,3 +583,162 @@ transform: rotateZ(-42.6deg);
     background-color: rgba(0, 0, 0, 0.4);
 	transition: all 500ms linear;
 }
+#settings {
+	position: absolute;
+	right: 0px;
+    top: 0px;
+	width: 250px;
+	height: 100%;
+	background-color: #333333;
+	transition: transform 500ms linear;
+	transform: translateX(250px);
+	z-index: 12;
+}
+#time{
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	z-index: 13;
+}
+#weather {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	z-index: 10;
+}
+
+#accounts {
+	position: relative;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#addNew {
+	position: relative;
+	margin-top: 120px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#trashcanIcon {
+	position: absolute;
+	bottom: 70px;
+	left: 34px;
+}
+#settingsIcon {
+	position: relative;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.settingsOverlay {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 11;
+	opacity: 0;
+}
+#line2dContainerBg {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 11;
+    left : 0px;
+	bottom: -100%;
+	background-image: url('../images/setting_bg.png');   
+	transition: all 500ms linear;
+}
+#lineContainer {
+	position: absolute;
+	height: 100%;
+	top: 0px;
+	left: 50%;
+	margin-left: -830px;
+	width: 1700px;
+	transition: all 450ms linear;
+
+}
+.line2d{
+  position: absolute;
+  z-index: 12;
+  left: 50%;
+  margin-left: -8px;
+  top: 40px;
+  background-color: rgba(255, 255, 255, 1.0);
+  position: absolute;
+  height: 100%;
+  width: 16px;
+  transition: all 450ms linear;
+}
+
+.lineOne{
+	background-color: #00e8fd;
+}
+.lineTwo {
+	background-color: #fd0797;
+}
+.lineThree {
+	background-color: #fded00;
+}
+.lineFour {
+	background-color: #bcfd09;
+}
+.lineFive {
+	background-color: #be0afd;
+}
+
+#element1_2d {
+	left: 0%;
+	margin-left: -61px;
+}
+#element2_2d {
+	left: 25%;
+	margin-left: -74px;
+}
+#element3_2d {
+	left: 50%;
+	margin-left: -95px;
+}
+#element4_2d {
+	right: 25%;
+	margin-right: -74px;
+}
+#element5_2d {
+	right: 0%;
+	margin-right: -61px;
+}
+.parentCanvas2d{
+  position: absolute;
+  transition: all 450ms linear;
+  width: 190px;
+  height: 100%;
+}
+.lineName {
+	font-family: arial;
+	font-size: 20px;
+	color: white;
+	font-weight: bold;
+	transform: translateY(17px);
+}
+.circle {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	transform: translateZ(2px)
+}
+.serviceLabel {
+	position: relative;
+	display: block;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	transform: translateZ(2px);
+}
+.serviceContainer {
+	position: absolute;
+	margin-top: 20px;
+	//left: 50%;
+	//margin-left: -16%;
+	width: 100%;
+}
