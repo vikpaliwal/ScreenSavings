@@ -1,2 +1,3 @@
-C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\BackgroundTask.csproj;neutral
-C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\ScreenSavings.jsproj;neutral
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\BackgroundTask\BackgroundTask.csproj;neutral
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\ScreenSavings.jsproj;neutral
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\WCFClientRuntimeComponent\WCFClientRuntimeComponent.csproj;neutral

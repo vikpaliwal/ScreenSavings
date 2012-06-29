@@ -1,270 +1,283 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>GAURAV</Machine>
-    <WindowsUser>gaura_000</WindowsUser>
+    <Machine>SHAH-WIN8-RC</Machine>
+    <WindowsUser>Shah</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>C492A2971E57D6C9806C915F912CC3269C57B3813F5892470DC973BA965DABB3</RegisteredManifestChecksum>
-    <RegisteredPackageMoniker>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
-    <RegisteredUserModeAppID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
-    <RegisteredPackageID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640</RegisteredPackageID>
+    <RegisteredManifestChecksum>5ED888F613E40342371CFF8879EEEB52CB856EC9C1DA72C69901CB7061F3A0D1</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b</RegisteredPackageID>
     <RegisteredPackagePublisher>CN=Shah</RegisteredPackagePublisher>
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-28T10:40:49.810</Modified>
+      <Modified>2012-06-29T11:59:12.407</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
       <PackagePath>BackgroundTask.winmd</PackagePath>
-      <Modified>2012-06-22T12:01:16.121</Modified>
+      <Modified>2012-06-29T11:59:08.789</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd">
+      <PackagePath>WCFClientRuntimeComponent.winmd</PackagePath>
+      <Modified>2012-06-29T11:59:08.944</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
       <PackagePath>BackgroundTask.pdb</PackagePath>
-      <Modified>2012-06-22T12:01:16.102</Modified>
+      <Modified>2012-06-29T11:59:08.585</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_Black.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb">
+      <PackagePath>WCFClientRuntimeComponent.pdb</PackagePath>
+      <Modified>2012-06-29T11:59:08.898</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_Black.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
+      <Modified>2012-05-21T11:56:22.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_White.png">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_White.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
+      <Modified>2012-05-21T11:56:20.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_Black.png">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_Black.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
+      <Modified>2012-05-21T11:56:22.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_White.png">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_White.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
+      <Modified>2012-05-21T11:56:20.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
+      <Modified>2012-05-21T11:56:22.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_White.png">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_White.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
+      <Modified>2012-05-21T11:56:20.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_Black.png">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_Black.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
+      <Modified>2012-05-21T11:56:22.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_White.png">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_White.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
+      <Modified>2012-05-21T11:56:20.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
+    <AppxPackagedFile Include="C:\Program Files\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
       <PackagePath>LiveSDKHTML\js\wl.js</PackagePath>
-      <Modified>2012-05-22T06:22:12.000</Modified>
+      <Modified>2012-05-22T12:22:12.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\css\3dCard-min.css">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
-      <Modified>2012-06-27T18:48:41.312</Modified>
+      <Modified>2012-06-29T11:07:57.842</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\css\default.css">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\css\default.css">
       <PackagePath>css\default.css</PackagePath>
-      <Modified>2012-06-25T18:14:10.486</Modified>
+      <Modified>2012-06-29T11:07:57.859</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\default.html">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2012-06-28T10:40:02.063</Modified>
+      <Modified>2012-06-29T12:00:53.639</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\accounts.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.976</Modified>
+      <Modified>2012-06-29T11:07:57.894</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\add_new.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\add_new.png">
       <PackagePath>images\add_new.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.976</Modified>
+      <Modified>2012-06-29T11:07:57.897</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\blueWide.scale-100.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\badgelogo-sdk.png">
+      <PackagePath>images\badgelogo-sdk.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-06-18T20:57:30.048</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\blueWide.scale-100.png">
       <PackagePath>images\blueWide.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-05-01T11:57:38.404</Modified>
+      <Modified>2012-06-29T11:07:57.898</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_blue.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\circle_blue.png">
       <PackagePath>images\circle_blue.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.945</Modified>
+      <Modified>2012-06-29T11:07:57.900</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_green.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\circle_green.png">
       <PackagePath>images\circle_green.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.945</Modified>
+      <Modified>2012-06-29T11:07:57.901</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_pink.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\circle_pink.png">
       <PackagePath>images\circle_pink.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.929</Modified>
+      <Modified>2012-06-29T11:07:57.903</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_purple.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\circle_purple.png">
       <PackagePath>images\circle_purple.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.929</Modified>
+      <Modified>2012-06-29T11:07:57.905</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\circle_yellow.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\circle_yellow.png">
       <PackagePath>images\circle_yellow.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.913</Modified>
+      <Modified>2012-06-29T11:07:57.907</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\commerce1.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\commerce1.png">
       <PackagePath>images\commerce1.png</PackagePath>
-      <Modified>2012-06-25T15:55:02.203</Modified>
+      <Modified>2012-06-29T11:07:57.911</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\commerce2.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\commerce2.png">
       <PackagePath>images\commerce2.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.898</Modified>
+      <Modified>2012-06-29T11:07:57.914</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\facebook.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\facebook.png">
       <PackagePath>images\facebook.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.835</Modified>
+      <Modified>2012-06-29T11:07:57.916</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\facebook_detail.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\facebook_detail.png">
       <PackagePath>images\facebook_detail.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.882</Modified>
+      <Modified>2012-06-29T11:07:57.921</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\flikr.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\flikr.png">
       <PackagePath>images\flikr.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.820</Modified>
+      <Modified>2012-06-29T11:07:57.924</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\ft.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\ft.png">
       <PackagePath>images\ft.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.788</Modified>
+      <Modified>2012-06-29T11:07:57.926</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\gmail.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\gmail.png">
       <PackagePath>images\gmail.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.742</Modified>
+      <Modified>2012-06-29T11:07:57.928</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\Gmail_detail.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\Gmail_detail.png">
       <PackagePath>images\Gmail_detail.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.710</Modified>
+      <Modified>2012-06-29T11:07:57.878</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\groupon.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\groupon.png">
       <PackagePath>images\groupon.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.663</Modified>
+      <Modified>2012-06-29T11:07:57.930</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\Groupon_detail.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\Groupon_detail.png">
       <PackagePath>images\Groupon_detail.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.804</Modified>
+      <Modified>2012-06-29T11:07:57.886</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\logo.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\logo.png">
       <PackagePath>images\logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-19T11:43:16.648</Modified>
+      <Modified>2012-06-29T11:07:57.932</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\mail1.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\mail1.png">
       <PackagePath>images\mail1.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.632</Modified>
+      <Modified>2012-06-29T11:07:57.934</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\mail2.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\mail2.png">
       <PackagePath>images\mail2.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.617</Modified>
+      <Modified>2012-06-29T11:07:57.936</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\mail3.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\mail3.png">
       <PackagePath>images\mail3.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.617</Modified>
+      <Modified>2012-06-29T11:07:57.938</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\news1.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\news1.png">
       <PackagePath>images\news1.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.601</Modified>
+      <Modified>2012-06-29T11:07:57.941</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\news2.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\news2.png">
       <PackagePath>images\news2.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.585</Modified>
+      <Modified>2012-06-29T11:07:57.943</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\photo1.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\photo1.png">
       <PackagePath>images\photo1.png</PackagePath>
-      <Modified>2012-06-26T09:51:04.802</Modified>
+      <Modified>2012-06-29T11:07:57.944</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\redWide.scale-100.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\redWide.scale-100.png">
       <PackagePath>images\redWide.scale-100.png</PackagePath>
-      <Modified>2012-05-01T11:57:38.419</Modified>
+      <Modified>2012-06-29T11:07:57.946</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\settings.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\settings.png">
       <PackagePath>images\settings.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.570</Modified>
+      <Modified>2012-06-29T11:07:57.953</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\setting_bg.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\setting_bg.png">
       <PackagePath>images\setting_bg.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.570</Modified>
+      <Modified>2012-06-29T11:07:57.952</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\smalllogo.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\smalllogo.png">
       <PackagePath>images\smalllogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-19T11:43:16.554</Modified>
+      <Modified>2012-06-29T11:07:57.955</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\social0.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\social0.png">
       <PackagePath>images\social0.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.554</Modified>
+      <Modified>2012-06-29T11:07:57.957</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\social1.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\social1.png">
       <PackagePath>images\social1.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.538</Modified>
+      <Modified>2012-06-29T11:07:57.958</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\social2.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\social2.png">
       <PackagePath>images\social2.png</PackagePath>
-      <Modified>2012-06-22T15:51:27.179</Modified>
+      <Modified>2012-06-29T11:07:57.960</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\splashscreen.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\splashscreen.png">
       <PackagePath>images\splashscreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-19T11:43:16.523</Modified>
+      <Modified>2012-06-29T11:07:57.963</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\storelogo.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\storelogo.png">
       <PackagePath>images\storelogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-19T11:43:16.507</Modified>
+      <Modified>2012-06-29T11:07:57.964</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\sun.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\sun.png">
       <PackagePath>images\sun.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.507</Modified>
+      <Modified>2012-06-29T11:07:57.966</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\time.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\time.png">
       <PackagePath>images\time.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.460</Modified>
+      <Modified>2012-06-29T11:07:57.968</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\trashcan.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\trashcan.png">
       <PackagePath>images\trashcan.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.460</Modified>
+      <Modified>2012-06-29T11:07:57.970</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\twitter.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\twitter.png">
       <PackagePath>images\twitter.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.445</Modified>
+      <Modified>2012-06-29T11:07:57.972</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\weather.png">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\weather.png">
       <PackagePath>images\weather.png</PackagePath>
-      <Modified>2012-06-19T11:43:16.445</Modified>
+      <Modified>2012-06-29T11:07:57.973</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\images\rose.jpg">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\images\rose.jpg">
       <PackagePath>images\rose.jpg</PackagePath>
-      <Modified>2012-06-25T18:07:24.336</Modified>
+      <Modified>2012-06-29T11:07:57.948</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\3dCard-min.js">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2012-06-28T11:40:28.133</Modified>
+      <Modified>2012-06-29T11:07:57.986</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\default.js">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2012-06-17T19:26:49.629</Modified>
+      <Modified>2012-06-29T12:12:41.177</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\js\jquery.js">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
-      <Modified>2012-06-19T11:43:17.038</Modified>
+      <Modified>2012-06-29T11:07:58.009</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\Shah\Documents\Visual Studio 2012\Projects\git\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2012-06-28T10:40:49.372</Modified>
+      <Modified>2012-06-29T11:59:11.893</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
-    <ResolvedSDKReference Include="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\">
+    <ResolvedSDKReference Include="C:\Program Files\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\">
       <Name>Microsoft.WinJS.1.0.RC</Name>
       <Version>1.0.8377.0</Version>
       <Architecture>Neutral</Architecture>
       <FrameworkIdentity>Name=Microsoft.WinJS.1.0.RC, MinVersion=1.0.8377.0</FrameworkIdentity>
-      <AppxLocation>C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\Microsoft.WinJS.1.0.RC.appx</AppxLocation>
+      <AppxLocation>C:\Program Files\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\Microsoft.WinJS.1.0.RC.appx</AppxLocation>
     </ResolvedSDKReference>
   </ItemGroup>
 </Project>
