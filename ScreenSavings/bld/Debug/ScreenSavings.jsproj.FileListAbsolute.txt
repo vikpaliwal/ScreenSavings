@@ -28,3 +28,20 @@ C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bld\Debug\priconf
 C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles.intermediate
 C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles.intermediate
 C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\resources.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\priconfig.xml.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\priconfig.xml
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\LanguageQualifiers.txt
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\ProjectArchitectures.txt

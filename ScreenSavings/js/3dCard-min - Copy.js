@@ -4,8 +4,8 @@ var ThreeDTranslateYStartingPos = 320;
 var ThreeDTranslateZStartingPos = 60;
 var TwoDYDelta = 200;
 var ThreeDZDelta = 80;
-
-
+var settingsVisible = false;
+var refPositions = { element1: 200, element2: 200, element3: 200, element4: 200, element5: 200 };
 
 function addCard(line){
 
@@ -556,13 +556,15 @@ $(document).ready(function () {
     
     
     function loadData() {
-               
+        var line_fb = 2;
+        var line_flickr = 0;
+        var line_groupon = 3;
         WinJS.xhr({ url: "http://198.101.207.173/gaomin/fb_json.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);                    
                     for (i = 0; i < 4; i++) {
-                        var cardDiv = document.getElementById("card" + (i + 8));
+                        var cardDiv = document.getElementById("card" + matrix[line_fb][i][0]);
                         var textDiv = cardDiv.getElementById("Span14");
                         var posterDiv = cardDiv.getElementById("Span15");
                         var imgDiv = cardDiv.getElementById("profilePic");
@@ -581,7 +583,7 @@ $(document).ready(function () {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
                     for (i = 0; i < 4; i++) {
-                        var cardDiv = document.getElementById("card" + (i + 12));
+                        var cardDiv = document.getElementById("card" + matrix[line_groupon][i][0]);
                         var textDiv = cardDiv.getElementById("Span14");
                         var titleDiv = cardDiv.getElementById("Span15");
                         var imgDiv = cardDiv.getElementById("profilePic");
@@ -593,13 +595,13 @@ $(document).ready(function () {
                         imgDiv.src = picUrl;
                     }
                 }
-            });*/
+            });
         WinJS.xhr({ url: "http://isscloud.intel.com/shilpa/shilpa/flickr.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
                     for (i = 0; i < 4; i++) {
-                        var cardDiv = document.getElementById("card" + i);
+                        var cardDiv = document.getElementById("card" + matrix[line_flickr][i][0]);
                         var textDiv = cardDiv.getElementById("Span14");
                         var imgDiv = cardDiv.getElementById("profilePic");
                         var user = data.flickr_feed[i].user;
@@ -610,7 +612,8 @@ $(document).ready(function () {
                       //  imgDiv.src = picUrl;
                     }
                 }
-            });          
+            });
+            */
     }
 
     function mouseClickFace(event) {
@@ -699,6 +702,29 @@ $(document).ready(function () {
         });
         */
     }
+
+    $('#settingsIcon, #weather').click(function () {
+        //console.log("show settings");
+        if (settingsVisible) {
+            $('#elements').css({ "transform": "" });
+            $('#settings').css({ "transform": "" });
+            $('#line2dContainerBg').css({ "transform": "" });
+            $('#lineContainer').css({ "transform": "", "width": "" });
+           $('.settingsOverlay').remove();
+        } else {
+            //console.log("show settings");
+            var width = parseInt($('#lineContainer').css("width")) * 0.78;
+            $('#elements').css({ "transform": "scale(0.8) translateX(-130px) translateY(-430px)"});
+            $('#settings').css({ "transform": "translateX(0px)" });
+            $('#line2dContainerBg').css({ "transform": "translateY(-500px)" });
+            $('#lineContainer').css({
+                "transform": "translateX(60px)",
+                "width": width + "px"
+            });
+            $('<div></div>').appendTo('body').addClass("settingsOverlay");
+        }
+        settingsVisible = !settingsVisible;
+    });
 });
 
 

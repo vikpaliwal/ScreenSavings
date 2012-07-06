@@ -1,2 +1,2 @@
-C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\BackgroundTask.csproj;neutral
-C:\Users\gaura_000\Desktop\samples\ScreenSavings\ScreenSavings\ScreenSavings.jsproj;neutral
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\BackgroundTask.csproj;neutral
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\ScreenSavings.jsproj;neutral

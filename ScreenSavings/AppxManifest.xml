@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="1be41ff0-47b5-4dfe-94a4-4cbd3793c640" Version="1.0.0.0" Publisher="CN=gaura_000" />
+  <Properties>
+    <DisplayName>ScreenSavings</DisplayName>
+    <PublisherDisplayName>gaura_000</PublisherDisplayName>
+    <Logo>images\storelogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.0</OSMinVersion>
+    <OSMaxVersionTested>6.2.0</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" StartPage="default.html">
+      <VisualElements DisplayName="ScreenSavings" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="ScreenSavings" ForegroundText="light" BackgroundColor="#464646" ToastCapable="false">
+        <DefaultTile ShowName="allLogos" WideLogo="images\blueWide.scale-100.png" />
+        <SplashScreen Image="images\splashscreen.png" />
+      </VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.ScreenSavingsTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

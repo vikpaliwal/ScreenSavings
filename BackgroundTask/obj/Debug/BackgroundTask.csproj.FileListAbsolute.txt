@@ -50,3 +50,15 @@ C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\layout
 C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles
 C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles
 C:\Users\gaura_000\Desktop\samples\ScreenSavings\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\LanguageQualifiers.txt

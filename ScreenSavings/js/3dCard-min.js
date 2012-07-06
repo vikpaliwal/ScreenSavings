@@ -4,10 +4,12 @@ var ThreeDTranslateYStartingPos = 320;
 var ThreeDTranslateZStartingPos = 60;
 var TwoDYDelta = 200;
 var ThreeDZDelta = 80;
+var scrolling = 0;
+var currentHoverFace = undefined;
+var hoverLineNum = 0;
+var transitionComplete = 0;
 var settingsVisible = false;
-var refPositions = { element1: 200, element2: 200, element3: 200, element4: 200, element5: 200 };
-
-function addCard(line){
+function addCard(line) {
 
 }
 
@@ -15,7 +17,7 @@ function addCard(line){
 
 
 $(document).ready(function () {
-	
+
     //removeRandomCards();
 
 
@@ -24,14 +26,14 @@ $(document).ready(function () {
 
     for (var i = 0; i < matrix.length; i++) {
         for (var j = 0; j < matrix[i].length; j++) {
-            $('#card' + matrix[i][j][0]).css('transform','translateY(' + matrix[i][j][1] + 'px)');
+            $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][1] + 'px)');
         }
     }
 
-    
-    
 
-    
+
+
+
 
 
 
@@ -47,16 +49,40 @@ $(document).ready(function () {
 
 
     function scrollCards(lineNum, pixels) {
+        // $('.face').unbind();
+        var currentCard;
         var numCardsInLine = matrix[lineNum - 1].length;
         for (var i = 0; i < numCardsInLine; i++) {
             matrix[lineNum - 1][i][3] += pixels;
-            $('#card' + matrix[lineNum - 1][i][0]).css('transform', 'translateY(' + matrix[lineNum - 1][i][2] + 'px) translateZ(' + matrix[lineNum - 1][i][3] + 'px)');
+            currentCard = '#card' + matrix[lineNum - 1][i][0];
+            $(currentCard).css('transform', 'translateY(' + matrix[lineNum - 1][i][2] + 'px) translateZ(' + matrix[lineNum - 1][i][3] + 'px)');
         }
+
+        $(currentCard).bind('transitionend', function () {
+
+            $('body').trigger("scrollend");
+
+        });
+
+        //bindFace();
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     function pushNewCard(lineNum) {
         //console.log(lineNum);
-        var numCardsInLine = matrix[lineNum-1].length;
+        var numCardsInLine = matrix[lineNum - 1].length;
         var newCard = new Array(4);
         newCard[0] = cardCount;
         newCard[1] = matrix[lineNum - 1][0][1];
@@ -65,8 +91,8 @@ $(document).ready(function () {
 
         scrollCards(lineNum, -80);
 
-        
-        matrix[lineNum-1].unshift(newCard);
+
+        matrix[lineNum - 1].unshift(newCard);
 
         var myGenericCard = document.createElement("div");
 
@@ -74,14 +100,14 @@ $(document).ready(function () {
         myGenericCard.setAttribute("class", "row" + lineNum + " position0");
         myGenericCard.setAttribute('style', 'transition: all 500ms linear;');
 
-        
+
 
         document.getElementById("element" + lineNum).appendChild(myGenericCard);
 
-        
+
         $('#card' + cardCount).addClass('face');
-         if (lineNum == 1) {
-             $('#card' + cardCount).html('<img src="images/photo1.png" class="card"/>');
+        if (lineNum == 1) {
+            $('#card' + cardCount).html('<img src="images/photo1.png" class="card"/>');
         } else if (lineNum == 2) {
             $('#card' + cardCount).html('<img src="images/mail1.png" class="card"/>');
         } else if (lineNum == 3) {
@@ -91,39 +117,152 @@ $(document).ready(function () {
         } else if (lineNum == 5) {
             $('#card' + cardCount).html('<img src="images/news2.png" class="card"/>');
         }
-        
-         $('#card' + cardCount).fadeTo('fast', 1);
+
+        $('#card' + cardCount).fadeTo('fast', 1);
 
 
-         $('.face').hover(
-             function () {
-                 var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
-                 $('#dump').text($(this).attr('id'));
-                 //$(this).children('.face').each(function () { $('#dump').append($(this).attr('id')) });
-                 $(this).css({ "transform": "translateY(290px) translateZ(" + transformMatrix[14] + "px)" });
-             },
-             function () {
-                 var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
+        $('.face').hover(
+            function () {
+                var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
+                $('#dump').text($(this).attr('id'));
+                //$(this).children('.face').each(function () { $('#dump').append($(this).attr('id')) });
+                $(this).css({ "transition": "transform 500ms linear", "transform": "translateY(290px) translateZ(" + transformMatrix[14] + "px)" });
+            },
+            function () {
+                var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
 
-                 $('#dump').text($(this).attr('id'));
-                 $(this).css({ "transform": "translateY(320px) translateZ(" + transformMatrix[14] + "px)" });
-                 //$(this).css({ "transform": "translateY(20px)" });
-             });
-            
-         $('.face').click(mouseClickFace);
-       // $('#card' + cardCount).css({'transition':'all 500ms linear', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
-        
+                $('#dump').text($(this).attr('id'));
+                $(this).css({ "transition": "transform 500ms linear", "transform": "translateY(320px) translateZ(" + transformMatrix[14] + "px)" });
+                //$(this).css({ "transform": "translateY(20px)" });
+            });
+
+        $('.face').unbind('click');
+        $('.face').click(mouseClickFace);
+        // $('#card' + cardCount).css({'transition':'all 500ms linear', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
+
         //
-        
+
 
         cardCount++;
         setTimeout(function () {
-            
+
             scrollCards(lineNum, 0);
-            
+
         }, 1);
-        
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function pushNewDataCard(lineNum, newCard) {
+        //console.log(lineNum);
+        var numCardsInLine = matrix[lineNum - 1].length;
+        //var newCard = new Array(4);
+        newCard[0] = cardCount;
+        newCard[1] = matrix[lineNum - 1][0][1];
+        newCard[2] = matrix[lineNum - 1][0][2];
+        newCard[3] = matrix[lineNum - 1][0][3];
+
+        scrollCards(lineNum, -80);
+
+
+        matrix[lineNum - 1].unshift(newCard);
+
+        var myGenericCard = document.createElement("div");
+
+        myGenericCard.setAttribute("id", "card" + cardCount);
+        myGenericCard.setAttribute("class", "row" + lineNum + " position0");
+        myGenericCard.setAttribute('style', 'transition: all 500ms linear;');
+
+
+
+        document.getElementById("element" + lineNum).appendChild(myGenericCard);
+
+
+        $('#card' + cardCount).addClass('face');
+        if (lineNum == 1) {
+            $('#card' + cardCount).html('<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + matrix[lineNum - 1][0][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + matrix[lineNum - 1][0][6] + '</span> </div>');
+        } else if (lineNum == 2) {
+            $('#card' + cardCount).html('<div class="GM_content"><span class="GM_time">11:11</span><span class="GM_From">From: ' + matrix[lineNum - 1][0][6] + '</span><span class="GM_subject">Subject: ' + matrix[lineNum - 1][0][7] + '</span><span class="GM_message">' + toStaticHTML(matrix[lineNum - 1][0][10]) + '</span> </div>');
+        } else if (lineNum == 3) {
+            if (matrix[lineNum - 1][0][4] == "facebook") {
+                $('#card' + cardCount).html('<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + matrix[lineNum - 1][0][9] + '/picture"/><span class="FB_time">' + matrix[lineNum - 1][0][5] + '</span><span class="FB_title">' + matrix[lineNum - 1][0][6] + '</span><span class="FB_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
+            } else if (matrix[lineNum - 1][0][4] == "twitter") {
+                $('#card' + cardCount).html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][5] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
+            }
+        } else if (lineNum == 4) {
+            $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + matrix[lineNum - 1][0][6] + '</span><span class="GROUPON_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
+        } else if (lineNum == 5) {
+            $('#card' + cardCount).html('<img src="images/news2.png" class="card"/>');
+        }
+
+        $('#card' + cardCount).fadeTo('fast', 1);
+
+
+        $('.face').unbind();
+        bindFace();
+        // $('#card' + cardCount).css({'transition':'all 500ms linear', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
+
+        //
+
+
+        cardCount++;
+        setTimeout(function () {
+
+            scrollCards(lineNum, 0);
+
+        }, 1);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -154,22 +293,22 @@ $(document).ready(function () {
                     //var myTwitContent = makeTwitterCard();
                     myGenericCard.setAttribute("id", "card" + cardCount);
                     myGenericCard.setAttribute("class", "row" + (i + 1) + " face");
-                    myGenericCard.setAttribute("style", "z-index: " + -(j+1) + ";");
+                    myGenericCard.setAttribute("style", "z-index: " + -(j + 1) + ";");
 
                     if (i == 0) {
-                        myGenericCard.innerHTML = '<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="images/rose.jpg"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">New @Reply from Levonmaa</span> </div>'
+                        myGenericCard.innerHTML = '<div class="FLICKR_content"><img class="FLICKR_PIC" src="images/rose.jpg"/><span class="FLICKR_time">11:11</span><span class="FLICKR_title">New @Reply from Levonmaa</span> </div>';
                     } else if (i == 1) {
                         myGenericCard.innerHTML = '<img src="images/mail1.png" class="card"/>';
                     } else if (i == 2) {
-                        myGenericCard.innerHTML = '<div class="TWIT_content"><img id="profilePic" class="FB_PIC" src=""/><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
+                        myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src=""/><span class="FB_time">11:11</span><span class="FB_title">New @Reply from Levonmaa</span><span class="FB_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
                     } else if (i == 3) {
-                        myGenericCard.innerHTML = '<div class="GROUPON_content"><img id="profilePic" class="GROUPON_PIC" src=""/><span id="Span13" class="GROUPON_time">11:11</span><span id="Span14" class="GROUPON_title">New @Reply from Levonmaa</span><span id="Span15" class="GROUPON_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
+                        myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src=""/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">New @Reply from Levonmaa</span><span class="GROUPON_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
                     } else if (i == 4) {
                         myGenericCard.innerHTML = '<img src="images/news2.png" class="card"/>';
                     }
 
-                    document.getElementById("element" + (i+1)).appendChild(myGenericCard);
-                    
+                    document.getElementById("element" + (i + 1)).appendChild(myGenericCard);
+
                     cardCount++;
 
                 }
@@ -183,6 +322,201 @@ $(document).ready(function () {
 
 
 
+    function mouseClickFace(event) {
+        event.stopPropagation();
+        $('body').unbind('keydown');
+        $('body').unbind('keyup');
+
+        $('.face').unbind('click');
+
+
+        var matrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
+
+        var overlay = $('#overlays').children();
+
+        var newFace = $(this).clone();
+        newFace.attr('id', 'newFace');
+
+        var oldFace = $(this);
+        oldFace.hide();
+        $('#dump').text(oldFace.children('.FLICKR_content').children('.FLICKR_PIC').attr('src'));
+        var cube = $(this).parent().clone().empty();
+
+        newFace.appendTo(cube);
+        //cube.appendTo(element);
+        cube.appendTo("#page-wrapper");
+        cube.css({ "z-index": "12" });
+        overlay.show();
+        //	var width = $('body').width() * 0.7;
+        var height = $('body').height() * 0.7;
+        var width = height * 1.6;
+        //var value = parseFloat($(cube).css('perspective-origin').split("px ")[0]) - ($(cube).offsetParent().left - 440) + (($('body').width() - width) / 2);
+        //var value = (parseFloat($(cube).css('perspective-origin').split("px ")[0])-114*4.5);
+        //var value = ;
+        //$('#dump').text(value);
+        var transX = ((parseFloat($(cube).css('perspective-origin').split("px ")[0]) - 114 * 2) * 1.78 - (($('body').width() - width) / 2)) + 114;
+        var transY = $('body').height() / 2 - height / 2 - 114;
+
+        $(newFace).css({
+            "background-color": "rgba(255, 255, 255, 1.0)",
+            "transition": "all 1s ease",
+            "transform": "translateZ(0px) translateY(" + transY + "px) translateX(" + transX + "px) rotateX(0deg)",
+            "height": height + "px",
+            "width": width + "px",
+            "z-index": "999999999",
+        });
+
+        var image = "";
+        if ($(cube).attr('id') == "element1") {
+            //    image = oldFace.children('.FLICKR_content').children('.FLICKR_PIC').attr('src');
+            //    console.log(oldFace.children('.FLICKR_content').children('.FLICKR_PIC').attr('src'));
+        } else if ($(cube).attr('id') == "element2") {
+            image = "images/Gmail_detail.png";
+        } else if ($(cube).attr('id') == "element4") {
+            image = "images/Groupon_detail.png";
+        }
+
+        if (image.length > 0) {
+            $(newFace).children().remove();
+            var content = $("<img src='" + image + "' />").appendTo($(newFace)).addClass('card');
+        }
+
+        //$('.parentCanvas').css({ "perspective": "350px" });
+        /*    $(newFace).click(function (e) {
+                e.stopPropagation();
+            });
+            */
+        /*$(cube).click(function (e) {
+            $(overlay).trigger('click');
+        });
+        */
+        $(overlay).unbind('click');
+
+        $(newFace).bind("transitionend", function () {
+            $(overlay).bind('click', function () {
+
+                removeOverlay(matrix[14], newFace, cube, overlay, oldFace);
+            });
+
+            $('body').keydown(function (event) {
+                var key = event.keyCode;
+                if (key == 27) {
+                    removeOverlay(matrix[14], newFace, cube, overlay, oldFace);
+                }
+            });
+
+
+        });
+        //
+
+
+
+        /*newFace.bind('mousewheel', function (e) {
+            return false;
+        });
+        */
+    }
+
+
+    function removeOverlay(zPos, newFace, cube, overlay, oldFace) {
+        $(newFace).bind("transitionend", function () {
+            //$(oldFace).css({ "transform": "translateZ(" + matrix[14] + "px) translateY(320px) rotateX(0deg)", "background-color": "rgba(255, 255, 255, 1.0)" });
+            $(cube).remove();
+            $(overlay).hide();
+            $(oldFace).show();
+            $('body').unbind('keydown');
+            $('body').unbind('keyup');
+            bindKeys();
+            $('.face').click(mouseClickFace);
+
+        });
+
+        $(newFace).css({
+            "transform": "translateZ(" + zPos + "px) translateY(320px) rotateX(0deg)",
+            "height": "122px",
+            "width": "251px"
+        });
+    }
+
+
+    function bindFace() {
+
+        $('.face').hover(
+                function () {
+                    if (scrolling == 0) {
+                        var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
+                        //$('#dump').text($(this).attr('id'));
+                        //$(this).children('.face').each(function () { $('#dump').append($(this).attr('id')) });
+                        $(this).css({ "transform": "translateY(290px) translateZ(" + transformMatrix[14] + "px)" });
+                        currentHoverFace = $(this).attr('id');
+                        //$('#dump').text($(this).parent().attr('id'));
+                    }
+                },
+                function () {
+                    if (scrolling == 0) {
+                        var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
+
+
+                        $(this).css({ "transform": "translateY(320px) translateZ(" + transformMatrix[14] + "px)" });
+                        //$(this).css({ "transform": "translateY(20px)" });
+
+                        //$(this).bind('transitionend', function () {
+                        currentHoverFace = undefined;
+                        //});
+                        //  $('#dump').text($(this).parent().attr('id'));
+                    }
+                });
+
+
+        $('.face').bind('click', mouseClickFace);
+
+
+
+    }
+
+    function bindKeys() {
+
+
+
+
+        var arrowKeyLock = 0;
+
+        $('body').keyup(function (event) {
+            var key = event.keyCode - 48;
+            //console.log("key " +key+ " is up!"); 
+            var elementId = "element" + key;
+            if (key > 0 && key < 6) {
+                arrowKeyLock = 0;
+            } else if (key == -8) {
+                arrowKeyLock = 0;
+            } else if (key == -10) {
+                arrowKeyLock = 0;
+            }
+        });
+
+        $('body').keydown(function (event) {
+            var key = event.keyCode - 48;
+            var elementId = "element" + key;
+            if (key > 0 && key < 6) {
+                pushNewCard(key);
+                arrowKeyLock = 1;
+
+            } else if (key == -8) {
+                if (hoverLineNum > 0 && arrowKeyLock == 0) {
+                    scrollCards(hoverLineNum, 40);
+                    arrowKeyLock = 1;
+                }
+            } else if (key == -10) {
+                if (hoverLineNum > 0 && arrowKeyLock == 0) {
+                    scrollCards(hoverLineNum, -40);
+                    arrowKeyLock = 1;
+                }
+            }
+
+
+        });
+
+    }
 
 
 
@@ -198,7 +532,7 @@ $(document).ready(function () {
     setTimeout(function () {
 
         $('.bgOne').css({ "width": "190px", "margin-left": "10px" });
- 	    $('.bgFive').css({ "width": "190px", "margin-left": "-18px" });
+        $('.bgFive').css({ "width": "190px", "margin-left": "-18px" });
         $('.bgPerspective').css({ "transform": "rotateX(-85deg) translateZ(-118px)" });
         $('.linePerspective').css({ "transform": "rotateX(-85deg) translateZ(-120px)" });
 
@@ -212,7 +546,7 @@ $(document).ready(function () {
         $('.face').each(function (index) {
 
             var name = $(this).attr('class');
-            
+
             switch (name) {
 
                 case "row1 face name1-2d":
@@ -245,7 +579,7 @@ $(document).ready(function () {
         */
 
 
-        var hoverLineNum = 0;
+
         /*$('.linePerspective, .bgPerspective, .face').mouseover(function () {
             var parentID = $(this).parent().attr("id");
             if (parentID == 'element1') {
@@ -318,65 +652,49 @@ $(document).ready(function () {
         setTimeout(function () {
             $('.line1, .line2, .line3, .line4, .line5').css({ "transition": "all 200ms ease" });
         }, 500);
-        $('#element1, #element2, #element3, #element4, #element5').bind({
 
-            mouseenter: function () {
-                var parentID = $(this).attr("id");
-                if (parentID == 'element1') {
-                    hoverLineNum = 1;
-                    updateShadow1.opt = true;
-                    updateShadow1(1);
-                } else if (parentID == 'element2') {
-                    hoverLineNum = 2;
-                    updateShadow2.opt = true;
-                    updateShadow2(2);
-                } else if (parentID == 'element3') {
-                    hoverLineNum = 3;
-                    updateShadow3.opt = true;
-                    updateShadow3(3);
-                } else if (parentID == 'element4') {
-                    hoverLineNum = 4;
-                    updateShadow4.opt = true;
-                    updateShadow4(4);
-                } else if (parentID == 'element5') {
-                    hoverLineNum = 5;
-                    updateShadow5.opt = true;
-                    updateShadow5(5);
-                } else {
-                    hoverLineNum = 0;
-                }
-                $('#dump').text(hoverLineNum);
-            },
-            mouseleave: function () {
+
+        $('#element1, #element2, #element3, #element4, #element5').hover(function () {
+            var parentID = $(this).attr("id");
+            if (parentID == 'element1') {
+                hoverLineNum = 1;
+                updateShadow1.opt = true;
+                updateShadow1(1);
+            } else if (parentID == 'element2') {
+                hoverLineNum = 2;
+                updateShadow2.opt = true;
+                updateShadow2(2);
+            } else if (parentID == 'element3') {
+                hoverLineNum = 3;
+                updateShadow3.opt = true;
+                updateShadow3(3);
+            } else if (parentID == 'element4') {
+                hoverLineNum = 4;
+                updateShadow4.opt = true;
+                updateShadow4(4);
+            } else if (parentID == 'element5') {
+                hoverLineNum = 5;
+                updateShadow5.opt = true;
+                updateShadow5(5);
+            } else {
                 hoverLineNum = 0;
-                $('#dump').text(hoverLineNum);
-
-                updateShadow1.opt = false;
-                updateShadow2.opt = false;
-                updateShadow3.opt = false;
-                updateShadow4.opt = false;
-                updateShadow5.opt = false;
             }
+            $('#dump').text(hoverLineNum);
+        }, function () {
+            hoverLineNum = 0;
+            $('#dump').text(hoverLineNum);
+
+            updateShadow1.opt = false;
+            updateShadow2.opt = false;
+            updateShadow3.opt = false;
+            updateShadow4.opt = false;
+            updateShadow5.opt = false;
         });
 
 
 
-            $('.face').hover(
-                function () {
-                    var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
-                    $('#dump').text($(this).attr('id'));
-                    //$(this).children('.face').each(function () { $('#dump').append($(this).attr('id')) });
-                    $(this).css({ "transform": "translateY(290px) translateZ(" + transformMatrix[14] + "px)" });
-                },
-                function () {
-                    var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
 
-                    $('#dump').text($(this).attr('id'));
-                    $(this).css({ "transform": "translateY(320px) translateZ(" + transformMatrix[14] + "px)" });
-                    //$(this).css({ "transform": "translateY(20px)" });
-                });
-
-           
+        bindKeys();
 
 
 
@@ -384,42 +702,22 @@ $(document).ready(function () {
 
 
 
-
-        var arrowKeyLock = 0;
-
-        $('body').keyup(function (event) {
-            var key = event.keyCode - 48;
-            //console.log("key " +key+ " is up!"); 
-            var elementId = "element" + key;
-            if (key == -8) {
-               arrowKeyLock = 0;
-            } else if (key == -10) {
-               arrowKeyLock = 0;
-            }
-        });
-
-        $('body').keydown(function (event) {
-            var key = event.keyCode - 48;
-            var elementId = "element" + key;
-            if (key > 0 && key < 6) {
-                pushNewCard(key);
-
-            } else if (key == -8) {
-                if (hoverLineNum > 0 && arrowKeyLock == 0) {
-                    scrollCards(hoverLineNum, 40);
-                    arrowKeyLock = 1;
-                }
-            } else if (key == -10) {
-                if (hoverLineNum > 0 && arrowKeyLock == 0) {
-                    scrollCards(hoverLineNum, -40);
-                    arrowKeyLock = 1;
-                }
-            }
-
-
-        });
 
         $('#element1, #element2, #element3, #element4, #element5').bind('mousewheel', function (e) {
+            scrolling = 1;
+            $('.face').unbind();
+
+            //    if (currentHoverFace == undefined) {
+
+
+
+            if (hoverLineNum > 0) {
+
+
+                //    scrollCards(hoverLineNum, 0);
+            }
+
+
             var direction;
             var pixels = 0;
             if (e.originalEvent === undefined) {
@@ -427,83 +725,56 @@ $(document).ready(function () {
                 pixels = 0;
             } else {
                 direction = e.originalEvent.wheelDelta;
-                pixels = (e.originalEvent.wheelDelta)/3;
+                pixels = (e.originalEvent.wheelDelta) / 3;
                 //$('.face').css({ 'transition': 'all 100ms linear' });
             }
 
-            
+
             if (hoverLineNum > 0) {
 
 
                 scrollCards(hoverLineNum, pixels);
             }
-                    
-            /*} else {
-                $('.linePerspective, .bgPerspective, .face').mouseover(function () {
-                    var parentID = $(this).parent().attr("id");
-                    if (parentID == 'element1') {
-                        hoverLineNum = 1;
-                    } else if (parentID == 'element2') {
-                        hoverLineNum = 2;
-                    } else if (parentID == 'element3') {
-                        hoverLineNum = 3;
-                    } else if (parentID == 'element4') {
-                        hoverLineNum = 4;
-                    } else if (parentID == 'element5') {
-                        hoverLineNum = 5;
-                    } else {
-                        hoverLineNum = 0;
-                    }
-                    scrollCards(hoverLineNum, pixels);
-                });                   
-             }           
+            scrolling = 0;
+            $('body').bind('scrollend', function () {
+                $('body').unbind('scrollend');
+                bindFace();
+            });
+            /*       } else {
+                       $(currentHoverFace).css({"transition": ""});
+                       if (hoverLineNum > 0) {
+       
+       
+                           //    scrollCards(hoverLineNum, 0);
+                       }
+       
+       
+                       var direction;
+                       var pixels = 0;
+                       if (e.originalEvent === undefined) {
+                           direction = -120;
+                           pixels = 0;
+                       } else {
+                           direction = e.originalEvent.wheelDelta;
+                           pixels = (e.originalEvent.wheelDelta) / 3;
+                           //$('.face').css({ 'transition': 'all 100ms linear' });
+                       }
+       
+       
+                       if (hoverLineNum > 0) {
+       
+       
+                           scrollCards(hoverLineNum, pixels);
+                       }
+                       scrolling = 0;
+                       $('body').bind('scrollend', function () {
+                           bindFace();
+                       });
+                   }*/
 
-            
-            /*if (direction > 0) {
-                //scroll towards
-               
-                    isScrolling = true;
-                    fadeCard($(this), oldPos, newPos)
-                    $(this).bind("msTransitionEnd", function () { isScrolling = false });
-               
-            } else {
-                //scroll away
-                $(this).siblings('.face').each(function (index) {
-                    var oldPos = refPositions[element] - index * 40;
-                    var newPos = oldPos - 40;
-
-                    if (index == 0 && newPos < 200) {
-                        return false;
-                    } else if (index == 0) {
-                        newRefPos = newPos;
-                    }
-                    isScrolling = true;
-                    fadeCard($(this), oldPos, newPos)
-                    $(this).bind("msTransitionEnd", function () { isScrolling = false });
-                    $(this).css({ "transform": "translateZ(" + newPos + "px) translateY(" + matrix[13] + "px) rotateX(-10deg)" });
-                });
-                $(this).children('.face').each(function (index) {
-                    var oldPos = refPositions[element] - index * 40;
-                    var newPos = oldPos - 40;
-
-                    if (index == 0 && newPos < 200) {
-                        return false;
-                    } else if (index == 0) {
-                        newRefPos = newPos;
-                    }
-                    isScrolling = true;
-                    fadeCard($(this), oldPos, newPos)
-                    $(this).bind("msTransitionEnd", function () { isScrolling = false });
-                    $(this).css({ "transform": "translateZ(" + newPos + "px) translateY(" + matrix[13] + "px) rotateX(-10deg)" });
-                });
-            }
-            refPositions[element] = newRefPos;
-            return false;
-
-            */
         });
 
-        $('.face').bind('click', mouseClickFace);
+        bindFace();
 
 
 
@@ -512,228 +783,317 @@ $(document).ready(function () {
         $('.pan').click(function () {
 
             if ($(this).hasClass('panRight')) {
-                pagePosition += pageDelta;
-                $('#elements').animate({ 'margin-left': pagePosition + 'px' }, 500);
-                $('#element3').animate({ 'border': '1px' }, 500);
-                $('.panRight').animate({ right: '-=' + pageDelta }, 500);
-                $('.panLeft').animate({ left: '+=' + pageDelta }, 500);
-                // $('#page-wrapper').css({"transform":"translateX(" + pagePosition + "px)"});
-            } else if ($(this).hasClass('panLeft')) {
                 pagePosition -= pageDelta;
                 $('#elements').animate({ 'margin-left': pagePosition + 'px' }, 500);
                 $('#element3').animate({ 'border': '1px' }, 500);
                 $('.panRight').animate({ right: '+=' + pageDelta }, 500);
                 $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
+                // $('#page-wrapper').css({"transform":"translateX(" + pagePosition + "px)"});
+            } else if ($(this).hasClass('panLeft')) {
+                pagePosition += pageDelta;
+                $('#elements').animate({ 'margin-left': pagePosition + 'px' }, 500);
+                $('#element3').animate({ 'border': '1px' }, 500);
+                $('.panRight').animate({ right: '-=' + pageDelta }, 500);
+                $('.panLeft').animate({ left: '+=' + pageDelta }, 500);
             }
         });
-       // loadData();
- 	}, 3000);
-    Element.prototype.getElementById = function(req) {
-        var elem = this, children = elem.childNodes, i, len, id;
- 
-        for (i = 0, len = children.length; i < len; i++) {
-            elem = children[i];
-        
-            //we only want real elements
-            if (elem.nodeType !== 1 )
-                continue;
+        // loadData();
 
-            id = elem.id || elem.getAttribute('id');
-        
-            if (id === req) {
-                return elem;
-            }
-            //recursion ftw
-            //find the correct element (or nothing) within the child node
-            id = elem.getElementById(req);
 
-            if (id)
-                return id;
-        }
-        //no match found, return null
-        return null;
-    }
-    
-    
+
+        $('body').trigger('flickr');
+        $('body').trigger('gmail');
+        $('body').trigger('fb_and_twitter');
+        $('body').trigger('groupon');
+
+
+        setTimeout(function () { transitionComplete = 1; }, 500);
+    }, 3000);
+
+
+
     function loadData() {
-        var line_fb = 2;
-        var line_flickr = 0;
-        var line_groupon = 3;
-        WinJS.xhr({ url: "http://198.101.207.173/gaomin/fb_json.php" }).done(
-            function fulfilled(result) {
-                if (result.status === 200) {
-                    var data = JSON.parse(result.response);                    
-                    for (i = 0; i < 4; i++) {
-                        var cardDiv = document.getElementById("card" + matrix[line_fb][i][0]);
-                        var textDiv = cardDiv.getElementById("Span14");
-                        var posterDiv = cardDiv.getElementById("Span15");
-                        var imgDiv = cardDiv.getElementById("profilePic");
-                        var poster = data.facebookPosts[i].posterName;
-                        var details = data.facebookPosts[i].text;
-                        var posterId = data.facebookPosts[i].posterId;
-                        var picUrl = "http://graph.facebook.com/" + posterId + "/picture";
-                        textDiv.innerText = details;
-                        posterDiv.innerText = poster;
-                        imgDiv.src = picUrl;
-                    }
-                }
-            });/*
-        WinJS.xhr({ url: "http://isscloud.intel.com/gaomin/groupon_json.php" }).done(
+
+        WinJS.xhr({ url: "http://198.101.207.173/shilpa/flickr_trial.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
-                    for (i = 0; i < 4; i++) {
-                        var cardDiv = document.getElementById("card" + matrix[line_groupon][i][0]);
-                        var textDiv = cardDiv.getElementById("Span14");
-                        var titleDiv = cardDiv.getElementById("Span15");
-                        var imgDiv = cardDiv.getElementById("profilePic");
-                        var title = data.groupons[i].title;
-                        var details = data.groupons[i].detailedText;
-                        var picUrl = data.groupons[i].itemPicUrl;
-                        textDiv.innerText = details;
-                        titleDiv.innerText = title;
-                        imgDiv.src = picUrl;
+                    var i;
+
+                    var lineNum = 1;
+
+                    if (transitionComplete == 1) {
+
+                        for (i = 0; i < data.flickr_feed.length; i++) {
+
+                            $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
+
+                            var newCard = new Array(8);
+                            newCard[4] = "flickr";
+                            newCard[5] = "timestampTBD";
+                            newCard[6] = data.flickr_feed[i].user;
+                            newCard[7] = data.flickr_feed[i].photo + "b.jpg";
+
+                            pushNewDataCard(lineNum, newCard);
+
+                            //scrollCards(lineNum, -160);
+
+                        }
+
+                    } else {
+
+                        $('body').bind('flickr', function () {
+
+                            setTimeout(function () {
+                                for (i = 0; i < data.flickr_feed.length; i++) {
+
+                                    $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
+
+                                    var newCard = new Array(8);
+                                    newCard[4] = "flickr";
+                                    newCard[5] = "timestampTBD";
+                                    newCard[6] = data.flickr_feed[i].user;
+                                    newCard[7] = data.flickr_feed[i].photo + "b.jpg";
+
+                                    pushNewDataCard(lineNum, newCard);
+
+                                    //scrollCards(lineNum, -160);
+
+                                }
+                            }, 500);
+                        });
                     }
                 }
             });
-        WinJS.xhr({ url: "http://isscloud.intel.com/shilpa/shilpa/flickr.php" }).done(
+
+
+
+        WinJS.xhr({ url: "http://198.101.207.173/shilpa/mygmail.php?email_address=screensavingsapp@gmail.com" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
-                    for (i = 0; i < 4; i++) {
-                        var cardDiv = document.getElementById("card" + matrix[line_flickr][i][0]);
-                        var textDiv = cardDiv.getElementById("Span14");
-                        var imgDiv = cardDiv.getElementById("profilePic");
-                        var user = data.flickr_feed[i].user;
-                        var photoUrl = data.flickr_feed[i].photo;
-                     //  var picUrl = data.groupons[i].itemPicUrl;
-                        textDiv.innerText = user;
-                        imgDiv.src = photoUrl;
-                      //  imgDiv.src = picUrl;
+                    var i;
+
+                    var lineNum = 2;
+
+                    if (transitionComplete == 1) {
+                        for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
+
+                            $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
+
+                            var newCard = new Array(11);
+                            newCard[4] = "facebook";
+                            newCard[5] = data.gmail_feed[i].date;
+                            newCard[6] = data.gmail_feed[i].from;
+                            newCard[7] = data.gmail_feed[i].subject;
+                            newCard[8] = data.gmail_feed[i].plain_text;
+                            newCard[9] = data.gmail_feed[i].to;
+                            newCard[10] = data.gmail_feed[i].truncated_text;
+
+                            pushNewDataCard(lineNum, newCard);
+
+                            //scrollCards(lineNum, -160);
+
+                        }
+                    } else {
+
+                        $('body').bind('gmail', function () {
+                            setTimeout(function () {
+                                for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
+
+                                    $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
+
+                                    var newCard = new Array(11);
+                                    newCard[4] = "facebook";
+                                    newCard[5] = data.gmail_feed[i].date;
+                                    newCard[6] = data.gmail_feed[i].from;
+                                    newCard[7] = data.gmail_feed[i].subject;
+                                    newCard[8] = data.gmail_feed[i].plain_text;
+                                    newCard[9] = data.gmail_feed[i].to;
+                                    newCard[10] = data.gmail_feed[i].truncated_text;
+
+                                    pushNewDataCard(lineNum, newCard);
+
+                                    //scrollCards(lineNum, -160);
+
+                                }
+                            }, 500);
+                        });
                     }
                 }
             });
+
+
+
+        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/fb_json.php" });
+        /*.done(
+            );
+
             */
-    }
 
-    function mouseClickFace(event) {
 
-        var matrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
+        var TwitPromise = WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php" });
 
-        var overlay = $('<div></div>').prependTo('.fixedlayout').addClass("overlay");
-
-        var newFace = $(this).clone();
-        newFace.attr('id', 'newFace');
-
-        var oldFace = $(this);
-        oldFace.hide();
-
-        var cube = $(this).parent().clone().empty();
-
-        newFace.appendTo(cube);
-        //cube.appendTo(element);
-        cube.appendTo("#page-wrapper");
-        cube.css({ "z-index": "12" });
-        overlay.show();
-        //	var width = $('body').width() * 0.7;
-        var height = $('body').height() * 0.7;
-        var width = height * 1.6;
-        //var value = parseFloat($(cube).css('perspective-origin').split("px ")[0]) - ($(cube).offsetParent().left - 440) + (($('body').width() - width) / 2);
-        //var value = (parseFloat($(cube).css('perspective-origin').split("px ")[0])-114*4.5);
-        var value = $('body').height() / 2 - height / 2 - 114;
-        $('#dump').text(value);
-        var transX = ((parseFloat($(cube).css('perspective-origin').split("px ")[0]) - 114 * 2) * 1.78 - (($('body').width() - width) / 2)) + 114;
-        var transY = value;
-
-        $(newFace).css({
-            "background-color": "rgba(255, 255, 255, 1.0)",
-            "transition": "all 1s ease",
-            "transform": "translateZ(0px) translateY(" + transY + "px) translateX(" + transX + "px) rotateX(0deg)",
-            "height": height + "px",
-            "width": width + "px",
-            "z-index": "999999999",
-        });
-
-        var image = "";
-        if ($(cube).attr('id') == "element1") {
-            image = "images/facebook_detail.png";
-        } else if ($(cube).attr('id') == "element2") {
-            image = "images/Gmail_detail.png";
-        } else if ($(cube).attr('id') == "element4") {
-            image = "images/Groupon_detail.png";
-        }
-
-        if (image.length > 0) {
-            $(newFace).children().remove();
-            var content = $("<img src='" + image + "' />").appendTo($(newFace)).addClass('card');
-        }
-
-        //$('.parentCanvas').css({ "perspective": "350px" });
-        /*    $(newFace).click(function (e) {
-                e.stopPropagation();
+        /*.done(
+            
             });
             */
-        /*$(cube).click(function (e) {
-            $(overlay).trigger('click');
-        });
-        */
-        $(overlay).click(function () {
-            $(newFace).bind("transitionend", function () {
-                //$(oldFace).css({ "transform": "translateZ(" + matrix[14] + "px) translateY(320px) rotateX(0deg)", "background-color": "rgba(255, 255, 255, 1.0)" });
-                $(cube).remove();
-                $(overlay).remove();
-                $(oldFace).show();
+        WinJS.Promise.join([fbPromise, TwitPromise]).done(
+            function () {
 
+
+                var lineNum = 3;
+                var tempArray = new Array();
+                var i;
+
+                fbPromise.done(
+                    function fulfilled(result) {
+                        if (result.status === 200) {
+                            var data = JSON.parse(result.response);
+
+
+                            for (i = (data.facebookPosts.length - 1) ; i >= 0; i--) {
+                                var time = "" + data.facebookPosts[i].time + "";
+                                time = time.replace("+0000", "");
+                                time = new Date(time);
+                                time = time.getTime(time) / 1000;
+                                //                           $('#dump').text($('#dump').val() + " ---- " + data.facebookPosts[i].user);
+
+                                var newCard = new Array(10);
+                                newCard[4] = "facebook";
+                                newCard[5] = time;
+                                newCard[6] = data.facebookPosts[i].posterName;
+                                newCard[7] = data.facebookPosts[i].text;
+                                newCard[8] = data.facebookPosts[i].link;
+                                newCard[9] = data.facebookPosts[i].posterId;
+
+                                tempArray.push(newCard);
+
+                                //scrollCards(lineNum, -160);
+
+                            }
+                        }
+                    });
+                TwitPromise.done(
+                    function fulfilled(result) {
+                        if (result.status === 200) {
+                            var data = JSON.parse(result.response);
+
+
+
+                            for (i = (data.twitter_feed.length - 1) ; i >= 0; i--) {
+
+                                //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
+
+                                var newCard = new Array(9);
+                                newCard[4] = "twitter";
+                                newCard[5] = data.twitter_feed[i].time;
+                                newCard[6] = data.twitter_feed[i].user;
+                                newCard[7] = data.twitter_feed[i].tweet;
+                                newCard[8] = data.twitter_feed[i].photo;
+
+                                tempArray.push(newCard);
+
+                                //scrollCards(lineNum, -160);
+
+                            }
+                        }
+                    });
+                tempArray.sort(function (a, b) { return a[5] - b[5] });
+                if (transitionComplete == 1) {
+                    for (i = 0; i < tempArray.length; i++) {
+                        pushNewDataCard(lineNum, tempArray[i]);
+                    }
+                } else {
+
+                    $('body').bind('fb_and_twitter', function () {
+                        setTimeout(function () {
+                            for (i = 0; i < tempArray.length; i++) {
+                                pushNewDataCard(lineNum, tempArray[i]);
+                            }
+                        }, 500);
+                    });
+                }
+                //console.log(FacebookData.status);
             });
 
-            $(newFace).css({
-                "transform": "translateZ(" + matrix[14] + "px) translateY(320px) rotateX(0deg)",
-                "height": "122px",
-                "width": "251px"
+        WinJS.xhr({ url: "http://198.101.207.173/gaomin/groupon_json.php" }).done(
+            function fulfilled(result) {
+                if (result.status === 200) {
+                    var data = JSON.parse(result.response);
+                    var i;
+
+                    var lineNum = 4;
+
+                    if (transitionComplete == 1) {
+                        for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
+
+                            //                                $('#dump').text($('#dump').val() + " ---- " + data.deals[i].user);
+
+                            var newCard = new Array(9);
+                            newCard[4] = "groupon";
+                            newCard[5] = "timestampTBD";
+                            newCard[6] = data.deals[i].title;
+                            newCard[7] = data.deals[i].highlightsHtml;
+                            newCard[8] = data.deals[i].largeImageUrl;
+
+                            pushNewDataCard(lineNum, newCard);
+
+                            //scrollCards(lineNum, -160);
+
+                        }
+                    } else {
+                        $('body').bind('groupon', function () {
+                            setTimeout(function () {
+                                for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
+
+                                    //                                $('#dump').text($('#dump').val() + " ---- " + data.deals[i].user);
+
+                                    var newCard = new Array(9);
+                                    newCard[4] = "groupon";
+                                    newCard[5] = "timestampTBD";
+                                    newCard[6] = data.deals[i].title;
+                                    newCard[7] = data.deals[i].highlightsHtml;
+                                    newCard[8] = data.deals[i].largeImageUrl;
+
+                                    pushNewDataCard(lineNum, newCard);
+
+                                    //scrollCards(lineNum, -160);
+
+                                }
+                            }, 500);
+                        });
+                    }
+                }
             });
 
-            //  $(overlay).css({ "background-color": "rgba(0, 0, 0, 0)" });
-            //$('.parentCanvas').css({ "perspective": "400px" });
 
-        });
 
-        /*newFace.bind('mousewheel', function (e) {
-            return false;
-        });
-        */
+
+
     }
+
 
     $('#settingsIcon, #weather').click(function () {
         //console.log("show settings");
         if (settingsVisible) {
-            $('#page-wrapper').css({ "transform": "" });
+            $('#elements').css({ "transform": "" });
             $('#settings').css({ "transform": "" });
             $('#line2dContainerBg').css({ "transform": "" });
             $('#lineContainer').css({ "transform": "", "width": "" });
-           $('.settingsOverlay').remove();
+            $('.settingsOverlay').remove();
         } else {
             //console.log("show settings");
-            for (var elementId in refPositions) {
-                var position = refPositions[elementId];
-                $("#" + elementId).children('.face').each(function (index) {
-                    var oldPos = position - index * 40;
-                    var newPos = 200 - index * 40;
-                    //fadeCard($(this), oldPos, newPos);
-                    $(this).css({ "transform": "translateZ(" + newPos + "px) translateY(0px) rotateX(-10deg)" });
-                });
-                refPositions[elementId] = 200;
-            }
+            $('<div></div>').appendTo('body').addClass("settingsOverlay");
             var width = parseInt($('#lineContainer').css("width")) * 0.78;
-            $('#page-wrapper').css({ "transform": "scale(0.8) translateX(-150px) translateY(-430px)"});
+            $('#elements').css({ "transform": "scale(0.8) translateX(-130px) translateY(-430px)" });
+
             $('#settings').css({ "transform": "translateX(0px)" });
             $('#line2dContainerBg').css({ "transform": "translateY(-500px)" });
             $('#lineContainer').css({
                 "transform": "translateX(60px)",
                 "width": width + "px"
             });
-
-
-            $('<div></div>').appendTo('body').addClass("settingsOverlay");
         }
         settingsVisible = !settingsVisible;
     });
