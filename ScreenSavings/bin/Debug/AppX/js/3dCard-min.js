@@ -925,7 +925,7 @@ $(document).ready(function () {
 
 
 
-        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/fb_json.php" });
+        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/fb_json.php" });
         /*.done(
             );
 
@@ -1017,7 +1017,7 @@ $(document).ready(function () {
                 //console.log(FacebookData.status);
             });
 
-        WinJS.xhr({ url: "http://198.101.207.173/gaomin/groupon_json.php" }).done(
+        WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/groupon_json.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);

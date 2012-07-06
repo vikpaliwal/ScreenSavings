@@ -7,16 +7,16 @@
     <PackageArchitecture>neutral</PackageArchitecture>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
       <PackagePath>BackgroundTask.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
       <PackagePath>BackgroundTask.pdb</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_Black.png">
@@ -46,150 +46,150 @@
     <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
       <PackagePath>LiveSDKHTML\js\wl.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\3dCard-min.css">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\default.css">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\css\default.css">
       <PackagePath>css\default.css</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\default.html">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\accounts.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\add_new.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\add_new.png">
       <PackagePath>images\add_new.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\blueWide.scale-100.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\blueWide.scale-100.png">
       <PackagePath>images\blueWide.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_blue.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\circle_blue.png">
       <PackagePath>images\circle_blue.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_green.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\circle_green.png">
       <PackagePath>images\circle_green.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_pink.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\circle_pink.png">
       <PackagePath>images\circle_pink.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_purple.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\circle_purple.png">
       <PackagePath>images\circle_purple.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_yellow.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\circle_yellow.png">
       <PackagePath>images\circle_yellow.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\commerce1.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\commerce1.png">
       <PackagePath>images\commerce1.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\commerce2.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\commerce2.png">
       <PackagePath>images\commerce2.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\facebook.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\facebook.png">
       <PackagePath>images\facebook.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\facebook_detail.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\facebook_detail.png">
       <PackagePath>images\facebook_detail.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\flikr.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\flikr.png">
       <PackagePath>images\flikr.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\ft.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\ft.png">
       <PackagePath>images\ft.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\gmail.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\gmail.png">
       <PackagePath>images\gmail.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\Gmail_detail.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\Gmail_detail.png">
       <PackagePath>images\Gmail_detail.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\groupon.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\groupon.png">
       <PackagePath>images\groupon.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\Groupon_detail.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\Groupon_detail.png">
       <PackagePath>images\Groupon_detail.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\logo.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\logo.png">
       <PackagePath>images\logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\mail1.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\mail1.png">
       <PackagePath>images\mail1.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\mail2.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\mail2.png">
       <PackagePath>images\mail2.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\mail3.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\mail3.png">
       <PackagePath>images\mail3.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news1.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\news1.png">
       <PackagePath>images\news1.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news2.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\news2.png">
       <PackagePath>images\news2.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\photo1.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\photo1.png">
       <PackagePath>images\photo1.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\redWide.scale-100.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\redWide.scale-100.png">
       <PackagePath>images\redWide.scale-100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\settings.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\settings.png">
       <PackagePath>images\settings.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\setting_bg.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\setting_bg.png">
       <PackagePath>images\setting_bg.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\smalllogo.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\smalllogo.png">
       <PackagePath>images\smalllogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\social0.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\social0.png">
       <PackagePath>images\social0.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\social1.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\social1.png">
       <PackagePath>images\social1.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\social2.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\social2.png">
       <PackagePath>images\social2.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\splashscreen.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\splashscreen.png">
       <PackagePath>images\splashscreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\storelogo.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\storelogo.png">
       <PackagePath>images\storelogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\sun.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\sun.png">
       <PackagePath>images\sun.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\time.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\time.png">
       <PackagePath>images\time.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\trashcan.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\trashcan.png">
       <PackagePath>images\trashcan.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\twitter.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\twitter.png">
       <PackagePath>images\twitter.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\weather.png">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\weather.png">
       <PackagePath>images\weather.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\rose.jpg">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\images\rose.jpg">
       <PackagePath>images\rose.jpg</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\3dCard-min.js">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\default.js">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\jquery.js">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\visual studio 2012\projects\screensavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>
