@@ -8,9 +8,58 @@ var scrolling = 0;
 var currentHoverFace = undefined;
 var hoverLineNum = 0;
 var transitionComplete = 0;
-var settingsVisible = false;
-function addCard(line) {
 
+function updateTime() {
+    var currentTime = new Date();
+    var timeVal;
+    var dateVal;
+    var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+
+
+
+
+    if (currentTime.getHours() > 12) {
+        if (("" + currentTime.getMinutes() + "").length == 1) {
+
+            timeVal = (currentTime.getHours() - 12) + ":0" + currentTime.getMinutes();
+        } else {
+            timeVal = (currentTime.getHours() - 12) + ":" + currentTime.getMinutes();
+        }
+    } else if (currentTime.getHours() == 0) {
+        if (("" + currentTime.getMinutes() + "").length == 1) {
+
+            timeVal = "12:0" + currentTime.getMinutes();
+        } else {
+            timeVal = "12:" + currentTime.getMinutes();
+        }
+    } else {
+        if (("" + currentTime.getMinutes() + "").length == 1) {
+
+            timeVal = currentTime.getHours() + ":0" + currentTime.getMinutes();
+        } else {
+            timeVal = currentTime.getHours() + ":" + currentTime.getMinutes();
+        }
+    }
+
+    dateVal = currentTime.getDate() + "th " + month[currentTime.getMonth()] + " " + currentTime.getFullYear();
+
+    $('#hrsMins').text(timeVal);
+    $('#date').text(dateVal);
+
+    setTimeout(updateTime, 500);
 }
 
 
@@ -19,7 +68,7 @@ function addCard(line) {
 $(document).ready(function () {
 
     //removeRandomCards();
-
+    updateTime();
 
     var matrix = createCardArray(5, 4, 4);
     loadData();
@@ -98,7 +147,7 @@ $(document).ready(function () {
 
         myGenericCard.setAttribute("id", "card" + cardCount);
         myGenericCard.setAttribute("class", "row" + lineNum + " position0");
-        myGenericCard.setAttribute('style', 'transition: all 500ms linear;');
+        myGenericCard.setAttribute('style', 'transition: all 500ms ease;');
 
 
 
@@ -126,19 +175,19 @@ $(document).ready(function () {
                 var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
                 $('#dump').text($(this).attr('id'));
                 //$(this).children('.face').each(function () { $('#dump').append($(this).attr('id')) });
-                $(this).css({ "transition": "transform 500ms linear", "transform": "translateY(290px) translateZ(" + transformMatrix[14] + "px)" });
+                $(this).css({ "transition": "transform 500ms ease", "transform": "translateY(290px) translateZ(" + transformMatrix[14] + "px)" });
             },
             function () {
                 var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
 
                 $('#dump').text($(this).attr('id'));
-                $(this).css({ "transition": "transform 500ms linear", "transform": "translateY(320px) translateZ(" + transformMatrix[14] + "px)" });
+                $(this).css({ "transition": "transform 500ms ease", "transform": "translateY(320px) translateZ(" + transformMatrix[14] + "px)" });
                 //$(this).css({ "transform": "translateY(20px)" });
             });
 
         $('.face').unbind('click');
         $('.face').click(mouseClickFace);
-        // $('#card' + cardCount).css({'transition':'all 500ms linear', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
+        // $('#card' + cardCount).css({'transition':'all 500ms ease', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
 
         //
 
@@ -195,7 +244,7 @@ $(document).ready(function () {
 
         myGenericCard.setAttribute("id", "card" + cardCount);
         myGenericCard.setAttribute("class", "row" + lineNum + " position0");
-        myGenericCard.setAttribute('style', 'transition: all 500ms linear;');
+        myGenericCard.setAttribute('style', 'transition: all 500ms ease;');
 
 
 
@@ -206,12 +255,12 @@ $(document).ready(function () {
         if (lineNum == 1) {
             $('#card' + cardCount).html('<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + matrix[lineNum - 1][0][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + matrix[lineNum - 1][0][6] + '</span> </div>');
         } else if (lineNum == 2) {
-            $('#card' + cardCount).html('<div class="GM_content"><span class="GM_time">11:11</span><span class="GM_From">From: ' + matrix[lineNum - 1][0][6] + '</span><span class="GM_subject">Subject: ' + matrix[lineNum - 1][0][7] + '</span><span class="GM_message">' + toStaticHTML(matrix[lineNum - 1][0][10]) + '</span> </div>');
+            $('#card' + cardCount).html('<div class="GM_content"><span class="GM_time">' + matrix[lineNum - 1][0][5] + '</span><span class="GM_From">From: ' + matrix[lineNum - 1][0][6] + '</span><span class="GM_subject">Subject: ' + matrix[lineNum - 1][0][7] + '</span><span class="GM_message">' + toStaticHTML(matrix[lineNum - 1][0][10]) + '</span> <span class="hiddenData">' + toStaticHTML(matrix[lineNum - 1][0][8]) + '</span> </div>');
         } else if (lineNum == 3) {
             if (matrix[lineNum - 1][0][4] == "facebook") {
-                $('#card' + cardCount).html('<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + matrix[lineNum - 1][0][9] + '/picture"/><span class="FB_time">' + matrix[lineNum - 1][0][5] + '</span><span class="FB_title">' + matrix[lineNum - 1][0][6] + '</span><span class="FB_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
+                $('#card' + cardCount).html('<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + matrix[lineNum - 1][0][9] + '/picture?type=large"/><span class="FB_time">' + matrix[lineNum - 1][0][10] + '</span><span class="FB_title">' + matrix[lineNum - 1][0][6] + '</span><span class="FB_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
             } else if (matrix[lineNum - 1][0][4] == "twitter") {
-                $('#card' + cardCount).html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][5] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
+                $('#card' + cardCount).html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][9] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
             }
         } else if (lineNum == 4) {
             $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + matrix[lineNum - 1][0][6] + '</span><span class="GROUPON_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
@@ -224,7 +273,7 @@ $(document).ready(function () {
 
         $('.face').unbind();
         bindFace();
-        // $('#card' + cardCount).css({'transition':'all 500ms linear', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
+        // $('#card' + cardCount).css({'transition':'all 500ms ease', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
 
         //
 
@@ -345,7 +394,7 @@ $(document).ready(function () {
         newFace.appendTo(cube);
         //cube.appendTo(element);
         cube.appendTo("#page-wrapper");
-        cube.css({ "z-index": "12" });
+        cube.css({ "z-index": "9999" });
         overlay.show();
         //	var width = $('body').width() * 0.7;
         var height = $('body').height() * 0.7;
@@ -366,6 +415,62 @@ $(document).ready(function () {
             "z-index": "999999999",
         });
 
+        if ($(newFace).children().attr('class') == "FLICKR_content") {
+            $('#dump').text("in Flickr");
+        } else if ($(newFace).children().attr('class') == "GM_content") {
+            $('#dump').text("in GMAIL");
+            $(newFace).children().css({ "background-image": "url(../images/Gmail_detail.png)", "background-size": "100% 100%", "z-index": "9999999999999" });
+            $(newFace).children().children('.GM_From').css({ "transition": "font 1s ease", "max-width": "100%", "height": "auto", "max-height": "10%", "left": "17%", "top": "3%", "font-weight": "100", "font-size": "200%", "color": "#FFF", "overflow-x": "hidden" });
+            if ($(newFace).children().children('.GM_From').text().length > 40) {
+                $(newFace).children().children('.GM_From').text($(newFace).children().children('.GM_From').text().substr(0, 40) + "...");
+            }
+
+
+            $(newFace).children().children('.GM_subject').css({ "transition": "font 1s ease", "max-width": "90%", "height": "auto", "max-height": "8%", "left": "2.5%", "top": "17%", "font-weight": "100", "font-size": "200%", "color": "#000" });
+            if ($(newFace).children().children('.GM_subject').text().length > 60) {
+                $(newFace).children().children('.GM_subject').text($(newFace).children().children('.GM_subject').text().substr(0, 60) + "...");
+            }
+            $(newFace).children().children('.GM_message').css({ "transition": "font 1s ease", "max-width": "93%", "height": "auto", "max-height": "30%", "left": "2.5%", "top": "28%", "font-weight": "100", "font-size": "150%", "color": "#666", "overflow": "hidden", "overflow-y": "scroll", "padding-right": "2%" });
+            $(newFace).children().children('.GM_message').text($(newFace).children().children('.hiddenData').text());
+            $(newFace).children().append("<textarea class='gmailReply'>Click here to reply</textarea>");
+            $(newFace).children().children('.gmailReply').css({ "font-weight": "100", "font-size": "200%" });
+            $(newFace).children().children('.GM_time').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "right": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
+
+
+        } else if ($(newFace).children().attr('class') == "FB_content") {
+
+            $('#dump').text("in FACEBOOK");
+
+            $(newFace).children().css({ "background-image": "url(../images/facebook_detail.png)", "background-size": "100% 100%" });
+            $(newFace).children().children('.FB_PIC').css({ "min-width": "20%", "max-width": "20.4%", "height": "auto", "max-height": "45%", "left": "5.1%", "top": "auto", "bottom": "40%" });
+            $(newFace).children().children('.FB_title').css({ "transition": "font 1s ease", "max-width": "25%", "height": "auto", "max-height": "45%", "left": "4.1%", "top": "61%", "font-weight": "bold", "font-size": "200%", "color": "#666" });
+            $(newFace).children().children('.FB_message').css({ "transition": "font 1s ease", "max-width": "67%", "height": "auto", "max-height": "30%", "left": "30%", "top": "18%", "font-weight": "100", "font-size": "200%", "color": "#000" });
+            $(newFace).children().children('.FB_time').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "right": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
+
+        } else if ($(newFace).children().attr('class') == "TWIT_content") {
+            $('#dump').text("in TWITTER");
+
+            $(newFace).children().css({ "background-image": "url(../images/twitter_detail.png)", "background-size": "100% 100%" });
+            $(newFace).children().children('.TWIT_PIC').css({ "min-width": "20%", "max-width": "20.4%", "height": "auto", "max-height": "45%", "left": "5.1%", "top": "auto", "bottom": "40%" });
+            $(newFace).children().children('.TWIT_title').css({ "transition": "font 1s ease", "max-width": "25%", "height": "auto", "max-height": "45%", "left": "4.1%", "top": "61%", "font-weight": "bold", "font-size": "200%", "color": "#666" });
+            $(newFace).children().children('.TWIT_message').css({ "transition": "font 1s ease", "max-width": "67%", "height": "auto", "max-height": "30%", "left": "30%", "top": "38%", "font-weight": "100", "font-size": "200%", "color": "#000" });
+            $(newFace).children().children('.TWIT_time').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "right": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
+
+
+
+
+        } else if ($(newFace).children().attr('class') == "GROUPON_content") {
+            $('#dump').text("in GRPN");
+            $(newFace).children().css({ "background-image": "url(../images/Groupon_detail.png)", "background-size": "100% 100%" });
+            $(newFace).children().children('.GROUPON_PIC').css({ "width": "54%", "height": "auto", "left": "43%", "top": "auto", "bottom": "14%" });
+            $(newFace).children().children('.GROUPON_title').css({ "transition": "font 1s ease", "max-width": "40%", "height": "auto", "max-height": "40%", "left": "1.5%", "top": "20%", "font-weight": "700", "font-size": "200%", "color": "#000", "text-align": "center" });
+            $(newFace).children().children('.GROUPON_message').css({ "transition": "font 1s ease", "max-width": "40%", "height": "auto", "max-height": "35%", "left": "1.5%", "top": "60%", "font-weight": "500", "font-size": "200%", "color": "#2F4215" });
+            $(newFace).children().children('.GROUPON_time').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "right": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
+
+        } else if ($(newFace).children().attr('class') == "card") {
+            $('#dump').text("in News");
+        }
+
         var image = "";
         if ($(cube).attr('id') == "element1") {
             //    image = oldFace.children('.FLICKR_content').children('.FLICKR_PIC').attr('src');
@@ -375,12 +480,12 @@ $(document).ready(function () {
         } else if ($(cube).attr('id') == "element4") {
             image = "images/Groupon_detail.png";
         }
-
+        /*
         if (image.length > 0) {
             $(newFace).children().remove();
             var content = $("<img src='" + image + "' />").appendTo($(newFace)).addClass('card');
         }
-
+        */
         //$('.parentCanvas').css({ "perspective": "350px" });
         /*    $(newFace).click(function (e) {
                 e.stopPropagation();
@@ -436,6 +541,51 @@ $(document).ready(function () {
             "height": "122px",
             "width": "251px"
         });
+
+
+
+        if ($(newFace).children().attr('class') == "FLICKR_content") {
+            $('#dump').text("in Flickr");
+        } else if ($(newFace).children().attr('class') == "GM_content") {
+            $('#dump').text("in GMAIL");
+
+            $(newFace).children().children('.GM_From').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.GM_subject').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.GM_message').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.GM_time').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.gmailReply').css({ "font-weight": "normal", "font-size": "50%" });
+
+
+        } else if ($(newFace).children().attr('class') == "FB_content") {
+
+            $('#dump').text("in FACEBOOK");
+
+            $(newFace).children().children('.FB_title').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.FB_message').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.FB_time').css({ "font-weight": "normal", "font-size": "50%" });
+
+        } else if ($(newFace).children().attr('class') == "TWIT_content") {
+            $('#dump').text("in TWITTER");
+
+
+            $(newFace).children().children('.TWIT_title').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.TWIT_message').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.TWIT_time').css({ "font-weight": "normal", "font-size": "50%" });
+
+
+
+        } else if ($(newFace).children().attr('class') == "GROUPON_content") {
+            $('#dump').text("in GRPN");
+            $(newFace).children().children('.GROUPON_title').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.GROUPON_message').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.GROUPON_time').css({ "font-weight": "normal", "font-size": "50%" });
+        } else if ($(newFace).children().attr('class') == "card") {
+            $('#dump').text("in News");
+        }
+
+
+
+
     }
 
 
@@ -491,6 +641,10 @@ $(document).ready(function () {
                 arrowKeyLock = 0;
             } else if (key == -10) {
                 arrowKeyLock = 0;
+            } else if (key == -14) {
+                arrowKeyLock = 0;
+            } else if (key == -15) {
+                arrowKeyLock = 0;
             }
         });
 
@@ -509,6 +663,16 @@ $(document).ready(function () {
             } else if (key == -10) {
                 if (hoverLineNum > 0 && arrowKeyLock == 0) {
                     scrollCards(hoverLineNum, -40);
+                    arrowKeyLock = 1;
+                }
+            } else if (key == -14) {
+                if (hoverLineNum > 0 && arrowKeyLock == 0) {
+                    scrollCards(hoverLineNum, 320);
+                    arrowKeyLock = 1;
+                }
+            } else if (key == -15) {
+                if (hoverLineNum > 0 && arrowKeyLock == 0) {
+                    scrollCards(hoverLineNum, -320);
                     arrowKeyLock = 1;
                 }
             }
@@ -726,7 +890,7 @@ $(document).ready(function () {
             } else {
                 direction = e.originalEvent.wheelDelta;
                 pixels = (e.originalEvent.wheelDelta) / 3;
-                //$('.face').css({ 'transition': 'all 100ms linear' });
+                //$('.face').css({ 'transition': 'all 100ms ease' });
             }
 
 
@@ -757,7 +921,7 @@ $(document).ready(function () {
                        } else {
                            direction = e.originalEvent.wheelDelta;
                            pixels = (e.originalEvent.wheelDelta) / 3;
-                           //$('.face').css({ 'transition': 'all 100ms linear' });
+                           //$('.face').css({ 'transition': 'all 100ms ease' });
                        }
        
        
@@ -808,11 +972,54 @@ $(document).ready(function () {
 
 
         setTimeout(function () { transitionComplete = 1; }, 500);
+
+
+
+        $('#settings').click(function () {
+
+            $('#dump').text("Clicked Settings!");
+            //$('#elements').css({ "transition": "transform 1s ease", "transform": "scale(0.6)" });
+            //$('#elements').animate({ 'margin-left': '+=-100px', 'margin-top': '+=-200px' }, 1000);
+            //$('#elements').slideUp('slow');
+            $('#elements').css({ "transition": "all 500ms linear", "transform": "scale(0.7)", "margin-left": "+=-100px", "margin-top": "+=-200px" });
+            $('#settingsMenu').css({ "transform": "translateX(0px)" });
+            $('#line2dContainerBg').css({ "transform": "translateX(0px)" });
+        });
+
+        $('#settingsIcon').click(function () {
+
+            $('#dump').text("Clicked Settings!");
+            //$('#elements').css({ "transition": "transform 1s ease", "transform": "scale(0.6)" });
+            //$('#elements').animate({ 'margin-left': '+=100px', 'margin-top': '+=200px' }, 1000);
+            //$('#elements').slideUp('slow');
+            $('#elements').css({ "transition": "all 500ms linear", "transform": "", "margin-left": "+=100px", "margin-top": "+=200px" });
+            $('#settingsMenu').css({ "transform": "translateX(250px)" });
+            $('#line2dContainerBg').css({ "transform": "translateY(350px)" });
+        });
+
+
     }, 3000);
 
 
 
     function loadData() {
+
+        WinJS.xhr({ url: "http://google.com/ig/api?weather=97229" }).done(
+            function fulfilled(result) {
+                if (result.status === 200) {
+
+                    var data = result.responseXML;
+                    $('#dump').text($(data).children().children('weather').children('forecast_information').children('city').attr('data') + " : " + + " : " + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
+                    var myLocationData = $(data).children().children('weather').children('forecast_information').children('city').attr('data').split(", ");
+
+                    $('#location').text(myLocationData[0]);
+                    $('#weatherIcon').attr('src', "http://www.google.com" + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
+                    $('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
+
+
+                }
+            });
+
 
         WinJS.xhr({ url: "http://198.101.207.173/shilpa/flickr_trial.php" }).done(
             function fulfilled(result) {
@@ -881,9 +1088,29 @@ $(document).ready(function () {
 
                             $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
 
+                            var timeVal = new Date(data.gmail_feed[i].date);
+
+
+                            if (timeVal.getHours() > 12) {
+                                if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                    timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
+                                } else {
+                                    timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
+                                }
+                            } else {
+                                if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                    timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
+                                } else {
+                                    timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
+                                }
+                            }
+
+
                             var newCard = new Array(11);
-                            newCard[4] = "facebook";
-                            newCard[5] = data.gmail_feed[i].date;
+                            newCard[4] = "gmail";
+                            newCard[5] = timeVal;
                             newCard[6] = data.gmail_feed[i].from;
                             newCard[7] = data.gmail_feed[i].subject;
                             newCard[8] = data.gmail_feed[i].plain_text;
@@ -903,9 +1130,29 @@ $(document).ready(function () {
 
                                     $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
 
+                                    var timeVal = new Date(data.gmail_feed[i].date);
+
+
+                                    if (timeVal.getHours() > 12) {
+                                        if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                            timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
+                                        } else {
+                                            timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
+                                        }
+                                    } else {
+                                        if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                            timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
+                                        } else {
+                                            timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
+                                        }
+                                    }
+
+
                                     var newCard = new Array(11);
-                                    newCard[4] = "facebook";
-                                    newCard[5] = data.gmail_feed[i].date;
+                                    newCard[4] = "gmail";
+                                    newCard[5] = timeVal;
                                     newCard[6] = data.gmail_feed[i].from;
                                     newCard[7] = data.gmail_feed[i].subject;
                                     newCard[8] = data.gmail_feed[i].plain_text;
@@ -925,19 +1172,13 @@ $(document).ready(function () {
 
 
 
-        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/fb_json.php" });
-        /*.done(
-            );
+        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/fb_json_new.php" });
 
-            */
 
 
         var TwitPromise = WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php" });
 
-        /*.done(
-            
-            });
-            */
+
         WinJS.Promise.join([fbPromise, TwitPromise]).done(
             function () {
 
@@ -953,19 +1194,37 @@ $(document).ready(function () {
 
 
                             for (i = (data.facebookPosts.length - 1) ; i >= 0; i--) {
-                                var time = "" + data.facebookPosts[i].time + "";
-                                time = time.replace("+0000", "");
-                                time = new Date(time);
-                                time = time.getTime(time) / 1000;
-                                //                           $('#dump').text($('#dump').val() + " ---- " + data.facebookPosts[i].user);
 
-                                var newCard = new Array(10);
+                                var time = parseFloat(data.facebookPosts[i].time) * 1000;
+                                var timeVal = new Date(time);
+                                //console.log(timeVal);
+
+                                if (timeVal.getHours() > 12) {
+                                    if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                        timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
+                                    } else {
+                                        timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
+                                    }
+                                } else {
+                                    if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                        timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
+                                    } else {
+                                        timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
+                                    }
+                                }
+
+
+
+                                var newCard = new Array(11);
                                 newCard[4] = "facebook";
                                 newCard[5] = time;
                                 newCard[6] = data.facebookPosts[i].posterName;
                                 newCard[7] = data.facebookPosts[i].text;
                                 newCard[8] = data.facebookPosts[i].link;
                                 newCard[9] = data.facebookPosts[i].posterId;
+                                newCard[10] = timeVal;
 
                                 tempArray.push(newCard);
 
@@ -985,12 +1244,36 @@ $(document).ready(function () {
 
                                 //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
 
-                                var newCard = new Array(9);
+                                var time = parseFloat(data.twitter_feed[i].time) * 1000;
+                                var timeVal = new Date(time);
+
+
+                                if (timeVal.getHours() > 12) {
+                                    if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                        timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
+                                    } else {
+                                        timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
+                                    }
+                                } else {
+                                    if (("" + timeVal.getMinutes() + "").length == 1) {
+
+                                        timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
+                                    } else {
+                                        timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
+                                    }
+                                }
+
+
+
+
+                                var newCard = new Array(10);
                                 newCard[4] = "twitter";
-                                newCard[5] = data.twitter_feed[i].time;
+                                newCard[5] = time;
                                 newCard[6] = data.twitter_feed[i].user;
                                 newCard[7] = data.twitter_feed[i].tweet;
-                                newCard[8] = data.twitter_feed[i].photo;
+                                newCard[8] = (data.twitter_feed[i].photo).replace("_normal", "");
+                                newCard[9] = timeVal;
 
                                 tempArray.push(newCard);
 
@@ -1073,30 +1356,6 @@ $(document).ready(function () {
 
     }
 
-
-    $('#settingsIcon, #weather').click(function () {
-        //console.log("show settings");
-        if (settingsVisible) {
-            $('#elements').css({ "transform": "" });
-            $('#settings').css({ "transform": "" });
-            $('#line2dContainerBg').css({ "transform": "" });
-            $('#lineContainer').css({ "transform": "", "width": "" });
-            $('.settingsOverlay').remove();
-        } else {
-            //console.log("show settings");
-            $('<div></div>').appendTo('body').addClass("settingsOverlay");
-            var width = parseInt($('#lineContainer').css("width")) * 0.78;
-            $('#elements').css({ "transform": "scale(0.8) translateX(-130px) translateY(-430px)" });
-
-            $('#settings').css({ "transform": "translateX(0px)" });
-            $('#line2dContainerBg').css({ "transform": "translateY(-500px)" });
-            $('#lineContainer').css({
-                "transform": "translateX(60px)",
-                "width": width + "px"
-            });
-        }
-        settingsVisible = !settingsVisible;
-    });
 });
 
 

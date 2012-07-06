@@ -21,11 +21,12 @@
 <body>
     <div data-win-control="WinJS.UI.ViewBox">
         <div class="fixedlayout">
-            <textarea id="dump">hello!</textarea>
+            <!--<textarea id="dump">hello!</textarea>-->
             <!--/////////////////////////////////////////////////////////////////////////-->
 
-            	<img src="images/time.png" id="time" />
-	<img src="images/weather.png" id="weather" />
+            	<div id="time"><!--<img src="images/time.png" />--><span id="date"></span><span id="hrsMins"></span></div>
+            <img src="images/weather.png" id="settings"/>
+	<div id="weather"><span id="location"></span><img src="" id="weatherIcon" /><span id="temperature"></span></div>
     <div id="page-wrapper">
         <span id="elements">
   		<div id="element1" class="parentCanvas">
@@ -71,26 +72,26 @@
 			</div>
   		</div>
 		</span>
-  	</div>
-<div id="settings">
+    <div id="settingsMenu">
 		<img src="images/settings.png" id="settingsIcon" />
 		<img src="images/accounts.png" id="accounts" />
 		<img src="images/add_new.png" id="addNew" />
 		<img src="images/trashcan.png" id="trashcanIcon" />		
 	</div>
-    <div id="line2dContainerBg">
+
+<div id="line2dContainerBg">
 		<div id="lineContainer">
 		<div id="element1_2d" class="parentCanvas2d">
-			<div class="lineName">SOCIAL</div>
+			<!--<div class="lineName">SOCIAL</div>-->
 			<div class="line2d lineOne"></div>
 			<div class="serviceContainer">
 				<img src="images/circle_blue.png" class="circle" />
-				<img src="images/facebook.png" class="serviceLabel" />
-				<img src="images/twitter.png" class="serviceLabel" />
+                <img src="images/flikr.png" class="serviceLabel" />
+				
 			</div>
 		</div>
 		<div id="element2_2d" class="parentCanvas2d">
-			<div class="lineName">MAIL</div>
+			<!--<div class="lineName">MAIL</div>-->
 			<div class="line2d lineTwo"></div>
 			<div class="serviceContainer">
 				<img src="images/circle_pink.png" class="circle" />
@@ -98,15 +99,18 @@
 			</div>
 		</div>
 		<div id="element3_2d" class="parentCanvas2d">
-			<div class="lineName">PHOTO</div>
+			<!--<div class="lineName">PHOTO</div>-->
 			<div class="line2d lineThree"></div>
 			<div class="serviceContainer">
 				<img src="images/circle_yellow.png" class="circle" />
-				<img src="images/flikr.png" class="serviceLabel" />
+				
+                <img src="images/facebook.png" class="serviceLabel" />
+				<img src="images/twitter.png" class="serviceLabel" />
+
 			</div>
 		</div>
 		<div id="element4_2d" class="parentCanvas2d">
-			<div class="lineName">COMMERCE</div>
+			<!--<div class="lineName">COMMERCE</div>-->
 			<div class="line2d lineFour"></div>
 			<div class="serviceContainer">
 				<img src="images/circle_green.png" class="circle" />
@@ -114,7 +118,7 @@
 			</div>
 		</div>
 		<div id="element5_2d" class="parentCanvas2d">
-			<div class="lineName">NEWS</div>
+			<!--<div class="lineName">NEWS</div>-->
 			<div class="line2d lineFive"></div>
 			<div class="serviceContainer">
 				<img src="images/circle_purple.png" class="circle" />
@@ -123,7 +127,16 @@
 			</div>
 		</div>
 		</div>
-	</div>               
+	</div>
+
+
+
+  	</div>
+   
+            <!--
+	
+	
+            -->
     <div class="pans parentCanvas">
         <div class="panLeft pan"></div>
         <div class="panRight pan"></div>
