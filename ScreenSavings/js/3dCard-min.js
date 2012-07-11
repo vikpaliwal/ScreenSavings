@@ -9,6 +9,34 @@ var currentHoverFace = undefined;
 var hoverLineNum = 0;
 var transitionComplete = 0;
 
+
+function convertTimeToString(timeVal) {
+    if (timeVal.getHours() > 12) {
+        if (("" + timeVal.getMinutes() + "").length == 1) {
+
+            timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
+        } else {
+            timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
+        }
+    } else if (timeVal.getHours() == 12) {
+        if (("" + timeVal.getMinutes() + "").length == 1) {
+
+            timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " PM";
+        } else {
+            timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " PM";
+        }
+    } else {
+        if (("" + timeVal.getMinutes() + "").length == 1) {
+
+            timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
+        } else {
+            timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
+        }
+    }
+    return timeVal;
+}
+
+
 function updateTime() {
     var currentTime = new Date();
     var timeVal;
@@ -173,14 +201,14 @@ $(document).ready(function () {
         $('.face').hover(
             function () {
                 var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
-                $('#dump').text($(this).attr('id'));
+                // $('#dump').text($(this).attr('id'));
                 //$(this).children('.face').each(function () { $('#dump').append($(this).attr('id')) });
                 $(this).css({ "transition": "transform 500ms ease", "transform": "translateY(290px) translateZ(" + transformMatrix[14] + "px)" });
             },
             function () {
                 var transformMatrix = String($(this).css("transform")).substr(9, String($(this).css("transform")).length - 10).split(', ');
 
-                $('#dump').text($(this).attr('id'));
+                //  $('#dump').text($(this).attr('id'));
                 $(this).css({ "transition": "transform 500ms ease", "transform": "translateY(320px) translateZ(" + transformMatrix[14] + "px)" });
                 //$(this).css({ "transform": "translateY(20px)" });
             });
@@ -265,7 +293,7 @@ $(document).ready(function () {
         } else if (lineNum == 4) {
             $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + matrix[lineNum - 1][0][6] + '</span><span class="GROUPON_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
         } else if (lineNum == 5) {
-            $('#card' + cardCount).html('<img src="images/news2.png" class="card"/>');
+            $('#card' + cardCount).html(toStaticHTML('<div class="NEWS_content"><img class="NEWS_PIC" src="' + matrix[lineNum - 1][0][6] + '"/><span class="NEWS_time">' + matrix[lineNum - 1][0][9] + '</span><span class="NEWS_source">' + matrix[lineNum - 1][0][11] + '</span><span class="NEWS_title">' + matrix[lineNum - 1][0][7] + '</span><span class="NEWS_message">' + matrix[lineNum - 1][0][8] + '</span><span class="hiddenData">' + toStaticHTML(matrix[lineNum - 1][0][10]) + '</span></div>'));
         }
 
         $('#card' + cardCount).fadeTo('fast', 1);
@@ -388,7 +416,7 @@ $(document).ready(function () {
 
         var oldFace = $(this);
         oldFace.hide();
-        $('#dump').text(oldFace.children('.FLICKR_content').children('.FLICKR_PIC').attr('src'));
+        // $('#dump').text(oldFace.children('.FLICKR_content').children('.FLICKR_PIC').attr('src'));
         var cube = $(this).parent().clone().empty();
 
         newFace.appendTo(cube);
@@ -416,9 +444,9 @@ $(document).ready(function () {
         });
 
         if ($(newFace).children().attr('class') == "FLICKR_content") {
-            $('#dump').text("in Flickr");
+            //    $('#dump').text("in Flickr");
         } else if ($(newFace).children().attr('class') == "GM_content") {
-            $('#dump').text("in GMAIL");
+                //   $('#dump').text("in GMAIL");
             $(newFace).children().css({ "background-image": "url(../images/Gmail_detail.png)", "background-size": "100% 100%", "z-index": "9999999999999" });
             $(newFace).children().children('.GM_From').css({ "transition": "font 1s ease", "max-width": "100%", "height": "auto", "max-height": "10%", "left": "17%", "top": "3%", "font-weight": "100", "font-size": "200%", "color": "#FFF", "overflow-x": "hidden" });
             if ($(newFace).children().children('.GM_From').text().length > 40) {
@@ -439,7 +467,7 @@ $(document).ready(function () {
 
         } else if ($(newFace).children().attr('class') == "FB_content") {
 
-            $('#dump').text("in FACEBOOK");
+                //    $('#dump').text("in FACEBOOK");
 
             $(newFace).children().css({ "background-image": "url(../images/facebook_detail.png)", "background-size": "100% 100%" });
             $(newFace).children().children('.FB_PIC').css({ "min-width": "20%", "max-width": "20.4%", "height": "auto", "max-height": "45%", "left": "5.1%", "top": "auto", "bottom": "40%" });
@@ -448,7 +476,7 @@ $(document).ready(function () {
             $(newFace).children().children('.FB_time').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "right": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
 
         } else if ($(newFace).children().attr('class') == "TWIT_content") {
-            $('#dump').text("in TWITTER");
+                //   $('#dump').text("in TWITTER");
 
             $(newFace).children().css({ "background-image": "url(../images/twitter_detail.png)", "background-size": "100% 100%" });
             $(newFace).children().children('.TWIT_PIC').css({ "min-width": "20%", "max-width": "20.4%", "height": "auto", "max-height": "45%", "left": "5.1%", "top": "auto", "bottom": "40%" });
@@ -460,15 +488,25 @@ $(document).ready(function () {
 
 
         } else if ($(newFace).children().attr('class') == "GROUPON_content") {
-            $('#dump').text("in GRPN");
+                //    $('#dump').text("in GRPN");
             $(newFace).children().css({ "background-image": "url(../images/Groupon_detail.png)", "background-size": "100% 100%" });
             $(newFace).children().children('.GROUPON_PIC').css({ "width": "54%", "height": "auto", "left": "43%", "top": "auto", "bottom": "14%" });
             $(newFace).children().children('.GROUPON_title').css({ "transition": "font 1s ease", "max-width": "40%", "height": "auto", "max-height": "40%", "left": "1.5%", "top": "20%", "font-weight": "700", "font-size": "200%", "color": "#000", "text-align": "center" });
             $(newFace).children().children('.GROUPON_message').css({ "transition": "font 1s ease", "max-width": "40%", "height": "auto", "max-height": "35%", "left": "1.5%", "top": "60%", "font-weight": "500", "font-size": "200%", "color": "#2F4215" });
             $(newFace).children().children('.GROUPON_time').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "right": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
 
-        } else if ($(newFace).children().attr('class') == "card") {
-            $('#dump').text("in News");
+        } else if ($(newFace).children().attr('class') == "NEWS_content") {
+
+
+            $(newFace).children().children('.NEWS_message').css({ "transition": "font 1s ease", "max-width": "80%", "height": "auto", "max-height": "80%", "left": "20%", "top": "38%", "font-weight": "100", "font-size": "200%", "color": "#000" });
+            $(newFace).children().children('.NEWS_PIC').css({ "width": "15%", "height": "25%", "left": "3%", "top": "40%" });
+            $(newFace).children().children('.NEWS_title').html(toStaticHTML("<a href=\"" + $(newFace).children().children('.hiddenData').text() + "\" >" + $(newFace).children().children('.NEWS_title').text() + "</a>"));
+            $(newFace).children().children('.NEWS_title').css({ "transition": "font 1s ease", "max-width": "93%", "height": "auto", "max-height": "30%", "left": "2.5%", "top": "22%", "font-weight": "100", "font-size": "250%", "color": "#666", "overflow": "hidden", "padding-right": "2%" });
+
+            $(newFace).children().children('.NEWS_source').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "left": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
+            $(newFace).children().children('.NEWS_time').css({ "transition": "font 1s ease", "height": "auto", "max-height": "10%", "right": "2%", "top": "2%", "font-weight": "normal", "font-size": "200%", "color": "#FFF" });
+
+
         }
 
         var image = "";
@@ -545,9 +583,9 @@ $(document).ready(function () {
 
 
         if ($(newFace).children().attr('class') == "FLICKR_content") {
-            $('#dump').text("in Flickr");
+            //   $('#dump').text("in Flickr");
         } else if ($(newFace).children().attr('class') == "GM_content") {
-            $('#dump').text("in GMAIL");
+                //   $('#dump').text("in GMAIL");
 
             $(newFace).children().children('.GM_From').css({ "font-weight": "normal", "font-size": "50%" });
             $(newFace).children().children('.GM_subject').css({ "font-weight": "normal", "font-size": "50%" });
@@ -558,14 +596,14 @@ $(document).ready(function () {
 
         } else if ($(newFace).children().attr('class') == "FB_content") {
 
-            $('#dump').text("in FACEBOOK");
+                //   $('#dump').text("in FACEBOOK");
 
             $(newFace).children().children('.FB_title').css({ "font-weight": "normal", "font-size": "50%" });
             $(newFace).children().children('.FB_message').css({ "font-weight": "normal", "font-size": "50%" });
             $(newFace).children().children('.FB_time').css({ "font-weight": "normal", "font-size": "50%" });
 
         } else if ($(newFace).children().attr('class') == "TWIT_content") {
-            $('#dump').text("in TWITTER");
+                //   $('#dump').text("in TWITTER");
 
 
             $(newFace).children().children('.TWIT_title').css({ "font-weight": "normal", "font-size": "50%" });
@@ -575,12 +613,19 @@ $(document).ready(function () {
 
 
         } else if ($(newFace).children().attr('class') == "GROUPON_content") {
-            $('#dump').text("in GRPN");
+                //   $('#dump').text("in GRPN");
             $(newFace).children().children('.GROUPON_title').css({ "font-weight": "normal", "font-size": "50%" });
             $(newFace).children().children('.GROUPON_message').css({ "font-weight": "normal", "font-size": "50%" });
             $(newFace).children().children('.GROUPON_time').css({ "font-weight": "normal", "font-size": "50%" });
-        } else if ($(newFace).children().attr('class') == "card") {
-            $('#dump').text("in News");
+        } else if ($(newFace).children().attr('class') == "NEWS_content") {
+                //  $('#dump').text("in News");
+
+
+            $(newFace).children().children('.NEWS_source').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.NEWS_title').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.NEWS_message').css({ "font-weight": "normal", "font-size": "50%" });
+            $(newFace).children().children('.NEWS_time').css({ "font-weight": "normal", "font-size": "50%" });
+
         }
 
 
@@ -843,10 +888,10 @@ $(document).ready(function () {
             } else {
                 hoverLineNum = 0;
             }
-            $('#dump').text(hoverLineNum);
+            //   $('#dump').text(hoverLineNum);
         }, function () {
             hoverLineNum = 0;
-            $('#dump').text(hoverLineNum);
+            //   $('#dump').text(hoverLineNum);
 
             updateShadow1.opt = false;
             updateShadow2.opt = false;
@@ -969,6 +1014,7 @@ $(document).ready(function () {
         $('body').trigger('gmail');
         $('body').trigger('fb_and_twitter');
         $('body').trigger('groupon');
+        $('body').trigger('news');
 
 
         setTimeout(function () { transitionComplete = 1; }, 500);
@@ -977,7 +1023,7 @@ $(document).ready(function () {
 
         $('#settings').click(function () {
 
-            $('#dump').text("Clicked Settings!");
+            //  $('#dump').text("Clicked Settings!");
             //$('#elements').css({ "transition": "transform 1s ease", "transform": "scale(0.6)" });
             //$('#elements').animate({ 'margin-left': '+=-100px', 'margin-top': '+=-200px' }, 1000);
             //$('#elements').slideUp('slow');
@@ -988,7 +1034,7 @@ $(document).ready(function () {
 
         $('#settingsIcon').click(function () {
 
-            $('#dump').text("Clicked Settings!");
+            //  $('#dump').text("Clicked Settings!");
             //$('#elements').css({ "transition": "transform 1s ease", "transform": "scale(0.6)" });
             //$('#elements').animate({ 'margin-left': '+=100px', 'margin-top': '+=200px' }, 1000);
             //$('#elements').slideUp('slow');
@@ -996,6 +1042,16 @@ $(document).ready(function () {
             $('#settingsMenu').css({ "transform": "translateX(250px)" });
             $('#line2dContainerBg').css({ "transform": "translateY(350px)" });
         });
+
+        /*
+        $('#twitterButton').click(function () {
+            var myIframe = document.createElement("a");
+            $(myIframe).attr("href", "http://198.101.207.173/shilpa/connect.php");
+            $(myIframe).text("Hello World! Click Me!");
+            //$(myIframe).css({ "position": "fixed", "left": "20%", "top": "20%", "width": "60%", "height": "60%", "z-index":"9999999999", "background-color":"#f3f3f3" });
+            $('settingsMenu').append(myIframe);
+        });
+        */
     }, 3000);
 
 
@@ -1007,12 +1063,91 @@ $(document).ready(function () {
                 if (result.status === 200) {
 
                     var data = result.responseXML;
-                    $('#dump').text($(data).children().children('weather').children('forecast_information').children('city').attr('data') + " : " + + " : " + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
+                    //     $('#dump').text($(data).children().children('weather').children('forecast_information').children('city').attr('data') + " : " +  + " : " + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
                     var myLocationData = $(data).children().children('weather').children('forecast_information').children('city').attr('data').split(", ");
 
                     $('#location').text(myLocationData[0]);
                     $('#weatherIcon').attr('src', "http://www.google.com" + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
                     $('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
+
+
+                }
+            });
+
+
+        WinJS.xhr({ url: "http://news.google.com/?output=rss" }).done(
+            function fulfilled(result) {
+                if (result.status === 200) {
+                    var i;
+                    var data = result.responseXML;
+                    var lineNum = 5;
+                    var tempArray = new Array();
+                    jQuery.fn.reverse = [].reverse;
+
+                    $(data).children('rss').children('channel').children('item').reverse().each(function () {
+                        var description = $(this).children('description').text();
+                        description = toStaticHTML(description);
+                        var newsImageURL = "http:" + $(description).children('tbody').children('tr').children('td').children('font').children('a').children('img').attr('src');
+                        newsImageURL = newsImageURL.replace("6.jpg", "1.jpg");
+                        var newsHeading = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('a').text();
+                        var newsAuthor = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font')[0].innerText;
+                        var newsData = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font')[1].innerText;
+                        var newsPubDate = $(this).children('pubDate').text();
+                        var time = new Date(newsPubDate);
+                        var newsURL = ($(this).children('link').text()).split("&url=");
+                        var newsSource = ($(this).children('title').text()).split(" - ");
+                        //var newsData = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font').text();
+
+                        $('#dump').text($('#dump').text() + newsURL[1] + "\n\n");
+
+
+
+                        timeVal = convertTimeToString(time);
+
+
+
+
+                        var newCard = new Array(12);
+                        newCard[4] = "news";
+                        newCard[5] = time;
+                        newCard[6] = newsImageURL;
+                        newCard[7] = newsHeading;
+                        newCard[8] = newsData;
+                        newCard[9] = timeVal;
+                        newCard[10] = newsURL[1];
+                        newCard[11] = newsSource[1];
+
+                        //pushNewDataCard(lineNum, newCard);
+                        tempArray.push(newCard);
+
+
+                    });
+
+                    tempArray.sort(function (a, b) { return a[5] - b[5] });
+                    if (transitionComplete == 1) {
+                        for (i = 0; i < tempArray.length; i++) {
+                            pushNewDataCard(lineNum, tempArray[i]);
+                        }
+                    } else {
+
+                        $('body').bind('news', function () {
+                            setTimeout(function () {
+                                for (i = 0; i < tempArray.length; i++) {
+                                    pushNewDataCard(lineNum, tempArray[i]);
+                                }
+                            }, 500);
+                        });
+                    }
+                    //$('#dump').text(i);
+
+                    //$('#dump').text($('#dump').text() + $(data).children('rss').children('channel').children('item')[i].children('title') + 'HAHAHAH');
+
+
+                    //var myLocationData = $(data).children().children('weather').children('forecast_information').children('city').attr('data').split(", ");
+
+                    //$('#location').text(myLocationData[0]);
+                    //$('#weatherIcon').attr('src', "http://www.google.com" + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
+                    //$('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
 
 
                 }
@@ -1031,7 +1166,7 @@ $(document).ready(function () {
 
                         for (i = 0; i < data.flickr_feed.length; i++) {
 
-                            $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
+                            // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
 
                             var newCard = new Array(8);
                             newCard[4] = "flickr";
@@ -1052,7 +1187,7 @@ $(document).ready(function () {
                             setTimeout(function () {
                                 for (i = 0; i < data.flickr_feed.length; i++) {
 
-                                    $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
+                                    // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
 
                                     var newCard = new Array(8);
                                     newCard[4] = "flickr";
@@ -1072,7 +1207,7 @@ $(document).ready(function () {
             });
 
 
-
+        /*
         WinJS.xhr({ url: "http://198.101.207.173/shilpa/mygmail.php?email_address=screensavingsapp@gmail.com" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
@@ -1084,26 +1219,12 @@ $(document).ready(function () {
                     if (transitionComplete == 1) {
                         for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
 
-                            $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
+                           // $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
 
                             var timeVal = new Date(data.gmail_feed[i].date);
 
 
-                            if (timeVal.getHours() > 12) {
-                                if (("" + timeVal.getMinutes() + "").length == 1) {
-
-                                    timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
-                                } else {
-                                    timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
-                                }
-                            } else {
-                                if (("" + timeVal.getMinutes() + "").length == 1) {
-
-                                    timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
-                                } else {
-                                    timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
-                                }
-                            }
+                            timeVal = convertTimeToString(timeVal);
 
 
                             var newCard = new Array(11);
@@ -1126,26 +1247,12 @@ $(document).ready(function () {
                             setTimeout(function () {
                                 for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
 
-                                    $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
+                                  //  $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
 
                                     var timeVal = new Date(data.gmail_feed[i].date);
 
 
-                                    if (timeVal.getHours() > 12) {
-                                        if (("" + timeVal.getMinutes() + "").length == 1) {
-
-                                            timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
-                                        } else {
-                                            timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
-                                        }
-                                    } else {
-                                        if (("" + timeVal.getMinutes() + "").length == 1) {
-
-                                            timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
-                                        } else {
-                                            timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
-                                        }
-                                    }
+                                    timeVal = convertTimeToString(timeVal);
 
 
                                     var newCard = new Array(11);
@@ -1167,19 +1274,19 @@ $(document).ready(function () {
                     }
                 }
             });
-
-
-
+            
+           
+        */
         var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/fb_json_new.php" });
 
 
-
+        /*   
         var TwitPromise = WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php" });
-
-
+        
+       
         WinJS.Promise.join([fbPromise, TwitPromise]).done(
             function () {
-
+                
 
                 var lineNum = 3;
                 var tempArray = new Array();
@@ -1189,95 +1296,67 @@ $(document).ready(function () {
                     function fulfilled(result) {
                         if (result.status === 200) {
                             var data = JSON.parse(result.response);
+                            
+
+                                    for (i = (data.facebookPosts.length - 1) ; i >= 0; i--) {
+                                        
+                                        var time = parseFloat(data.facebookPosts[i].time) * 1000;
+                                        var timeVal = new Date(time);
+                                        //console.log(timeVal);
+
+                                        timeVal = convertTimeToString(timeVal);
 
 
-                            for (i = (data.facebookPosts.length - 1) ; i >= 0; i--) {
 
-                                var time = parseFloat(data.facebookPosts[i].time) * 1000;
-                                var timeVal = new Date(time);
-                                //console.log(timeVal);
+                                        var newCard = new Array(11);
+                                        newCard[4] = "facebook";
+                                        newCard[5] = time;
+                                        newCard[6] = data.facebookPosts[i].posterName;
+                                        newCard[7] = data.facebookPosts[i].text;
+                                        newCard[8] = data.facebookPosts[i].link;
+                                        newCard[9] = data.facebookPosts[i].posterId;
+                                        newCard[10] = timeVal;
 
-                                if (timeVal.getHours() > 12) {
-                                    if (("" + timeVal.getMinutes() + "").length == 1) {
+                                        tempArray.push(newCard);
 
-                                        timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
-                                    } else {
-                                        timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
+                                        //scrollCards(lineNum, -160);
+
                                     }
-                                } else {
-                                    if (("" + timeVal.getMinutes() + "").length == 1) {
-
-                                        timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
-                                    } else {
-                                        timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
-                                    }
-                                }
-
-
-
-                                var newCard = new Array(11);
-                                newCard[4] = "facebook";
-                                newCard[5] = time;
-                                newCard[6] = data.facebookPosts[i].posterName;
-                                newCard[7] = data.facebookPosts[i].text;
-                                newCard[8] = data.facebookPosts[i].link;
-                                newCard[9] = data.facebookPosts[i].posterId;
-                                newCard[10] = timeVal;
-
-                                tempArray.push(newCard);
-
-                                //scrollCards(lineNum, -160);
-
-                            }
-                        }
+                         }
                     });
                 TwitPromise.done(
                     function fulfilled(result) {
                         if (result.status === 200) {
                             var data = JSON.parse(result.response);
 
+                            
+                            
+                                    for (i = (data.twitter_feed.length - 1) ; i >= 0; i--) {
+
+                                        //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
+
+                                        var time = parseFloat(data.twitter_feed[i].time)*1000;
+                                        var timeVal = new Date(time);
 
 
-                            for (i = (data.twitter_feed.length - 1) ; i >= 0; i--) {
-
-                                //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
-
-                                var time = parseFloat(data.twitter_feed[i].time) * 1000;
-                                var timeVal = new Date(time);
+                                        timeVal = convertTimeToString(timeVal);
 
 
-                                if (timeVal.getHours() > 12) {
-                                    if (("" + timeVal.getMinutes() + "").length == 1) {
 
-                                        timeVal = (timeVal.getHours() - 12) + ":0" + timeVal.getMinutes() + " PM";
-                                    } else {
-                                        timeVal = (timeVal.getHours() - 12) + ":" + timeVal.getMinutes() + " PM";
+                                        
+                                        var newCard = new Array(10);
+                                        newCard[4] = "twitter";
+                                        newCard[5] = time;
+                                        newCard[6] = data.twitter_feed[i].user;
+                                        newCard[7] = data.twitter_feed[i].tweet;
+                                        newCard[8] = (data.twitter_feed[i].photo).replace("_normal","");
+                                        newCard[9] = timeVal;
+
+                                        tempArray.push(newCard);
+
+                                        //scrollCards(lineNum, -160);
+
                                     }
-                                } else {
-                                    if (("" + timeVal.getMinutes() + "").length == 1) {
-
-                                        timeVal = timeVal.getHours() + ":0" + timeVal.getMinutes() + " AM";
-                                    } else {
-                                        timeVal = timeVal.getHours() + ":" + timeVal.getMinutes() + " AM";
-                                    }
-                                }
-
-
-
-
-                                var newCard = new Array(10);
-                                newCard[4] = "twitter";
-                                newCard[5] = time;
-                                newCard[6] = data.twitter_feed[i].user;
-                                newCard[7] = data.twitter_feed[i].tweet;
-                                newCard[8] = (data.twitter_feed[i].photo).replace("_normal", "");
-                                newCard[9] = timeVal;
-
-                                tempArray.push(newCard);
-
-                                //scrollCards(lineNum, -160);
-
-                            }
                         }
                     });
                 tempArray.sort(function (a, b) { return a[5] - b[5] });
@@ -1297,7 +1376,7 @@ $(document).ready(function () {
                 }
                 //console.log(FacebookData.status);
             });
-
+        */
         WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/groupon_json.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
@@ -1353,7 +1432,278 @@ $(document).ready(function () {
 
 
     }
+    $('#FB_BUTTON').click(function () {
+        var facebookURL = "https://www.facebook.com/dialog/oauth?client_id=";
+        var clientID = "358452557528632";
+        if (clientID === null || clientID === "") {
+            WinJS.log("Enter a ClientID", "Web Authentication SDK Sample", "error");
+            return;
+        }
 
+        var callbackURL = "https://www.facebook.com/connect/login_success.html";
+
+        facebookURL += clientID + "&redirect_uri=" + encodeURIComponent(callbackURL) + "&scope=read_stream&display=popup&response_type=token";
+
+        var startURI = new Windows.Foundation.Uri(facebookURL);
+        var endURI = new Windows.Foundation.Uri(callbackURL);
+
+        //  document.getElementById("FacebookDebugArea").value += "Navigating to: " + facebookURL + "\r\n";
+
+        authzInProgress = true;
+        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+            .done(function (result) {
+                var value = result.responseData;
+                var startpos = value.indexOf("access_token") + 13;
+                var endpos = value.indexOf("&expires_in");
+                var accesstoken = value.substring(startpos, endpos);
+                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+                }
+                Windows.System.UserProfile.UserInformation.getPrincipalNameAsync().done(function success(result) {
+                    //send data to intelscreensavings server
+                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?token=" + accesstoken + "&liveid=" + result }).done(
+                   );
+                });
+            }, function (err) {
+                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+                // document.getElementById("FacebookDebugArea").value += " Error Message: " + err.message + "\r\n";
+                // authzInProgress = false;
+            });
+    })
+    function sendGetRequest(url) {
+        try {
+            var request = new XMLHttpRequest();
+            request.open("GET", url, false);
+            request.send(null);
+            return request.responseText;
+        } catch (err) {
+            WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
+        }
+    }
+    function sendPostRequest(url, authzheader, params) {
+        try {
+            var request = new XMLHttpRequest();
+            request.open("POST", url, false);
+            request.setRequestHeader("Authorization", authzheader);
+            request.send(params);
+            return request.responseText;
+        } catch (err) {
+            WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
+        }
+    }
+
+    $('#TWITTER_BUTTON').click(function () {
+        var twitterURL = "https://api.twitter.com/oauth/request_token";
+        var accessTokenUrl = "https://api.twitter.com/oauth/access_token";
+        // Get all the parameters from the user
+        var clientID = "hk7hZzZVSGMd6nJNztYw";
+        var clientSecret = "HqoWMS3qvKh0kb2qigzz9DSE8rzXZ9gnxdPEu2ZMXU";
+        var callbackURL = "http://198.101.207.173/shilpa/callback.php";
+
+        // Acquiring a request token
+        var timestamp = Math.round(new Date().getTime() / 1000.0);
+        var nonce = Math.random();
+        nonce = Math.floor(nonce * 1000000000);
+
+        // Compute base signature string and sign it.
+        //    This is a common operation that is required for all requests even after the token is obtained.
+        //    Parameters need to be sorted in alphabetical order
+        //    Keys and values should be URL Encoded.
+        var sigBaseStringParams = "oauth_callback=" + encodeURIComponent(callbackURL);
+        sigBaseStringParams += "&" + "oauth_consumer_key=" + clientID;
+        sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
+        sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
+        sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
+        sigBaseStringParams += "&" + "oauth_version=1.0";
+        var sigBaseString = "POST&";
+        sigBaseString += encodeURIComponent(twitterURL) + "&" + encodeURIComponent(sigBaseStringParams);
+
+        var keyText = clientSecret + "&";
+        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+        var key = macAlgorithmProvider.createKey(keyMaterial);
+        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+        var dataToPost = "OAuth oauth_callback=\"" + encodeURIComponent(callbackURL) + "\", oauth_consumer_key=\"" + clientID + "\", oauth_nonce=\"" + nonce + "\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"" + timestamp + "\", oauth_version=\"1.0\", oauth_signature=\"" + encodeURIComponent(signature) + "\"";
+        var response = sendPostRequest(twitterURL, dataToPost, null);
+        var oauth_token;
+        var oauth_token_secret;
+        var keyValPairs = response.split("&");
+
+        for (var i = 0; i < keyValPairs.length; i++) {
+            var splits = keyValPairs[i].split("=");
+            switch (splits[0]) {
+                case "oauth_token":
+                    oauth_token = splits[1];
+                    break;
+                case "oauth_token_secret":
+                    oauth_token_secret = splits[1];
+                    break;
+            }
+        }
+
+        // Send the user to authorization
+        twitterURL = "https://api.twitter.com/oauth/authorize?oauth_token=" + oauth_token;
+
+        // document.getElementById("TwitterDebugArea").value += "\r\nNavigating to: " + twitterURL + "\r\n";
+        var startURI = new Windows.Foundation.Uri(twitterURL);
+        var endURI = new Windows.Foundation.Uri(callbackURL);
+
+        //authzInProgress = true;
+        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+            .done(function (result) {
+                var value = result.responseData;
+
+                var startpos = value.indexOf("oauth_token") + 12;
+                var endpos = value.indexOf("&oauth_verifier");
+                var oauthtoken = value.substring(startpos, endpos);
+                var oauthverifier = value.substring(endpos + 16);
+                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+                }
+                //form the header and send the verifier in the request to accesstokenurl
+                var accessdataToPost = "OAuth oauth_consumer_key=\"" + clientID + "\", oauth_nonce=\"" + nonce + "\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"" + timestamp + "\", oauth_token=\"" + oauth_token + "\", oauth_version=\"1.0\"";
+                var param = "oauth_verifier=" + oauthverifier;
+                var response = sendPostRequest(accessTokenUrl, accessdataToPost, param);
+                var tokenstartpos = response.indexOf("oauth_token") + 12;
+                var tokenendpos = response.indexOf("&oauth_token_secret");
+                var secretstartpos = tokenendpos + 20;
+                var secretendpos = response.indexOf("&user_id");
+                var useridstartpos = secretendpos + 9;
+                var useridendpos = response.indexOf("&screen_name");
+                var token = response.substring(tokenstartpos, tokenendpos);
+                var secret = response.substring(secretstartpos, secretendpos);
+                var user = response.substring(useridstartpos, useridendpos);
+                /*
+                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                    //send data to intelscreensavings server
+                    WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php?token=" + oauthtoken + "&verifier=" + oauthverifier }).done(
+                        function (result) {
+                            var results = result.responseData;
+                        }
+                   );
+                });
+                */
+            }, function (err) {
+                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+            });
+    })
+
+    $('#FLICKR_BUTTON').click(function () {
+        var flickrURL = "https://secure.flickr.com/services/oauth/request_token";
+        var accessTokenUrl = "http://www.flickr.com/services/oauth/access_token";
+        // Get all the parameters from the user
+        var clientID = "698637b46e1640dc47bb878246328e95";
+        var clientSecret = "0e0d30a1d78038fd";
+        var callbackURL = "http://198.101.207.173/shilpa/flickrcallback.php";
+
+        // Acquiring a request token
+        var timestamp = Math.round(new Date().getTime() / 1000.0);
+        var nonce = Math.random();
+        nonce = Math.floor(nonce * 1000000000);
+
+        // Compute base signature string and sign it.
+        // This is a common operation that is required for all requests even after the token is obtained.
+        // Parameters need to be sorted in alphabetical order
+        // Keys and values should be URL Encoded.
+        var sigBaseStringParams = "oauth_callback=" + encodeURIComponent(callbackURL);
+        sigBaseStringParams += "&" + "oauth_consumer_key=" + clientID;
+        sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
+        sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
+        sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
+        sigBaseStringParams += "&" + "oauth_version=1.0";
+        var sigBaseString = "GET&";
+        sigBaseString += encodeURIComponent(flickrURL) + "&" + encodeURIComponent(sigBaseStringParams);
+        var keyText = clientSecret + "&";
+        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+        var key = macAlgorithmProvider.createKey(keyMaterial);
+        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+
+        flickrURL += "?" + sigBaseStringParams + "&oauth_signature=" + encodeURIComponent(signature);
+        var response = sendGetRequest(flickrURL);
+
+        var oauth_token;
+        var oauth_token_secret;
+        var keyValPairs = response.split("&");
+
+        for (var i = 0; i < keyValPairs.length; i++) {
+            var splits = keyValPairs[i].split("=");
+            switch (splits[0]) {
+                case "oauth_token":
+                    oauth_token = splits[1];
+                    break;
+                case "oauth_token_secret":
+                    oauth_token_secret = splits[1];
+                    break;
+            }
+        }
+
+        // Send the user to authorization
+        flickrURL = "https://secure.flickr.com/services/oauth/authorize?oauth_token=" + oauth_token + "&perms=read";
+
+        var startURI = new Windows.Foundation.Uri(flickrURL);
+        var endURI = new Windows.Foundation.Uri(callbackURL);
+
+        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+            .done(function (result) {
+                var value = result.responseData;
+
+                var startpos = value.indexOf("oauth_token") + 12;
+                var endpos = value.indexOf("&oauth_verifier");
+                var oauthtoken = value.substring(startpos, endpos);
+                var oauthverifier = value.substring(endpos + 16);
+                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+                }
+                //form the header and send the verifier in the request to accesstokenurl
+                var timestamp = Math.round(new Date().getTime() / 1000.0);
+                var nonce = Math.random();
+                nonce = Math.floor(nonce * 1000000000);
+                // Compute base signature string and sign it.
+                // This is a common operation that is required for all requests even after the token is obtained.
+                // Parameters need to be sorted in alphabetical order
+                // Keys and values should be URL Encoded.
+
+                var sigBaseStringParams = "oauth_consumer_key=" + clientID;
+                sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
+                sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
+                sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
+                sigBaseStringParams += "&" + "oauth_token=" + oauthtoken;
+                sigBaseStringParams += "&" + "oauth_verifier=" + oauthverifier;
+                sigBaseStringParams += "&" + "oauth_version=1.0";
+
+                var sigBaseString = "GET&";
+                sigBaseString += encodeURIComponent(accessTokenUrl) + "&" + encodeURIComponent(sigBaseStringParams);
+                var keyText = clientSecret + "&" + oauth_token_secret;
+                var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+                var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+                var key = macAlgorithmProvider.createKey(keyMaterial);
+                var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+                var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+                var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+
+                accessTokenUrl += "?" + sigBaseStringParams + "&oauth_signature=" + encodeURIComponent(signature);
+                var response = sendGetRequest(accessTokenUrl);
+                var tokenstartpos = response.indexOf("oauth_token") + 12;
+                var tokenendpos = response.indexOf("&oauth_token_secret");
+                var secretstartpos = tokenendpos + 20;
+                var secretendpos = response.indexOf("&user_nsid");
+                var useridstartpos = secretendpos + 11;
+                var useridendpos = response.indexOf("&username");
+                var token = response.substring(tokenstartpos, tokenendpos);
+                var secret = response.substring(secretstartpos, secretendpos);
+                var user = response.substring(useridstartpos, useridendpos);
+            }, function (err) {
+                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+            });
+    });
 });
 
 

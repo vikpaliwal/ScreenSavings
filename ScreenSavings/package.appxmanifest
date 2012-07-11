@@ -16,6 +16,7 @@
   <Applications>
     <Application Id="App" StartPage="default.html">
       <VisualElements DisplayName="ScreenSavings" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="ScreenSavings" ForegroundText="light" BackgroundColor="#464646" ToastCapable="false">
+        <LockScreen Notification="badge" BadgeLogo="images\smalllogo.png" />
         <DefaultTile ShowName="allLogos" WideLogo="images\blueWide.scale-100.png" />
         <SplashScreen Image="images\splashscreen.png" />
       </VisualElements>
@@ -23,12 +24,14 @@
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.ScreenSavingsTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
+            <Task Type="pushNotification" />
           </BackgroundTasks>
         </Extension>
       </Extensions>
     </Application>
   </Applications>
   <Capabilities>
+    <Capability Name="enterpriseAuthentication" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>

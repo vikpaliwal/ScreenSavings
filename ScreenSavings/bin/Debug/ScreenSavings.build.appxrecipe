@@ -123,6 +123,9 @@
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\mail3.png">
       <PackagePath>images\mail3.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news.png">
+      <PackagePath>images\news.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news1.png">
       <PackagePath>images\news1.png</PackagePath>
     </AppxPackagedFile>

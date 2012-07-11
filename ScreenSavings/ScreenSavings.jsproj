@@ -74,6 +74,7 @@
     <Content Include="images\mail1.png" />
     <Content Include="images\mail2.png" />
     <Content Include="images\mail3.png" />
+    <Content Include="images\news.png" />
     <Content Include="images\news1.png" />
     <Content Include="images\news2.png" />
     <Content Include="images\photo1.png" />

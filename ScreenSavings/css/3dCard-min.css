@@ -88,6 +88,21 @@ html{
     top: 500px;
     display: block;
 }
+
+.NEWS_content {
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/news.png');
+  background-size: cover;
+}
+
+.NEWS_bgImg {
+    position: absolute;
+    left: 1800px;
+    top: 500px;
+    display: block;
+}
+
 .FLICKR_content {
   width: 100%;
   height: 100%;
@@ -312,6 +327,10 @@ html{
 	position: absolute;
 	left: 61px;
 	top: 50px;
+    //border: 1px solid yellow;
+    width: 74%;
+    height: 51%;
+    overflow: hidden;
 }
 
 .GROUPON_time {
@@ -421,11 +440,63 @@ html{
 	left: 5%;
 	top: 55px;
     height: 50%;
+    //border: 1px solid pink;
+    width: 93%;
     overflow: hidden;
     
 }
 
+.NEWS_time {
+	color: #C6C6C6;
+	font-family: 'Segoe UI';
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	top: 3px;
+}
 
+.NEWS_source {
+	color: #C6C6C6;
+	font-family: 'Segoe UI';
+	font-size: 10px;
+	position: absolute;
+	left: 5px;
+	top: 3px;
+}
+
+.NEWS_PIC {
+    position: absolute;
+    width: 104px;
+    height: 104px;
+    left: 0px;
+    bottom: 0px;
+}    
+
+.NEWS_title {
+	color: #000000;
+	font-family: 'Segoe UI';
+	font-size: 12px;
+	font-stretch: condensed;
+	position: absolute;
+	left: 107px;
+	top: 18px;
+    overflow: hidden;
+    height: 52px;
+}
+
+.NEWS_message {
+	color: #000000;
+	font-family: 'Segoe UI';
+	font-size: 11px;
+	font-stretch: condensed;
+	text-align: left;
+	position: absolute;
+    //width: 90%;
+	left: 107px;
+	top: 73px;
+    height: 46px;
+    overflow: hidden;
+}
 
 
 #time{
@@ -833,7 +904,34 @@ position: fixed;
     text-align: center;
 }
 
-
+#FB_BUTTON {
+    width: 70px;
+    height: 30px;
+    background-color: red;
+    border: 2px solid black;
+    font-size : 15px;
+}
+#TWITTER_BUTTON {
+    width: 70px;
+    height: 30px;
+    background-color: red;
+    border: 2px solid black;
+    font-size : 15px;
+}
+#FLICKR_BUTTON {
+    width: 70px;
+    height: 30px;
+    background-color: red;
+    border: 2px solid black;
+    font-size : 15px;
+}
+#GMAIL_BUTTON {
+    width: 70px;
+    height: 30px;
+    background-color: red;
+    border: 2px solid black;
+    font-size : 15px;
+}
 #line2dContainerBg {
 	position: fixed;
 	height: 100%;

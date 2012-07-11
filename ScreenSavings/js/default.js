@@ -48,6 +48,23 @@
     app.onactivated = function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
             if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
+                /*
+                WL.init({
+                    scope: ["wl.signin", "wl.basic"]
+                }); 
+                
+                WL.login().then(
+                    function (response) {
+                        if (response.status == 'connected') {
+                            getUserId();
+                        }
+                        else {
+                            loginFailed(response.status);
+                        }
+                    },
+                    function (responseFailed) {
+                        loginFailed(responseFailed.error);
+                    });*/
                 BackgroundTask.unregisterBackgroundTasks(BackgroundTask.BackgroundTaskName);
                 BackgroundTask.registerBackgroundTask(BackgroundTask.BackgroundTaskEntryPoint,
                                                     BackgroundTask.BackgroundTaskName,
@@ -60,6 +77,25 @@
             args.setPromise(WinJS.UI.processAll());
         }
     };
+
+    var getUserId = function () {
+        WL.api({
+            path: "me",
+            method: "GET"
+        }).then(
+            function (response) {
+                userId = response.id;
+                //openNotificationChannel();
+            },
+            function (responseFailed) {
+                loginFailed(responseFailed.error);
+            }
+        );
+    };
+    var loginFailed = function (errorMessage) {
+        $('#dump').text(errorMessage);
+        //probably exit from app with an error.
+    }
 
     app.oncheckpoint = function (args) {
         // TODO: This application is about to be suspended. Save any state

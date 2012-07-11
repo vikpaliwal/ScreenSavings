@@ -5,7 +5,7 @@
     <WindowsUser>gaura_000</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>2337897F0B705A10B6FC94FA35F41F429256F9CE7C8B30F3A18EB6F61F16DA0E</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>A2E6D8DBC4F0A1D6D10ED5D2E45B27DBC62D74029C0BB03ACAFBB8146A07D253</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
     <RegisteredPackageID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640</RegisteredPackageID>
@@ -16,7 +16,7 @@
     <AppXManifest Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-07-05T16:56:25.745</Modified>
+      <Modified>2012-07-10T18:51:20.674</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +66,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
-      <Modified>2012-07-06T11:46:37.506</Modified>
+      <Modified>2012-07-10T18:48:18.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\default.css">
       <PackagePath>css\default.css</PackagePath>
@@ -74,7 +74,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2012-07-06T11:46:12.283</Modified>
+      <Modified>2012-07-10T18:51:14.060</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
@@ -166,6 +166,10 @@
       <PackagePath>images\mail3.png</PackagePath>
       <Modified>2012-06-29T16:10:45.942</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news.png">
+      <PackagePath>images\news.png</PackagePath>
+      <Modified>2012-07-09T14:32:44.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news1.png">
       <PackagePath>images\news1.png</PackagePath>
       <Modified>2012-06-29T16:10:45.944</Modified>
@@ -243,19 +247,19 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2012-07-06T11:46:24.886</Modified>
+      <Modified>2012-07-10T18:46:57.585</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2012-06-29T16:10:45.981</Modified>
+      <Modified>2012-07-09T15:31:46.795</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
-      <Modified>2012-06-29T16:10:46.005</Modified>
+      <Modified>2012-07-10T13:51:19.396</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2012-07-06T11:46:48.877</Modified>
+      <Modified>2012-07-10T18:51:20.542</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
