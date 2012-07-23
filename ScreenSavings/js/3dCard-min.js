@@ -1460,11 +1460,19 @@ $(document).ready(function () {
                 if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
                     //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
                 }
-                Windows.System.UserProfile.UserInformation.getPrincipalNameAsync().done(function success(result) {
-                    //send data to intelscreensavings server
-                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?token=" + accesstoken + "&liveid=" + result }).done(
-                   );
+                var fb_id_url = "https://graph.facebook.com/me?access_token=" + accesstoken;
+                WinJS.xhr({ url: fb_id_url }).done(function success(result) {
+                    var fb_id = JSON.parse(result.responseText).id;
+                    Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                        //send data to intelscreensavings server
+                        WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=fb&win_id=" + result + "&token=" + accesstoken + "&fb_id=" + fb_id }).done(
+                            function (result) {
+                                var results = result.responseData;
+                            }
+                       );
+                    });
                 });
+                
             }, function (err) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
                 // document.getElementById("FacebookDebugArea").value += " Error Message: " + err.message + "\r\n";
@@ -1492,7 +1500,6 @@ $(document).ready(function () {
             WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
         }
     }
-
     $('#TWITTER_BUTTON').click(function () {
         var twitterURL = "https://api.twitter.com/oauth/request_token";
         var accessTokenUrl = "https://api.twitter.com/oauth/access_token";
@@ -1577,16 +1584,16 @@ $(document).ready(function () {
                 var token = response.substring(tokenstartpos, tokenendpos);
                 var secret = response.substring(secretstartpos, secretendpos);
                 var user = response.substring(useridstartpos, useridendpos);
-                /*
+                
                 Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                     //send data to intelscreensavings server
-                    WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php?token=" + oauthtoken + "&verifier=" + oauthverifier }).done(
+                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=twitter&win_id="+result+ "&oauth_token=" + oauthtoken + "&oauth_verifier=" + oauthverifier }).done(
                         function (result) {
                             var results = result.responseData;
                         }
                    );
                 });
-                */
+                
             }, function (err) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
             });
@@ -1700,10 +1707,189 @@ $(document).ready(function () {
                 var token = response.substring(tokenstartpos, tokenendpos);
                 var secret = response.substring(secretstartpos, secretendpos);
                 var user = response.substring(useridstartpos, useridendpos);
+                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                    //send data to intelscreensavings server
+                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=flickr&win_id=" + result + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
+                        function (result) {
+                            var results = result.responseData;
+                        }
+                   );
+                });
             }, function (err) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
             });
-    });
+    });   
+    $('#GMAIL_BUTTON').click(function () {
+        //oauth1 approach similar to twitter
+        var requestUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
+        var authorizeUrl = "https://www.google.com/accounts/OAuthAuthorizeToken";
+        var accessUrl = "https://www.google.com/accounts/OAuthGetAccessToken";
+        var callbackUrl = "http://198.101.207.173/shilpa/two-legged.php";
+        var scope = "https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
+        var clientID = "198.101.207.173";
+        var clientSecret = "GZuBybtQi1QnKnKh-GCzVCIA";
+        //var clientID = "anonymous";
+        //var clientSecret = "anonymous";
+        var timestamp = Math.round(new Date().getTime() / 1000.0);
+        var nonce = (new Date()).getTime();   
+        var params = [];
+        params["oauth_callback"] = encodeURI(callbackUrl);
+        params["oauth_consumer_key"] = clientID;
+        params["oauth_timestamp"] = timestamp;
+        params["oauth_nonce"] = nonce;
+        params["oauth_signature_method"] = "HMAC-SHA1";
+        params["scope"] = scope;
+        var paramString = normalizeParams(params);
+        var sigBaseString = "GET&" + encodeURIComponent(requestUrl) + "&" + encodeURIComponent(paramString);
+        var keyText = encodeURIComponent(clientSecret) + "&";
+        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+        var key = macAlgorithmProvider.createKey(keyMaterial);
+        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+        paramString += "&oauth_signature=" + encodeURIComponent(signature);
+        requestUrl = encodeURI(requestUrl);
+        requestUrl += "?" + paramString;
+        var response = sendGetRequest(requestUrl);
+        //requestUrl += "?scope="+encodeURIComponent(scope);
+        //var response = sendGetRequest(requestUrl, dataToPost, null);
+        var keyValPairs = response.split("&");
+        var oauth_token;
+        var oauth_token_secret;
+        for (var i = 0; i < keyValPairs.length; i++) {
+            var splits = keyValPairs[i].split("=");
+            switch (splits[0]) {
+                case "oauth_token":
+                    oauth_token = splits[1];
+                    break;
+                case "oauth_token_secret":
+                    oauth_token_secret = splits[1];
+                    break;
+            }
+        }
+
+        // Send the user to authorization
+        authorizeUrl += "?oauth_token=" + oauth_token;
+
+        // document.getElementById("TwitterDebugArea").value += "\r\nNavigating to: " + twitterURL + "\r\n";
+        var startURI = new Windows.Foundation.Uri(authorizeUrl);
+        var endURI = new Windows.Foundation.Uri(callbackUrl);
+
+        //authzInProgress = true;
+        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+            .done(function (result) {
+                var value = result.responseData;
+                var callbackPrefix = callbackUrl + "?";
+                var dataPart = value.substring(callbackPrefix.length);
+                var keyValPairs = dataPart.split("&");
+                var authorize_token;
+                var oauth_verifier;
+                for (var i = 0; i < keyValPairs.length; i++) {
+                    var splits = keyValPairs[i].split("=");
+                    switch (splits[0]) {
+                        case "oauth_token":
+                            authorize_token = splits[1];
+                            break;
+                        case "oauth_verifier":
+                            oauth_verifier = splits[1];
+                            break;
+                    }
+                }
+               if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+                }
+                //form the header and send the verifier in the request to accesstokenurl
+               var params = [];
+               var timestamp = Math.round(new Date().getTime() / 1000.0);
+               var nonce = (new Date()).getTime();
+               params["oauth_consumer_key"] = clientID;
+               params["oauth_nonce"] = nonce;
+               params["oauth_signature_method"] = "HMAC-SHA1";
+               params["oauth_timestamp"] = timestamp;
+               params["oauth_token"] = authorize_token;
+               params["oauth_verifier"] = oauth_verifier;              
+               var paramString = normalizeParams(params);
+             
+               var sigBaseString = "GET&" + rfcEncoding(accessUrl) + "&" + rfcEncoding(paramString);
+               var keyText = rfcEncoding(clientSecret) + "&" + rfcEncoding(oauth_token_secret);
+               var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+               var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+               var key = macAlgorithmProvider.createKey(keyMaterial);
+               var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+               var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+               var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+               paramString += "&oauth_signature=" + rfcEncoding(signature);
+               accessUrl = encodeURI(accessUrl);
+               accessUrl += "?" + paramString;
+               var response = sendGetRequest(accessUrl);
+
+                var tokenstartpos = response.indexOf("oauth_token") + 12;
+                var tokenendpos = response.indexOf("&oauth_token_secret");
+                var secretstartpos = tokenendpos + 20;
+                var token = response.substring(tokenstartpos, tokenendpos);
+                var secret = response.substring(secretstartpos);
+
+
+                //var gmailinfourl = "https://www.googleapis.com/userinfo/email?access_token="+token;
+              
+                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                    //send data to intelscreensavings server
+
+                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=gmail&win_id=" + result + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com" }).done(
+                        function (result) {
+                            var results = result.responseData;
+                        }
+                   );
+                });          
+               
+            }, function (err) {
+                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+            });
+    });    
+   
+
+     function normalizeParams (params) {
+         for (var key in params) {
+             if (key != "oauth_token")
+                 params[key] = encodeURIComponent(params[key]);
+         }
+        return join("&", "=", params, true);
+     }
+
+    function join(separator1, separator2, arr, sort) {
+        var arrKeys = [];
+        for (var key in arr) {
+            arrKeys.push(key);
+        }
+        if (sort)
+            arrKeys.sort();
+
+        var newArr = [];
+        for (var i = 0; i < arrKeys.length; i++) {
+            if (separator2 != "") {
+                newArr.push(arrKeys[i] + separator2 + arr[arrKeys[i]]);
+            }
+            else {
+                newArr.push(arrKeys[i]);
+                newArr.push(arr[arrKeys[i]]);
+            }
+        }
+
+        return newArr.join(separator1);
+    }
+
+    //encodes the special characters according to the RFC standard
+    function rfcEncoding(str) {
+        var tmp = encodeURIComponent(str);
+        tmp = tmp.replace('!', '%21');
+        tmp = tmp.replace('*', '%2A');
+        tmp = tmp.replace('(', '%28');
+        tmp = tmp.replace(')', '%29');
+        tmp = tmp.replace("'", '%27');
+        return tmp;
+    }
 });
 
 

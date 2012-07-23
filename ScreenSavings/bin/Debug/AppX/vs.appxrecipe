@@ -16,7 +16,7 @@
     <AppXManifest Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-07-10T18:51:20.674</Modified>
+      <Modified>2012-07-17T13:39:09.416</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +74,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2012-07-10T18:51:14.060</Modified>
+      <Modified>2012-07-17T13:42:04.745</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
@@ -247,7 +247,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2012-07-10T18:46:57.585</Modified>
+      <Modified>2012-07-22T18:14:36.068</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
@@ -257,9 +257,13 @@
       <PackagePath>js\jquery.js</PackagePath>
       <Modified>2012-07-10T13:51:19.396</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\oauth.js">
+      <PackagePath>js\oauth.js</PackagePath>
+      <Modified>2012-07-17T16:42:48.383</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2012-07-10T18:51:20.542</Modified>
+      <Modified>2012-07-17T13:39:08.847</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
