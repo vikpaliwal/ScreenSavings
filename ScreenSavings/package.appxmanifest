@@ -31,7 +31,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="enterpriseAuthentication" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>

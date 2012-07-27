@@ -4,7 +4,8 @@ html{
     overflow: hidden;
 	width: 100%;
 	height: 100%;
-    background-color: #DDD;
+    background-image : url('../images/cloudsbg.png');
+    background-size:cover;
 }
 
 .fixedlayout{
@@ -118,6 +119,7 @@ html{
     display: block;
 }     
 #element1{
+  -ms-touch-action : pinch-zoom;  
   left: 0px;
   z-index: 8;
   perspective-origin: 235% -25%;
@@ -125,6 +127,7 @@ html{
   position: absolute;
 }
 #element2{
+  -ms-touch-action : pinch-zoom;   
   left: 160px;
   z-index: 9;
   perspective-origin: 145% -25%;
@@ -132,6 +135,7 @@ html{
   position: absolute;
 }
 #element3{
+  -ms-touch-action : pinch-zoom;  
   left: 320px;
   z-index: 10;
   perspective-origin: 60% -25%;
@@ -139,6 +143,7 @@ html{
   position: absolute;
 }
 #element4{
+  -ms-touch-action : pinch-zoom;  
   left: 480px;
   z-index: 9;
   perspective-origin: -25% -25%;
@@ -146,6 +151,7 @@ html{
   position: absolute;
 }
 #element5{
+  -ms-touch-action : pinch-zoom;  
   left: 640px;
   z-index: 8;
   perspective-origin: -115% -25%;
@@ -158,7 +164,7 @@ html{
   z-index: -50;
   left: 113px;
 
-  background-color: rgba(255, 255, 255, 1.0);
+  //background-color: rgba(255, 255, 255, 1.0);
   position: absolute;
   height: 100%;
   width: 10px;
@@ -174,8 +180,7 @@ html{
   width: 100%;
   z-index: -99999;
   box-shadow: none;
-  background-color: #CCC;
- //background-color: #2C3;
+  background-color: none;
  ////transition: all 500ms ease;
   transform: rotateX(180deg) translateZ(-200px) translateY(270px);
   //border: 1px solid red;
@@ -504,6 +509,7 @@ html{
 	left: 0px;
 	top: 0px;
 	z-index: 13;
+   
 }
 #settings {
 	position: fixed;
@@ -728,13 +734,16 @@ display: none;
 }
 
 .pans {
+pointer-events : none;
+-ms-touch-action: none;
 position: fixed;
 top: -530px;
 left: 0px;
 width: 100%;
 height: 100%;
 perspective: 400px;
-z-index: 30;
+background-color: rgba(255,255,255,0);
+//z-index: 30;
 }
 
 .pan {
@@ -748,12 +757,15 @@ position: absolute;
 left: -710px;
 /*perspective-origin: 100% -25%;*/
 transform: rotateZ(43deg);
+//background-color: #be0afd;
+
 }
 
 .panRight {
 right: -688px;
 /*perspective-origin: -100% -25%;*/
 transform: rotateZ(-42.6deg);
+//background-color:blue;
 }
 
 #elements {
@@ -780,6 +792,7 @@ transform: rotateZ(-42.6deg);
 
 #overlays {
 display: block;
+background-color : red;
 }
 
 #date {
@@ -1029,7 +1042,6 @@ position: fixed;
 
 .lineOne{
 	background-color: #00e8fd;
-
 }
 .lineTwo {
 	background-color: #fd0797;

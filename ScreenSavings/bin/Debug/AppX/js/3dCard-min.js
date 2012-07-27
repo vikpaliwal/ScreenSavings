@@ -8,7 +8,8 @@ var scrolling = 0;
 var currentHoverFace = undefined;
 var hoverLineNum = 0;
 var transitionComplete = 0;
-
+var cumulativeX = 0;
+var cumulativeY = 0;
 
 function convertTimeToString(timeVal) {
     if (timeVal.getHours() > 12) {
@@ -547,8 +548,6 @@ $(document).ready(function () {
                     removeOverlay(matrix[14], newFace, cube, overlay, oldFace);
                 }
             });
-
-
         });
         //
 
@@ -632,8 +631,6 @@ $(document).ready(function () {
 
 
     }
-
-
     function bindFace() {
 
         $('.face').hover(
@@ -915,33 +912,18 @@ $(document).ready(function () {
         $('#element1, #element2, #element3, #element4, #element5').bind('mousewheel', function (e) {
             scrolling = 1;
             $('.face').unbind();
-
             //    if (currentHoverFace == undefined) {
-
-
-
             if (hoverLineNum > 0) {
-
-
                 //    scrollCards(hoverLineNum, 0);
             }
-
-
-            var direction;
             var pixels = 0;
             if (e.originalEvent === undefined) {
-                direction = -120;
                 pixels = 0;
             } else {
-                direction = e.originalEvent.wheelDelta;
                 pixels = (e.originalEvent.wheelDelta) / 3;
                 //$('.face').css({ 'transition': 'all 100ms ease' });
             }
-
-
             if (hoverLineNum > 0) {
-
-
                 scrollCards(hoverLineNum, pixels);
             }
             scrolling = 0;
@@ -949,40 +931,33 @@ $(document).ready(function () {
                 $('body').unbind('scrollend');
                 bindFace();
             });
-            /*       } else {
-                       $(currentHoverFace).css({"transition": ""});
-                       if (hoverLineNum > 0) {
-       
-       
-                           //    scrollCards(hoverLineNum, 0);
-                       }
-       
-       
-                       var direction;
-                       var pixels = 0;
-                       if (e.originalEvent === undefined) {
-                           direction = -120;
-                           pixels = 0;
-                       } else {
-                           direction = e.originalEvent.wheelDelta;
-                           pixels = (e.originalEvent.wheelDelta) / 3;
-                           //$('.face').css({ 'transition': 'all 100ms ease' });
-                       }
-       
-       
-                       if (hoverLineNum > 0) {
-       
-       
-                           scrollCards(hoverLineNum, pixels);
-                       }
-                       scrolling = 0;
-                       $('body').bind('scrollend', function () {
-                           bindFace();
-                       });
-                   }*/
-
         });
+        //capture the drag event
+        //count the number of pixels it needs to move       
+        //on msgesturestart record x and y
+        //on msgestureend take x and y
+        //find delta ze
+        //pass to scrollcards function
+        // on every msgesture change count the cumulative transx and transy
+        //on gesture end count transz
+        var elements = document.getElementsByClassName('serviceLine');
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            var gObj = new MSGesture();             // Creating a gesture object for each element
+            gObj.target = element;
+            gObj.srcElt = element;
+            element.gestureObject = gObj;
+            element.gesture = gObj;                     // Expando gesture poroperty for each element.
+            element.gesture.pointerType = null;         // Expando property to capture pointer type to handle multiple pointer sources
 
+            // Creating event listeners for gesture elements 
+            element.addEventListener("MSPointerDown", onPointerDown, true);
+
+            //el3.addEventListener("MSGestureTap", onGestureChange, false);
+
+            element.addEventListener("MSGestureChange", onGestureChange, true);
+            element.addEventListener("MSGestureEnd", onGestureEnd, true);
+        }
         bindFace();
 
 
@@ -993,17 +968,17 @@ $(document).ready(function () {
 
             if ($(this).hasClass('panRight')) {
                 pagePosition -= pageDelta;
-                $('#elements').animate({ 'margin-left': pagePosition + 'px' }, 500);
-                $('#element3').animate({ 'border': '1px' }, 500);
-                $('.panRight').animate({ right: '+=' + pageDelta }, 500);
-                $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
-                // $('#page-wrapper').css({"transform":"translateX(" + pagePosition + "px)"});
-            } else if ($(this).hasClass('panLeft')) {
-                pagePosition += pageDelta;
-                $('#elements').animate({ 'margin-left': pagePosition + 'px' }, 500);
+                $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
                 $('#element3').animate({ 'border': '1px' }, 500);
                 $('.panRight').animate({ right: '-=' + pageDelta }, 500);
                 $('.panLeft').animate({ left: '+=' + pageDelta }, 500);
+                // $('#page-wrapper').css({"transform":"translateX(" + pagePosition + "px)"});
+            } else if ($(this).hasClass('panLeft')) {
+                pagePosition += pageDelta;
+                $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
+                $('#element3').animate({ 'border': '1px' }, 500);
+                $('.panRight').animate({ right: '+=' + pageDelta }, 500);
+                $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
             }
         });
         // loadData();
@@ -1069,8 +1044,6 @@ $(document).ready(function () {
                     $('#location').text(myLocationData[0]);
                     $('#weatherIcon').attr('src', "http://www.google.com" + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
                     $('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
-
-
                 }
             });
 
@@ -1207,7 +1180,7 @@ $(document).ready(function () {
             });
 
 
-        /*
+
         WinJS.xhr({ url: "http://198.101.207.173/shilpa/mygmail.php?email_address=screensavingsapp@gmail.com" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
@@ -1219,7 +1192,7 @@ $(document).ready(function () {
                     if (transitionComplete == 1) {
                         for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
 
-                           // $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
+                            // $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
 
                             var timeVal = new Date(data.gmail_feed[i].date);
 
@@ -1247,7 +1220,7 @@ $(document).ready(function () {
                             setTimeout(function () {
                                 for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
 
-                                  //  $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
+                                    //  $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
 
                                     var timeVal = new Date(data.gmail_feed[i].date);
 
@@ -1274,19 +1247,19 @@ $(document).ready(function () {
                     }
                 }
             });
-            
-           
-        */
-        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/fb_json_new.php" });
 
 
-        /*   
+
+        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/fb_json.php" });
+
+
+
         var TwitPromise = WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php" });
-        
-       
+
+
         WinJS.Promise.join([fbPromise, TwitPromise]).done(
             function () {
-                
+
 
                 var lineNum = 3;
                 var tempArray = new Array();
@@ -1296,67 +1269,67 @@ $(document).ready(function () {
                     function fulfilled(result) {
                         if (result.status === 200) {
                             var data = JSON.parse(result.response);
-                            
-
-                                    for (i = (data.facebookPosts.length - 1) ; i >= 0; i--) {
-                                        
-                                        var time = parseFloat(data.facebookPosts[i].time) * 1000;
-                                        var timeVal = new Date(time);
-                                        //console.log(timeVal);
-
-                                        timeVal = convertTimeToString(timeVal);
 
 
+                            for (i = (data.facebookPosts.length - 1) ; i >= 0; i--) {
 
-                                        var newCard = new Array(11);
-                                        newCard[4] = "facebook";
-                                        newCard[5] = time;
-                                        newCard[6] = data.facebookPosts[i].posterName;
-                                        newCard[7] = data.facebookPosts[i].text;
-                                        newCard[8] = data.facebookPosts[i].link;
-                                        newCard[9] = data.facebookPosts[i].posterId;
-                                        newCard[10] = timeVal;
+                                var time = parseFloat(data.facebookPosts[i].time) * 1000;
+                                var timeVal = new Date(time);
+                                //console.log(timeVal);
 
-                                        tempArray.push(newCard);
+                                timeVal = convertTimeToString(timeVal);
 
-                                        //scrollCards(lineNum, -160);
 
-                                    }
-                         }
+
+                                var newCard = new Array(11);
+                                newCard[4] = "facebook";
+                                newCard[5] = time;
+                                newCard[6] = data.facebookPosts[i].posterName;
+                                newCard[7] = data.facebookPosts[i].text;
+                                newCard[8] = data.facebookPosts[i].link;
+                                newCard[9] = data.facebookPosts[i].posterId;
+                                newCard[10] = timeVal;
+
+                                tempArray.push(newCard);
+
+                                //scrollCards(lineNum, -160);
+
+                            }
+                        }
                     });
                 TwitPromise.done(
                     function fulfilled(result) {
                         if (result.status === 200) {
                             var data = JSON.parse(result.response);
 
-                            
-                            
-                                    for (i = (data.twitter_feed.length - 1) ; i >= 0; i--) {
-
-                                        //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
-
-                                        var time = parseFloat(data.twitter_feed[i].time)*1000;
-                                        var timeVal = new Date(time);
 
 
-                                        timeVal = convertTimeToString(timeVal);
+                            for (i = (data.twitter_feed.length - 1) ; i >= 0; i--) {
+
+                                //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
+
+                                var time = parseFloat(data.twitter_feed[i].time) * 1000;
+                                var timeVal = new Date(time);
+
+
+                                timeVal = convertTimeToString(timeVal);
 
 
 
-                                        
-                                        var newCard = new Array(10);
-                                        newCard[4] = "twitter";
-                                        newCard[5] = time;
-                                        newCard[6] = data.twitter_feed[i].user;
-                                        newCard[7] = data.twitter_feed[i].tweet;
-                                        newCard[8] = (data.twitter_feed[i].photo).replace("_normal","");
-                                        newCard[9] = timeVal;
 
-                                        tempArray.push(newCard);
+                                var newCard = new Array(10);
+                                newCard[4] = "twitter";
+                                newCard[5] = time;
+                                newCard[6] = data.twitter_feed[i].user;
+                                newCard[7] = data.twitter_feed[i].tweet;
+                                newCard[8] = (data.twitter_feed[i].photo).replace("_normal", "");
+                                newCard[9] = timeVal;
 
-                                        //scrollCards(lineNum, -160);
+                                tempArray.push(newCard);
 
-                                    }
+                                //scrollCards(lineNum, -160);
+
+                            }
                         }
                     });
                 tempArray.sort(function (a, b) { return a[5] - b[5] });
@@ -1376,7 +1349,7 @@ $(document).ready(function () {
                 }
                 //console.log(FacebookData.status);
             });
-        */
+
         WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/groupon_json.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
@@ -1472,7 +1445,7 @@ $(document).ready(function () {
                        );
                     });
                 });
-                
+
             }, function (err) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
                 // document.getElementById("FacebookDebugArea").value += " Error Message: " + err.message + "\r\n";
@@ -1584,16 +1557,16 @@ $(document).ready(function () {
                 var token = response.substring(tokenstartpos, tokenendpos);
                 var secret = response.substring(secretstartpos, secretendpos);
                 var user = response.substring(useridstartpos, useridendpos);
-                
+
                 Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                     //send data to intelscreensavings server
-                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=twitter&win_id="+result+ "&oauth_token=" + oauthtoken + "&oauth_verifier=" + oauthverifier }).done(
+                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=twitter&win_id=" + result + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
                         function (result) {
                             var results = result.responseData;
                         }
                    );
                 });
-                
+
             }, function (err) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
             });
@@ -1718,7 +1691,7 @@ $(document).ready(function () {
             }, function (err) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
             });
-    });   
+    });
     $('#GMAIL_BUTTON').click(function () {
         //oauth1 approach similar to twitter
         var requestUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
@@ -1731,7 +1704,7 @@ $(document).ready(function () {
         //var clientID = "anonymous";
         //var clientSecret = "anonymous";
         var timestamp = Math.round(new Date().getTime() / 1000.0);
-        var nonce = (new Date()).getTime();   
+        var nonce = (new Date()).getTime();
         var params = [];
         params["oauth_callback"] = encodeURI(callbackUrl);
         params["oauth_consumer_key"] = clientID;
@@ -1797,33 +1770,33 @@ $(document).ready(function () {
                             break;
                     }
                 }
-               if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
                     //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
                 }
                 //form the header and send the verifier in the request to accesstokenurl
-               var params = [];
-               var timestamp = Math.round(new Date().getTime() / 1000.0);
-               var nonce = (new Date()).getTime();
-               params["oauth_consumer_key"] = clientID;
-               params["oauth_nonce"] = nonce;
-               params["oauth_signature_method"] = "HMAC-SHA1";
-               params["oauth_timestamp"] = timestamp;
-               params["oauth_token"] = authorize_token;
-               params["oauth_verifier"] = oauth_verifier;              
-               var paramString = normalizeParams(params);
-             
-               var sigBaseString = "GET&" + rfcEncoding(accessUrl) + "&" + rfcEncoding(paramString);
-               var keyText = rfcEncoding(clientSecret) + "&" + rfcEncoding(oauth_token_secret);
-               var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-               var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
-               var key = macAlgorithmProvider.createKey(keyMaterial);
-               var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-               var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
-               var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
-               paramString += "&oauth_signature=" + rfcEncoding(signature);
-               accessUrl = encodeURI(accessUrl);
-               accessUrl += "?" + paramString;
-               var response = sendGetRequest(accessUrl);
+                var params = [];
+                var timestamp = Math.round(new Date().getTime() / 1000.0);
+                var nonce = (new Date()).getTime();
+                params["oauth_consumer_key"] = clientID;
+                params["oauth_nonce"] = nonce;
+                params["oauth_signature_method"] = "HMAC-SHA1";
+                params["oauth_timestamp"] = timestamp;
+                params["oauth_token"] = authorize_token;
+                params["oauth_verifier"] = oauth_verifier;
+                var paramString = normalizeParams(params);
+
+                var sigBaseString = "GET&" + rfcEncoding(accessUrl) + "&" + rfcEncoding(paramString);
+                var keyText = rfcEncoding(clientSecret) + "&" + rfcEncoding(oauth_token_secret);
+                var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+                var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+                var key = macAlgorithmProvider.createKey(keyMaterial);
+                var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+                var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+                var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+                paramString += "&oauth_signature=" + rfcEncoding(signature);
+                accessUrl = encodeURI(accessUrl);
+                accessUrl += "?" + paramString;
+                var response = sendGetRequest(accessUrl);
 
                 var tokenstartpos = response.indexOf("oauth_token") + 12;
                 var tokenendpos = response.indexOf("&oauth_token_secret");
@@ -1833,40 +1806,28 @@ $(document).ready(function () {
 
 
                 //var gmailinfourl = "https://www.googleapis.com/userinfo/email?access_token="+token;
-              
+
                 Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                     //send data to intelscreensavings server
-
                     WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=gmail&win_id=" + result + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com" }).done(
                         function (result) {
                             var results = result.responseData;
                         }
                    );
                 });
-                
-               /*
-                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
-                    //send data to intelscreensavings server
-                    WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php?token=" + oauthtoken + "&verifier=" + oauthverifier }).done(
-                        function (result) {
-                            var results = result.responseData;
-                        }
-                   );
-                });
-                */
             }, function (err) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
             });
-    });    
-   
+    });
 
-     function normalizeParams (params) {
-         for (var key in params) {
-             if (key != "oauth_token")
-                 params[key] = encodeURIComponent(params[key]);
-         }
+
+    function normalizeParams(params) {
+        for (var key in params) {
+            if (key != "oauth_token")
+                params[key] = encodeURIComponent(params[key]);
+        }
         return join("&", "=", params, true);
-     }
+    }
 
     function join(separator1, separator2, arr, sort) {
         var arrKeys = [];
@@ -1899,6 +1860,69 @@ $(document).ready(function () {
         tmp = tmp.replace(')', '%29');
         tmp = tmp.replace("'", '%27');
         return tmp;
+    }
+
+    // Handler for transformation on gesture elements 
+
+    function onGestureChange(e) {
+        cumulativeX += e.translationX;
+        cumulativeY += e.translationY;
+        scrolling = 1;
+        $('.face').unbind();
+        scrolling = 0;
+        $('body').bind('scrollend', function () {
+            $('body').unbind('scrollend');
+            bindFace();
+        });
+    }
+
+    function onGestureEnd(e) {
+        //var elt = e.target;
+        /*
+        scrolling = 1;
+        $('.face').unbind();
+        scrolling = 0;
+        $('body').bind('scrollend', function () {
+            $('body').unbind('scrollend');
+            bindFace();
+        });
+        */
+        var elementId = e.currentTarget.id;
+        var lineNum = elementId.substr(7);
+        var deltaX = cumulativeX;
+        var deltaY = cumulativeY;
+        cumulativeX = 0;
+        cumulativeY = 0;
+        var deltaZ = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+        if (deltaY > 0)
+            scrollCards(lineNum, deltaZ / 2);
+        else
+            scrollCards(lineNum, -deltaZ / 2);
+    }
+    /*
+    function onGestureChange(e) {
+        //var elt = e.target;
+        scrolling = 1;
+        $('.face').unbind();
+        scrolling = 0;
+        $('body').bind('scrollend', function () {
+            $('body').unbind('scrollend');
+            bindFace();
+        });
+        var elt = e.currentTarget;
+        var deltaX = e.translationX;
+        var deltaY = e.translationY;
+        var deltaZ = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+        if (deltaY > 0)
+            scrollCards(3, deltaZ);
+        else
+            scrollCards(3, -deltaZ);
+    }
+    */
+    function onPointerDown(e) {
+        e.currentTarget.gesture.addPointer(e.pointerId);                   // Attaches pointer to element (e.target is the element)
+        e.currentTarget.gesture.pointerType = e.pointerType;
+        //e.target.freeCapture = 1;
     }
 });
 

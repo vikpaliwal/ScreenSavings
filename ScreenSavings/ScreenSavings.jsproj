@@ -60,6 +60,7 @@
     <Content Include="images\circle_pink.png" />
     <Content Include="images\circle_purple.png" />
     <Content Include="images\circle_yellow.png" />
+    <Content Include="images\cloudsbg.png" />
     <Content Include="images\commerce1.png" />
     <Content Include="images\commerce2.png" />
     <Content Include="images\facebook.png" />

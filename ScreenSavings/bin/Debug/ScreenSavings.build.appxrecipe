@@ -80,6 +80,9 @@
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_yellow.png">
       <PackagePath>images\circle_yellow.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\cloudsbg.png">
+      <PackagePath>images\cloudsbg.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\commerce1.png">
       <PackagePath>images\commerce1.png</PackagePath>
     </AppxPackagedFile>
