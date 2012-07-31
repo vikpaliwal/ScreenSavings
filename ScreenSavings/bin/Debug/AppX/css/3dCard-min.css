@@ -204,24 +204,25 @@ html{
 }
 
 .line1{
-	background-color: #00e8fd;
-    box-shadow: 0px 0px 5px rgba(0,232,253,.9);
+	background-color: #be0afd;
+    box-shadow:  0px 0px 5px rgba(190,10,253,.9);
 }
+
 .line2 {
 	background-color: #fd0797;
     box-shadow: 0px 0px 5px rgba(253,7,151,.9);
 }
 .line3 {
-	background-color: #fded00;
-    box-shadow: 0px 0px 5px rgba(253,237,0,.9);
-}
-.line4 {
 	background-color: #bcfd09;
     box-shadow: 0px 0px 5px rgba(188,253,9,.9);
 }
+.line4 {
+	background-color: orange;
+    box-shadow: 0px 0px 5px rgba(255,165,0,.9);
+}
 .line5 {
-	background-color: #be0afd;
-    box-shadow: 0px 0px 5px rgba(190,10,253,.9);
+	background-color: #00e8fd;
+    box-shadow: 0px 0px 5px rgba(0,232,253,.9);
 }
 
 .face{
@@ -620,7 +621,7 @@ font-family: 'Segoe UI';
 font-size: 20px;
 font-weight:900;
 box-shadow: none;
-    transform: translateY(680px) translateX(-230px);
+    transform: translateY(680px) translateX(-30px);
 }
 
 .name2-3d {
@@ -660,7 +661,7 @@ box-shadow: none;
 }
 
 .name1{
-	color: #00e8fd;
+	color: #be0afd;
     text-shadow:2px 2px 2px #333;
 }
 .name2 {
@@ -668,15 +669,15 @@ box-shadow: none;
     text-shadow:2px 2px 2px #333;
 }
 .name3 {
-	color: #fded00;
-    text-shadow:2px 2px 2px #333;
-}
-.name4 {
 	color: #bcfd09;
     text-shadow:2px 2px 2px #333;
 }
+.name4 {
+	color:orange;
+    text-shadow:2px 2px 2px #333;
+}
 .name5 {
-	color: #be0afd;
+	color: #00e8fd;
     text-shadow:2px 2px 2px #333;
 
 }
@@ -699,8 +700,8 @@ z-index: 9999999999;
 
 
 .lineShadow1{
-	background-color: #00e8fd;
-    box-shadow: 0px 0px 40px rgba(0,180,193,1);
+	background-color: #be0afd;
+    box-shadow:  0px 0px 40px rgba(190,10,253,.9);
     transition: all 200ms ease;
 }
 .lineShadow2 {
@@ -709,23 +710,20 @@ z-index: 9999999999;
     transition: all 200ms ease;
 }
 .lineShadow3 {
-	background-color: #fded00;
-    box-shadow: 0px 0px 40px rgba(193,180,0,1);
+	background-color: #bcfd09;
+    box-shadow: 0px 0px 40px rgba(188,253,9,.9);
     transition: all 200ms ease;
 }
 .lineShadow4 {
-	background-color: #bcfd09;
-    box-shadow: 0px 0px 40px rgba(147,193,7,1);
+	background-color: orange;
+    box-shadow: 0px 0px 40px rgba(255,165,0,.9);
     transition: all 200ms ease;
 }
 .lineShadow5 {
-	background-color: #be0afd;
-    box-shadow: 0px 0px 40px rgba(190,10,253,1);
+	background-color: #00e8fd;
+    box-shadow: 0px 0px 40px rgba(0,232,253,.9);
     transition: all 200ms ease;
 }
-
-
-
 
 .position0 {
 transition: transform 500ms ease;
@@ -1041,17 +1039,17 @@ position: fixed;
 }
 
 .lineOne{
-	background-color: #00e8fd;
+	background-color: #be0afd;
 }
 .lineTwo {
 	background-color: #fd0797;
 }
 .lineThree {
-	background-color: #fded00;
-}
-.lineFour {
 	background-color: #bcfd09;
 }
+.lineFour {
+	background-color: orange;
+}
 .lineFive {
-	background-color: #be0afd;
+	background-color: #00e8fd;
 }

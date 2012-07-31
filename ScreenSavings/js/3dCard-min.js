@@ -10,7 +10,9 @@ var hoverLineNum = 0;
 var transitionComplete = 0;
 var cumulativeX = 0;
 var cumulativeY = 0;
-
+var BASE_URL_TEST = "http://198.101.207.173";
+var BASE_URL_LIVE = "http://50.56.189.202";
+var weather_zipcode = 97124;
 function convertTimeToString(timeVal) {
     if (timeVal.getHours() > 12) {
         if (("" + timeVal.getMinutes() + "").length == 1) {
@@ -95,10 +97,53 @@ function updateTime() {
 
 
 $(document).ready(function () {
-
-    //removeRandomCards();
     updateTime();
+    /*
+    var latitude, longitude;
+    var coord;
+    var geolocator = Windows.Devices.Geolocation.Geolocator();
+    promise = geolocator.getGeopositionAsync();
+    promise.done(
+    function (pos) {
 
+        coord = pos.coordinate;
+        latitude = coord.latitude;
+        longitude = coord.longitude;
+        Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done
+            (function success(result) {
+                //store result in win_id global var to access win_id throughout the app.
+                win_id = result;
+                //send data to intelscreensavings server's register groupon page
+                WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=groupon&win_id=" + result + "&lat=" + latitude + "&lng=" + longitude }).done();
+
+                WinJS.xhr({ url: BASE_URL_TEST+"/shilpa/coord_to_location.php?win_id=" + result + "&latitude=" + latitude + "&longitude=" + longitude }).done(
+               
+              function success(result) {
+                  if (result.status === 200) {
+                      "use strict";
+                      var data = JSON.parse(result.response);
+                      var city_name, zipcode;
+
+                      //city_name = data.location_feed[0].city;
+                      zipcode = data.location_feed[0].zip;
+                      weather_zipcode = zipcode;
+                      loadData();
+                  }
+                  else {
+                      loadData();
+                  }
+              },
+              function err(result) {
+                  loadData();
+              }
+              );
+            });
+    },
+     function (err) {
+         loadData();
+         WinJS.log && WinJS.log(err.message, "sample", "error");
+     });
+     */
     var matrix = createCardArray(5, 4, 4);
     loadData();
 
@@ -188,11 +233,11 @@ $(document).ready(function () {
             $('#card' + cardCount).html('<img src="images/photo1.png" class="card"/>');
         } else if (lineNum == 2) {
             $('#card' + cardCount).html('<img src="images/mail1.png" class="card"/>');
-        } else if (lineNum == 3) {
-            $('#card' + cardCount).html('<div class="TWIT_content"><img id="profilePic" class="FB_PIC" src=""></img><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span></div>');
-        } else if (lineNum == 4) {
-            $('#card' + cardCount).html('<img src="images/commerce1.png" class="card"/>');
         } else if (lineNum == 5) {
+            $('#card' + cardCount).html('<div class="TWIT_content"><img id="profilePic" class="FB_PIC" src=""></img><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span></div>');
+        } else if (lineNum == 3) {
+            $('#card' + cardCount).html('<img src="images/commerce1.png" class="card"/>');
+        } else if (lineNum == 4) {
             $('#card' + cardCount).html('<img src="images/news2.png" class="card"/>');
         }
 
@@ -285,15 +330,15 @@ $(document).ready(function () {
             $('#card' + cardCount).html('<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + matrix[lineNum - 1][0][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + matrix[lineNum - 1][0][6] + '</span> </div>');
         } else if (lineNum == 2) {
             $('#card' + cardCount).html('<div class="GM_content"><span class="GM_time">' + matrix[lineNum - 1][0][5] + '</span><span class="GM_From">From: ' + matrix[lineNum - 1][0][6] + '</span><span class="GM_subject">Subject: ' + matrix[lineNum - 1][0][7] + '</span><span class="GM_message">' + toStaticHTML(matrix[lineNum - 1][0][10]) + '</span> <span class="hiddenData">' + toStaticHTML(matrix[lineNum - 1][0][8]) + '</span> </div>');
-        } else if (lineNum == 3) {
+        } else if (lineNum == 5) {
             if (matrix[lineNum - 1][0][4] == "facebook") {
                 $('#card' + cardCount).html('<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + matrix[lineNum - 1][0][9] + '/picture?type=large"/><span class="FB_time">' + matrix[lineNum - 1][0][10] + '</span><span class="FB_title">' + matrix[lineNum - 1][0][6] + '</span><span class="FB_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
             } else if (matrix[lineNum - 1][0][4] == "twitter") {
                 $('#card' + cardCount).html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][9] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
             }
-        } else if (lineNum == 4) {
+        } else if (lineNum == 3) {
             $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + matrix[lineNum - 1][0][6] + '</span><span class="GROUPON_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
-        } else if (lineNum == 5) {
+        } else if (lineNum == 4) {
             $('#card' + cardCount).html(toStaticHTML('<div class="NEWS_content"><img class="NEWS_PIC" src="' + matrix[lineNum - 1][0][6] + '"/><span class="NEWS_time">' + matrix[lineNum - 1][0][9] + '</span><span class="NEWS_source">' + matrix[lineNum - 1][0][11] + '</span><span class="NEWS_title">' + matrix[lineNum - 1][0][7] + '</span><span class="NEWS_message">' + matrix[lineNum - 1][0][8] + '</span><span class="hiddenData">' + toStaticHTML(matrix[lineNum - 1][0][10]) + '</span></div>'));
         }
 
@@ -377,11 +422,11 @@ $(document).ready(function () {
                         myGenericCard.innerHTML = '<div class="FLICKR_content"><img class="FLICKR_PIC" src="images/rose.jpg"/><span class="FLICKR_time">11:11</span><span class="FLICKR_title">New @Reply from Levonmaa</span> </div>';
                     } else if (i == 1) {
                         myGenericCard.innerHTML = '<img src="images/mail1.png" class="card"/>';
-                    } else if (i == 2) {
-                        myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src=""/><span class="FB_time">11:11</span><span class="FB_title">New @Reply from Levonmaa</span><span class="FB_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
-                    } else if (i == 3) {
-                        myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src=""/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">New @Reply from Levonmaa</span><span class="GROUPON_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
                     } else if (i == 4) {
+                        myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src=""/><span class="FB_time">11:11</span><span class="FB_title">New @Reply from Levonmaa</span><span class="FB_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
+                    } else if (i == 2) {
+                        myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src=""/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">New @Reply from Levonmaa</span><span class="GROUPON_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
+                    } else if (i == 3) {
                         myGenericCard.innerHTML = '<img src="images/news2.png" class="card"/>';
                     }
 
@@ -969,14 +1014,22 @@ $(document).ready(function () {
             if ($(this).hasClass('panRight')) {
                 pagePosition -= pageDelta;
                 $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
+                $('#element1').animate({ 'border': '1px' }, 500);
+                $('#element2').animate({ 'border': '1px' }, 500);
                 $('#element3').animate({ 'border': '1px' }, 500);
+                $('#element4').animate({ 'border': '1px' }, 500);
+                $('#element5').animate({ 'border': '1px' }, 500);
                 $('.panRight').animate({ right: '-=' + pageDelta }, 500);
                 $('.panLeft').animate({ left: '+=' + pageDelta }, 500);
                 // $('#page-wrapper').css({"transform":"translateX(" + pagePosition + "px)"});
             } else if ($(this).hasClass('panLeft')) {
                 pagePosition += pageDelta;
                 $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
+                $('#element1').animate({ 'border': '1px' }, 500);
+                $('#element2').animate({ 'border': '1px' }, 500);
                 $('#element3').animate({ 'border': '1px' }, 500);
+                $('#element4').animate({ 'border': '1px' }, 500);
+                $('#element5').animate({ 'border': '1px' }, 500);
                 $('.panRight').animate({ right: '+=' + pageDelta }, 500);
                 $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
             }
@@ -1033,7 +1086,7 @@ $(document).ready(function () {
 
     function loadData() {
 
-        WinJS.xhr({ url: "http://google.com/ig/api?weather=97229" }).done(
+        WinJS.xhr({ url: "http://google.com/ig/api?weather=" + weather_zipcode }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
 
@@ -1053,7 +1106,7 @@ $(document).ready(function () {
                 if (result.status === 200) {
                     var i;
                     var data = result.responseXML;
-                    var lineNum = 5;
+                    var lineNum = 4;
                     var tempArray = new Array();
                     jQuery.fn.reverse = [].reverse;
 
@@ -1127,7 +1180,7 @@ $(document).ready(function () {
             });
 
 
-        WinJS.xhr({ url: "http://198.101.207.173/shilpa/flickr_trial.php" }).done(
+        WinJS.xhr({ url: BASE_URL_LIVE + "/shilpa/flickr_trial.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
@@ -1181,7 +1234,7 @@ $(document).ready(function () {
 
 
 
-        WinJS.xhr({ url: "http://198.101.207.173/shilpa/mygmail.php?email_address=screensavingsapp@gmail.com" }).done(
+        WinJS.xhr({ url: BASE_URL_LIVE + "/shilpa/mygmail.php?email_address=screensavingsapp@gmail.com" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
@@ -1250,18 +1303,17 @@ $(document).ready(function () {
 
 
 
-        var fbPromise = WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/fb_json.php" });
+        var fbPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/fb_json.php" });
 
 
-
-        var TwitPromise = WinJS.xhr({ url: "http://198.101.207.173/shilpa/twitter_trial.php" });
+        var TwitPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/shilpa/twitter_trial.php" });
 
 
         WinJS.Promise.join([fbPromise, TwitPromise]).done(
             function () {
 
 
-                var lineNum = 3;
+                var lineNum = 5;
                 var tempArray = new Array();
                 var i;
 
@@ -1350,13 +1402,13 @@ $(document).ready(function () {
                 //console.log(FacebookData.status);
             });
 
-        WinJS.xhr({ url: "http://198.101.207.173/gaomin/client/groupon_json.php" }).done(
+        WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/groupon_json.php" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
                     var i;
 
-                    var lineNum = 4;
+                    var lineNum = 3;
 
                     if (transitionComplete == 1) {
                         for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
@@ -1438,7 +1490,7 @@ $(document).ready(function () {
                     var fb_id = JSON.parse(result.responseText).id;
                     Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                         //send data to intelscreensavings server
-                        WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=fb&win_id=" + result + "&token=" + accesstoken + "&fb_id=" + fb_id }).done(
+                        WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=fb&win_id=" + result + "&token=" + accesstoken + "&fb_id=" + fb_id }).done(
                             function (result) {
                                 var results = result.responseData;
                             }
@@ -1560,7 +1612,7 @@ $(document).ready(function () {
 
                 Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                     //send data to intelscreensavings server
-                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=twitter&win_id=" + result + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
+                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=twitter&win_id=" + result + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
                         function (result) {
                             var results = result.responseData;
                         }
@@ -1682,7 +1734,7 @@ $(document).ready(function () {
                 var user = response.substring(useridstartpos, useridendpos);
                 Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                     //send data to intelscreensavings server
-                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=flickr&win_id=" + result + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
+                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=flickr&win_id=" + result + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
                         function (result) {
                             var results = result.responseData;
                         }
@@ -1803,13 +1855,11 @@ $(document).ready(function () {
                 var secretstartpos = tokenendpos + 20;
                 var token = response.substring(tokenstartpos, tokenendpos);
                 var secret = response.substring(secretstartpos);
-
-
                 //var gmailinfourl = "https://www.googleapis.com/userinfo/email?access_token="+token;
 
                 Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                     //send data to intelscreensavings server
-                    WinJS.xhr({ url: "http://198.101.207.173/gaomin/register_user.php?service=gmail&win_id=" + result + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com" }).done(
+                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=gmail&win_id=" + result + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com" }).done(
                         function (result) {
                             var results = result.responseData;
                         }
