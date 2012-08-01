@@ -1234,7 +1234,7 @@ $(document).ready(function () {
 
 
 
-        WinJS.xhr({ url: BASE_URL_LIVE + "/shilpa/mygmail.php?email_address=screensavingsapp@gmail.com" }).done(
+        WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/gmail_client_cache.php?win_id=shilpa" }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
