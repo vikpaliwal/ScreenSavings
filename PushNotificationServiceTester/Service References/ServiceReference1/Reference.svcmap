@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a0e579ad-2932-4057-aff8-dd2041a87b5e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://127.0.0.1/PushNotificationService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PushNotificationService3.xsd" MetadataType="Schema" ID="1d796802-dbcc-4140-a18e-f31dfc0b794b" SourceId="1" SourceUrl="http://127.0.0.1/PushNotificationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PushNotificationService31.xsd" MetadataType="Schema" ID="64e372c7-ae02-4800-b919-6e606137949e" SourceId="1" SourceUrl="http://127.0.0.1/PushNotificationService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PushNotificationService1.wsdl" MetadataType="Wsdl" ID="27799fe2-8910-4798-bf2a-36864f7ec31e" SourceId="1" SourceUrl="http://127.0.0.1/PushNotificationService.svc?wsdl" />
+    <MetadataFile FileName="PushNotificationService1.disco" MetadataType="Disco" ID="c109de1a-5851-48d0-ad71-a57bbd94c9c7" SourceId="1" SourceUrl="http://127.0.0.1/PushNotificationService.svc?disco" />
+    <MetadataFile FileName="PushNotificationService32.xsd" MetadataType="Schema" ID="14358097-25d4-4ec6-b857-c780062216cf" SourceId="1" SourceUrl="http://127.0.0.1/PushNotificationService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

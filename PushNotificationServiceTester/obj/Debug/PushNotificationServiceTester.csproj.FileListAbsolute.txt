@@ -1,0 +1,12 @@
+C:\Users\Shah\documents\visual studio 2012\Projects\ScreenSavings\PushNotificationServiceTester\bin\Debug\PushNotificationServiceTester.exe.config
+C:\Users\Shah\documents\visual studio 2012\Projects\ScreenSavings\PushNotificationServiceTester\bin\Debug\PushNotificationServiceTester.exe
+C:\Users\Shah\documents\visual studio 2012\Projects\ScreenSavings\PushNotificationServiceTester\bin\Debug\PushNotificationServiceTester.pdb
+C:\Users\Shah\documents\visual studio 2012\Projects\ScreenSavings\PushNotificationServiceTester\obj\Debug\PushNotificationServiceTester.exe
+C:\Users\Shah\documents\visual studio 2012\Projects\ScreenSavings\PushNotificationServiceTester\obj\Debug\PushNotificationServiceTester.pdb
+C:\Users\Shah\documents\visual studio 2012\Projects\ScreenSavings\PushNotificationServiceTester\obj\Debug\PushNotificationServiceTester.csprojResolveAssemblyReference.cache
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\PushNotificationClient\PushNotificationServiceTester\bin\Debug\PushNotificationServiceTester.exe.config
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\PushNotificationClient\PushNotificationServiceTester\obj\Debug\PushNotificationServiceTester.exe
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\PushNotificationClient\PushNotificationServiceTester\obj\Debug\PushNotificationServiceTester.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\PushNotificationClient\PushNotificationServiceTester\bin\Debug\PushNotificationServiceTester.exe
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\PushNotificationClient\PushNotificationServiceTester\bin\Debug\PushNotificationServiceTester.pdb
+C:\Users\Shah\Documents\Visual Studio 2012\Projects\PushNotificationClient\PushNotificationServiceTester\obj\Debug\PushNotificationServiceTester.csprojResolveAssemblyReference.cache

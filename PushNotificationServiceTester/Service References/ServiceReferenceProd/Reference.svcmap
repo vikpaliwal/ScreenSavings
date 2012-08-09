@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b6cac6f7-f516-43a7-aa87-1dfa348149a5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://screensavings.cloudapp.net/PushNotificationService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PushNotificationService.xsd" MetadataType="Schema" ID="94ef1bc7-2c65-4cc2-93b6-6abeda138cec" SourceId="1" SourceUrl="http://screensavings.cloudapp.net/PushNotificationService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PushNotificationService.wsdl" MetadataType="Wsdl" ID="d521a3d6-e37b-4a2a-9e41-4c43e3f3be4f" SourceId="1" SourceUrl="http://screensavings.cloudapp.net/PushNotificationService.svc?wsdl" />
+    <MetadataFile FileName="PushNotificationService.disco" MetadataType="Disco" ID="8a70f832-50d8-4209-999f-c30fc7f075bc" SourceId="1" SourceUrl="http://screensavings.cloudapp.net/PushNotificationService.svc?disco" />
+    <MetadataFile FileName="PushNotificationService1.xsd" MetadataType="Schema" ID="6729f622-f61a-455f-b5e3-d183471ae685" SourceId="1" SourceUrl="http://screensavings.cloudapp.net/PushNotificationService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PushNotificationService2.xsd" MetadataType="Schema" ID="7e36595e-3515-4bb7-9244-a147ff2d9e9c" SourceId="1" SourceUrl="http://screensavings.cloudapp.net/PushNotificationService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
