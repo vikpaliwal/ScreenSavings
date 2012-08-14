@@ -7,10 +7,10 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="1be41ff0-47b5-4dfe-94a4-4cbd3793c640" Version="1.0.0.0" Publisher="CN=Shah" ProcessorArchitecture="neutral" />
+  <Identity Name="BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b" Version="1.0.0.0" Publisher="CN=Shah" ProcessorArchitecture="neutral" />
   <Properties>
     <DisplayName>ScreenSavings</DisplayName>
-    <PublisherDisplayName>gaura_000</PublisherDisplayName>
+    <PublisherDisplayName>Shah</PublisherDisplayName>
     <Logo>images\storelogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -22,15 +22,14 @@
   </Resources>
   <Applications>
     <Application Id="App" StartPage="default.html">
-      <VisualElements DisplayName="Dash" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="ScreenSavings" ForegroundText="light" BackgroundColor="#464646" ToastCapable="false">
-        <LockScreen Notification="badge" BadgeLogo="images\smalllogo.png" />
+      <VisualElements DisplayName="ScreenSavings" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="ScreenSavings" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
+        <LockScreen Notification="badge" BadgeLogo="images\badgelogo-sdk.png" />
         <DefaultTile ShowName="allLogos" WideLogo="images\blueWide.scale-100.png" />
         <SplashScreen Image="images\splashscreen.png" />
       </VisualElements>
       <Extensions>
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.ScreenSavingsTask">
           <BackgroundTasks>
-            <Task Type="systemEvent" />
             <Task Type="pushNotification" />
           </BackgroundTasks>
         </Extension>
@@ -39,6 +38,7 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <DeviceCapability Name="location" />
   </Capabilities>
   <Dependencies>
     <PackageDependency Name="Microsoft.WinJS.1.0.RC" MinVersion="1.0.8377.0" />
@@ -48,6 +48,7 @@
       <InProcessServer>
         <Path>CLRHost.dll</Path>
         <ActivatableClass ActivatableClassId="BackgroundTask.ScreenSavingsTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="WCFClientRuntimeComponent.WCFServiceCaller" ThreadingModel="both" />
       </InProcessServer>
     </Extension>
   </Extensions>

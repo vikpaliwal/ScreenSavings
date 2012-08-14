@@ -98,7 +98,6 @@
     <Content Include="js\default.js" />
     <Content Include="css\default.css" />
     <Content Include="js\jquery.js" />
-    <Content Include="js\oauth.js" />
     <None Include="ScreenSavings_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BackgroundTask\BackgroundTask.csproj" />
+    <ProjectReference Include="..\WCFClientRuntimeComponent\WCFClientRuntimeComponent.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

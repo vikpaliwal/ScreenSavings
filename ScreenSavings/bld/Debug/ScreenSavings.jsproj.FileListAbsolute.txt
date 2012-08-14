@@ -45,3 +45,6 @@ C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSav
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\LanguageQualifiers.txt
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\ProjectArchitectures.txt
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri

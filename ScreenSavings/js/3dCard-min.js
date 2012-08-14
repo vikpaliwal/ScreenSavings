@@ -13,6 +13,12 @@ var cumulativeY = 0;
 var BASE_URL_TEST = "http://198.101.207.173";
 var BASE_URL_LIVE = "http://50.56.189.202";
 var weather_zipcode = 97124;
+var HORIZONTAL_DRAG_RATIO = 0.30;
+var pagePosition = 0;
+var pageDelta = 190;
+var POINTER_TOUCH = 2;
+var win_id;
+var groupon_dummy_url = "https://s3.grouponcdn.com/images/site_images/2071/9571/IMAGE-Curry-Leaf_medium.jpg";
 function convertTimeToString(timeVal) {
     if (timeVal.getHours() > 12) {
         if (("" + timeVal.getMinutes() + "").length == 1) {
@@ -98,9 +104,10 @@ function updateTime() {
 
 $(document).ready(function () {
     updateTime();
-    /*
+
     var latitude, longitude;
     var coord;
+    
     var geolocator = Windows.Devices.Geolocation.Geolocator();
     promise = geolocator.getGeopositionAsync();
     promise.done(
@@ -116,8 +123,8 @@ $(document).ready(function () {
                 //send data to intelscreensavings server's register groupon page
                 WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=groupon&win_id=" + result + "&lat=" + latitude + "&lng=" + longitude }).done();
 
-                WinJS.xhr({ url: BASE_URL_TEST+"/shilpa/coord_to_location.php?win_id=" + result + "&latitude=" + latitude + "&longitude=" + longitude }).done(
-               
+                WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/coord_to_location.php?win_id=" + result + "&latitude=" + latitude + "&longitude=" + longitude }).done(
+
               function success(result) {
                   if (result.status === 200) {
                       "use strict";
@@ -127,7 +134,7 @@ $(document).ready(function () {
                       //city_name = data.location_feed[0].city;
                       zipcode = data.location_feed[0].zip;
                       weather_zipcode = zipcode;
-                      loadData();
+                      //loadData();
                   }
                   else {
                       loadData();
@@ -143,9 +150,9 @@ $(document).ready(function () {
          loadData();
          WinJS.log && WinJS.log(err.message, "sample", "error");
      });
-     */
+     
     var matrix = createCardArray(5, 4, 4);
-    loadData();
+    //loadData();
 
     for (var i = 0; i < matrix.length; i++) {
         for (var j = 0; j < matrix[i].length; j++) {
@@ -186,9 +193,7 @@ $(document).ready(function () {
             $('body').trigger("scrollend");
 
         });
-
         //bindFace();
-
     }
 
 
@@ -236,7 +241,7 @@ $(document).ready(function () {
         } else if (lineNum == 5) {
             $('#card' + cardCount).html('<div class="TWIT_content"><img id="profilePic" class="FB_PIC" src=""></img><span id="Span13" class="TWIT_time">11:11</span><span id="Span14" class="TWIT_title">New @Reply from Levonmaa</span><span id="Span15" class="TWIT_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span></div>');
         } else if (lineNum == 3) {
-            $('#card' + cardCount).html('<img src="images/commerce1.png" class="card"/>');
+            $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + groupon_dummy_url + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">$5 for $10 at Curry Leaf Restaurant</span><span class="GROUPON_message">Masala dosas, mutter paneer, and tandoori roti sate appetites and appease vegetarians or those with gluten allergies</span> </div>');
         } else if (lineNum == 4) {
             $('#card' + cardCount).html('<img src="images/news2.png" class="card"/>');
         }
@@ -738,7 +743,7 @@ $(document).ready(function () {
         $('body').keydown(function (event) {
             var key = event.keyCode - 48;
             var elementId = "element" + key;
-            if (key > 0 && key < 6) {
+            if (key > 0 && key < 5) {
                 pushNewCard(key);
                 arrowKeyLock = 1;
 
@@ -977,14 +982,34 @@ $(document).ready(function () {
                 bindFace();
             });
         });
-        //capture the drag event
-        //count the number of pixels it needs to move       
-        //on msgesturestart record x and y
-        //on msgestureend take x and y
-        //find delta ze
-        //pass to scrollcards function
-        // on every msgesture change count the cumulative transx and transy
-        //on gesture end count transz
+        //use gesturerecognizer class to detect swipe
+        // Initialize gesture recognizer
+        //gr = new Windows.UI.Input.GestureRecognizer();
+
+        // Configure GestureRecognizer to detect rotation, translation, and scaling,
+        // inertia, and tap gesture
+        //gr.gestureSettings = Windows.UI.Input.GestureSettings.drag;
+        //gr.addEventListener('manipulationcompleted', manipulationEndHandler);
+        // body.addEventListener('
+        //var container = document.getElementById('appcontainer');
+        //container.addEventListener('MSPointerDown', processDown, false);
+        //container.addEventListener('MSPointerMove', processMove, false);
+        //container.addEventListener('MSPointerUp', processUp, false);   
+        var container = document.getElementById('appcontainer');
+        //listen to  the gesture start and gesture end on the body
+        //find end and start points
+        //find the angle,if it's < 20 deg make a pan else pass the event down
+        // Creating event listeners for gesture elements 
+        container.addEventListener("MSPointerDown", onPointerDownContainer, true);
+        //el3.addEventListener("MSGestureTap", onGestureChange, false);
+        container.addEventListener("MSGestureEnd", onGestureEndContainer, true);
+        container.addEventListener("MSGestureChange", onGestureChange, true);
+        var gObjContainer = new MSGesture();             // Creating a gesture object for each element
+        gObjContainer.target = container;
+        gObjContainer.srcElt = container;
+        container.gestureObject = gObjContainer;
+        container.gesture = gObjContainer;                     // Expando gesture poroperty for each element.
+        container.gesture.pointerType = POINTER_TOUCH;
         var elements = document.getElementsByClassName('serviceLine');
         for (var i = 0; i < elements.length; i++) {
             var element = elements[i];
@@ -993,45 +1018,31 @@ $(document).ready(function () {
             gObj.srcElt = element;
             element.gestureObject = gObj;
             element.gesture = gObj;                     // Expando gesture poroperty for each element.
-            element.gesture.pointerType = null;         // Expando property to capture pointer type to handle multiple pointer sources
+            element.gesture.pointerType = POINTER_TOUCH;         // Expando property to capture pointer type to handle multiple pointer sources
 
             // Creating event listeners for gesture elements 
             element.addEventListener("MSPointerDown", onPointerDown, true);
-
-            //el3.addEventListener("MSGestureTap", onGestureChange, false);
-
-            element.addEventListener("MSGestureChange", onGestureChange, true);
+            //element.addEventListener("MSGestureChange", onGestureChange, true);
             element.addEventListener("MSGestureEnd", onGestureEnd, true);
         }
+        //add the event listener for 
+        //capture the drag event
+        //count the number of pixels it needs to move       
+        //on msgesturestart record x and y
+        //on msgestureend take x and y
+        //find delta z
+        //pass to scrollcards function
+        // on every msgesture change count the cumulative transx and transy
+        //on gesture end count transz
+
         bindFace();
 
-
-
-        var pagePosition = 0;
-        var pageDelta = 190;
         $('.pan').click(function () {
 
             if ($(this).hasClass('panRight')) {
-                pagePosition -= pageDelta;
-                $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
-                $('#element1').animate({ 'border': '1px' }, 500);
-                $('#element2').animate({ 'border': '1px' }, 500);
-                $('#element3').animate({ 'border': '1px' }, 500);
-                $('#element4').animate({ 'border': '1px' }, 500);
-                $('#element5').animate({ 'border': '1px' }, 500);
-                $('.panRight').animate({ right: '-=' + pageDelta }, 500);
-                $('.panLeft').animate({ left: '+=' + pageDelta }, 500);
-                // $('#page-wrapper').css({"transform":"translateX(" + pagePosition + "px)"});
+                panRight();
             } else if ($(this).hasClass('panLeft')) {
-                pagePosition += pageDelta;
-                $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
-                $('#element1').animate({ 'border': '1px' }, 500);
-                $('#element2').animate({ 'border': '1px' }, 500);
-                $('#element3').animate({ 'border': '1px' }, 500);
-                $('#element4').animate({ 'border': '1px' }, 500);
-                $('#element5').animate({ 'border': '1px' }, 500);
-                $('.panRight').animate({ right: '+=' + pageDelta }, 500);
-                $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
+                panLeft();
             }
         });
         // loadData();
@@ -1055,7 +1066,7 @@ $(document).ready(function () {
             //$('#elements').css({ "transition": "transform 1s ease", "transform": "scale(0.6)" });
             //$('#elements').animate({ 'margin-left': '+=-100px', 'margin-top': '+=-200px' }, 1000);
             //$('#elements').slideUp('slow');
-            $('#elements').css({ "transition": "all 500ms linear", "transform": "scale(0.7)", "margin-left": "+=-100px", "margin-top": "+=-200px" });
+            $('#elements').css({ "transform": "scale(0.7)", "margin-left": "+=-100px", "margin-top": "+=-200px" });
             $('#settingsMenu').css({ "transform": "translateX(0px)" });
             $('#line2dContainerBg').css({ "transform": "translateX(0px)" });
         });
@@ -1066,20 +1077,10 @@ $(document).ready(function () {
             //$('#elements').css({ "transition": "transform 1s ease", "transform": "scale(0.6)" });
             //$('#elements').animate({ 'margin-left': '+=100px', 'margin-top': '+=200px' }, 1000);
             //$('#elements').slideUp('slow');
-            $('#elements').css({ "transition": "all 500ms linear", "transform": "", "margin-left": "+=100px", "margin-top": "+=200px" });
+            $('#elements').css({ "transform": "", "margin-left": "+=100px", "margin-top": "+=200px" });
             $('#settingsMenu').css({ "transform": "translateX(250px)" });
             $('#line2dContainerBg').css({ "transform": "translateY(350px)" });
         });
-
-        /*
-        $('#twitterButton').click(function () {
-            var myIframe = document.createElement("a");
-            $(myIframe).attr("href", "http://198.101.207.173/shilpa/connect.php");
-            $(myIframe).text("Hello World! Click Me!");
-            //$(myIframe).css({ "position": "fixed", "left": "20%", "top": "20%", "width": "60%", "height": "60%", "z-index":"9999999999", "background-color":"#f3f3f3" });
-            $('settingsMenu').append(myIframe);
-        });
-        */
     }, 3000);
 
 
@@ -1180,7 +1181,7 @@ $(document).ready(function () {
             });
 
 
-        WinJS.xhr({ url: BASE_URL_LIVE + "/shilpa/flickr_trial.php" }).done(
+        WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/flickr_client.php?win_id=" + win_id }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
@@ -1190,7 +1191,7 @@ $(document).ready(function () {
 
                     if (transitionComplete == 1) {
 
-                        for (i = 0; i < data.flickr_feed.length; i++) {
+                        for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
 
                             // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
 
@@ -1211,7 +1212,7 @@ $(document).ready(function () {
                         $('body').bind('flickr', function () {
 
                             setTimeout(function () {
-                                for (i = 0; i < data.flickr_feed.length; i++) {
+                                for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
 
                                     // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
 
@@ -1233,8 +1234,8 @@ $(document).ready(function () {
             });
 
 
-
-        WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/gmail_client_cache.php?win_id=shilpa" }).done(
+        /*
+        WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/gmail_client_cache.php?win_id="+win_id }).done(
             function fulfilled(result) {
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
@@ -1299,14 +1300,11 @@ $(document).ready(function () {
                         });
                     }
                 }
-            });
-
-
-
+            });            
+        */
         var fbPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/fb_json.php" });
 
-
-        var TwitPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/shilpa/twitter_trial.php" });
+        var TwitPromise = WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/twitter_client.php?win_id=" + win_id });
 
 
         WinJS.Promise.join([fbPromise, TwitPromise]).done(
@@ -1490,7 +1488,7 @@ $(document).ready(function () {
                     var fb_id = JSON.parse(result.responseText).id;
                     Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                         //send data to intelscreensavings server
-                        WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=fb&win_id=" + result + "&token=" + accesstoken + "&fb_id=" + fb_id }).done(
+                        WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=fb&win_id=" + result + "&fb_token=" + accesstoken + "&fb_id=" + fb_id }).done(
                             function (result) {
                                 var results = result.responseData;
                             }
@@ -1897,7 +1895,6 @@ $(document).ready(function () {
                 newArr.push(arr[arrKeys[i]]);
             }
         }
-
         return newArr.join(separator1);
     }
 
@@ -1918,8 +1915,9 @@ $(document).ready(function () {
         cumulativeX += e.translationX;
         cumulativeY += e.translationY;
         scrolling = 1;
-        $('.face').unbind();
+        //$('.face').unbind();
         scrolling = 0;
+        $('body').unbind('scrollend');
         $('body').bind('scrollend', function () {
             $('body').unbind('scrollend');
             bindFace();
@@ -1927,16 +1925,6 @@ $(document).ready(function () {
     }
 
     function onGestureEnd(e) {
-        //var elt = e.target;
-        /*
-        scrolling = 1;
-        $('.face').unbind();
-        scrolling = 0;
-        $('body').bind('scrollend', function () {
-            $('body').unbind('scrollend');
-            bindFace();
-        });
-        */
         var elementId = e.currentTarget.id;
         var lineNum = elementId.substr(7);
         var deltaX = cumulativeX;
@@ -1948,31 +1936,64 @@ $(document).ready(function () {
             scrollCards(lineNum, deltaZ / 2);
         else
             scrollCards(lineNum, -deltaZ / 2);
+        // e.stopPropagation();
+        //e.currentTarget.gesture = null;
     }
-    /*
-    function onGestureChange(e) {
-        //var elt = e.target;
-        scrolling = 1;
-        $('.face').unbind();
-        scrolling = 0;
-        $('body').bind('scrollend', function () {
-            $('body').unbind('scrollend');
+    function onGestureEndContainer(e) {
+        var elementId = e.currentTarget.id;
+        var lineNum = elementId.substr(7);
+        var deltaX = cumulativeX;
+        var deltaY = cumulativeY;
+        var ratio = Math.abs(deltaY / deltaX);
+        if (ratio < HORIZONTAL_DRAG_RATIO) {
+            //do panning and bindface again
+            cumulativeX = 0;
+            cumulativeY = 0;
+            e.stopPropagation();
+            if (deltaX < 0)
+                panLeft();
+            else
+                panRight();
             bindFace();
-        });
-        var elt = e.currentTarget;
-        var deltaX = e.translationX;
-        var deltaY = e.translationY;
-        var deltaZ = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-        if (deltaY > 0)
-            scrollCards(3, deltaZ);
-        else
-            scrollCards(3, -deltaZ);
+        }
+        //e.currentTarget.gesture = null;
     }
-    */
+
     function onPointerDown(e) {
-        e.currentTarget.gesture.addPointer(e.pointerId);                   // Attaches pointer to element (e.target is the element)
-        e.currentTarget.gesture.pointerType = e.pointerType;
-        //e.target.freeCapture = 1;
+        if (e.currentTarget.gesture.pointerType == e.pointerType) {
+            e.currentTarget.gesture.addPointer(e.pointerId);                   // Attaches pointer to element (e.target is the element)
+            e.currentTarget.gesture.pointerType = e.pointerType;
+            //e.target.freeCapture = 1;
+        }
+    }
+    function onPointerDownContainer(e) {
+        if (e.currentTarget.gesture.pointerType == e.pointerType) {
+            e.currentTarget.gesture.addPointer(e.pointerId);                   // Attaches pointer to element (e.target is the element)
+            e.currentTarget.gesture.pointerType = e.pointerType;
+            //e.target.freeCapture = 1;
+        }
+    }
+    function panRight() {
+        pagePosition -= pageDelta;
+        $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
+        $('#element1').animate({ 'border': '1px' }, 500);
+        $('#element2').animate({ 'border': '1px' }, 500);
+        $('#element3').animate({ 'border': '1px' }, 500);
+        $('#element4').animate({ 'border': '1px' }, 500);
+        $('#element5').animate({ 'border': '1px' }, 500);
+        $('.panRight').animate({ right: '-=' + pageDelta }, 500);
+        $('.panLeft').animate({ left: '+=' + pageDelta }, 500);
+    }
+    function panLeft() {
+        pagePosition += pageDelta;
+        $('#elements').animate({ 'margin-left': -pagePosition + 'px' }, 500);
+        $('#element1').animate({ 'border': '1px' }, 500);
+        $('#element2').animate({ 'border': '1px' }, 500);
+        $('#element3').animate({ 'border': '1px' }, 500);
+        $('#element4').animate({ 'border': '1px' }, 500);
+        $('#element5').animate({ 'border': '1px' }, 500);
+        $('.panRight').animate({ right: '+=' + pageDelta }, 500);
+        $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
     }
 });
 

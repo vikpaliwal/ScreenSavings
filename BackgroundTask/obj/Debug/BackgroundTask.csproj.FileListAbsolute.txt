@@ -57,6 +57,10 @@ C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\Backgroun
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.pdb
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\priconfig.xml.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\layout.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles.intermediate
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\priconfig.xml
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\layout.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles

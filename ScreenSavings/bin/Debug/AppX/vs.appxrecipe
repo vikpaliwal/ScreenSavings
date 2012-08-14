@@ -5,10 +5,10 @@
     <WindowsUser>gaura_000</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>612D25925744BEC3E5B963A6D086ED927146BDF468F23CB238DC283E07B154F6</RegisteredManifestChecksum>
-    <RegisteredPackageMoniker>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
-    <RegisteredUserModeAppID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
-    <RegisteredPackageID>1be41ff0-47b5-4dfe-94a4-4cbd3793c640</RegisteredPackageID>
+    <RegisteredManifestChecksum>EEF62ACDF6B56CAD3067035A01C80FC3736EE8C2B1A721195E8EAF1624A066D7</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b</RegisteredPackageID>
     <RegisteredPackagePublisher>CN=Shah</RegisteredPackagePublisher>
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
@@ -16,17 +16,25 @@
     <AppXManifest Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-07-31T16:31:25.585</Modified>
+      <Modified>2012-08-14T12:47:41.544</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
       <PackagePath>BackgroundTask.winmd</PackagePath>
-      <Modified>2012-06-29T16:21:52.579</Modified>
+      <Modified>2012-08-14T12:19:45.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd">
+      <PackagePath>WCFClientRuntimeComponent.winmd</PackagePath>
+      <Modified>2012-08-14T12:19:45.240</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
       <PackagePath>BackgroundTask.pdb</PackagePath>
-      <Modified>2012-06-29T16:21:52.559</Modified>
+      <Modified>2012-08-14T12:19:45.157</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb">
+      <PackagePath>WCFClientRuntimeComponent.pdb</PackagePath>
+      <Modified>2012-08-14T12:19:45.221</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_Black.png">
       <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_Black.png</PackagePath>
@@ -66,7 +74,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
-      <Modified>2012-07-31T16:30:52.432</Modified>
+      <Modified>2012-08-13T14:56:31.881</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\default.css">
       <PackagePath>css\default.css</PackagePath>
@@ -74,7 +82,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2012-07-31T16:30:12.300</Modified>
+      <Modified>2012-08-14T12:01:26.848</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
@@ -251,23 +259,19 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2012-08-01T15:29:35.508</Modified>
+      <Modified>2012-08-14T12:14:15.860</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2012-07-09T15:31:46.795</Modified>
+      <Modified>2012-08-14T12:42:51.518</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
       <Modified>2012-07-10T13:51:19.396</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\oauth.js">
-      <PackagePath>js\oauth.js</PackagePath>
-      <Modified>2012-07-17T16:42:48.383</Modified>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2012-07-31T16:31:25.124</Modified>
+      <Modified>2012-08-14T12:47:41.384</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
