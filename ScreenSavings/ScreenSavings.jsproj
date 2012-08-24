@@ -93,6 +93,7 @@
     <Content Include="images\time.png" />
     <Content Include="images\trashcan.png" />
     <Content Include="images\twitter.png" />
+    <Content Include="images\twitter_detail.png" />
     <Content Include="images\weather.png" />
     <Content Include="js\3dCard-min.js" />
     <Content Include="js\default.js" />

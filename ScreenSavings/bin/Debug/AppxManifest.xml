@@ -33,10 +33,19 @@
             <Task Type="pushNotification" />
           </BackgroundTasks>
         </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="text">
+            <DisplayName>text</DisplayName>
+            <SupportedFileTypes>
+              <FileType>.txt</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>
   <Capabilities>
+    <Capability Name="documentsLibrary" />
     <Capability Name="internetClient" />
     <DeviceCapability Name="location" />
   </Capabilities>
