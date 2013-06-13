@@ -5,27 +5,44 @@
     <title>App1</title>
 
     <!-- WinJS references -->
-    <!--<link href="//Microsoft.WinJS.1.0.RC/css/ui-dark.css" rel="stylesheet" />-->
-    <script src="//Microsoft.WinJS.1.0.RC/js/base.js"></script>
-    <script src="//Microsoft.WinJS.1.0.RC/js/ui.js"></script>
+    <!--<link href="//Microsoft.WinJS.1.0/css/ui-dark.css" rel="stylesheet" />-->
+    <script src="//Microsoft.WinJS.1.0/js/base.js"></script>
+    <script src="//Microsoft.WinJS.1.0/js/ui.js"></script>
+    <link href="//Microsoft.WinJS.1.0/css/ui-dark.css" rel="stylesheet" />
+    
 
     <!-- App1 references -->
     <link href="/css/default.css" rel="stylesheet" />
     <link href="/css/3dCard-min.css" rel="stylesheet" />
     <script src="/js/jquery.js"></script>
     <script src="/js/default.js"></script>
-     <script src="/js/3dCard-min.js"></script>  
+    <script src="/js/AccountBinder.js"></script>
+    <script src="/js/DashMain.js"></script>
+    <script src="/js/PhaseSetup.js"></script>  
+    <script src="/js/InitializationUI.js"></script>  
+    <script src="/js/3dCard-min.js"></script>  
     <script type="text/javascript" src="/LiveSDKHTML/js/wl.js"></script>    
 </head>
 <body>
-    <div data-win-control="WinJS.UI.ViewBox">
+    <div id="Main"data-win-control="WinJS.UI.ViewBox">
+        <div id="InitialSetupContainer" >
+            <div id="TopLeft">
+                <button class="win-backbutton" id="win-backbutton" aria-label="Back"></button>
+            </div>
+            <div id="TopRight">
+                <div id="DropDownBox"></div>
+            </div>
+            <div id="TopCenterBar"></div>
+            <div id="MiddleContent"></div>
+            <div id="FooterBar"></div>
+        </div>
         <div class="fixedlayout" id="appcontainer">
             <!--<textarea id="dump">hello!</textarea>-->
             <!--/////////////////////////////////////////////////////////////////////////-->
 
             	<div id="time"><!--<img src="images/time.png" />--><span id="date"></span><span id="hrsMins"></span></div>
             <img src="images/weather.png" id="settings"/>
-	<div id="weather"><span id="location">Portland</span><img src="" id="weatherIcon" /><span id="temperature">67 F</span></div>
+	<div id="weather"><span id="location">portland</span><img src="" id="weatherIcon" /><span id="temperature">78</span></div>
     <div id="page-wrapper">
         <span id="elements">
   		<div id="element1" class="parentCanvas serviceLine">
@@ -33,7 +50,7 @@
 			<div id="line1id" class="linePerspective line1"></div>
 
                 <div class="row1 face name1-2d">
-					<span class="name1">PHOTOS</span>
+					<span claloginFailedss="name1">PHOTOS</span>
 				</div>
   		</div>
   		<div id="element2" class="parentCanvas serviceLine">
@@ -70,6 +87,7 @@
 			</div>
   		</div>
 		</span>
+        
     <div id="settingsMenu">
 		<img src="images/settings.png" id="settingsIcon" />
 		<img src="images/accounts.png" id="accounts" />

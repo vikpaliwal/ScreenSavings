@@ -17,15 +17,13 @@ namespace BackgroundTask
 {
     public sealed class ScreenSavingsTask : IBackgroundTask
     {
-        private string tileUpdateURL = "http://198.101.207.173/iss/WINDOWS_TILES.PHP";
-        private string lockScreenImageURL = "http://198.101.207.173/iss/tile.bmp";
+        private string tileUpdateURL = "http://198.101.207.173/shilpa/live_tile/live_tile.php";
+        private string lockScreenImageURL = "http://198.101.207.173/gaomin/client/tile_generator_vikas.php?win_id="+"demo";
         private string lockScreenImageName = "screen-savings.bmp";
-
         BackgroundTaskDeferral deferral = null;
         private int taskCompleted;
         private Object lockTaskCompleted = new Object();
         private StorageFile lockScreenImageFile;
-
         public void Run(IBackgroundTaskInstance taskInstance)
         {
             Debug.WriteLine(taskInstance.Task.Name + " started...");

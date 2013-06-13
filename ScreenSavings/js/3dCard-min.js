@@ -28,11 +28,6 @@ var twitter_last_card_time = 0;
 var fb_last_card_time = 0;
 var gmail_last_card_time = 0;
 var news_last_card_time = 0;
-var flickrcache = [];
-var twittercache = [];
-var fbcache = [];
-var gmailcache = [];
-var grouponcache = [];
 
 function convertTimeToString(timeVal) {
     if (timeVal.getHours() > 12) {
@@ -107,69 +102,603 @@ function updateTime() {
 }
 
 function getLocation() {
-    var latitude, longitude;
-    var coord;
-    var geolocator = Windows.Devices.Geolocation.Geolocator();
-    promise = geolocator.getGeopositionAsync();
-    promise.done(
-    function (pos) {
-        openNotificationChannel();
-        coord = pos.coordinate;
-        latitude = coord.latitude;
-        longitude = coord.longitude;
-        Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done
-            (function success(result) {
-                //store result in win_id global var to access win_id throughout the app.
-                win_id = result;
-                //send data to intelscreensavings server's register groupon page
-                WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=groupon&win_id=" + userId + "&lat=" + latitude + "&lng=" + longitude }).done();
+        var latitude, longitude;
+        var coord;
+        var geolocator = Windows.Devices.Geolocation.Geolocator();
+        promise = geolocator.getGeopositionAsync();
+        promise.done(
+        function (pos) {
+            openNotificationChannel();
+            coord = pos.coordinate;
+            latitude = coord.latitude;
+            longitude = coord.longitude;
+            Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done
+                (function success(result) {
+                    //store result in win_id global var to access win_id throughout the app.
+                    win_id = result;
+                    //send data to intelscreensavings server's register groupon page
+                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=groupon&win_id=" + userId + "&lat=" + latitude + "&lng=" + longitude }).done();
+    
+                   WinJS.xhr({ url: "http://maps.google.com/maps/geo?q="+latitude+","+longitude}).done(
+                   function success(result) {
+                      if (result.status === 200) {
+                          var data = JSON.parse(result.response);
+                          //weather_zipcode = data.Placemark[0].AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber;
+                         loadData();
+                      }
+                      else {
+                          loadData();
+                      }
+                  },
+                  function err(result) {
+                      loadData();
+                  }
+                  );
+                });
+              
+        },
+         function (err) {
+             loadData();
+             WinJS.log && WinJS.log(err.message, "sample", "error");
+         });  
+}
 
-                WinJS.xhr({ url: "http://maps.google.com/maps/geo?q=" + latitude + "," + longitude }).done(
-                function success(result) {
-                    if (result.status === 200) {
-                        var data = JSON.parse(result.response);
-                        weather_zipcode = data.Placemark[0].AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber;
-                        loadData();
+function FaceBookLogin(SuccessFunction,FailureFunction)
+{
+    var FacebookLoginPromise = new WinJS.Promise(function(FacebookLoginSuccess,FacebookLoginFailure,FacebookLoginProgress){
+        var facebookURL = "https://www.facebook.com/dialog/oauth?client_id=";
+        var clientID = "358452557528632";
+        if (clientID === null || clientID === "") {
+            WinJS.log("Enter a ClientID", "Web Authentication SDK Sample", "error");
+            return;
+        }
+
+        var callbackURL = "https://www.facebook.com/connect/login_success.html";
+
+        facebookURL += clientID + "&redirect_uri=" + encodeURIComponent(callbackURL) + "&scope=read_stream,user_likes&display=popup&response_type=token";
+
+        var startURI = new Windows.Foundation.Uri(facebookURL);
+        var endURI = new Windows.Foundation.Uri(callbackURL);
+
+        //  document.getElementById("FacebookDebugArea").value += "Navigating to: " + facebookURL + "\r\n";
+
+        authzInProgress = true;
+        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+            .done(function (result) {
+                var value = result.responseData;
+                var startpos = value.indexOf("access_token") + 13;
+                var endpos = value.indexOf("&expires_in");
+                var accesstoken = value.substring(startpos, endpos);
+                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+                }
+                var fb_id_url = "https://graph.facebook.com/me?access_token=" + accesstoken;
+                WinJS.xhr({ url: fb_id_url }).done(
+                    function success(result)
+                    {
+                        var fb_id = JSON.parse(result.responseText).id;
+                        Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result)
+                        {
+                            //send data to intelscreensavings server
+                            WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=fb&win_id=" + userId + "&fb_token=" + accesstoken + "&fb_id=" + fb_id }).done(
+                                function (result) {
+                                    var results = result.responseData;
+                                }
+                           );
+                        });
+                    }, function FailureAccessToken(err)
+                    {
+                        FacebookLoginFailure(err)
+                        //WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
                     }
-                    else {
-                        loadData();
+                    );
+
+            }, function (err) {
+                FacebookLoginFailure(err)
+                //WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+                // document.getElementById("FacebookDebugArea").value += " Error Message: " + err.message + "\r\n";
+                // authzInProgress = false;
+            });
+    })
+    FacebookLoginPromise.done
+        (
+        function (passed)
+        {
+            if (SuccessFunction == undefined) { return}
+            SuccessFunction(passed)
+        },
+        function (err)
+        {
+            if (FailureFunction == undefined) { return}; FailureFunction(err);
+            
+        }
+    )
+}
+
+function TwitterLogin(SuccessFunction, FailureFunction) {
+    var TwitterLoginPromise = new WinJS.Promise(function (TwitterLoginSuccesCallBack, TwitterLoginFailureCallBack, TwitterLoginProgressCallBack) {
+
+        var twitterURL = "https://api.twitter.com/oauth/request_token";
+        var accessTokenUrl = "https://api.twitter.com/oauth/access_token";
+        // Get all the parameters from the user
+        var clientID = "hk7hZzZVSGMd6nJNztYw";
+        var clientSecret = "HqoWMS3qvKh0kb2qigzz9DSE8rzXZ9gnxdPEu2ZMXU";
+        var callbackURL = "http://198.101.207.173/shilpa/callback.php";
+
+        // Acquiring a request token
+        var timestamp = Math.round(new Date().getTime() / 1000.0);
+        var nonce = Math.random();
+        nonce = Math.floor(nonce * 1000000000);
+
+        // Compute base signature string and sign it.
+        //    This is a common operation that is required for all requests even after the token is obtained.
+        //    Parameters need to be sorted in alphabetical order
+        //    Keys and values should be URL Encoded.
+        var sigBaseStringParams = "oauth_callback=" + encodeURIComponent(callbackURL);
+        sigBaseStringParams += "&" + "oauth_consumer_key=" + clientID;
+        sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
+        sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
+        sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
+        sigBaseStringParams += "&" + "oauth_version=1.0";
+        var sigBaseString = "POST&";
+        sigBaseString += encodeURIComponent(twitterURL) + "&" + encodeURIComponent(sigBaseStringParams);
+
+        var keyText = clientSecret + "&";
+        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+        var key = macAlgorithmProvider.createKey(keyMaterial);
+        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+        var dataToPost = "OAuth oauth_callback=\"" + encodeURIComponent(callbackURL) + "\", oauth_consumer_key=\"" + clientID + "\", oauth_nonce=\"" + nonce + "\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"" + timestamp + "\", oauth_version=\"1.0\", oauth_signature=\"" + encodeURIComponent(signature) + "\"";
+        var response = sendPostRequest(twitterURL, dataToPost, null);
+        var oauth_token;
+        var oauth_token_secret;
+        var keyValPairs = response.split("&");
+
+        for (var i = 0; i < keyValPairs.length; i++) {
+            var splits = keyValPairs[i].split("=");
+            switch (splits[0]) {
+                case "oauth_token":
+                    oauth_token = splits[1];
+                    break;
+                case "oauth_token_secret":
+                    oauth_token_secret = splits[1];
+                    break;
+            }
+        }
+
+        // Send the user to authorization
+        twitterURL = "https://api.twitter.com/oauth/authorize?oauth_token=" + oauth_token;
+
+        // document.getElementById("TwitterDebugArea").value += "\r\nNavigating to: " + twitterURL + "\r\n";
+        var startURI = new Windows.Foundation.Uri(twitterURL);
+        var endURI = new Windows.Foundation.Uri(callbackURL);
+
+        //authzInProgress = true;
+        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+            .done(function (result) {
+                var value = result.responseData;
+
+                var startpos = value.indexOf("oauth_token") + 12;
+                var endpos = value.indexOf("&oauth_verifier");
+                var oauthtoken = value.substring(startpos, endpos);
+                var oauthverifier = value.substring(endpos + 16);
+                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+                }
+                //form the header and send the verifier in the request to accesstokenurl
+                var accessdataToPost = "OAuth oauth_consumer_key=\"" + clientID + "\", oauth_nonce=\"" + nonce + "\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"" + timestamp + "\", oauth_token=\"" + oauth_token + "\", oauth_version=\"1.0\"";
+                var param = "oauth_verifier=" + oauthverifier;
+                var response = sendPostRequest(accessTokenUrl, accessdataToPost, param);
+                var tokenstartpos = response.indexOf("oauth_token") + 12;
+                var tokenendpos = response.indexOf("&oauth_token_secret");
+                var secretstartpos = tokenendpos + 20;
+                var secretendpos = response.indexOf("&user_id");
+                var useridstartpos = secretendpos + 9;
+                var useridendpos = response.indexOf("&screen_name");
+                var token = response.substring(tokenstartpos, tokenendpos);
+                var secret = response.substring(secretstartpos, secretendpos);
+                var user = response.substring(useridstartpos, useridendpos);
+
+                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                    //send data to intelscreensavings server
+                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=twitter&win_id=" + userId + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
+                        function (result) {
+                            var results = result.responseData;
+                        }
+                   );
+                });
+
+            }, function (err) {
+                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+            });
+    })
+    TwitterLoginPromise.done(function TwitterLoginSuccess(value) { if (SuccessFunction == undefined) { return}; SuccessFunction(value); }, function TwitterLoginFailure(value) { if (FailureFunction == undefined) { return}; FailureFunction(value) })
+}
+
+function FlickrLogin(SuccessFunction, FailureFunction)
+{
+    var FlickrLoginPromise = new WinJS.Promise(function (FlickrLoginSuccesCallBack, FlickrLoginFailureCallBack, FlickrLoginProgressCallBack) {
+        var flickrURL = "https://secure.flickr.com/services/oauth/request_token";
+        var accessTokenUrl = "http://www.flickr.com/services/oauth/access_token";
+        // Get all the parameters from the user
+        var clientID = "698637b46e1640dc47bb878246328e95";
+        var clientSecret = "0e0d30a1d78038fd";
+        var callbackURL = "http://198.101.207.173/shilpa/flickrcallback.php";
+
+        // Acquiring a request token
+        var timestamp = Math.round(new Date().getTime() / 1000.0);
+        var nonce = Math.random();
+        nonce = Math.floor(nonce * 1000000000);
+
+        // Compute base signature string and sign it.
+        // This is a common operation that is required for all requests even after the token is obtained.
+        // Parameters need to be sorted in alphabetical order
+        // Keys and values should be URL Encoded.
+        var sigBaseStringParams = "oauth_callback=" + encodeURIComponent(callbackURL);
+        sigBaseStringParams += "&" + "oauth_consumer_key=" + clientID;
+        sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
+        sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
+        sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
+        sigBaseStringParams += "&" + "oauth_version=1.0";
+        var sigBaseString = "GET&";
+        sigBaseString += encodeURIComponent(flickrURL) + "&" + encodeURIComponent(sigBaseStringParams);
+        var keyText = clientSecret + "&";
+        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+        var key = macAlgorithmProvider.createKey(keyMaterial);
+        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+
+        flickrURL += "?" + sigBaseStringParams + "&oauth_signature=" + encodeURIComponent(signature);
+        var response = sendGetRequest(flickrURL);
+
+        var oauth_token;
+        var oauth_token_secret;
+        var keyValPairs = response.split("&");
+
+        for (var i = 0; i < keyValPairs.length; i++) {
+            var splits = keyValPairs[i].split("=");
+            switch (splits[0]) {
+                case "oauth_token":
+                    oauth_token = splits[1];
+                    break;
+                case "oauth_token_secret":
+                    oauth_token_secret = splits[1];
+                    break;
+            }
+        }
+
+        // Send the user to authorization
+        flickrURL = "https://secure.flickr.com/services/oauth/authorize?oauth_token=" + oauth_token + "&perms=read";
+
+        var startURI = new Windows.Foundation.Uri(flickrURL);
+        var endURI = new Windows.Foundation.Uri(callbackURL);
+
+        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+            .done(function (result) {
+                var value = result.responseData;
+
+                var startpos = value.indexOf("oauth_token") + 12;
+                var endpos = value.indexOf("&oauth_verifier");
+                var oauthtoken = value.substring(startpos, endpos);
+                var oauthverifier = value.substring(endpos + 16);
+                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+                }
+                //form the header and send the verifier in the request to accesstokenurl
+                var timestamp = Math.round(new Date().getTime() / 1000.0);
+                var nonce = Math.random();
+                nonce = Math.floor(nonce * 1000000000);
+                // Compute base signature string and sign it.
+                // This is a common operation that is required for all requests even after the token is obtained.
+                // Parameters need to be sorted in alphabetical order
+                // Keys and values should be URL Encoded.
+
+                var sigBaseStringParams = "oauth_consumer_key=" + clientID;
+                sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
+                sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
+                sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
+                sigBaseStringParams += "&" + "oauth_token=" + oauthtoken;
+                sigBaseStringParams += "&" + "oauth_verifier=" + oauthverifier;
+                sigBaseStringParams += "&" + "oauth_version=1.0";
+
+                var sigBaseString = "GET&";
+                sigBaseString += encodeURIComponent(accessTokenUrl) + "&" + encodeURIComponent(sigBaseStringParams);
+                var keyText = clientSecret + "&" + oauth_token_secret;
+                var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+                var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+                var key = macAlgorithmProvider.createKey(keyMaterial);
+                var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+                var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+                var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+
+                accessTokenUrl += "?" + sigBaseStringParams + "&oauth_signature=" + encodeURIComponent(signature);
+                var response = sendGetRequest(accessTokenUrl);
+                var tokenstartpos = response.indexOf("oauth_token") + 12;
+                var tokenendpos = response.indexOf("&oauth_token_secret");
+                var secretstartpos = tokenendpos + 20;
+                var secretendpos = response.indexOf("&user_nsid");
+                var useridstartpos = secretendpos + 11;
+                var useridendpos = response.indexOf("&username");
+                var token = response.substring(tokenstartpos, tokenendpos);
+                var secret = response.substring(secretstartpos, secretendpos);
+                var user = response.substring(useridstartpos, useridendpos);
+                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                    //send data to intelscreensavings server
+                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=flickr&win_id=" + userId + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
+                        function (result) {
+                            var results = result.responseData;
+                        }
+                   );
+                });
+            }, function (err) {
+                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+            });
+    })
+    FlickrLoginPromise.done(function FlickrLoginSuccess(value) { if (SuccessFunction == undefined) { return}; SuccessFunction(value); }, function FlickrLoginFailure(value) { if (FailureFunction == undefined) { return}; FailureFunction(value)})
+}
+
+function GmailLogin(SuccessFunction, FailureFunction) {
+    //oauth1 approach similar to twitter
+    var gMailLoginPromise = new WinJS.Promise(function (gMailLoginSuccesCallBack, gMailLoginFailureCallBack, gMailLoginProgressCallBack){
+    var requestUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
+    var authorizeUrl = "https://www.google.com/accounts/OAuthAuthorizeToken";
+    var accessUrl = "https://www.google.com/accounts/OAuthGetAccessToken";
+    var callbackUrl = "http://198.101.207.173/shilpa/two-legged.php";
+    var scope = "https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
+    var clientID = "198.101.234.220";
+    var clientSecret = "p1_QaRDYcgZXdB_kC8scaINW";
+    var timestamp = Math.round(new Date().getTime() / 1000.0);
+    var nonce = (new Date()).getTime();
+    var params = [];
+    params["oauth_callback"] = encodeURI(callbackUrl);
+    params["oauth_consumer_key"] = clientID;
+    params["oauth_timestamp"] = timestamp;
+    params["oauth_nonce"] = nonce;
+    params["oauth_signature_method"] = "HMAC-SHA1";
+    params["scope"] = scope;
+    var paramString = normalizeParams(params);
+    var sigBaseString = "GET&" + encodeURIComponent(requestUrl) + "&" + encodeURIComponent(paramString);
+    var keyText = encodeURIComponent(clientSecret) + "&";
+    var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+    var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+    var key = macAlgorithmProvider.createKey(keyMaterial);
+    var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+    var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+    var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+    paramString += "&oauth_signature=" + encodeURIComponent(signature);
+    requestUrl = encodeURI(requestUrl);
+    requestUrl += "?" + paramString;
+    var response = sendGetRequest(requestUrl);
+    //requestUrl += "?scope="+encodeURIComponent(scope);
+    //var response = sendGetRequest(requestUrl, dataToPost, null);
+    var keyValPairs = response.split("&");
+    var oauth_token;
+    var oauth_token_secret;
+    for (var i = 0; i < keyValPairs.length; i++) {
+        var splits = keyValPairs[i].split("=");
+        switch (splits[0]) {
+            case "oauth_token":
+                oauth_token = splits[1];
+                break;
+            case "oauth_token_secret":
+                oauth_token_secret = splits[1];
+                break;
+        }
+    }
+
+    // Send the user to authorization
+    authorizeUrl += "?oauth_token=" + oauth_token;
+
+    // document.getElementById("TwitterDebugArea").value += "\r\nNavigating to: " + twitterURL + "\r\n";
+    var startURI = new Windows.Foundation.Uri(authorizeUrl);
+    var endURI = new Windows.Foundation.Uri(callbackUrl);
+
+    //authzInProgress = true;
+    Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
+        Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
+        .done(function (result) {
+            var value = result.responseData;
+            var callbackPrefix = callbackUrl + "?";
+            var dataPart = value.substring(callbackPrefix.length);
+            var keyValPairs = dataPart.split("&");
+            var authorize_token;
+            var oauth_verifier;
+            for (var i = 0; i < keyValPairs.length; i++) {
+                var splits = keyValPairs[i].split("=");
+                switch (splits[0]) {
+                    case "oauth_token":
+                        authorize_token = splits[1];
+                        break;
+                    case "oauth_verifier":
+                        oauth_verifier = splits[1];
+                        break;
+                }
+            }
+            if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
+                //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
+            }
+            //form the header and send the verifier in the request to accesstokenurl
+            var params = [];
+            var timestamp = Math.round(new Date().getTime() / 1000.0);
+            var nonce = (new Date()).getTime();
+            params["oauth_consumer_key"] = clientID;
+            params["oauth_nonce"] = nonce;
+            params["oauth_signature_method"] = "HMAC-SHA1";
+            params["oauth_timestamp"] = timestamp;
+            params["oauth_token"] = authorize_token;
+            params["oauth_verifier"] = oauth_verifier;
+            var paramString = normalizeParams(params);
+
+            var sigBaseString = "GET&" + rfcEncoding(accessUrl) + "&" + rfcEncoding(paramString);
+            var keyText = rfcEncoding(clientSecret) + "&" + rfcEncoding(oauth_token_secret);
+            var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+            var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
+            var key = macAlgorithmProvider.createKey(keyMaterial);
+            var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+            var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
+            var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
+            paramString += "&oauth_signature=" + rfcEncoding(signature);
+            accessUrl = encodeURI(accessUrl);
+            accessUrl += "?" + paramString;
+            var response = sendGetRequest(accessUrl);
+
+            var tokenstartpos = response.indexOf("oauth_token") + 12;
+            var tokenendpos = response.indexOf("&oauth_token_secret");
+            var secretstartpos = tokenendpos + 20;
+            var token = response.substring(tokenstartpos, tokenendpos);
+            var secret = response.substring(secretstartpos);
+            //var gmailinfourl = "https://www.googleapis.com/userinfo/email?access_token="+token;
+
+            Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                //send data to intelscreensavings server
+                WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=gmail&win_id=" + userId + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com" }).done(
+                    function (result) {
+                        var results = result.responseData;
                     }
-                },
-               function err(result) {
-                   loadData();
-               }
                );
             });
+        }, function (err) {
+            WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+        });})
+    gMailLoginPromise.done(function gMailLoginSuccess(value) { if (SuccessFunction == undefined) { return}; SuccessFunction(value) }, function gMailLoginFailure(value) { if (FailureFunction == undefined) { return}; FailureFunction(value) })
+}
 
-    },
-     function (err) {
-         loadData();
-         WinJS.log && WinJS.log(err.message, "sample", "error");
-     });
+function YahooMailLogin(SuccessFunction, FailureFunction)
+{
+    var YahooMailTest = true;
+    var YahooMailTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
+
+        if (YahooMailTest) {
+            Success(true);
+        }
+        else {
+            Failure(false)
+        }
+    });
+    YahooMailTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
+
+}
+
+function SunNewsRSS(SuccessFunction, FailureFunction)
+{
+    var SunNewsTest = true;
+    var SunNewsTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
+
+        if (SunNewsTest) {
+            Success(true);
+        }
+        else {
+            Failure(false)
+        }
+    });
+    SunNewsTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
+
+}
+
+function GoogleNewsRss(SuccessFunction, FailureFunction)
+{
+    var GoogleNewsTest = true;
+    var GoogleNewsTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
+
+        if (GoogleNewsTest) {
+            Success(true);
+        }
+        else {
+            Failure(false)
+        }
+    });
+    GoogleNewsTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
+}
+
+function InstagramLogin(SuccessFunction, FailureFunction)
+{
+    var InstagramTest = true;
+    var InstagramTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
+
+        if (InstagramTest) {
+            Success(true);
+        }
+        else {
+            Failure(false)
+        }
+    });
+    InstagramTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
+}
+
+function GrouponLogin(SuccessFunction, FailureFunction)
+{
+    var GrouponTest = true;
+    var GrouponTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
+
+        if (GrouponTest) {
+            Success(true);
+        }
+        else {
+            Failure(false)
+        }
+    });
+    GrouponTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
+    
+}
+
+function LivingSocialLogin(SuccessFunction, FailureFunction)
+{
+    var LivingSocialTest = true;
+    var LivingSocialTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
+
+        if (LivingSocialTest) {
+            Success(true);
+        }
+        else {
+            Failure(false)
+        }
+    });
+    LivingSocialTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
+}
+
+function sendGetRequest(url) {
+    try {
+        var request = new XMLHttpRequest();
+        request.open("GET", url, false);
+        request.send(null);
+        return request.responseText;
+    } catch (err) {
+        WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
+    }
 }
 
 
 
-$(document).ready(function () {
+var ValidatedAccountLaunch= function (){
+    $(document).ready(function () {
     updateTime();
-
-
+    
+    
     Windows.Storage.KnownFolders.documentsLibrary.getFileAsync(cache_filename).done(
-            function (file) {
-                Windows.Storage.FileIO.readTextAsync(file).done(function (fileContent) {
-                    cached_data = JSON.parse(fileContent);
-                    matrix = createCardArray(5, 4, 4);
-                    //loadData();
-                    for (var i = 0; i < matrix.length; i++) {
-                        for (var j = 0; j < matrix[i].length; j++) {
-                            $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][1] + 'px)');
-                        }
+        function (file) {
+            Windows.Storage.FileIO.readTextAsync(file).done(function (fileContent) {
+                cached_data = JSON.parse(fileContent);
+                matrix = new Array();
+                matrix = createCardArray(5, 4, 4);
+                //loadData();
+                for (var i = 0; i < matrix.length; i++) {
+                    for (var j = 0; j < matrix[i].length; j++) {
+                        $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][1] + 'px)');
                     }
-                },
-                function (error) {
-                    WinJS.log && WinJS.log(error, "sample", "error");
-                });
-            });
+                }
+            },
+            function (error) {
+                WinJS.log && WinJS.log(error, "sample", "error");
+            });    
+        });
+
     /*
     for (var i = 0; i < matrix.length; i++) {
         for (var j = 0; j < matrix[i].length; j++) {
@@ -179,7 +708,7 @@ $(document).ready(function () {
         }
     }
     */
-    function createCardArray(d1, d2, d3) {
+    function createCardArray(d1, d2, d3){
         var x = new Array(d1);
         for (var i = 0; i < d1; i++) {
             x[i] = new Array(d2);
@@ -187,7 +716,7 @@ $(document).ready(function () {
         for (var i = 0; i < d1; i++) {
             for (var j = 0; j < d2; j++) {
                 if (i == 0)
-                    d3 = 8;
+                    d3 = 8;                
                 if (i == 1)
                     d3 = 11;
                 if (i == 2)
@@ -195,8 +724,8 @@ $(document).ready(function () {
                 if (i == 3)
                     d3 = 11;
                 if (i == 4)
-                    d3 = 11;
-                x[i][j] = new Array(d3);
+                    d3 = 11;                    
+                x[i][j] = new Array(d3);               
                 x[i][j][0] = cardCount;
                 if (j == 0) {
                     x[i][j][1] = TwoDTranslateYStartingPos;
@@ -206,7 +735,7 @@ $(document).ready(function () {
                     x[i][j][1] = x[i][j - 1][1] - TwoDYDelta;
                     x[i][j][2] = ThreeDTranslateYStartingPos;
                     x[i][j][3] = x[i][j - 1][3] - ThreeDZDelta;
-                }
+                }                    
                 var myGenericCard = document.createElement("div");
                 //var myTwitContent = makeTwitterCard();
                 myGenericCard.setAttribute("id", "card" + cardCount);
@@ -223,76 +752,68 @@ $(document).ready(function () {
                 } else if (i == 3) {
                     myGenericCard.innerHTML = '<img src="images/news2.png" class="card"/>';
                 }
-                if (i == 0) {
-                    // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);      
-                    if (j < cached_data.flickr_feed.length) {
-                        x[i][j][4] = "flickr";
-                        x[i][j][5] = "timestampTBD";
-                        x[i][j][6] = cached_data.flickr_feed[j].user;
-                        x[i][j][7] = cached_data.flickr_feed[j].photo + "b.jpg";
-                        myGenericCard.innerHTML = '<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + x[i][j][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + x[i][j][6] + '</span> </div>';
-                    }
+                if (i == 0) {      
+                    // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);                            
+                    x[i][j][4] = "flickr";
+                    x[i][j][5] = "timestampTBD";
+                    x[i][j][6] = cached_data.flickr_feed[j].user;
+                    x[i][j][7] = cached_data.flickr_feed[j].photo + "b.jpg";
+                    myGenericCard.innerHTML='<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + x[i][j][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + x[i][j][6] + '</span> </div>';
                 }
                 else if (i == 1) {
-                    if (j < cached_data.gmail_feed.length) {
-                        var timeVal = new Date(cached_data.gmail_feed[i].date);
-                        timeVal = convertTimeToString(timeVal);
-                        x[i][j][4] = "gmail";
-                        x[i][j][5] = timeVal;
-                        x[i][j][6] = cached_data.gmail_feed[j].from;
-                        x[i][j][7] = cached_data.gmail_feed[j].subject;
-                        x[i][j][8] = cached_data.gmail_feed[j].plain_text;
-                        x[i][j][9] = cached_data.gmail_feed[j].to;
-                        x[i][j][10] = cached_data.gmail_feed[j].truncated_text;
-                        myGenericCard.innerHTML = '<div class="GM_content"><span class="GM_time">' + toStaticHTML(x[i][j][5]) + '</span><span class="GM_From">From: ' + toStaticHTML(x[i][j][6]) + '</span><span class="GM_subject">Subject: ' + x[i][j][7] + '</span><span class="GM_message">' + toStaticHTML(x[i][j][10]) + '</span> <span class="hiddenData">' + toStaticHTML(x[i][j][8]) + '</span> </div>';
-                    }
+                    var timeVal = new Date(cached_data.gmail_feed[i].date);
+                    timeVal = convertTimeToString(timeVal);
+                    x[i][j][4] = "gmail";
+                    x[i][j][5] = timeVal;
+                    x[i][j][6] = cached_data.gmail_feed[j].from;
+                    x[i][j][7] = cached_data.gmail_feed[j].subject;
+                    x[i][j][8] = cached_data.gmail_feed[j].plain_text;
+                    x[i][j][9] = cached_data.gmail_feed[j].to;
+                    x[i][j][10] = cached_data.gmail_feed[j].truncated_text;
+                    myGenericCard.innerHTML = '<div class="GM_content"><span class="GM_time">' + toStaticHTML(x[i][j][5]) + '</span><span class="GM_From">From: ' + toStaticHTML(x[i][j][6]) + '</span><span class="GM_subject">Subject: ' + x[i][j][7] + '</span><span class="GM_message">' + toStaticHTML(x[i][j][10]) + '</span> <span class="hiddenData">' + toStaticHTML(x[i][j][8]) + '</span> </div>';
                 }
                 else if (i == 2) {
-                    if (j < cached_data.deals.length) {
-                        x[i][j][4] = "groupon";
-                        x[i][j][5] = "timestampTBD";
-                        x[i][j][6] = cached_data.deals[j].title;
-                        x[i][j][7] = cached_data.deals[j].highlightsHtml;
-                        x[i][j][8] = cached_data.deals[j].largeImageUrl;
-                        myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + x[i][j][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + x[i][j][6] + '</span><span class="GROUPON_message">' + x[i][j][7] + '</span> </div>';
-                    }
+                    x[i][j][4] = "groupon";
+                    x[i][j][5] = "timestampTBD";
+                    x[i][j][6] = cached_data.deals[j].title;
+                    x[i][j][7] = cached_data.deals[j].highlightsHtml;
+                    x[i][j][8] = cached_data.deals[j].largeImageUrl;
+                    myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + x[i][j][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + x[i][j][6] + '</span><span class="GROUPON_message">' + x[i][j][7] + '</span> </div>';
                 }
                 else if (i == 4) {
-                        //  if (matrix[lineNum - 1][0][4] == "facebook") {
-                    if (j < cached_data.facebookPosts.length) {
-                        var time = parseFloat(cached_data.facebookPosts[j].time) * 1000;
-                        var timeVal = new Date(time);
-                        //console.log(timeVal);
-                        timeVal = convertTimeToString(timeVal);
-                        x[i][j][4] = "facebook";
-                        x[i][j][5] = time;
-                        x[i][j][6] = cached_data.facebookPosts[j].posterName;
-                        x[i][j][7] = cached_data.facebookPosts[j].text;
-                        x[i][j][8] = cached_data.facebookPosts[j].link;
-                        x[i][j][9] = cached_data.facebookPosts[j].posterId;
-                        x[i][j][10] = timeVal;
-                        myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + x[i][j][9] + '/picture?type=large"/><span class="FB_time">' + x[i][j][10] + '</span><span class="FB_title">' + x[i][j][6] + '</span><span class="FB_message">' + x[i][j][7] + '</span> </div>';
-                    }
+                    //  if (matrix[lineNum - 1][0][4] == "facebook") {
+                    var time = parseFloat(cached_data.facebookPosts[j].time) * 1000;
+                    var timeVal = new Date(time);
+                    //console.log(timeVal);
+                    timeVal = convertTimeToString(timeVal);
+                    x[i][j][4] = "facebook";
+                    x[i][j][5] = time;
+                    x[i][j][6] = cached_data.facebookPosts[j].posterName;
+                    x[i][j][7] = cached_data.facebookPosts[j].text;
+                    x[i][j][8] = cached_data.facebookPosts[j].link;
+                    x[i][j][9] = cached_data.facebookPosts[j].posterId;
+                    x[i][j][10] = timeVal;
+                    myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + x[i][j][9] + '/picture?type=large"/><span class="FB_time">' + x[i][j][10] + '</span><span class="FB_title">' + x[i][j][6] + '</span><span class="FB_message">' + x[i][j][7] + '</span> </div>';
                     // }
                     //else if (matrix[lineNum - 1][0][4] == "twitter") {
                     //   myGenericCard.html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][9] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
                     //}
                 } else if (i == 3) {
-                        /*
-                        timeVal = convertTimeToString(time);
-                        x[i][j][4] = "news";
-                        x[i][j][5] = time;
-                        x[i][j][6] = newsImageURL;
-                        x[i][j][7] = newsHeading;
-                        x[i][j][8] = newsData;
-                        x[i][j][9] = timeVal;
-                        x[i][j][10] = newsURL[1];
-                        x[i][j][11] = newsSource[1];
-                        myGenericCard.innerHTML = toStaticHTML('<div class="NEWS_content"><img class="NEWS_PIC" src="' + x[i][j][6] + '"/><span class="NEWS_time">' + x[i][j][9] + '</span><span class="NEWS_source">' + x[i][j][11] + '</span><span class="NEWS_title">' + x[i][j][7] + '</span><span class="NEWS_message">' + x[i][j][8] + '</span><span class="hiddenData">' + toStaticHTML(x[i][j][10]) + '</span></div>');
-                    */
+                    /*
+                    timeVal = convertTimeToString(time);
+                    x[i][j][4] = "news";
+                    x[i][j][5] = time;
+                    x[i][j][6] = newsImageURL;
+                    x[i][j][7] = newsHeading;
+                    x[i][j][8] = newsData;
+                    x[i][j][9] = timeVal;
+                    x[i][j][10] = newsURL[1];
+                    x[i][j][11] = newsSource[1];
+                    myGenericCard.innerHTML = toStaticHTML('<div class="NEWS_content"><img class="NEWS_PIC" src="' + x[i][j][6] + '"/><span class="NEWS_time">' + x[i][j][9] + '</span><span class="NEWS_source">' + x[i][j][11] + '</span><span class="NEWS_title">' + x[i][j][7] + '</span><span class="NEWS_message">' + x[i][j][8] + '</span><span class="hiddenData">' + toStaticHTML(x[i][j][10]) + '</span></div>');
+                */
                 }
                 document.getElementById("element" + (i + 1)).appendChild(myGenericCard);
-                cardCount++;
+                cardCount++;            
             }
         }
         return x;
@@ -418,7 +939,7 @@ $(document).ready(function () {
                 hoverLineNum = 0;
             }
             //   $('#dump').text(hoverLineNum);
-        }, function () {
+        }, function () {//function responsible for pulse on lines this is just setting up delegate for hover ::Comment added By Jerome Biotidara jeromebiotidara@gmail.com
             hoverLineNum = 0;
             //   $('#dump').text(hoverLineNum);
             updateShadow1.opt = false;
@@ -428,7 +949,7 @@ $(document).ready(function () {
             updateShadow5.opt = false;
         });
         bindKeys();
-        $('#element1, #element2, #element3, #element4, #element5').bind('mousewheel', function (e) {
+        $('#element1, #element2, #element3, #element4, #element5').bind('mousewheel', function (e) {//this binds the mouse scroll event and calls scrollCards which is responsible for moving the items ::Comment added By Jerome Biotidara jeromebiotidara@gmail.com
             scrolling = 1;
             $('.face').unbind();
             //    if (currentHoverFace == undefined) {
@@ -451,7 +972,7 @@ $(document).ready(function () {
                 bindFace();
             });
         });
-
+        
         var container = document.getElementById('appcontainer');
         //listen to  the gesture start and gesture end on the body
         //find end and start points
@@ -499,12 +1020,12 @@ $(document).ready(function () {
                 panLeft();
             }
         });
-        $('body').trigger('flickr');
+        /*$('body').trigger('flickr');
         $('body').trigger('gmail');
         $('body').trigger('fb_and_twitter');
         $('body').trigger('groupon');
-        $('body').trigger('news');
-        setTimeout(function () { transitionComplete = 1; }, 500);
+        $('body').trigger('news');*/;
+        setTimeout(function () { transitionComplete = 1; }, 500);        
         $('#settings').click(function () {
 
             //  $('#dump').text("Clicked Settings!");
@@ -525,75 +1046,28 @@ $(document).ready(function () {
             $('#elements').css({ "transform": "", "margin-left": "+=100px", "margin-top": "+=200px" });
             $('#settingsMenu').css({ "transform": "translateX(250px)" });
             $('#line2dContainerBg').css({ "transform": "translateY(350px)" });
-        });
+        });        
     }, 3000);
-    setTimeout(refreshData, 25000);
-    setTimeout(saveData, 50000);
-    $('#FB_BUTTON').click(function () {
-        var facebookURL = "https://www.facebook.com/dialog/oauth?client_id=";
-        var clientID = "358452557528632";
-        var client_secret = "bd48908a2f2e8d608fd43889d9f66b5e";
-        if (clientID === null || clientID === "") {
-            WinJS.log("Enter a ClientID", "Web Authentication SDK Sample", "error");
-            return;
-        }
+    //setTimeout(refreshData, 25000);
+    BindSettingsSocialNetworkButton()
+    
 
-        var callbackURL = "https://www.facebook.com/connect/login_success.html";
 
-        facebookURL += clientID + "&redirect_uri=" + encodeURIComponent(callbackURL) + "&scope=read_stream,user_likes&display=popup&response_type=token";
 
-        var startURI = new Windows.Foundation.Uri(facebookURL);
-        var endURI = new Windows.Foundation.Uri(callbackURL);
-
-        //  document.getElementById("FacebookDebugArea").value += "Navigating to: " + facebookURL + "\r\n";
-
-        authzInProgress = true;
-        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
-            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
-            .done(function (result) {
-                var value = result.responseData;
-                var startpos = value.indexOf("access_token") + 13;
-                var endpos = value.indexOf("&expires_in");
-                var accesstoken = value.substring(startpos, endpos);
-                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
-                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
-                }
-                var get_longlivedtoken_url = "https://graph.facebook.com/oauth/access_token?client_id=" + clientID + "&client_secret=" + client_secret + "&grant_type=fb_exchange_token&fb_exchange_token=" + accesstoken;
-                WinJS.xhr({ url: get_longlivedtoken_url }).done(function register(result) {
-                    var token_data = result.responseText;
-                    var startpos_token = token_data.indexOf("access_token") + 13;
-                    var endpos_token = token_data.indexOf("&expires");
-                    var long_lived_token = token_data.substring(startpos_token, endpos_token);
-                    var fb_id_url = "https://graph.facebook.com/me?access_token=" + long_lived_token;
-                    WinJS.xhr({ url: fb_id_url }).done(function success(result) {
-                        var fb_id = JSON.parse(result.responseText).id;
-                        Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
-                            //send data to intelscreensavings server
-                            WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=fb&win_id=" + userId + "&fb_token=" + long_lived_token + "&fb_id=" + fb_id }).done(
-                                function (result) {
-                                    var results = result.responseData;
-                                }
-                           );
-                        });
-                    });
-
-                }, function (err) {
-                    WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
-                    // document.getElementById("FacebookDebugArea").value += " Error Message: " + err.message + "\r\n";
-                    // authzInProgress = false;
-                });
-            })
-    })
-    function sendGetRequest(url) {
-        try {
-            var request = new XMLHttpRequest();
-            request.open("GET", url, false);
-            request.send(null);
-            return request.responseText;
-        } catch (err) {
-            WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
-        }
+    function BindSettingsSocialNetworkButton()
+    {
+        /*
+            *Name: Jerome Biotidara
+            *Date: 6/7/2013
+            *Description:   This function makes sereral Jquery calls that bind functions the click of the social network buttons in the settings menu.
+        */
+                
+        $('#FB_BUTTON').click(FaceBookLogin);
+        $('#TWITTER_BUTTON').click(TwitterLogin)
+        $('#FLICKR_BUTTON').click(FlickrLogin);
+        $('#GMAIL_BUTTON').click(GmailLogin);
     }
+    
     function sendPostRequest(url, authzheader, params) {
         try {
             var request = new XMLHttpRequest();
@@ -605,350 +1079,6 @@ $(document).ready(function () {
             WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
         }
     }
-    $('#TWITTER_BUTTON').click(function () {
-        var twitterURL = "https://api.twitter.com/oauth/request_token";
-        var accessTokenUrl = "https://api.twitter.com/oauth/access_token";
-        // Get all the parameters from the user
-        var clientID = "hk7hZzZVSGMd6nJNztYw";
-        var clientSecret = "HqoWMS3qvKh0kb2qigzz9DSE8rzXZ9gnxdPEu2ZMXU";
-        var callbackURL = "http://198.101.207.173/shilpa/callback.php";
-
-        // Acquiring a request token
-        var timestamp = Math.round(new Date().getTime() / 1000.0);
-        var nonce = Math.random();
-        nonce = Math.floor(nonce * 1000000000);
-
-        // Compute base signature string and sign it.
-        //    This is a common operation that is required for all requests even after the token is obtained.
-        //    Parameters need to be sorted in alphabetical order
-        //    Keys and values should be URL Encoded.
-        var sigBaseStringParams = "oauth_callback=" + encodeURIComponent(callbackURL);
-        sigBaseStringParams += "&" + "oauth_consumer_key=" + clientID;
-        sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
-        sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
-        sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
-        sigBaseStringParams += "&" + "oauth_version=1.0";
-        var sigBaseString = "POST&";
-        sigBaseString += encodeURIComponent(twitterURL) + "&" + encodeURIComponent(sigBaseStringParams);
-
-        var keyText = clientSecret + "&";
-        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
-        var key = macAlgorithmProvider.createKey(keyMaterial);
-        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
-        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
-        var dataToPost = "OAuth oauth_callback=\"" + encodeURIComponent(callbackURL) + "\", oauth_consumer_key=\"" + clientID + "\", oauth_nonce=\"" + nonce + "\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"" + timestamp + "\", oauth_version=\"1.0\", oauth_signature=\"" + encodeURIComponent(signature) + "\"";
-        var response = sendPostRequest(twitterURL, dataToPost, null);
-        var oauth_token;
-        var oauth_token_secret;
-        var keyValPairs = response.split("&");
-
-        for (var i = 0; i < keyValPairs.length; i++) {
-            var splits = keyValPairs[i].split("=");
-            switch (splits[0]) {
-                case "oauth_token":
-                    oauth_token = splits[1];
-                    break;
-                case "oauth_token_secret":
-                    oauth_token_secret = splits[1];
-                    break;
-            }
-        }
-
-        // Send the user to authorization
-        twitterURL = "https://api.twitter.com/oauth/authorize?oauth_token=" + oauth_token;
-
-        // document.getElementById("TwitterDebugArea").value += "\r\nNavigating to: " + twitterURL + "\r\n";
-        var startURI = new Windows.Foundation.Uri(twitterURL);
-        var endURI = new Windows.Foundation.Uri(callbackURL);
-
-        //authzInProgress = true;
-        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
-            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
-            .done(function (result) {
-                var value = result.responseData;
-
-                var startpos = value.indexOf("oauth_token") + 12;
-                var endpos = value.indexOf("&oauth_verifier");
-                var oauthtoken = value.substring(startpos, endpos);
-                var oauthverifier = value.substring(endpos + 16);
-                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
-                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
-                }
-                //form the header and send the verifier in the request to accesstokenurl
-                var accessdataToPost = "OAuth oauth_consumer_key=\"" + clientID + "\", oauth_nonce=\"" + nonce + "\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"" + timestamp + "\", oauth_token=\"" + oauth_token + "\", oauth_version=\"1.0\"";
-                var param = "oauth_verifier=" + oauthverifier;
-                var response = sendPostRequest(accessTokenUrl, accessdataToPost, param);
-                var tokenstartpos = response.indexOf("oauth_token") + 12;
-                var tokenendpos = response.indexOf("&oauth_token_secret");
-                var secretstartpos = tokenendpos + 20;
-                var secretendpos = response.indexOf("&user_id");
-                var useridstartpos = secretendpos + 9;
-                var useridendpos = response.indexOf("&screen_name");
-                var token = response.substring(tokenstartpos, tokenendpos);
-                var secret = response.substring(secretstartpos, secretendpos);
-                var user = response.substring(useridstartpos, useridendpos);
-
-                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
-                    //send data to intelscreensavings server
-                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=twitter&win_id=" + userId + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
-                        function (result) {
-                            var results = result.responseData;
-                        }
-                   );
-                });
-
-            }, function (err) {
-                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
-            });
-    })
-
-    $('#FLICKR_BUTTON').click(function () {
-        var flickrURL = "https://secure.flickr.com/services/oauth/request_token";
-        var accessTokenUrl = "http://www.flickr.com/services/oauth/access_token";
-        // Get all the parameters from the user
-        var clientID = "698637b46e1640dc47bb878246328e95";
-        var clientSecret = "0e0d30a1d78038fd";
-        var callbackURL = "http://198.101.207.173/shilpa/flickrcallback.php";
-
-        // Acquiring a request token
-        var timestamp = Math.round(new Date().getTime() / 1000.0);
-        var nonce = Math.random();
-        nonce = Math.floor(nonce * 1000000000);
-
-        // Compute base signature string and sign it.
-        // This is a common operation that is required for all requests even after the token is obtained.
-        // Parameters need to be sorted in alphabetical order
-        // Keys and values should be URL Encoded.
-        var sigBaseStringParams = "oauth_callback=" + encodeURIComponent(callbackURL);
-        sigBaseStringParams += "&" + "oauth_consumer_key=" + clientID;
-        sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
-        sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
-        sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
-        sigBaseStringParams += "&" + "oauth_version=1.0";
-        var sigBaseString = "GET&";
-        sigBaseString += encodeURIComponent(flickrURL) + "&" + encodeURIComponent(sigBaseStringParams);
-        var keyText = clientSecret + "&";
-        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
-        var key = macAlgorithmProvider.createKey(keyMaterial);
-        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
-        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
-
-        flickrURL += "?" + sigBaseStringParams + "&oauth_signature=" + encodeURIComponent(signature);
-        var response = sendGetRequest(flickrURL);
-
-        var oauth_token;
-        var oauth_token_secret;
-        var keyValPairs = response.split("&");
-
-        for (var i = 0; i < keyValPairs.length; i++) {
-            var splits = keyValPairs[i].split("=");
-            switch (splits[0]) {
-                case "oauth_token":
-                    oauth_token = splits[1];
-                    break;
-                case "oauth_token_secret":
-                    oauth_token_secret = splits[1];
-                    break;
-            }
-        }
-
-        // Send the user to authorization
-        flickrURL = "https://secure.flickr.com/services/oauth/authorize?oauth_token=" + oauth_token + "&perms=read";
-
-        var startURI = new Windows.Foundation.Uri(flickrURL);
-        var endURI = new Windows.Foundation.Uri(callbackURL);
-
-        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
-            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
-            .done(function (result) {
-                var value = result.responseData;
-
-                var startpos = value.indexOf("oauth_token") + 12;
-                var endpos = value.indexOf("&oauth_verifier");
-                var oauthtoken = value.substring(startpos, endpos);
-                var oauthverifier = value.substring(endpos + 16);
-                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
-                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
-                }
-                //form the header and send the verifier in the request to accesstokenurl
-                var timestamp = Math.round(new Date().getTime() / 1000.0);
-                var nonce = Math.random();
-                nonce = Math.floor(nonce * 1000000000);
-                // Compute base signature string and sign it.
-                // This is a common operation that is required for all requests even after the token is obtained.
-                // Parameters need to be sorted in alphabetical order
-                // Keys and values should be URL Encoded.
-
-                var sigBaseStringParams = "oauth_consumer_key=" + clientID;
-                sigBaseStringParams += "&" + "oauth_nonce=" + nonce;
-                sigBaseStringParams += "&" + "oauth_signature_method=HMAC-SHA1";
-                sigBaseStringParams += "&" + "oauth_timestamp=" + timestamp;
-                sigBaseStringParams += "&" + "oauth_token=" + oauthtoken;
-                sigBaseStringParams += "&" + "oauth_verifier=" + oauthverifier;
-                sigBaseStringParams += "&" + "oauth_version=1.0";
-
-                var sigBaseString = "GET&";
-                sigBaseString += encodeURIComponent(accessTokenUrl) + "&" + encodeURIComponent(sigBaseStringParams);
-                var keyText = clientSecret + "&" + oauth_token_secret;
-                var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-                var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
-                var key = macAlgorithmProvider.createKey(keyMaterial);
-                var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-                var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
-                var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
-
-                accessTokenUrl += "?" + sigBaseStringParams + "&oauth_signature=" + encodeURIComponent(signature);
-                var response = sendGetRequest(accessTokenUrl);
-                var tokenstartpos = response.indexOf("oauth_token") + 12;
-                var tokenendpos = response.indexOf("&oauth_token_secret");
-                var secretstartpos = tokenendpos + 20;
-                var secretendpos = response.indexOf("&user_nsid");
-                var useridstartpos = secretendpos + 11;
-                var useridendpos = response.indexOf("&username");
-                var token = response.substring(tokenstartpos, tokenendpos);
-                var secret = response.substring(secretstartpos, secretendpos);
-                var user = response.substring(useridstartpos, useridendpos);
-                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
-                    //send data to intelscreensavings server
-                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=flickr&win_id=" + userId + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
-                        function (result) {
-                            var results = result.responseData;
-                        }
-                   );
-                });
-            }, function (err) {
-                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
-            });
-    });
-    $('#GMAIL_BUTTON').click(function () {
-        //oauth1 approach similar to twitter
-        var requestUrl = "https://www.google.com/accounts/OAuthGetRequestToken";
-        var authorizeUrl = "https://www.google.com/accounts/OAuthAuthorizeToken";
-        var accessUrl = "https://www.google.com/accounts/OAuthGetAccessToken";
-        var callbackUrl = "http://198.101.207.173/shilpa/two-legged.php";
-        var scope = "https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
-        var clientID = "198.101.234.220";
-        var clientSecret = "p1_QaRDYcgZXdB_kC8scaINW";
-        var timestamp = Math.round(new Date().getTime() / 1000.0);
-        var nonce = (new Date()).getTime();
-        var params = [];
-        params["oauth_callback"] = encodeURI(callbackUrl);
-        params["oauth_consumer_key"] = clientID;
-        params["oauth_timestamp"] = timestamp;
-        params["oauth_nonce"] = nonce;
-        params["oauth_signature_method"] = "HMAC-SHA1";
-        params["scope"] = scope;
-        var paramString = normalizeParams(params);
-        var sigBaseString = "GET&" + encodeURIComponent(requestUrl) + "&" + encodeURIComponent(paramString);
-        var keyText = encodeURIComponent(clientSecret) + "&";
-        var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-        var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
-        var key = macAlgorithmProvider.createKey(keyMaterial);
-        var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-        var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
-        var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
-        paramString += "&oauth_signature=" + encodeURIComponent(signature);
-        requestUrl = encodeURI(requestUrl);
-        requestUrl += "?" + paramString;
-        var response = sendGetRequest(requestUrl);
-        //requestUrl += "?scope="+encodeURIComponent(scope);
-        //var response = sendGetRequest(requestUrl, dataToPost, null);
-        var keyValPairs = response.split("&");
-        var oauth_token;
-        var oauth_token_secret;
-        for (var i = 0; i < keyValPairs.length; i++) {
-            var splits = keyValPairs[i].split("=");
-            switch (splits[0]) {
-                case "oauth_token":
-                    oauth_token = splits[1];
-                    break;
-                case "oauth_token_secret":
-                    oauth_token_secret = splits[1];
-                    break;
-            }
-        }
-
-        // Send the user to authorization
-        authorizeUrl += "?oauth_token=" + oauth_token;
-
-        // document.getElementById("TwitterDebugArea").value += "\r\nNavigating to: " + twitterURL + "\r\n";
-        var startURI = new Windows.Foundation.Uri(authorizeUrl);
-        var endURI = new Windows.Foundation.Uri(callbackUrl);
-
-        //authzInProgress = true;
-        Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
-            Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
-            .done(function (result) {
-                var value = result.responseData;
-                var callbackPrefix = callbackUrl + "?";
-                var dataPart = value.substring(callbackPrefix.length);
-                var keyValPairs = dataPart.split("&");
-                var authorize_token;
-                var oauth_verifier;
-                for (var i = 0; i < keyValPairs.length; i++) {
-                    var splits = keyValPairs[i].split("=");
-                    switch (splits[0]) {
-                        case "oauth_token":
-                            authorize_token = splits[1];
-                            break;
-                        case "oauth_verifier":
-                            oauth_verifier = splits[1];
-                            break;
-                    }
-                }
-                if (result.responseStatus === Windows.Security.Authentication.Web.WebAuthenticationStatus.errorHttp) {
-                    //document.getElementById("FacebookDebugArea").value += "Error returned: " + result.responseErrorDetail + "\r\n";
-                }
-                //form the header and send the verifier in the request to accesstokenurl
-                var params = [];
-                var timestamp = Math.round(new Date().getTime() / 1000.0);
-                var nonce = (new Date()).getTime();
-                params["oauth_consumer_key"] = clientID;
-                params["oauth_nonce"] = nonce;
-                params["oauth_signature_method"] = "HMAC-SHA1";
-                params["oauth_timestamp"] = timestamp;
-                params["oauth_token"] = authorize_token;
-                params["oauth_verifier"] = oauth_verifier;
-                var paramString = normalizeParams(params);
-
-                var sigBaseString = "GET&" + rfcEncoding(accessUrl) + "&" + rfcEncoding(paramString);
-                var keyText = rfcEncoding(clientSecret) + "&" + rfcEncoding(oauth_token_secret);
-                var keyMaterial = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(keyText, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-                var macAlgorithmProvider = Windows.Security.Cryptography.Core.MacAlgorithmProvider.openAlgorithm("HMAC_SHA1");
-                var key = macAlgorithmProvider.createKey(keyMaterial);
-                var tbs = Windows.Security.Cryptography.CryptographicBuffer.convertStringToBinary(sigBaseString, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
-                var signatureBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.sign(key, tbs);
-                var signature = Windows.Security.Cryptography.CryptographicBuffer.encodeToBase64String(signatureBuffer);
-                paramString += "&oauth_signature=" + rfcEncoding(signature);
-                accessUrl = encodeURI(accessUrl);
-                accessUrl += "?" + paramString;
-                var response = sendGetRequest(accessUrl);
-
-                var tokenstartpos = response.indexOf("oauth_token") + 12;
-                var tokenendpos = response.indexOf("&oauth_token_secret");
-                var secretstartpos = tokenendpos + 20;
-                var token = response.substring(tokenstartpos, tokenendpos);
-                var secret = response.substring(secretstartpos);
-                //var gmailinfourl = "https://www.googleapis.com/userinfo/email?access_token="+token;
-
-                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
-                    //send data to intelscreensavings server
-                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=gmail&win_id=" + userId + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com" }).done(
-                        function (result) {
-                            var results = result.responseData;
-                        }
-                   );
-                });
-            }, function (err) {
-                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
-            });
-    });
-
-
     function normalizeParams(params) {
         for (var key in params) {
             if (key != "oauth_token")
@@ -956,7 +1086,6 @@ $(document).ready(function () {
         }
         return join("&", "=", params, true);
     }
-
     function join(separator1, separator2, arr, sort) {
         var arrKeys = [];
         for (var key in arr) {
@@ -990,7 +1119,6 @@ $(document).ready(function () {
     }
 
     // Handler for transformation on gesture elements 
-
     function onGestureChange(e) {
         cumulativeX += e.translationX;
         cumulativeY += e.translationY;
@@ -1003,7 +1131,6 @@ $(document).ready(function () {
             bindFace();
         });
     }
-
     function onGestureEnd(e) {
         var elementId = e.currentTarget.id;
         var lineNum = elementId.substr(7);
@@ -1038,7 +1165,6 @@ $(document).ready(function () {
         }
         //e.currentTarget.gesture = null;
     }
-
     function onPointerDown(e) {
         if (e.currentTarget.gesture.pointerType == e.pointerType) {
             e.currentTarget.gesture.addPointer(e.pointerId);                   // Attaches pointer to element (e.target is the element)
@@ -1075,23 +1201,24 @@ $(document).ready(function () {
         $('.panRight').animate({ right: '+=' + pageDelta }, 500);
         $('.panLeft').animate({ left: '-=' + pageDelta }, 500);
     }
-});
+});}
+
 function loadData() {
     /*
-        WinJS.xhr({ url: "http://google.com/ig/api?weather=" + weather_zipcode }).done(
-            function fulfilled(result) {
-                if (result.status === 200) {
+    WinJS.xhr({ url: "http://google.com/ig/api?weather=" + weather_zipcode }).done(
+        function fulfilled(result) {
+            if (result.status === 200) {
 
-                    var data = result.responseXML;
-                    //     $('#dump').text($(data).children().children('weather').children('forecast_information').children('city').attr('data') + " : " +  + " : " + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
-                    var myLocationData = $(data).children().children('weather').children('forecast_information').children('city').attr('data').split(", ");
+                var data = result.responseXML;
+                //     $('#dump').text($(data).children().children('weather').children('forecast_information').children('city').attr('data') + " : " +  + " : " + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
+                var myLocationData = $(data).children().children('weather').children('forecast_information').children('city').attr('data').split(", ");
 
-                    $('#location').text(myLocationData[0]);
-                    $('#weatherIcon').attr('src', "http://www.google.com" + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
-                    $('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
-                }
-            });    
-            */
+                $('#location').text(myLocationData[0]);
+                $('#weatherIcon').attr('src', "http://www.google.com" + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
+                $('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
+            }
+        });
+    */
     WinJS.xhr({ url: "http://news.google.com/news?topic=h&output=rss" }).done(
         function fulfilled(result) {
             if (result.status === 200) {
@@ -1135,7 +1262,7 @@ function loadData() {
                     for (i = 0; i < tempArray.length; i++) {
                         pushNewDataCard(lineNum, tempArray[i]);
                     }
-                } else {
+                }else {
                     $('body').bind('news', function () {
                         setTimeout(function () {
                             for (i = 0; i < tempArray.length; i++) {
@@ -1156,8 +1283,8 @@ function loadData() {
                 //$('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
             }
         });
-
-
+    
+    
     WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/flickr_client.php?win_id=" + userId }).done(
         function fulfilled(result) {
             if (result.status === 200) {
@@ -1165,7 +1292,6 @@ function loadData() {
                 var i;
                 var lineNum = 1;
                 if (transitionComplete == 1) {
-                    var ctr = 0;
                     for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
                         // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
                         var newCard = new Array(8);
@@ -1173,11 +1299,6 @@ function loadData() {
                         newCard[5] = "timestampTBD";
                         newCard[6] = data.flickr_feed[i].user;
                         newCard[7] = data.flickr_feed[i].photo + "b.jpg";
-                        if (ctr < 4) {
-                            var temp = { "user": data.flickr_feed[i].user, "photo": data.flickr_feed[i].photo };
-                            flickrcache.unshift(temp);
-                            ctr++;
-                        }
                         pushNewDataCard(lineNum, newCard);
                         //scrollCards(lineNum, -160);
                     }
@@ -1185,37 +1306,35 @@ function loadData() {
                     $('body').bind('flickr', function () {
 
                         setTimeout(function () {
-                            var ctr = 0;
                             for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
+
                                 // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
-                                //save 4 cards into a JSON format                                
+
                                 var newCard = new Array(8);
                                 newCard[4] = "flickr";
                                 newCard[5] = "timestampTBD";
                                 newCard[6] = data.flickr_feed[i].user;
                                 newCard[7] = data.flickr_feed[i].photo + "b.jpg";
-                                if (ctr < 4) {
-                                    var temp = { "user": data.flickr_feed[i].user, "photo": data.flickr_feed[i].photo };
-                                    flickrcache.unshift(temp);
-                                    ctr++;
-                                }
+
                                 pushNewDataCard(lineNum, newCard);
+
                                 //scrollCards(lineNum, -160);
                             }
                         }, 500);
                     });
                 }
             }
-        });
-
-    WinJS.xhr({ url: BASE_URL_TEST2 + "/shilpa/gmail_client.php?win_id=" + userId }).done(
+        });        
+    
+    WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userId }).done(
         function fulfilled(result) {
             if (result.status === 200) {
                 var data = JSON.parse(result.response);
                 var i;
+
                 var lineNum = 2;
+
                 if (transitionComplete == 1) {
-                    var ctr = 0;
                     for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
                         // $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
                         gmail_last_card_time = data.gmail_feed[0].date
@@ -1229,11 +1348,6 @@ function loadData() {
                         newCard[8] = data.gmail_feed[i].plain_text;
                         newCard[9] = data.gmail_feed[i].to;
                         newCard[10] = data.gmail_feed[i].truncated_text;
-                        if (ctr < 4) {
-                            var temp = { "from": data.gmail_feed[i].from, "to": data.gmail_feed[i].to, "date": data.gmail_feed[i].date, "subject": data.gmail_feed[i].subject, "plain_text": data.gmail_feed[i].plain_text, "truncated_text": data.gmail_feed[i].truncated_text };
-                            gmailcache.unshift(temp);
-                            ctr++;
-                        }
                         pushNewDataCard(lineNum, newCard);
                         //scrollCards(lineNum, -160);
                     }
@@ -1241,7 +1355,6 @@ function loadData() {
 
                     $('body').bind('gmail', function () {
                         setTimeout(function () {
-                            var ctr = 0;
                             for (i = (data.gmail_feed.length - 1) ; i >= 0; i--) {
 
                                 //  $('#dump').text($('#dump').val() + " ---- " + data.gmail_feed[i].user);
@@ -1260,11 +1373,7 @@ function loadData() {
                                 newCard[8] = data.gmail_feed[i].plain_text;
                                 newCard[9] = data.gmail_feed[i].to;
                                 newCard[10] = data.gmail_feed[i].truncated_text;
-                                if (ctr < 4) {
-                                    var temp = { "from": data.gmail_feed[i].from, "to": data.gmail_feed[i].to, "date": data.gmail_feed[i].date, "subject": data.gmail_feed[i].subject, "plain_text": data.gmail_feed[i].plain_text, "truncated_text": data.gmail_feed[i].truncated_text };
-                                    gmailcache.unshift(temp);
-                                    ctr++;
-                                }
+
                                 pushNewDataCard(lineNum, newCard);
 
                                 //scrollCards(lineNum, -160);
@@ -1275,11 +1384,11 @@ function loadData() {
                 }
             }
         });
-
+        
     var fbPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/fb_json.php" });
 
-    var TwitPromise = WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/twitter_client.php?win_id=" + userId });
-
+    var TwitPromise = WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/twitter_client.php?win_id=" + userId });    
+    
     WinJS.Promise.join([fbPromise, TwitPromise]).done(
         function () {
 
@@ -1292,7 +1401,6 @@ function loadData() {
                     if (result.status === 200) {
                         var data = JSON.parse(result.response);
                         fb_last_card_time = data.facebookPosts[0].time;
-                        var ctr = 0;
                         for (i = (data.facebookPosts.length - 1) ; i >= 0; i--) {
                             var time = parseFloat(data.facebookPosts[i].time) * 1000;
                             var timeVal = new Date(time);
@@ -1306,46 +1414,40 @@ function loadData() {
                             newCard[8] = data.facebookPosts[i].link;
                             newCard[9] = data.facebookPosts[i].posterId;
                             newCard[10] = timeVal;
-                            if (ctr < 4) {
-                                var temp = { "serviceName": "Facebook", "type": data.facebookPosts[i].type, "posterName": data.facebookPosts[i].posterName, "posterId": data.facebookPosts[i].posterId, "time": data.facebookPosts[i].time, "text": data.facebookPosts[i].text, "link": data.facebookPosts[i].link, "likeUrl": data.facebookPosts[i].likeUrl, "commentUrl": data.facebookPosts[i].commentUrl };
-                                fbcache.unshift(temp);
-                                ctr++;
-                            }
                             tempArray.push(newCard);
                             //scrollCards(lineNum, -160);
                         }
                     }
-                });
+                });            
             TwitPromise.done(
                 function fulfilled(result) {
                     if (result.status === 200) {
-                        var data = JSON.parse(result.response);
-                        twitter_last_card_time = (data.twitter_feed[0].time);
-                        var ctr = 0;
-                        for (i = (data.twitter_feed.length - 1) ; i >= 0; i--) {
+                        try
+                        {
+                            var data = JSON.parse(result.response);
+                            twitter_last_card_time = (data.twitter_feed[0].time);
+                            for (i = (data.twitter_feed.length - 1) ; i >= 0; i--) {
 
-                            //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
-                            var time = parseFloat(data.twitter_feed[i].time) * 1000;
-                            var timeVal = new Date(time);
-                            timeVal = convertTimeToString(timeVal);
-                            var newCard = new Array(10);
-                            newCard[4] = "twitter";
-                            newCard[5] = time;
-                            newCard[6] = data.twitter_feed[i].user;
-                            newCard[7] = data.twitter_feed[i].tweet;
-                            newCard[8] = (data.twitter_feed[i].photo).replace("_normal", "");
-                            newCard[9] = timeVal;
-                            if (ctr < 4) {
-                                var temp = { "user": data.twitter_feed[i].user, "photo": data.twitter_feed[i].photo, "tweet": data.twitter_feed[i].tweet, "time": data.twitter_feed[i].time };
-                                twittercache.unshift(temp);
-                                ctr++;
+                                //                           $('#dump').text($('#dump').val() + " ---- " + data.twitter_feed[i].user);
+                                var time = parseFloat(data.twitter_feed[i].time) * 1000;
+                                var timeVal = new Date(time);
+                                timeVal = convertTimeToString(timeVal);
+                                var newCard = new Array(10);
+                                newCard[4] = "twitter";
+                                newCard[5] = time;
+                                newCard[6] = data.twitter_feed[i].user;
+                                newCard[7] = data.twitter_feed[i].tweet;
+                                newCard[8] = (data.twitter_feed[i].photo).replace("_normal", "");
+                                newCard[9] = timeVal;
+                                tempArray.push(newCard);
+                                //scrollCards(lineNum, -160);
                             }
-                            tempArray.push(newCard);
-                            //scrollCards(lineNum, -160);
+                        }
+                        catch (e) {
                         }
                     }
                 });
-
+            
             tempArray.sort(function (a, b) { return a[5] - b[5] });
             if (transitionComplete == 1) {
                 for (i = 0; i < tempArray.length; i++) {
@@ -1363,8 +1465,8 @@ function loadData() {
             }
             //console.log(FacebookData.status);
         });
-
-
+        
+    
     WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/groupon_json.php" }).done(
         function fulfilled(result) {
             if (result.status === 200) {
@@ -1374,7 +1476,6 @@ function loadData() {
                 var lineNum = 3;
 
                 if (transitionComplete == 1) {
-                    var ctr = 0;
                     for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
 
                         //                                $('#dump').text($('#dump').val() + " ---- " + data.deals[i].user);
@@ -1385,19 +1486,15 @@ function loadData() {
                         newCard[6] = data.deals[i].title;
                         newCard[7] = data.deals[i].highlightsHtml;
                         newCard[8] = data.deals[i].largeImageUrl;
-                        if (ctr < 4) {
-                            var temp = { "title": data.deals[i].title, "highlightsHtml": data.deals[i].highlightsHtml, "largeImageUrl": data.deals[i].largeImageUrl };
-                            grouponcache.unshift(temp);
-                            ctr++;
-                        }
+
                         pushNewDataCard(lineNum, newCard);
 
                         //scrollCards(lineNum, -160);
+
                     }
                 } else {
                     $('body').bind('groupon', function () {
                         setTimeout(function () {
-                            var ctr = 0;
                             for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
 
                                 //                                $('#dump').text($('#dump').val() + " ---- " + data.deals[i].user);
@@ -1408,22 +1505,18 @@ function loadData() {
                                 newCard[6] = data.deals[i].title;
                                 newCard[7] = data.deals[i].highlightsHtml;
                                 newCard[8] = data.deals[i].largeImageUrl;
-                                if (ctr < 4) {
-                                    var temp = { "title": data.deals[i].title, "highlightsHtml": data.deals[i].highlightsHtml, "largeImageUrl": data.deals[i].largeImageUrl };
-                                    grouponcache.unshift(temp);
-                                    ctr++;
-                                }
                                 pushNewDataCard(lineNum, newCard);
                                 //scrollCards(lineNum, -160);
+
                             }
                         }, 500);
                     });
                 }
             }
         });
-
+        
 }
-function pushNewDataCard(lineNum, newCard) {
+function pushNewDataCard(lineNum,newCard) {
     //console.log(lineNum);
     var numCardsInLine = matrix[lineNum - 1].length;
     //var newCard = new Array(4);
@@ -1511,7 +1604,6 @@ function bindFace() {
             });
     $('.face').bind('click', mouseClickFace);
 }
-
 function bindKeys() {
 
     var arrowKeyLock = 0;
@@ -1786,7 +1878,6 @@ function pushNewCard(lineNum) {
 
     }, 1);
 }
-
 function removeOverlay(zPos, newFace, cube, overlay, oldFace) {
     $(newFace).bind("transitionend", function () {
         //$(oldFace).css({ "transform": "translateZ(" + matrix[14] + "px) translateY(320px) rotateX(0deg)", "background-color": "rgba(255, 255, 255, 1.0)" });
@@ -1853,7 +1944,6 @@ function removeOverlay(zPos, newFace, cube, overlay, oldFace) {
         $(newFace).children().children('.NEWS_time').css({ "font-weight": "normal", "font-size": "50%" });
     }
 }
-
 function refreshData() {
     refreshTwitter();
     //refreshFB();
@@ -1861,7 +1951,6 @@ function refreshData() {
     refreshNews();
     setTimeout(refreshData, 60000);
 }
-
 function refreshTwitter() {
     //check if any new data is there for twitter
     //using timestamp
@@ -1876,30 +1965,36 @@ function refreshTwitter() {
         //update the last_time
          function fulfilled(result) {
              if (result.status === 200) {
-                 var newData = JSON.parse(result.response);
-                 for (i = (newData.twitter_feed.length - 1) ; i >= 0; i--) {
-                     curTime = newData.twitter_feed[i].time;
-                     if (twitter_last_card_time < curTime) {
-                         var time = parseFloat(newData.twitter_feed[i].time) * 1000;
-                         var timeVal = new Date(time);
-                         timeVal = convertTimeToString(timeVal);
-                         var newCard = new Array(10);
-                         newCard[4] = "twitter";
-                         newCard[5] = time;
-                         newCard[6] = newData.twitter_feed[i].user;
-                         newCard[7] = newData.twitter_feed[i].tweet;
-                         newCard[8] = (newData.twitter_feed[i].photo).replace("_normal", "");
-                         newCard[9] = timeVal;
-                         tempArray.push(newCard);
+                 try
+                 {
+                     var newData = JSON.parse(result.response);
+                     for (i = (newData.twitter_feed.length - 1) ; i >= 0; i--) {
+                         curTime = newData.twitter_feed[i].time;
+                         if (twitter_last_card_time < curTime) {
+                             var time = parseFloat(newData.twitter_feed[i].time) * 1000;
+                             var timeVal = new Date(time);
+                             timeVal = convertTimeToString(timeVal);
+                             var newCard = new Array(10);
+                             newCard[4] = "twitter";
+                             newCard[5] = time;
+                             newCard[6] = newData.twitter_feed[i].user;
+                             newCard[7] = newData.twitter_feed[i].tweet;
+                             newCard[8] = (newData.twitter_feed[i].photo).replace("_normal", "");
+                             newCard[9] = timeVal;
+                             tempArray.push(newCard);
+                         }
+                         //console.log(newData.twitter_feed[i].subject);
                      }
-                     //console.log(newData.twitter_feed[i].subject);
+                     twitter_last_card_time = newData.twitter_feed[0].time;
+                     tempArray.sort(function (a, b) { return a[5] - b[5] });
+                     for (var i = 0; i < tempArray.length; i++) {
+                         var card = tempArray[i];
+                         pushNewDataCard(lineNum, tempArray[i]);
+                     }
                  }
-                 twitter_last_card_time = newData.twitter_feed[0].time;
-                 tempArray.sort(function (a, b) { return a[5] - b[5] });
-                 for (var i = 0; i < tempArray.length; i++) {
-                     var card = tempArray[i];
-                     pushNewDataCard(lineNum, tempArray[i]);
+                 catch (e) {
                  }
+                                  
              }
          }
     );
@@ -1952,7 +2047,7 @@ function refreshGmail() {
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
-    var gmailPromise = WinJS.xhr({ url: BASE_URL_TEST2 + "/shilpa/gmail_client.php?win_id=" + userId });
+    var gmailPromise = WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userId });
     var tempArray = new Array();
     var lineNum = 2;
     gmailPromise.done(
@@ -1962,12 +2057,14 @@ function refreshGmail() {
         //update the last_time
          function fulfilled(result) {
              if (result.status === 200) {
+                 //var JSONToBeParsed = "\n\r\n{\"gmail_feed\":[\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Sat, 18 Aug 2012 22:02:34 +0000\",\r\n\"subject\":\"Discover more on Twitter\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Twitter has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Mon, 20 Aug 2012 22:08:45 +0000\",\r\n\"subject\":\"Discover more on Flickr\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Flickr has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:50 +0000\",\r\n\"subject\":\"Discover more on Yahoo\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Yahoo has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:56 +0000\",\r\n\"subject\":\"Discover more on Facebook\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Facebook has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 20 Aug 2012 23:06:59 +0000\",\r\n\"subject\":\"Discover more on Picasa\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Picasa has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n}\r\n]}\r\n\r\n";
+                 //var newData = JSON.parse(JSONToBeParsed);
+
                  var newData = JSON.parse(result.response);
                  for (i = (newData.gmail_feed.length - 1) ; i >= 0; i--) {
                      curTime = newData.gmail_feed[i].date;
-                     var timeVal = new Date(newData.gmail_feed[i].date);
-                     var last_retrieved = new Date(gmail_last_card_time);
-                     if (last_retrieved < curTime) {
+                     if (gmail_last_card_time < curTime) {
+                         var timeVal = new Date(newData.gmail_feed[i].date);
                          timeVal = convertTimeToString(timeVal);
                          var newCard = new Array(11);
                          newCard[4] = "gmail";
@@ -1997,7 +2094,7 @@ function refreshNews() {
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
     var newsPromise = WinJS.xhr({ url: "http://news.google.com/news?topic=h&output=rss" });
     var tempArray = new Array();
-    var lineNum = 4;
+    var lineNum = 3;
     newsPromise.done(
         //get all data from server check with last_card_time if it is higher
         //add to the new json object
@@ -2039,27 +2136,12 @@ function refreshNews() {
                      }
                  });
                  tempArray.sort(function (a, b) { return a[5] - b[5] });
-                 if (tempArray.length != 0)
-                     news_last_card_time = tempArray[tempArray.length - 1][5];
+                 if(tempArray.length !=0)
+                    news_last_card_time = tempArray[tempArray.length - 1][5];
                  for (i = 0; i < tempArray.length; i++) {
-                     pushNewDataCard(lineNum, tempArray[i]);
+                       pushNewDataCard(lineNum, tempArray[i]);
                  }
              }
          }
     );
-}
-function saveData() {
-    var data = {};
-    var dataobject = {};
-    dataobject.flickr_feed = flickrcache;
-    dataobject.twitter_feed = twittercache;
-    dataobject.gmail_feed = gmailcache;
-    dataobject.deals = grouponcache;
-    dataobject.facebookPosts = fbcache;
-    data = JSON.stringify(dataobject);
-    //{ "flickr_feed": [] };
-    Windows.Storage.KnownFolders.documentsLibrary.createFileAsync("data.txt", Windows.Storage.CreationCollisionOption.replaceExisting).done(function (file) {
-        Windows.Storage.FileIO.writeTextAsync(file, data).done(function () {
-        });
-    });
 }

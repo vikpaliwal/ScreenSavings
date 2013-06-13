@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>GAURAV</Machine>
-    <WindowsUser>gaura_000</WindowsUser>
+    <Machine>JBIOTIDA-MOBL3</Machine>
+    <WindowsUser>jbiotida</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>7A1987511CA2C5FBD3718CEB1FAA00401397F4AB27AD2E572EA9807747D3FF08</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>7BB6B61B772D2DF1F1AA74FC234C0D8ABD733C2BC1F62161345E54935203C7DE</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
     <RegisteredPackageID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b</RegisteredPackageID>
@@ -13,278 +13,277 @@
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-08-24T11:36:01.401</Modified>
+      <Modified>2013-06-13T08:58:57.190</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
       <PackagePath>BackgroundTask.winmd</PackagePath>
-      <Modified>2012-08-24T11:29:45.664</Modified>
+      <Modified>2013-06-10T16:15:39.257</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd">
       <PackagePath>WCFClientRuntimeComponent.winmd</PackagePath>
-      <Modified>2012-08-24T11:29:45.852</Modified>
+      <Modified>2013-06-04T01:03:53.270</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
       <PackagePath>BackgroundTask.pdb</PackagePath>
-      <Modified>2012-08-24T11:29:45.649</Modified>
+      <Modified>2013-06-10T16:15:39.257</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb">
       <PackagePath>WCFClientRuntimeComponent.pdb</PackagePath>
-      <Modified>2012-08-24T11:29:45.836</Modified>
+      <Modified>2013-06-04T01:03:53.270</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_Black.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Hotmail_White.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\Hotmail_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_Black.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Messenger_White.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\Messenger_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\SkyDrive_White.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\SkyDrive_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_Black.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_Black.png</PackagePath>
-      <Modified>2012-05-21T05:56:22.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\CommonConfiguration\neutral\LiveSDKHTML\Images\SignInControl\Windows_White.png">
-      <PackagePath>LiveSDKHTML\Images\SignInControl\Windows_White.png</PackagePath>
-      <Modified>2012-05-21T05:56:20.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files (x86)\Microsoft SDKs\Live\v5.0\Metro HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Live\v5.0\Windows Store app HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
       <PackagePath>LiveSDKHTML\js\wl.js</PackagePath>
-      <Modified>2012-05-22T06:22:12.000</Modified>
+      <Modified>2012-11-12T21:00:46.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\3dCard-min.css">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
-      <Modified>2012-08-24T11:28:27.319</Modified>
+      <Modified>2013-06-13T00:00:37.419</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\css\default.css">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\default.css">
       <PackagePath>css\default.css</PackagePath>
-      <Modified>2012-06-29T16:10:45.894</Modified>
+      <Modified>2013-06-07T21:34:46.175</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\default.html">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2012-08-24T11:28:02.612</Modified>
+      <Modified>2013-06-13T06:06:57.381</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\accounts.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.916</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\add_new.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\add_new.png">
       <PackagePath>images\add_new.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.918</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\blueWide.scale-100.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\blueWide.scale-100.png">
       <PackagePath>images\blueWide.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-29T16:10:45.919</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_blue.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\circle_blue.png">
       <PackagePath>images\circle_blue.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.920</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_green.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\circle_green.png">
       <PackagePath>images\circle_green.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.920</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_pink.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\circle_pink.png">
       <PackagePath>images\circle_pink.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.922</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_purple.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\circle_purple.png">
       <PackagePath>images\circle_purple.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.922</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\circle_yellow.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\circle_yellow.png">
       <PackagePath>images\circle_yellow.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.923</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\cloudsbg.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\cloudsbg.png">
       <PackagePath>images\cloudsbg.png</PackagePath>
-      <Modified>2012-07-26T16:19:05.809</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\commerce1.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\commerce1.png">
       <PackagePath>images\commerce1.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.927</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\commerce2.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\commerce2.png">
       <PackagePath>images\commerce2.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.928</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\facebook.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\facebook.png">
       <PackagePath>images\facebook.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.929</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\facebook_detail.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\facebook_detail.png">
       <PackagePath>images\facebook_detail.png</PackagePath>
-      <Modified>2012-07-10T13:54:39.218</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\flikr.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\flikr.png">
       <PackagePath>images\flikr.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.935</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\ft.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\ft.png">
       <PackagePath>images\ft.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.936</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\gmail.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\gmail.png">
       <PackagePath>images\gmail.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.937</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\Gmail_detail.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\Gmail_detail.png">
       <PackagePath>images\Gmail_detail.png</PackagePath>
-      <Modified>2012-07-10T13:54:39.140</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\groupon.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\groupon.png">
       <PackagePath>images\groupon.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.938</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\Groupon_detail.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\Groupon_detail.png">
       <PackagePath>images\Groupon_detail.png</PackagePath>
-      <Modified>2012-07-10T13:54:39.015</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\logo.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\logo.png">
       <PackagePath>images\logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-29T16:10:45.939</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\mail1.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\mail1.png">
       <PackagePath>images\mail1.png</PackagePath>
-      <Modified>2012-07-05T16:34:38.579</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\mail2.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\mail2.png">
       <PackagePath>images\mail2.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.941</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\mail3.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\mail3.png">
       <PackagePath>images\mail3.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.942</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\news.png">
       <PackagePath>images\news.png</PackagePath>
-      <Modified>2012-07-09T14:32:44.000</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news1.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\news1.png">
       <PackagePath>images\news1.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.944</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\news2.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\news2.png">
       <PackagePath>images\news2.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.945</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\photo1.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\photo1.png">
       <PackagePath>images\photo1.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.946</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\redWide.scale-100.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\redWide.scale-100.png">
       <PackagePath>images\redWide.scale-100.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.947</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\settings.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\settings.png">
       <PackagePath>images\settings.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.952</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\setting_bg.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\setting_bg.png">
       <PackagePath>images\setting_bg.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.951</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\smalllogo.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\smalllogo.png">
       <PackagePath>images\smalllogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-29T16:10:45.953</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\social0.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\social0.png">
       <PackagePath>images\social0.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.954</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\social1.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\social1.png">
       <PackagePath>images\social1.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.955</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\social2.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\social2.png">
       <PackagePath>images\social2.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.956</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\splashscreen.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\splashscreen.png">
       <PackagePath>images\splashscreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-29T16:10:45.957</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\storelogo.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\storelogo.png">
       <PackagePath>images\storelogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-06-29T16:10:45.958</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\sun.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\sun.png">
       <PackagePath>images\sun.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.959</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\time.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\time.png">
       <PackagePath>images\time.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.960</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\trashcan.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\trashcan.png">
       <PackagePath>images\trashcan.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.961</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\twitter.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\twitter.png">
       <PackagePath>images\twitter.png</PackagePath>
-      <Modified>2012-06-29T16:10:45.962</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\twitter_detail.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\twitter_detail.png">
       <PackagePath>images\twitter_detail.png</PackagePath>
-      <Modified>2012-07-10T13:54:38.671</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\weather.png">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\weather.png">
       <PackagePath>images\weather.png</PackagePath>
-      <Modified>2012-07-05T17:43:29.451</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\images\rose.jpg">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\rose.jpg">
       <PackagePath>images\rose.jpg</PackagePath>
-      <Modified>2012-06-29T16:10:45.949</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\3dCard-min.js">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2012-08-24T11:27:19.412</Modified>
+      <Modified>2013-06-12T18:02:09.381</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\default.js">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AccountBinder.js">
+      <PackagePath>js\AccountBinder.js</PackagePath>
+      <Modified>2013-06-13T10:46:55.666</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AuthenticateUser.js">
+      <PackagePath>js\AuthenticateUser.js</PackagePath>
+      <Modified>2013-06-13T10:28:31.462</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DashMain.js">
+      <PackagePath>js\DashMain.js</PackagePath>
+      <Modified>2013-06-13T10:50:51.348</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2012-08-24T11:27:38.608</Modified>
+      <Modified>2013-06-13T09:08:46.652</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\js\jquery.js">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DefaultInterface.js">
+      <PackagePath>js\DefaultInterface.js</PackagePath>
+      <Modified>2013-06-13T10:06:35.612</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\InitializationUI.js">
+      <PackagePath>js\InitializationUI.js</PackagePath>
+      <Modified>2013-06-13T10:49:32.231</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
-      <Modified>2012-07-10T13:51:19.396</Modified>
+      <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\ListOfFuncs.js">
+      <PackagePath>js\ListOfFuncs.js</PackagePath>
+      <Modified>2013-06-13T08:51:47.207</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\PhaseSetup.js">
+      <PackagePath>js\PhaseSetup.js</PackagePath>
+      <Modified>2011-12-13T05:06:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\SetUpUI.js">
+      <PackagePath>js\SetUpUI.js</PackagePath>
+      <Modified>2011-12-13T05:06:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2012-08-24T11:36:01.276</Modified>
+      <Modified>2013-06-13T11:03:00.843</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
-    <ResolvedSDKReference Include="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\">
-      <Name>Microsoft.WinJS.1.0.RC</Name>
-      <Version>1.0.8377.0</Version>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0\1.0\">
+      <Name>Microsoft.WinJS.1.0</Name>
+      <Version>1.0.9200.20602</Version>
       <Architecture>Neutral</Architecture>
-      <FrameworkIdentity>Name=Microsoft.WinJS.1.0.RC, MinVersion=1.0.8377.0</FrameworkIdentity>
-      <AppxLocation>C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0.RC\1.0\Microsoft.WinJS.1.0.RC.appx</AppxLocation>
+      <FrameworkIdentity>Name=Microsoft.WinJS.1.0, MinVersion=1.0.9200.20602</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v8.0\ExtensionSDKs\Microsoft.WinJS.1.0\1.0\Microsoft.WinJS.1.0.appx</AppxLocation>
     </ResolvedSDKReference>
   </ItemGroup>
 </Project>

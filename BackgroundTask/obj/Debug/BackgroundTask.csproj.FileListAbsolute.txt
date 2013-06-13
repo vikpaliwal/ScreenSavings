@@ -66,3 +66,71 @@ C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\Backgroun
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\priconfig.xml.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\layout.resfiles.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\screensavings_push\BackgroundTask\obj\Debug\priconfig.xml
+C:\screensavings_push\BackgroundTask\obj\Debug\layout.resfiles
+C:\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles
+C:\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles
+C:\screensavings_push\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\pc1\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\pc1\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\pc1\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\priconfig.xml.intermediate
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\layout.resfiles.intermediate
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles.intermediate
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles.intermediate
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\pc1\screensavings_push\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\LanguageQualifiers.txt

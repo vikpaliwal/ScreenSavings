@@ -1,5 +1,5 @@
 //! Copyright (c) Microsoft Corporation. All rights reserved.
-// WL.JS Version 5.0.3358.0522
+// WL.JS Version 5.3.3496.1112
 
 (function() {
 if (!window.WL) {
@@ -94,12 +94,12 @@ var COOKIE_AUTH = "wl_auth",  // This cookie stores the Auth information.
 /**
 * Display types.
 */
-var DISPLAY_APP = "app",
-    DISPLAY_POPUP = "popup",
-    DISPLAY_PAGE = "page",
+var DISPLAY_PAGE = "page",
     DISPLAY_TOUCH = "touch",
     DISPLAY_NONE = "none";
-    
+
+var DOM_DISPLAY_NONE = "none";
+
 /**
  * Event types.
  */
@@ -112,12 +112,12 @@ var EVENT_AUTH_LOGIN = "auth.login",
 var ERROR_ACCESS_DENIED = "access_denied",
     ERROR_CONNECTION_FAILED = "connection_failed",
     ERROR_COOKIE_ERROR = "invalid_cookie",
+    ERROR_INVALID_REQUEST = "invalid_request",
     ERROR_REQ_CANCEL = "request_canceled",
     ERROR_REQUEST_FAILED = "request_failed",
     ERROR_TIMEDOUT = "timed_out",
-    ERROR_UKNOWN_USER = "unknown_user",
+    ERROR_UNKNOWN_USER = "unknown_user",
     ERROR_USER_CANCELED = "user_canceled",
-    ERROR_USER_REJECTED = "user_rejected",
     ERROR_DESC_ACCESS_DENIED = "METHOD: Failed to get the required user permission to perform this operation.",
     ERROR_DESC_BROWSER_ISSUE = "The request could not be completed due to browser issues.",
     ERROR_DESC_BROWSER_LIMIT = "The request could not be completed due to browser limitations.",
@@ -125,24 +125,25 @@ var ERROR_ACCESS_DENIED = "access_denied",
     ERROR_DESC_COOKIE_INVALID = "The 'wl_auth' cookie is not valid.",
     ERROR_DESC_COOKIE_OVERWRITE = "The 'wl_auth' cookie has been modified incorrectly. Ensure that the redirect URI only modifies sub-keys for values received from the OAuth endpoint.",
     ERROR_DESC_COOKIE_MULTIPLEVALUE = "The 'wl_auth' cookie has multiple values. Ensure that the redirect URI specifies a cookie domain and path when setting cookies.",
-    ERROR_DESC_DOM_INVALID = "METHOD: The input parameter 'PARAM' does not reference a valid DOM element.",
+    ERROR_DESC_DOM_INVALID = "METHOD: The input property 'PARAM' does not reference a valid DOM element.",
     ERROR_DESC_EXCEPTION = "METHOD: An exception was received for EVENT. Detail: MESSAGE",
     ERROR_DESC_ENSURE_INIT = "METHOD: The WL object must be initialized with WL.init() prior to invoking this method.",
     ERROR_DESC_FAIL_CONNECT = "A connection to the server could not be established.",
     ERROR_DESC_FAIL_IDENTIFY_USER = "The user could not be identified.",
     ERROR_DESC_LOGIN_CANCEL = "The pending login request has been canceled.",
-    ERROR_DESC_PARAM_INVALID = "METHOD: The input parameter 'PARAM' is not valid.",
-    ERROR_DESC_PARAM_MISSING = "METHOD: The input parameter 'PARAM' must be included.",
-    ERROR_DESC_PARAM_TYPE_INVALID = "METHOD: The type of the provided value for the input parameter 'PARAM' is not valid.",
+    ERROR_DESC_LOGOUT_NOTSUPPORTED = "Logging out the user is not supported in current session because the user is logged in with a Microsoft account on this computer. To logout, the user may quit the app or log out from the computer.",
+    ERROR_DESC_PARAM_INVALID = "METHOD: The input value for parameter/property 'PARAM' is not valid.",
+    ERROR_DESC_PARAM_MISSING = "METHOD: The input parameter/property 'PARAM' must be included.",
+    ERROR_DESC_PARAM_TYPE_INVALID = "METHOD: The type of the provided value for the input parameter/property 'PARAM' is not valid.",
     ERROR_DESC_PENDING_CALL_CONFLICT = "METHOD: There is a pending METHOD request, the current call will be ignored.",
     ERROR_DESC_PENDING_LOGIN_CONFLICT = ERROR_DESC_PENDING_CALL_CONFLICT.replace(/METHOD/g, "WL.login"),
     ERROR_DESC_PENDING_FILEDIALOG_CONFLICT = ERROR_DESC_PENDING_CALL_CONFLICT.replace(/METHOD/g, "WL.fileDialog"),
     ERROR_DESC_PENDING_UPLOAD_IGNORED = ERROR_DESC_PENDING_CALL_CONFLICT.replace(/METHOD/g, "WL.upload"),
-    ERROR_DESC_REDIRECTURI_MISSING = "METHOD: The input parameter 'redirect_uri' is required if the value of the 'response_type' parameter is 'code'.",
+    ERROR_DESC_REDIRECTURI_MISSING = "METHOD: The input property 'redirect_uri' is required if the value of the 'response_type' property is 'code'.",
     ERROR_DESC_REDIRECTURI_INVALID_WWA = "WL.init: The redirect_uri value should be the same as the value of 'Redirect Domain' on API Settings page of your app on https://manage.dev.live.com. It must begin with 'http://' or 'https://'.",
     ERROR_DESC_UNSUPPORTED_API_CALL = "METHOD: The api call is not supported on this platform.",
     ERROR_DESC_UNSUPPORTED_RESPONSE_TYPE_CODE = "WL.init: The response_type value 'code' is not supported on this platform.",
-    ERROR_DESC_URL_SSL = "METHOD: The input parameter 'redirect_uri' must use https: to match the scheme of the current page.",
+    ERROR_DESC_URL_SSL = "METHOD: The input property 'redirect_uri' must use https: to match the scheme of the current page.",
     ERROR_TRACE_AUTH_TIMEOUT = "The auth request is timed out.",
     ERROR_TRACE_AUTH_CLOSE = "The popup is closed without receiving consent.";
 
@@ -226,7 +227,10 @@ var UI_PARAM_NAME = "name",
     UI_PARAM_TYPE = "type",
     UI_PARAM_SIGN_IN_TEXT = "sign_in_text",
     UI_PARAM_SIGN_OUT_TEXT = "sign_out_text",
-    UI_PARAM_THEME = "theme";
+    UI_PARAM_THEME = "theme",
+    UI_PARAM_ONLOGGEDIN = "onloggedin",
+    UI_PARAM_ONLOGGEDOUT = "onloggedout",
+    UI_PARAM_ONERROR = "onerror";
 
 var UI_BRAND_MESSENGER = "messenger",
     UI_BRAND_HOTMAIL = "hotmail",
@@ -252,126 +256,13 @@ var UPLOAD_STATE_ID = "id";
 var WL_SDK_ROOT = "sdk_root",
     WL_TRACE = "wl_trace";
 
-var expectedCallback_Optional = {
-    name: API_PARAM_CALLBACK,
-    type: TYPE_FUNCTION,
-    optional: true
-};
-
-var expectedCallback_Required = {
-    name: API_PARAM_CALLBACK,
-    type: TYPE_FUNCTION,
-    optional: false
-};
-
 window.WL = {
-    init: function (properties) {
-        /// <summary>
-        /// Initializes the JavaScript library.
-        /// An application must call this function before making other function
-        /// calls in the library except for subscribing to events.
-        /// </summary>
-        /// <param name="properties" type="Object">
-        /// Required. A JSON object that includes the following properties:
-        /// &#10; client_id:  Required only for Web applications. The OAuth client ID of your application.
-        /// &#10; scope:  Optional. The scope values used to determine if the user has logged in.
-        /// &#10; redirect_uri:  Optional. The default redirect URI used for OAuth authentication. 
-        /// The OAuth server redirects to this URI during the OAuth flow. This is only supported in Web applications.
-        /// &#10; response_type:  Optional. The OAuth response_type value. It can be either "code" or "token".
-        /// If set to "token" (default), the client will receive the access token directly. If set to "code"
-        /// the client will receive an authorization code and the application server that serves the redirect_uri 
-        /// page should handle retrieving the access token from the OAuth server using the authorization 
-        /// code and client secret. The "code" response_type scenarios are only supported in Web applications.
-        /// &#10; logging: Optional. If set to true (default), the library logs error information to the web browser console and
-        /// notifies the application through "wl.log" event.
-        /// &#10; status: Optional. If set to true (default), the library attempts to get the login status of the user from 
-        /// Windows Live.
-        /// &#10; secure_cookie: Optional. If set to true, the library will specify secure attribute when writting cookie on an
-        /// https page. The default value is false.
-        /// </param>
-
-        try {
-
-            var clonedProperties = cloneObject(properties);
-
-            // Validate parameters
-            validateParams(
-                clonedProperties,
-                {
-                    name: "properties",
-                    type: "properties",
-                    optional: false,
-                    properties: [
-                        { name: AK_CLIENT_ID, altName: CK_APPID, type: TYPE_STRING, optional: !requireClientId() },
-                        { name: AK_SCOPE, type: TYPE_STRINGORARRAY, optional: true },
-                        { name: AK_REDIRECT_URI, altName: CK_CHANNELURL, type: "url", optional: true },
-                        { name: AK_RESPONSE_TYPE, type: TYPE_STRING, allowedValues: [RESPONSE_TYPE_CODE, RESPONSE_TYPE_TOKEN], optional: true },                        
-                        { name: API_PARAM_LOGGING, type: TYPE_BOOLEAN, optional: true },
-                        { name: AK_STATUS, type: TYPE_BOOLEAN, optional: true }
-                        ]
-                },
-                "WL.init");
-
-            if (!clonedProperties[AK_REDIRECT_URI] && clonedProperties[AK_RESPONSE_TYPE] === AK_CODE) {
-                throw new Error(ERROR_DESC_REDIRECTURI_MISSING.replace("METHOD", "WL.init"));
-            }
-
-            if (clonedProperties[AK_STATUS] == null) {
-                clonedProperties[AK_STATUS] = true;
-            }
-
-            wl_app.appInit(clonedProperties);
-        }
-        catch (e) {
-            logError(e.message);
-        }
-    },
-
-    login: function (properties, callback) {
-        /// <summary>
-        /// Signs the user in or expands the user's permission set.
-        /// This function can result in launching the consent page popup. Therefore, it should only be 
-        /// called in response to a user action such as clicking a button.  
-        /// Otherwise, the web browser may block the popup.
-        /// </summary>
-        /// <param name="properties" type="Object">
-        /// Required. A JSON object with the following properties:
-        /// &#10; redirect_uri: Optional. By default, the redirect_uri parameter supplied to WL.init is used. 
-        /// An application can override it for specific scenarios with this parameter.
-        /// &#10; scope: Required. The scopes for the user to authorize. It can be an array
-        /// of scope string values or a string value of multiple scopes delimited by a space character.
-        /// &#10; theme: Optional. For Web apps, the property has no impact. For Windows Metro style HTML apps, the options
-        /// are "dark" (default) and "light".
-        /// &#10; state: Optional. For Windows Metro style HTML apps, the property has no impact. For Web apps, this parameter
-        /// can be used to track the caller state at the app server side if you choose to implement a server flow authentication.
-        /// </param>
-        /// <param name="callback" type="Function" >Optional. A function that is invoked when login is completed.</param>
-
-        try {
-            var args = normalizeArguments(arguments);
-
-            // Validate parameters
-            validateProperties(
-                args,
-                [
-                    { name: AK_SCOPE, type: TYPE_STRINGORARRAY, optional: true },
-                    { name: AK_REDIRECT_URI, type: "url", optional: true },
-                    { name: AK_STATE, type: TYPE_STRING, optional: true },
-                    expectedCallback_Optional
-                ],
-                "WL.login");
-
-            return wl_app.login(args);
-        }
-        catch (e) {
-            return handleAsyncCallingError("WL.login", e);
-        }
-    },
 
     getSession: function () {
         /// <summary>
         /// A synchronous function that gets the current session object, if it exists.
         /// </summary> 
+        /// <returns type="Object" >The current session object.</returns>
 
         try {
             return wl_app.getSession();
@@ -388,11 +279,14 @@ window.WL = {
         /// This is an asynchronous function that returns the user's status by contacting the Windows Live 
         /// OAuth server. If the user status is already known, the library may return what is cached.
         /// However, you can force the library to retrieve up-to-date status by setting the "force" 
-        /// parameter to true. 
+        /// parameter to true. This is an async method that returns a Promise object that allows you to 
+        /// attach events to handle succeeded and failed situations.
         /// </summary>
         /// <param name="callback" type="Function">Optional. The callback function that is invoked when the user's login status is retrieved.</param>
         /// <param name="force" type="Boolean">Optional. If set to false (default), the function may return an existing user status, if it exists. 
         /// Otherwise, if set to true, the function contacts the server to determine the user's status.</param>
+        /// <returns type="Promise" mayBeNull="false" >The Promise object that allows you to attach events to handle succeeded and failed
+        /// situations.</returns>
 
         try {
             return wl_app.getLoginStatus(
@@ -410,9 +304,12 @@ window.WL = {
     logout: function (callback) {
         /// <summary>
         /// Logs the user out of Windows Live and clears any user state that is maintained 
-        /// by the JavaScript library, such as cookies.
+        /// by the JavaScript library, such as cookies. This is an async method that returns a Promise object that 
+        /// allows you to attach events to handle succeeded and failed situations.
         /// </summary>
         /// <param name="callback" type="Function">Optional. Specifies a callback function that is invoked when logout is complete.</param>
+        /// <returns type="Promise" mayBeNull="false" >The Promise object that allows you to attach events to handle succeeded and failed
+        /// situations.</returns>
 
         try {
             validateParams(callback, expectedCallback_Optional, "WL.logout");
@@ -423,9 +320,19 @@ window.WL = {
         }
     },
 
+    canLogout: function () {
+        /// <summary>
+        /// Returns if the app can log the user out.
+        /// </summary>
+        /// <returns type="boolean" >Whether the app can logout.</returns>
+
+        return wl_app.canLogout();
+    },
+
     api: function (properties, callback) {
         /// <summary>
-        /// Makes a call to the Windows Live REST API.
+        /// Makes a call to the Windows Live REST API. This is an async method that returns a Promise object that allows you to 
+        /// attach events to handle succeeded and failed situations.
         /// </summary>
         /// <param name="properties" type="Object">Required. A JSON object containing the properties for making the API call:
         /// &#10; path: Required. The path to the REST API object.
@@ -433,6 +340,8 @@ window.WL = {
         /// &#10; body: A JSON object containing all necessary properties for making the REST API request.
         /// </param>
         /// <param name="callback" type="Function">Required. A callback function that is invoked when the REST API call is complete.</param>
+        /// <returns type="Promise" mayBeNull="false" >The Promise object that allows you to attach events to handle succeeded and failed
+        /// situations.</returns>
 
         try {
             var args = normalizeApiArguments(arguments);
@@ -503,68 +412,6 @@ WL.Event = {
 
 WL.Internal = {};
 
-function normalizeArguments(args, methodName) {
-    var receivedArgs = cloneArray(args),
-        properties = null,
-        callback = null;
-
-    for (var i = 0; i < receivedArgs.length; i++) {
-        var arg = receivedArgs[i],
-            argType = typeof arg;
-
-        if (argType === TYPE_OBJECT && properties === null) {
-            properties = cloneObject(arg);
-        }
-        else if (argType === TYPE_FUNCTION && callback === null) {
-            callback = arg;
-        }
-    }
-
-    properties = properties || {};
-
-    if (callback) {
-        properties.callback = callback;
-    }
-
-    properties[API_INTERFACE_METHOD] = methodName;
-    
-    return properties;
-}
-
-function normalizeApiArguments(args) {
-    var receivedArgs = cloneArray(args),
-        path = null,
-        method = null;
-
-    if (typeof receivedArgs[0] === TYPE_STRING) {
-        // Read path
-        path = receivedArgs.shift();
-
-        if (typeof receivedArgs[0] === TYPE_STRING) {
-            // Read method
-            method = receivedArgs.shift();
-        }
-    }
-
-    normalizedArgs = normalizeArguments(receivedArgs);
-
-    if (path !== null) {
-        normalizedArgs[API_PARAM_PATH] = path;
-
-        if (method != null) {
-            normalizedArgs[API_PARAM_METHOD] = method;
-        }
-    }
-
-    return normalizedArgs;
-}
-
-function handleAsyncCallingError(name, err) {
-    var error = createExceptionResponse(name, name, err);
-    logError(err.message);
-    return createCompletePromise(name, false, null, error);
-}
-
 var wl_event = {
     subscribe: function (event, callback) {
         trace("Subscribe " + event);
@@ -624,7 +471,7 @@ var wl_event = {
 /**
  * The wl_app type encapsulates the implementation of all inteface methods.
  */
-var wl_app = { _status: APP_STATUS_NONE, _statusRequests: [] };
+var wl_app = { _status: APP_STATUS_NONE, _statusRequests: [], _rpsAuth: false };
 
 /**
  * The implementation of WL.init().
@@ -632,8 +479,10 @@ var wl_app = { _status: APP_STATUS_NONE, _statusRequests: [] };
 wl_app.appInit = function (properties) {
 
     // If app has already invoked WL.init(), ignore this call.
-    if (wl_app._status == APP_STATUS_INITIALIZED)
-        return;
+    if (wl_app._status == APP_STATUS_INITIALIZED) {
+        var status = wl_app._session.getNormalStatus();
+        return createCompletePromise("WL.init", true/*succeeded*/, properties.callback, status);
+    }
 
     var sdkRoot = WL[WL_SDK_ROOT];
     if (sdkRoot) {
@@ -649,15 +498,12 @@ wl_app.appInit = function (properties) {
         wl_app._logEnabled = logging;
     }
 
-    wl_app._authScope = normalizeScopeValue(properties[AK_SCOPE]);
-    wl_app._secureCookie = normalizeBooleanValue(properties[AK_SECURE_COOKIE]);
-    wl_app._status = APP_STATUS_INITIALIZED;
-
     if (wl_app.testInit) {
         wl_app.testInit(properties);
     }
     
-    appInitPlatformSpecific(properties);
+    wl_app._status = APP_STATUS_INITIALIZED;
+    return appInitPlatformSpecific(properties);
 };
 
 /**
@@ -678,7 +524,7 @@ function getCoreApp() {
     return WL.Internal.tApp || wl_app;
 }
 
-wl_app.api = function (properties, ignoreResponse) {
+wl_app.api = function (properties) {
 
     ensureAppInited("WL.api");
 
@@ -691,7 +537,7 @@ wl_app.api = function (properties, ignoreResponse) {
     var method = properties[API_PARAM_METHOD];
     properties[API_PARAM_METHOD] = ((method != null) ? stringTrim(method) : HTTP_METHOD_GET).toUpperCase();
 
-    return new APIRequest(properties, !!ignoreResponse).execute();
+    return new APIRequest(properties).execute();
 };
 
 var generateApiRequestId = function () {
@@ -704,11 +550,10 @@ var generateApiRequestId = function () {
     return id;
 };
 
-var APIRequest = function (properties, ignoreResponse) {
+var APIRequest = function (properties) {
     var request = this;
     request._properties = properties;
     request._completed = false;
-    request._ignoreResp = ignoreResponse;
     request._id = generateApiRequestId();
     properties[API_PARAM_PRETTY] = false;
     properties[API_PARAM_SSLRESOURCE] = wl_app._isHttps;
@@ -765,12 +610,13 @@ function createErrorObject(status, errorDescription) {
 }
 
 function getAccessTokenForApi() {
+    var token = null;
+    if (!wl_app._rpsAuth) {
+        var status = getCoreApp()._session.getStatus();
 
-    var token = null,
-        status = getCoreApp()._session.getStatus();
-
-    if (status.status === AS_EXPIRING || status.status === AS_CONNECTED) {
-        token = status.session[AK_ACCESS_TOKEN];
+        if (status.status === AS_EXPIRING || status.status === AS_CONNECTED) {
+            token = status.session[AK_ACCESS_TOKEN];
+        }
     }
 
     return token;
@@ -915,7 +761,7 @@ function buildFilePathUrlString(path, extra_params) {
 }
 
 function handleDownloadErrorResponse(errorMessage, op) {
-    op.downloadComplete(false, createErrorResponse(ERROR_REQUEST_FAILED, "WL.download:" + errorMessage));
+    op.downloadComplete(false, createErrorResponse(ERROR_REQUEST_FAILED, "WL.download: " + errorMessage));
 }
 
 var DOWNLOAD_OPSTATE_NOTSTARTED = "notStarted",
@@ -1004,7 +850,9 @@ DownloadOperation.prototype = {
     _complete: function () {
         var op = this,
             result = op._result,
-            promiseEvent = (op._status === DOWNLOAD_OPSTATE_DOWNLOADCOMPLETED) ? PROMISE_EVENT_ONSUCCESS : PROMISE_EVENT_ONERROR;
+            promiseEvent = (op._status === DOWNLOAD_OPSTATE_DOWNLOADCOMPLETED) ?
+                           PROMISE_EVENT_ONSUCCESS :
+                           PROMISE_EVENT_ONERROR;
 
         op._status = DOWNLOAD_OPSTATE_COMPLETED;
 
@@ -1043,36 +891,15 @@ wl_app.login = function (properties, internal) {
 }
 
 function onAuthRequestCompleted(requestProperties, response) {
-
     wl_app._pendingLogin = null;
 
     var error = response[AK_ERROR];
     if (error) {
-        if (error == ERROR_USER_REJECTED) {
-            trace("wl_app-onAuthRequestCompleted: " + response[AK_ERROR_DESC]);
-        }
-        else {
-            log("WL.login: " + response[AK_ERROR_DESC]);
-        }
-
-        return;
+        log("WL.login: " + response[AK_ERROR_DESC]);
     }
     else {
         invokeCallback(requestProperties.callback, response, true/*synchronous*/);
     }
-}
-
-function normalizeLoginScope(properties) {
-    var scope = normalizeScopeValue(properties[AK_SCOPE]);    
-    if (scope === "") {
-        scope = wl_app._authScope;
-    }
-
-    if (!scope || scope === "") {
-        throw createMissingParamError(AK_SCOPE, "WL.login");
-    }
-
-    properties.normalizedScope = scope;
 }
 
 function normalizeScopeValue(scopeValue) {
@@ -1164,201 +991,54 @@ function onGetLoginStatusCompleted(requestProperties, response) {
  * The implementation of WL.logout() method.
  */
 wl_app.logout = function (properties) {
+    var methodName = "WL.logout";
+    ensureAppInited(methodName);
 
-    ensureAppInited("WL.logout");
+    var promise = new Promise(methodName, null, null),
+        logoutCallback = function (error) {
+            // Ensure that the callback is asynchronous.
+            delayInvoke(function () {
+                var resp,
+                    event = PROMISE_EVENT_ONSUCCESS;
+                if (error) {
+                    logError(error.message);
+                    event = PROMISE_EVENT_ONERROR;
+                    resp = createExceptionResponse(methodName, methodName, error);
+                }
+                else {
+                    resp = wl_app._session.getNormalStatus();
+                }
 
-    var promise = new Promise("WL.logout", null, null);
+                invokeCallback(properties.callback, resp, false/*synchronous*/);
+                promise[event](resp);
+            });
+        },
+        logout = function () {
+            var authSession = wl_app._session;
+            if (authSession.isSignedIn()) {
+                if (wl_app.canLogout()) {
+                    authSession.updateStatus(AS_UNKNOWN);
+                    logoutWindowsLive(logoutCallback);
+                }
+                else {
+                    logoutCallback(new Error(ERROR_DESC_LOGOUT_NOTSUPPORTED));
+                }
+            } else {
+                logoutCallback();
+            }
+        };
 
-    var f = function () {
-        var resp = authSession.getNormalStatus()
-        invokeCallback(properties.callback, resp, false/*synchronous*/);
-        promise[PROMISE_EVENT_ONSUCCESS](resp);
-    };
-
-    var authSession = wl_app._session;
-    if (authSession.isSignedIn()) {
-        authSession.updateStatus(AS_UNKNOWN);
-        logoutWindowsLive(f);
-    } else {
-        f();
+    if (wl_app._pendingStatusRequest != null) {
+        // If we have a pending getLoginStatus request, let's wait for the status call to complete
+        // before invoking logout.
+        wl_app.getLoginStatus({ internal: true, callback: logout }, false/*force*/);
+    }
+    else{
+        logout();
     }
 
     return promise;
 };
-
-// TODO: rename this file to be wl.app.ui.signin.js
-var SignInControl = function (properties) {
-
-    var control = this;
-
-    control._properties = properties;
-
-    var signInControlInit = createDelegate(control, control.init);
-
-    checkDocumentReady(signInControlInit);    
-};
-
-SignInControl.prototype = {
-    init: function () {
-        if (this._inited === true) {
-            return;
-        }
-
-        this._inited = true;
-
-        try {
-            this.validate();
-
-            var control = this,
-            properties = control._properties,
-            element = properties[UI_PARAM_ELEMENT],
-            type = properties[UI_PARAM_TYPE],
-            callback = properties[API_PARAM_CALLBACK],
-            signinText = properties[UI_PARAM_SIGN_IN_TEXT],
-            signoutText = properties[UI_PARAM_SIGN_OUT_TEXT];
-            
-            normalizeSignInControlScope(properties);
-            
-            element = (typeof (element) === TYPE_STRING) ? getElementById(properties[UI_PARAM_ELEMENT]) : element;
-            control._element = element;
-
-            type = type != null ? type : UI_SIGNIN_TYPE_SIGNIN;
-            if (type == UI_SIGNIN_TYPE_SIGNIN) {
-                signinText = WLText.signIn;
-                signoutText = WLText.signOut;
-            }
-            else if (type == UI_SIGNIN_TYPE_LOGIN) {
-                signinText = WLText.login;
-                signoutText = WLText.logout;
-            }
-            else if (type == UI_SIGNIN_TYPE_CONNECT) {
-                signinText = WLText.connect;
-                signoutText = WLText.signOut;
-            }
-
-            control[UI_PARAM_SIGN_IN_TEXT] = signinText;
-            control[UI_PARAM_SIGN_OUT_TEXT] = signoutText;
-
-            setInnerHtml(element, buildSignInControlHtml(properties));
-
-            control.setText(wl_app._session.isSignedIn() ? signoutText : signinText);
-
-            attachSignInControlMouseEvents(control, element.childNodes[0]);
-
-            wl_event.subscribe(EVENT_AUTH_LOGIN, createDelegate(control, control.onLoggedIn));
-            wl_event.subscribe(EVENT_AUTH_LOGOUT, createDelegate(control, control.onLoggedOut));
-
-            wl_app.getLoginStatus({ internal: true });
-
-            // We don't need to store the callback for sign-in and 
-            // we don't want it to be invoked when login completes
-            delete properties[API_PARAM_CALLBACK];
-            invokeCallback(callback, properties, false/*synchronous*/);
-        }
-        catch (e) {
-            logError(e.message);
-        }
-    },
-
-    validate: function () {
-        var properties = this._properties;
-        validateProperties(
-            properties,
-            [{
-                name: UI_PARAM_ELEMENT,
-                type: TYPE_DOM,
-                optional: false
-            },
-             {
-                 name: UI_PARAM_TYPE,
-                 allowedValues: [UI_SIGNIN_TYPE_SIGNIN, UI_SIGNIN_TYPE_LOGIN, UI_SIGNIN_TYPE_CONNECT, UI_SIGNIN_TYPE_CUSTOM],
-                 type: TYPE_STRING,
-                 optional: true
-             },
-             { name: AK_SCOPE, type: TYPE_STRINGORARRAY, optional: true },
-             { name: AK_STATE, type: TYPE_STRING, optional: true }
-            ],
-            "WL.ui(name:'signin')");
-
-        validateSignInControlPlatformSpecificParameters(properties);
-
-        // Validate custom sign-in control text values
-        var type = properties[UI_PARAM_TYPE];
-        if (type == UI_SIGNIN_TYPE_CUSTOM) {
-            validateProperties(
-                properties,
-                [{
-                    name: UI_PARAM_SIGN_IN_TEXT,
-                    type: TYPE_STRING,
-                    optional: false
-                },
-                 {
-                     name: UI_PARAM_SIGN_OUT_TEXT,
-                     type: TYPE_STRING,
-                     optional: false
-                 }
-                ],
-                "WL.ui(name:'signin')");
-        }
-    },
-
-    onClick: function () {
-        if (this._element.childNodes.length == 0) {
-            // The button has been cleared.
-            detachSignInControlMouseEvents(this);
-            return;
-        }
-
-        if (wl_app._session.isSignedIn()) {
-            wl_app.logout({});
-        }
-        else {
-            wl_app.login(this._properties, true/*internal*/);
-        }
-
-        return false;
-    },
-
-    onLoggedIn: function () {
-        this.setText(this[UI_PARAM_SIGN_OUT_TEXT])
-    },
-
-    onLoggedOut: function () {
-        this.setText(this[UI_PARAM_SIGN_IN_TEXT]);
-    }
-};
-
-function normalizeSignInControlScope(properties) {
-    if (wl_app._authScope && wl_app._authScope !== "") {
-        // We use the scope values passed in from WL.init.
-        // If it isn't available, the scope value from SignInControl will be used for backward compatibility.
-        properties[AK_SCOPE] = wl_app._authScope;
-    }
-
-    if (!properties[AK_SCOPE]) {
-        // If no scope is available, we use wl.signin as default for auth UI flow.
-        properties[AK_SCOPE] = SCOPE_SIGNIN;
-    }
-}
-
-function getSDKRootPath() {
-    return wl_app[WL_SDK_ROOT];
-}
-
-function getImagePath() {
-    return getSDKRootPath() + "images";
-}
-
-function createSignInControlEventHandler(name, control, callback) {
-    control._handlers = control._handlers || {};
-    var handler = createDelegate(control, callback);
-    control._handlers[name] = handler;
-    return handler;
-}
-
-function getSignInControlEventHandler(name, control) {
-    return control._handlers[name];
-}
 
 // wl.app.upload.js
 // Common WL.upload methods.
@@ -1377,8 +1057,6 @@ wl_app.upload = function (properties) {
 
     normalizeUploadFileName(properties);
 
-    //TODO: review upload to file object Id case.
-
     return new UploadOperation(properties).execute();
 }
 
@@ -1391,7 +1069,16 @@ function normalizeUploadFileName(properties) {
 }
 
 function buildUploadToFolderUrlString(location, file_name, overwrite) {
-    // TODO: Ensure encoding here works properly in Win8
+    var queryStringIndex = location.indexOf("?");
+    var hasQueryString = queryStringIndex !== -1;
+    var queryString = "";
+    // Since we might be appending the fileName on to the URI, we want
+    // to break the string apart at the query string.
+    if (hasQueryString) {
+        queryString = location.substring(queryStringIndex + 1);
+        location = location.substring(0, queryStringIndex);
+    }
+
     var hasFileName = typeof(file_name) !== TYPE_UNDEFINED;
     var hasTrailingSlash = location.charAt(location.length-1) === "/";
     if (hasFileName && !hasTrailingSlash) {
@@ -1413,8 +1100,17 @@ function buildUploadToFolderUrlString(location, file_name, overwrite) {
     } else {  // if overwrite is true or false
         params[API_PARAM_OVERWRITE] = overwrite;
     }
+
+    // If we broke apart the string, let's put it back together.
+    if (hasQueryString) {
+        path = appendQueryString(path, queryString);
+    }
     
     return buildUploadFileUrlString(path, params);
+}
+
+function isFilePath(path) {
+    return /^(file|\/file)/.test(path.toLowerCase());
 }
 
 function buildUploadFileUrlString(path, params) {
@@ -1478,7 +1174,7 @@ UploadOperation.prototype = {
     cancel: function () {
         var self = this;
         self._status = UPLOAD_OPSTATE_CANCELED;
-        
+
         if (self._cancel) {
             try {
                 self._cancel();
@@ -1518,7 +1214,7 @@ UploadOperation.prototype = {
         this.uploadComplete((response.error == null), response);
     },
 
-    setFileName: function(fileName) {
+    setFileName: function (fileName) {
         this._props[API_PARAM_FILENAME] = fileName;
     },
 
@@ -1569,15 +1265,20 @@ UploadOperation.prototype = {
                 var location = response.upload_location;
 
                 if (location) {
+                    // Make sure the query path sent into WL.upload is sent to the upload POST/PUT request.
+                    // Not just the GET upload_location request.
+                    var queryString = parseQueryString(path);
+                    location = appendQueryString(location, queryString);
+
                     var file_name = props[API_PARAM_FILENAME],
                         overwrite = props[API_PARAM_OVERWRITE];
-                    // TODO: ensure we always have a name.
-                    if (path.indexOf("file") === 0) {
-                        // TODO: double check if overwrite is not needed.
+                    if (isFilePath(path)) {
                         op._uploadPath = buildUploadFileUrlString(location);
-                    } else {
+                    } 
+                    else {
                         op._uploadPath = buildUploadToFolderUrlString(location, file_name, overwrite);
                     }
+
                     op._status = UPLOAD_OPSTATE_UPLOADREADY;
                 }
                 else {
@@ -1607,8 +1308,9 @@ UploadOperation.prototype = {
 
         op._status = UPLOAD_OPSTATE_COMPLETED;
 
-        if (this._callback) {
-            this._callback(result);
+        var callback = op._props[API_PARAM_CALLBACK];
+        if (callback) {
+            callback(result);
         }
 
         op._promise[promiseEvent](result);
@@ -1653,6 +1355,42 @@ function cloneObjectExcept(obj, target, exceptionlist) {
     }
 
     return clonedObject;
+}
+
+/**
+ * Checks if an array contains a given object.
+ */
+function arrayContains(arr, obj) {
+    var i;
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i] === obj) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Merge two arrays into one and avoid duplicate.
+ */
+function arrayMerge(arr1, arr2) {
+    var arr = [], arrMap = {};
+
+    var addToArray = function (elements) {
+        for (var i = 0; i < elements.length; i++) {
+            arrElm = elements[i];
+            if (arrElm != "" && !arrMap[arrElm]) {
+                arrMap[arrElm] = true;
+                arr.push(arrElm);
+            }
+        }
+    };
+
+    addToArray(arr1);
+    addToArray(arr2);
+
+    return arr;
 }
 
 /**
@@ -1783,13 +1521,53 @@ function setElementText(element, text) {
     }
 }
 
+/**
+ * Takes in a url string object and returns the query string portion.
+ * (e.g., given foo.com?k1=v1, this function returns k1=v1).
+ */
+function parseQueryString(url) {
+    var queryStringIndex = url.indexOf("?");
+    if (queryStringIndex === -1) {
+        return "";
+    }
+
+    var fragmentIndex = url.indexOf("#", queryStringIndex + 1);
+    if (fragmentIndex !== -1) {
+        return url.substring(queryStringIndex + 1, fragmentIndex);
+    }
+
+    return url.substring(queryStringIndex + 1);
+}
+
+/**
+ * Takes in a base url and a query string and appends the query string to the end of the base url.
+ * (e.g., given foo.com?k1=v1 and k2=v2, this function returns foo.com?k1=v1&k2=v2).
+ * Returns the unmodified baseUrl if the queryString is empty string, null, or undefined.
+ */
+function appendQueryString(baseUrl, queryString) {
+    if (typeof(queryString) === TYPE_UNDEFINED || queryString === null || queryString === "") {
+        return baseUrl;
+    }
+
+    var queryStringIndex = baseUrl.indexOf("?");
+    if (queryStringIndex === -1) {
+        return baseUrl + "?" + queryString;
+    }
+
+    if (baseUrl.charAt(baseUrl.length - 1) !== "&") {
+        baseUrl += "&";
+    }
+
+    return baseUrl + queryString;
+}
+
 function Uri(url) {
     cloneObject(parseUri(url), this);
 }
 
 Uri.prototype = {
     toString: function () {
-        var uri = this;
+        var uri = this,
         s = (uri.scheme != "" ? uri.scheme + "//" : "") + uri.host + (uri.port != "" ? ":" + uri.port : "") + uri.path;
         return s;
     },
@@ -1942,19 +1720,27 @@ function trimVersionBuildNumber(version) {
     return versionArr[0] + "." + versionArr[1];
 }
 
-function delayInvoke(callback) {
+function delayInvoke(callback, delay) {
 
     if (window.wlUnitTests) {
         wlUnitTests.delayInvoke(callback);
     }
     else {
-        window.setTimeout(callback, 1);
+        window.setTimeout(callback, delay || 1);
     }
 }
 
 function detectBrowsers() {
-    var ua = navigator.userAgent.toLowerCase();
-    wl_app._browser = {
+    var browser = getBrowserInfo(navigator.userAgent, document.documentMode),
+        libraryValue = wl_app[API_X_HTTP_LIVE_LIBRARY];
+    wl_app._browser = browser;
+    wl_app[API_X_HTTP_LIVE_LIBRARY] = libraryValue.replace("DEVICE", browser.device);
+}
+
+function getBrowserInfo(ua, documentMode) {
+    ua = ua.toLowerCase();
+    var device = "other",
+        browser = {
         "firefox": /firefox/.test(ua),
         "firefox1.5": /firefox\/1\.5/.test(ua),
         "firefox2": /firefox\/2/.test(ua),
@@ -1965,19 +1751,21 @@ function detectBrowsers() {
         "ie7": false,
         "ie8": false,
         "ie9": false,
+        "ie10": false,
         "opera": /opera/.test(ua),
         "webkit": /webkit/.test(ua),
+        "chrome": /chrome/.test(ua),
         "mobile": /mobile/.test(ua) || /phone/.test(ua)
     };
 
-    if (wl_app._browser["ie"]) {
+    if (browser["ie"]) {
         // detect the rendering engine IE is using.
         // if documentMode is defined, we rely on its value to determine the rendering engine.
         var engine = 0;
 
-        if (document.documentMode) {
-            engine = document.documentMode;
-        } 
+        if (documentMode) {
+            engine = documentMode;
+        }
         else {
             // if we're in a browser that doesn't support documentMode (IE6, IE7) we need to do some more sniffing.
             if (/msie 7/.test(ua)) {
@@ -1986,10 +1774,32 @@ function detectBrowsers() {
         }
 
         // clamp the engine on 6,9
-        engine = Math.min(9, Math.max(engine, 6));
+        engine = Math.min(10, Math.max(engine, 6));
+        device = "ie" + engine;
 
-        wl_app._browser["ie" + engine] = true;
+        browser[device] = true;
     }
+    else {
+        if (browser.firefox) {
+            device = "firefox";
+        }
+        else if (browser.chrome) {
+            device = "chrome";
+        }
+        else if (browser.webkit) {
+            device = "webkit";
+        }
+        else if (browser.opera) {
+            device = "opera";
+        }
+    }
+
+    if (browser.mobile) {
+        device += "mobile";
+    }
+
+    browser.device = device;
+    return browser;
 }
 
 /**
@@ -2101,6 +1911,18 @@ function normalizeBooleanValue(value) {
     }
 }
 
+var expectedCallback_Optional = {
+    name: API_PARAM_CALLBACK,
+    type: TYPE_FUNCTION,
+    optional: true
+};
+
+var expectedCallback_Required = {
+    name: API_PARAM_CALLBACK,
+    type: TYPE_FUNCTION,
+    optional: false
+};
+
 function validateParams(params, expectedParams, method) {
     if (params instanceof Array) {
         for (var i = 0; i < params.length; i++) {
@@ -2136,7 +1958,6 @@ function validateParamType(param, expected, method) {
 
     switch (expectedType) {
         case "string":
-        case "url":
             {
                 if (paramType !== TYPE_STRING) {
                     throw createParamTypeError(paramName, method);                    
@@ -2224,8 +2045,13 @@ function createMissingParamError(paramName, method) {
     return new Error(ERROR_DESC_PARAM_MISSING.replace("METHOD", method).replace("PARAM", paramName));
 }
 
-function createInvalidParamValue(paramName, method) {
-    return new Error(ERROR_DESC_PARAM_INVALID.replace("METHOD", method).replace("PARAM", paramName));
+function createInvalidParamValue(paramName, method, optionalMessage) {
+    var message = ERROR_DESC_PARAM_INVALID.replace("METHOD", method).replace("PARAM", paramName);
+    if (typeof(optionalMessage) !== TYPE_UNDEFINED) {
+        message += " " + optionalMessage;
+    }
+
+    return new Error(message);
 }
 
 function findArgumentByType(args, type, maxToRead) {
@@ -2238,6 +2064,68 @@ function findArgumentByType(args, type, maxToRead) {
     }
 
     return undefined;
+}
+
+function normalizeArguments(args, methodName) {
+    var receivedArgs = cloneArray(args),
+        properties = null,
+        callback = null;
+
+    for (var i = 0; i < receivedArgs.length; i++) {
+        var arg = receivedArgs[i],
+            argType = typeof(arg);
+
+        if (argType === TYPE_OBJECT && properties === null) {
+            properties = cloneObject(arg);
+        }
+        else if (argType === TYPE_FUNCTION && callback === null) {
+            callback = arg;
+        }
+    }
+
+    properties = properties || {};
+
+    if (callback) {
+        properties.callback = callback;
+    }
+
+    properties[API_INTERFACE_METHOD] = methodName;
+
+    return properties;
+}
+
+function normalizeApiArguments(args) {
+    var receivedArgs = cloneArray(args),
+        path = null,
+        method = null;
+
+    if (typeof receivedArgs[0] === TYPE_STRING) {
+        // Read path
+        path = receivedArgs.shift();
+
+        if (typeof receivedArgs[0] === TYPE_STRING) {
+            // Read method
+            method = receivedArgs.shift();
+        }
+    }
+
+    normalizedArgs = normalizeArguments(receivedArgs);
+
+    if (path !== null) {
+        normalizedArgs[API_PARAM_PATH] = path;
+
+        if (method != null) {
+            normalizedArgs[API_PARAM_METHOD] = method;
+        }
+    }
+
+    return normalizedArgs;
+}
+
+function handleAsyncCallingError(name, err) {
+    var error = createExceptionResponse(name, name, err);
+    logError(err.message);
+    return createCompletePromise(name, false, null, error);
 }
 
 var Promise = function (opName, op, uplinkPromise) {
@@ -2393,20 +2281,93 @@ var APISERVICE_URI = "apiservice_uri",
 
 var IDS_NON_CONNECTED_ACCOUNT_ERROR_CODE = -2147023579;
 
-var SDK_ROOT_PATH = "///LiveSDKHTML/",
-    SDK_RESOURCE_PATH = "ms-resource:///WLText/";
+WL.init = function (properties) {
+    /// <summary>
+    /// Initializes the JavaScript library. An application must call this function before making other function calls to 
+    /// the library except for subscribing/unsubscribing to events.
+    /// </summary>
+    /// <param name="properties" type="Object">
+    /// Required. A JSON object that includes the following properties:
+    /// &#10; scope:  Optional. The scope values used to check and determine the user's login and consent status.
+    /// &#10; redirect_uri:  Optional. Specifying redirect_uri value will enable the library to return the user's authentication 
+    /// token in the user session object. For further detail about authentication token, please check
+    /// http://msdn.microsoft.com/en-us/library/live/hh826544.aspx#get_token
+    /// The redirect_uri value must match the redirect domain of the app registered at https://manage.dev.live.com/ site.
+    /// &#10; logging: Optional. If set to true (default), the library logs error information to the JavaScript console and
+    /// notifies the application through "wl.log" event.
+    /// </param>
+    /// <returns type="Promise" mayBeNull="false" >The Promise object that allows you to attach events to handle succeeded and failed
+    /// situations.</returns>
+    try {
 
-var WLText = null;
+        var clonedProperties = cloneObject(properties);
+
+        // Validate parameters
+        validateParams(
+            clonedProperties,
+            {
+                name: "properties",
+                type: "properties",
+                optional: false,
+                properties: [
+                    { name: AK_SCOPE, type: TYPE_STRINGORARRAY, optional: true },
+                    { name: AK_REDIRECT_URI, type: TYPE_STRING, optional: true },                        
+                    { name: API_PARAM_LOGGING, type: TYPE_BOOLEAN, optional: true }
+                ]
+            },
+            "WL.init");
+
+        return wl_app.appInit(clonedProperties);
+    }
+    catch (e) {
+        return handleAsyncCallingError("WL.init", e);
+    }
+};
+
+WL.login = function (properties, callback) {
+    /// <summary>
+    /// Signs the user in or expands the user's permission set.
+    /// </summary>
+    /// <param name="properties" type="Object">
+    /// Required. A JSON object with the following properties:
+    /// &#10; scope: Required. The scopes for the user to authorize. It can be an array of scope string values or 
+    /// a string value of multiple scopes delimited by a space character.
+    /// </param>
+    /// <param name="callback" type="Function" >Optional. A function that is invoked when login is completed.</param>
+    /// <returns type="Promise" mayBeNull="false" >The Promise object that allows you to attach events to handle succeeded and failed
+    /// situations.</returns>
+
+    try {
+        var args = normalizeArguments(arguments);
+
+        // Validate parameters
+        validateProperties(
+            args,
+            [
+                { name: AK_SCOPE, type: TYPE_STRINGORARRAY, optional: true },
+                expectedCallback_Optional
+            ],
+            "WL.login");
+
+        return wl_app.login(args);
+    }
+    catch (e) {
+        return handleAsyncCallingError("WL.login", e);
+    }
+};
 
 WL.backgroundDownload = function (properties, callback) {
     /// <summary>
-    /// Makes a call to download a file from SkyDrive.
+    /// Makes a call to download a file from SkyDrive. This is an async method that returns a Promise object that 
+    /// allows you to attach events to handle succeeded, failed and progressed situations.
     /// </summary>
     /// <param name="properties" type="Object">Required. A JSON object containing the properties for downloading a file:
     /// &#10; path: Required. The path to the file to download.
-    /// &#10; file_output: Optional. The file output object where to write the downloaded file data. This only applies to Windows Metro style HTML apps. 
+    /// &#10; file_output: Optional. The file output object where to write the downloaded file data.
     /// </param>
     /// <param name="callback" type="Function">Optional. A callback function that is invoked when the download call is complete.</param>
+    /// <returns type="Promise" mayBeNull="false" >The Promise object that allows you to attach events to handle succeeded, failed, 
+    /// and progressed situations.</returns>
 
     try {
         var method = "WL.backgroundDownload",
@@ -2420,7 +2381,8 @@ WL.backgroundDownload = function (properties, callback) {
 
 WL.backgroundUpload = function (properties, callback) {
     /// <summary>
-    /// Makes a call to upload a file to SkyDrive.
+    /// Makes a call to upload a file to SkyDrive. This is an async method that returns a Promise object that 
+    /// allows you to attach events to handle succeeded, failed and progressed situations.
     /// </summary>
     /// <param name="properties" type="Object">Required. A JSON object containing the properties for uploading a file:
     /// &#10; path: Required. The path to the file to download.
@@ -2431,6 +2393,8 @@ WL.backgroundUpload = function (properties, callback) {
     /// Suported values include "true", "false", "rename", true, false.
     /// </param>
     /// <param name="callback" type="Function">Optional. A callback function that is invoked when the upload call is complete.</param>
+    /// <returns type="Promise" mayBeNull="false" >The Promise object that allows you to attach events to handle succeeded, failed, 
+    /// and progressed situations.</returns>
 
     try {
         var method = "WL.backgroundUpload",
@@ -2442,48 +2406,11 @@ WL.backgroundUpload = function (properties, callback) {
     }
 };
 
-WL.ui = function (properties, callback) {
-    /// <summary>
-    /// Creates a user interface control on the current page.
-    /// </summary>
-    /// <param name="properties" type="Object">Required. A JSON object containing properties for creating the user interface element.
-    /// &#10; name: Required. Specifies the name of the UI element to create. For the sign-in control, it is "signin".
-    /// &#10; element: Required. The DOM element to attach to the UI element.
-    /// &#10; brand: Optional. Defines the brand, or type of icon, used with the signin control. It can be one of the following
-    /// values: "hotmail", "messenger", "windows"(default), "skydrive", or "none".
-    /// &#10; theme: Optional. For Web apps, the options are "blue" (default) and "white". For Windows Metro style HTML apps, the options
-    /// are "dark" (default) and "light".
-    /// &#10; type: Optional. Defines the type of the sign-in control. It can be one of the following values: "signin" (default), "login", "connect", 
-    /// or "custom". 
-    /// &#10; sign_in_text: If the type value is "custom", defines the signin text displayed in the sign-in control.
-    /// &#10; sign_out_text: If the type value is "custom", defines the sign out text displayed in the sign-in control.
-    /// </param>
-    /// <param name="callback" type="Function">Optional. A callback function that is invoked when the UI element is rendered.</param>
-
-    // TODO: update intellisense comments
-    try {
-        var method = "WL.ui",
-            args = normalizeArguments(arguments, method);
-
-        // Validate parameters
-        validateProperties(
-                args,
-                [{ name: UI_PARAM_NAME, type: TYPE_STRING, allowedValues: [UI_SIGNIN], optional: false },
-                expectedCallback_Optional],
-                method);
-
-        wl_app.ui(args);
-
-    }
-    catch (e) {
-        logError(e.message);
-    }
-};
-
 /**
  * The WWA version of appInitPlatformSpecific() method.
  */
 function appInitPlatformSpecific(properties) {
+    wl_app._authScope = normalizeScopeValue(properties[AK_SCOPE]);
     if (properties[AK_RESPONSE_TYPE] === AK_CODE) {
         throw new Error(ERROR_DESC_UNSUPPORTED_RESPONSE_TYPE_CODE);
     }
@@ -2491,17 +2418,13 @@ function appInitPlatformSpecific(properties) {
     // let's run as ssl so that api service will return us ssl resources.
     wl_app._isHttps = true;
 
+    wl_app._authScope = ensureDefaultAuthScope(wl_app._authScope);
+
     if (properties[API_PARAM_TRACING]) {
         wl_app._traceEnabled = true;
     }
         
-    if (!wl_app[WL_SDK_ROOT]) {
-        wl_app[WL_SDK_ROOT] = SDK_ROOT_PATH;
-    }
-
     wl_app._domain = readRedirectDomain(properties);
-
-    initLocale();
 
     var psid = Windows.Security.Authentication.Web.WebAuthenticationBroker.getCurrentApplicationCallbackUri().absoluteUri;
 
@@ -2510,6 +2433,16 @@ function appInitPlatformSpecific(properties) {
     cleanPendingBackgroundTransferOperations();
 
     wl_app._session = new AuthSession(psid);
+    var promise = new Promise("WL.init");
+    wl_app.getLoginStatus({
+        internal: true,
+        callback: function (resp) {
+            var eventType = !!(resp.error) ? PROMISE_EVENT_ONERROR : PROMISE_EVENT_ONSUCCESS;
+            promise[eventType](resp);
+        }
+    }, true/*force*/);
+
+    return promise;
 }
 
 function readRedirectDomain(properties) {
@@ -2527,28 +2460,6 @@ function readRedirectDomain(properties) {
     }
 
     return appDomain;
-}
-
-function initLocale() {
-    try {
-        var ns = Windows.ApplicationModel.Resources.Core,
-            rm = ns.ResourceManager,
-            locale = rm.current.defaultContext.languages[0],
-            resources = ns.ResourceManager.current.mainResourceMap;
-
-        wl_app._locale = ((locale || "en").toLowerCase());
-
-        WLText = {
-            signIn: resources.getValue(SDK_RESOURCE_PATH + "signIn").valueAsString,
-            signOut: resources.getValue(SDK_RESOURCE_PATH + "signOut").valueAsString,
-            login: resources.getValue(SDK_RESOURCE_PATH + "login").valueAsString,
-            logout: resources.getValue(SDK_RESOURCE_PATH + "logout").valueAsString,
-            connect: resources.getValue(SDK_RESOURCE_PATH + "connect").valueAsString
-        };
-                
-    } catch (error) {
-        log(error.message);
-    }
 }
 
 /**
@@ -2573,11 +2484,14 @@ function normalizeRedirectUrl(url) {
     return url;
 }
 
-/**
- * The WWA version of requireClientId() method.
- */
-function requireClientId() {
-    return false;
+function ensureDefaultAuthScope(scope) {
+    scope = scope || SCOPE_SIGNIN;
+
+    if (scope.indexOf(SCOPE_SIGNIN) < 0) {
+        scope = scope + " " + SCOPE_SIGNIN;
+    }
+
+    return stringTrim(scope);
 }
 
 /**
@@ -2636,11 +2550,24 @@ function handlePendingLogin(internal) {
 }
 
 /**
+ * Normalize login scope.
+ */
+function normalizeLoginScope(properties) {
+
+    var loginScope = properties[AK_SCOPE] || [],
+        currentAppScope = wl_app._authScope.split(SCOPE_DELIMINATOR);
+    
+    if (typeof(loginScope) === TYPE_STRING) {
+        loginScope = loginScope.split(SCOPE_DELIMINATOR);
+    }
+
+    properties.normalizedScope = arrayMerge(currentAppScope, loginScope).join(" ");
+}
+
+/**
  * The WWA version of createLoginRequest() method.
  */
 function createLoginRequest(properties, onAuthRequestCompleted) {
-    properties[UI_PARAM_THEME] = properties[UI_PARAM_THEME] || UI_SIGNIN_THEME_DARK;
-
     return new AuthRequest(DISPLAY_PAGE, properties.normalizedScope, properties, onAuthRequestCompleted);
 }
 
@@ -2651,6 +2578,10 @@ function createLoginStatusRequest(properties, onGetLoginStatusCompleted) {
     return new AuthRequest(DISPLAY_NONE, wl_app._authScope, properties, onGetLoginStatusCompleted);
 }
 
+wl_app.canLogout = function () {
+    return Windows.Security.Authentication.OnlineId.OnlineIdAuthenticator().canSignOut;
+};
+
 /**
  * The WWA version of logoutWindowsLive() method.
  */
@@ -2660,150 +2591,17 @@ function logoutWindowsLive(callback) {
         var ns = Windows.Security.Authentication.OnlineId,
                 clientAuth = new ns.OnlineIdAuthenticator();
 
-        var authOperation = clientAuth.signOutUserAsync().then(callback, callback);
+        var authOperation = clientAuth.signOutUserAsync().then(
+            function (resp) {
+                callback();
+            },
+            callback);
     }
     catch (error) {
         log(error);
-        callback();
+        callback(error);
     }
 }
-
-wl_app.ui = function (properties) {
-
-    ensureAppInited("WL.ui");
-
-    if (properties.name === UI_SIGNIN) {
-        new SignInControl(properties);
-    }
-}
-
-function validateSignInControlPlatformSpecificParameters(properties) {
-    validateProperties(
-        properties,
-        [{
-            name: UI_PARAM_THEME,
-            allowedValues: [UI_SIGNIN_THEME_DARK, UI_SIGNIN_THEME_LIGHT],
-            type: TYPE_STRING,
-            optional: true
-        },
-        {
-            name: UI_PARAM_BRAND,
-            allowedValues: [UI_BRAND_MESSENGER, UI_BRAND_HOTMAIL, UI_BRAND_SKYDRIVE, UI_BRAND_WINDOWS, UI_BRAND_NONE],
-            type: TYPE_STRING,
-            optional: true
-        }],
-        "WL.ui(name:'signin')");
-
-    properties[UI_PARAM_THEME] = properties[UI_PARAM_THEME] || UI_SIGNIN_THEME_DARK;
-    properties[UI_PARAM_BRAND] = properties[UI_PARAM_BRAND] || UI_BRAND_WINDOWS;
-}
-
-function buildSignInControlHtml(properties) {
-    var brand = (properties[UI_PARAM_BRAND]),
-        theme = (properties[UI_PARAM_THEME]),
-        imgHtml = buildSignInControlIconHtml(brand, theme),
-        textHtml = buildSignInControlTextHtml(brand),
-		buttonHtml = "<button style=\"text-align: center;\">" + imgHtml + textHtml + "</button>";
-
-    return buttonHtml;
-}
-
-function buildSignInControlIconHtml(brand, theme) {
-    var html = "";
-    if (brand !== UI_BRAND_NONE) {
-        var imgName = brand + (theme === UI_SIGNIN_THEME_DARK ? "_white.png" : "_black.png");
-        html = "<img alt=\"\" src=\"" + getImagePath() +"/SignInControl/"+ imgName + "\" style=\"vertical-align: middle;\">";
-    }
-    return html;
-}
-
-function buildSignInControlTextHtml(brand) {
-    var html = (brand !== UI_BRAND_NONE) ? "<span style=\"margin: 0px 4px; text-align: center; vertical-align: middle;\"></span>" : "";
-    return html;
-}
-
-SignInControl.prototype.setText = function (text) {
-    if (this._element.childNodes.length == 0) {
-        // The button has been cleared.
-        detachSignInControlMouseEvents(this);
-        return;
-    }
-
-    if (text != this._text) {
-        var button = this._element.childNodes[0],
-            textContainer = (this._properties[UI_PARAM_BRAND] === UI_BRAND_NONE) ? button : button.childNodes[1];
-
-        setElementText(textContainer, text);
-        this._text = text;
-    }
-};
-
-SignInControl.prototype.onMouseDown = function (e) {
-    this.mousedown = true;
-    OnSignControlMouseEvent(this);
-};
-
-SignInControl.prototype.onMouseUp = function (e) {
-    this.mousedown = false;
-    OnSignControlMouseEvent(this);
-};
-
-SignInControl.prototype.onMouseEnter = function (e) {
-    this.mousein = true;
-    OnSignControlMouseEvent(this);
-};
-
-SignInControl.prototype.onMouseLeave = function (e) {
-    this.mousein = false;
-    OnSignControlMouseEvent(this);
-};
-
-function OnSignControlMouseEvent(signInControl) {
-    var properties = signInControl._properties,
-        brand = properties[UI_PARAM_BRAND];
-
-    if (brand === UI_BRAND_NONE){
-        return;
-    }
-
-    if (signInControl._element.childNodes.length == 0) {
-        // The button has been cleared. 
-        detachSignInControlMouseEvents(signInControl);
-        return;
-    }
-
-    var imgEl = signInControl._element.childNodes[0].childNodes[0],
-        theme = (properties[UI_PARAM_THEME]),
-        useWhite = (theme === UI_SIGNIN_THEME_DARK),
-        invert = signInControl.mousedown && signInControl.mousein;
-    useWhite = invert ? !useWhite : useWhite;
-    
-
-    var imgName = brand + (useWhite ? "_white.png" : "_black.png");
-    imgEl.src = getImagePath() + "/SignInControl/" + imgName;
-}
-
-function attachSignInControlMouseEvents(control, button) {
-    control._button = button;
-    button.addEventListener("click", createSignInControlEventHandler("click", control, control.onClick), false);
-    button.addEventListener("mouseenter", createSignInControlEventHandler("mouseenter", control, control.onMouseEnter), false);
-    button.addEventListener("mouseleave", createSignInControlEventHandler("mouseleave", control, control.onMouseLeave), false);
-    document.addEventListener("mousedown", createSignInControlEventHandler("mousedown", control, control.onMouseDown), false);
-    document.addEventListener("mouseup", createSignInControlEventHandler("mouseup", control, control.onMouseUp), false);
-}
-
-function detachSignInControlMouseEvents(control) {
-    var button = control._button;
-    if (button) {
-        button.removeEventListener("click", getSignInControlEventHandler("click", control), false);
-        button.removeEventListener("mouseenter", getSignInControlEventHandler("mouseenter", control), false);
-        button.removeEventListener("mouseleave", getSignInControlEventHandler("mouseleave", control), false);
-        document.removeEventListener("mousedown", getSignInControlEventHandler("mousedown", control), false);
-        document.removeEventListener("mouseup", getSignInControlEventHandler("mouseup", control), false);
-        delete control._button;
-    }
-}
-
 
 var AuthRequest = function (display, scope, properties, callback) {
     var request = this;
@@ -2818,24 +2616,53 @@ var AuthRequest = function (display, scope, properties, callback) {
 };
 
 AuthRequest.prototype = {
+    execute: function () {
+        return this._sendRequest(this._scope);
+    },
 
-    execute: function () {    
+    _sendRequest: function (scope) {    
         var request = this,
-            onCompleteDelegate = createDelegate(request, request._onComplete),
+            onCompleteDelegate = createDelegate(request, request._onResponse),
             ns = Windows.Security.Authentication.OnlineId,
             promptOption = (request._display === DISPLAY_NONE) ? ns.CredentialPromptType.doNotPrompt : ns.CredentialPromptType.promptIfNeeded;
 
-        authenticateUser(promptOption, request._scope, onCompleteDelegate);
+        request._currentScope = scope;
+        authenticateUser(promptOption, scope, onCompleteDelegate);
 
         return request._promise;
     },
 
-    _onComplete: function (response) {
-        if (!this._completed) {
-            this._completed = true;
+    _onResponse: function (response) {
+        var request = this;
+        if (request._display === DISPLAY_NONE &&
+            response[AK_ERROR] === ERROR_ACCESS_DENIED &&
+            request._currentScope !== SCOPE_SIGNIN) {
+            // If we receive access_denied when making silent auth check, it is possible the user has revoked consent from consent.live.com.
+            // So, let's try the default scope (wl.signin) to get access_token.
+            request._sendRequest(SCOPE_SIGNIN);
+        }
+        else {
+            request._onComplete(response);
+        }
+    },
+    
+    _onComplete: function(response) {
+        var request = this;
+        if (!request._completed) {
+            request._completed = true;
 
-            // Let the app session absorb the response.
-            wl_app._session.onAuthResponse(response);
+            if (request._display === DISPLAY_NONE &&
+                request._scope === SCOPE_SIGNIN &&
+                (response[AK_ERROR] === ERROR_ACCESS_DENIED || response[AK_ERROR] === ERROR_UNKNOWN_USER)) {
+                // If we receive access_denied or unknow_user for default scope, it means the user may have revoked consent scopes
+                // and we should just logout.
+                var status = (response[AK_ERROR] === ERROR_ACCESS_DENIED) ? AS_NOTCONNECTED : AS_UNKNOWN;
+                wl_app._session.updateStatus(status);
+            }
+            else {
+                // Let the app session absorb the response.
+                wl_app._session.onAuthResponse(response);
+            }
 
             var hasError = false,
                 appResp = wl_app._session.getStatus();
@@ -2845,6 +2672,30 @@ AuthRequest.prototype = {
                 if (response[AK_ACCESS_TOKEN] == null) {
                     hasError = true;
                     appResp = response;
+                }
+                else {
+                    // IDCRL API map cached tokens to scope values that have been requested. This will cause a problem that the 
+                    // the token we retrieved may not cover all scopes that the user has consented. This can happen if the app implements
+                    // incremental consent. In order to get the token that satisfy an app's need, we require the app to always pass in
+                    // required scopes via WL.init or WL.login, and we remember scope values from WL.init and from WL.login that has been
+                    // invoked successfully.
+                    // Because we always include WL.init scopes in WL.login execution, if the login is successful, we update the value
+                    // of wl_app._authscope so that recent consented scopes are remembered for later REST api calls.
+                    wl_app._authScope = this._scope;
+                }
+            }
+            else {
+                // For getLoginStatus, unknown_user or access_denied are considered proper responses from the auth server.
+                if (response[AK_ERROR]) {
+                    switch (response[AK_ERROR]) {
+                        case ERROR_UNKNOWN_USER:
+                        case ERROR_ACCESS_DENIED:
+                            break;
+                        default:
+                            hasError = true;
+                            appResp = response;
+                            break;
+                    }
                 }
             }
 
@@ -2860,12 +2711,15 @@ AuthRequest.prototype = {
     }
 };
 
-function authenticateUser(uiOption, scope, callback) {
-    
-    var authErrorText = "The authentication process failed with error: ";
-    try {
-        scope = scope || SCOPE_SIGNIN;        
+function authenticateUser(uiOption, scope, callback) {    
+    var authErrorText = "The authentication process failed with error: ",
+        configAppGuide = " To configure your app correctly, please follow the instructions on http://go.microsoft.com/fwlink/?LinkId=220871.",
+        UserNotFoundErrorCode = -2147023579,
+        ConsentNotGrantedErrorCode = -2138701812,
+        Invalid_Client = -2138701821,
+        Invalid_Auth_Target = -2138701823;
 
+    try {
         var authMethod = wl_app._authMethod ? wl_app._authMethod : invokeClientAuth;
 
         // Get access token
@@ -2885,7 +2739,14 @@ function authenticateUser(uiOption, scope, callback) {
                                 invokeCallback(callback, resp, false/*synchronous*/);
                             },
                             function (result) {
-                                resp = createAuthError(ERROR_REQUEST_FAILED, authErrorText + result.message);
+                                var errorCode = ERROR_REQUEST_FAILED,
+                                    errorDesc = authErrorText + result.message;
+                                if (result.name === "WinRTError" && result.number === Invalid_Auth_Target) {
+                                    errorCode = ERROR_INVALID_REQUEST;
+                                    errorDesc += configAppGuide;
+                                }
+
+                                resp = createAuthError(errorCode, errorDesc);
                                 invokeCallback(callback, resp, false/*synchronous*/);
                             });
                     }
@@ -2903,7 +2764,37 @@ function authenticateUser(uiOption, scope, callback) {
                 }
             }, 
             function (result) {
-                var resp = createAuthError(ERROR_REQUEST_FAILED, authErrorText + result.message);
+                var error = ERROR_REQUEST_FAILED,
+                    errorDesc = authErrorText + result.message;
+                switch (result.name)
+                {
+                    case "Canceled":
+                        {
+                            error = ERROR_ACCESS_DENIED;
+                            break;
+                        }
+                    case "WinRTError":
+                        {
+                            switch (result.number) {
+                                case UserNotFoundErrorCode:
+                                    error = ERROR_UNKNOWN_USER;
+                                    break;
+                                case ConsentNotGrantedErrorCode:
+                                    error = ERROR_ACCESS_DENIED;
+                                    break;
+                                case Invalid_Client:
+                                    error = ERROR_INVALID_REQUEST;
+                                    errorDesc += configAppGuide;
+                                    break;
+                                default:
+                                    error = ERROR_REQUEST_FAILED;
+                                    break;
+                            }
+                            break;
+                        }
+                }
+
+                var resp = createAuthError(error, errorDesc);
                 invokeCallback(callback, resp, false/*synchronous*/);
             }
         );
@@ -2928,17 +2819,9 @@ var AuthSession = function (client_id) {
     _this._state[AK_CLIENT_ID] = client_id;
     _this._state[AK_STATUS] = AS_UNKNOWN;
     _this._state[AK_ACCESS_TOKEN] = null;
-
-    delayInvoke(function () {
-        _this.init();
-    });
 };
 
 AuthSession.prototype = {
-    init: function () {
-        // check auth..
-        wl_app.getLoginStatus({ internal: true }, true);
-    },
 
     isSignedIn: function () {
         return this._state[AK_STATUS] === AS_CONNECTED;
@@ -2976,7 +2859,6 @@ AuthSession.prototype = {
     },
 
     tryGetResponse: function (scope) {
-
         // Always return null, because we always rely on IDCRL to give us auth response.
         return null;
     },
@@ -2997,7 +2879,7 @@ AuthSession.prototype = {
             sessionChanged = true;
         }
 
-        var newStatus = (newAccessToken != null) ? AS_CONNECTED : AS_UNKNOWN;
+        var newStatus = (state[AK_ACCESS_TOKEN]) ? AS_CONNECTED : AS_UNKNOWN;
 
         // Process state change
         if (oldStatus != newStatus) {
@@ -3179,9 +3061,10 @@ function BackgroundTransferUploadStrategy(operation, uploadSource) {
                         }
 
                         operation.onResp(text);
+                        reader.close();
                     };
 
-                    reader.loadAsync(10000).then(onRead, onRead);
+                    reader.loadAsync(100000).then(onRead, onRead);
                 }
                 else {
                     operation.onResp(text);
@@ -3266,7 +3149,7 @@ function setInnerHtml(element, content) {
 }
 
 
-wl_app[API_X_HTTP_LIVE_LIBRARY] = "Windows/HTML8_" + trimVersionBuildNumber("5.0.3358.0522");
+wl_app[API_X_HTTP_LIVE_LIBRARY] = "Windows/HTML8_" + trimVersionBuildNumber("5.3.3496.1112");
 
 if (!wl_app._settings) {
 	wl_app._settings = {};

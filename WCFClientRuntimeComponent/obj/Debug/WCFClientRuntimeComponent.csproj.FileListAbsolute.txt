@@ -62,3 +62,63 @@ C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClient
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClientRuntimeComponent\obj\Debug\resources.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClientRuntimeComponent\obj\Debug\pri.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\WCFClientRuntimeComponent\obj\Debug\LanguageQualifiers.txt
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmdobj
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.compile.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\priconfig.xml.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\layout.resfiles.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\resources.resfiles.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\pri.resfiles.intermediate
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\priconfig.xml
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\layout.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\resources.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\pri.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\WCFClientRuntimeComponent\obj\Debug\LanguageQualifiers.txt
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmdobj
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.compile.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\priconfig.xml.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\layout.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\resources.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\pri.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\priconfig.xml
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\layout.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\resources.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\pri.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\WCFClientRuntimeComponent\obj\Debug\LanguageQualifiers.txt
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmdobj
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.compile.pdb
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\priconfig.xml.intermediate
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\layout.resfiles.intermediate
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\resources.resfiles.intermediate
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\pri.resfiles.intermediate
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\priconfig.xml
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\layout.resfiles
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\resources.resfiles
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\pri.resfiles
+C:\Users\pc1\screensavings_push\WCFClientRuntimeComponent\obj\Debug\LanguageQualifiers.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.winmdobj
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\WCFClientRuntimeComponent.compile.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\priconfig.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\layout.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\resources.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\pri.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\WCFClientRuntimeComponent\obj\Debug\LanguageQualifiers.txt

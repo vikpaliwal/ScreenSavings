@@ -45,5 +45,13 @@ images\twitter.png
 images\twitter_detail.png
 images\weather.png
 js\3dCard-min.js
+js\AccountBinder.js
+js\AuthenticateUser.js
+js\DashMain.js
 js\default.js
+js\DefaultInterface.js
+js\InitializationUI.js
 js\jquery.js
+js\ListOfFuncs.js
+js\PhaseSetup.js
+js\SetUpUI.js

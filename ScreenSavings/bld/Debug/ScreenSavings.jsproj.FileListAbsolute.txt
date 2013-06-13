@@ -32,19 +32,127 @@ C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSav
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.winmd
-C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.pdb
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.pri
-C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
-C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\priconfig.xml.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles.intermediate
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\priconfig.xml
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\LanguageQualifiers.txt
 C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\ProjectArchitectures.txt
-C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\priconfig.xml.intermediate
-C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles.intermediate
-C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles.intermediate
-C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles.intermediate
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\resources.pri
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\AppxManifest.xml
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.winmd
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pri
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bld\Debug\priconfig.xml
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bld\Debug\layout.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bld\Debug\resources.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bld\Debug\pri.resfiles
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bld\Debug\LanguageQualifiers.txt
+C:\Users\demo\Desktop\samples\screensavings_push\ScreenSavings\bld\Debug\ProjectArchitectures.txt
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\resources.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\AppxManifest.xml
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bld\Debug\priconfig.xml
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bld\Debug\layout.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bld\Debug\resources.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bld\Debug\pri.resfiles
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bld\Debug\LanguageQualifiers.txt
+C:\Users\gaura_000\Documents\Visual Studio 2012\Projects\screensavings_push\ScreenSavings\bld\Debug\ProjectArchitectures.txt
+C:\screensavings_push\ScreenSavings\bin\Debug\resources.pri
+C:\screensavings_push\ScreenSavings\bin\Debug\AppxManifest.xml
+C:\screensavings_push\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
+C:\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.winmd
+C:\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pdb
+C:\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pri
+C:\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
+C:\screensavings_push\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\screensavings_push\ScreenSavings\bld\Debug\priconfig.xml
+C:\screensavings_push\ScreenSavings\bld\Debug\layout.resfiles
+C:\screensavings_push\ScreenSavings\bld\Debug\resources.resfiles
+C:\screensavings_push\ScreenSavings\bld\Debug\pri.resfiles
+C:\screensavings_push\ScreenSavings\bld\Debug\LanguageQualifiers.txt
+C:\screensavings_push\ScreenSavings\bld\Debug\ProjectArchitectures.txt
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\resources.pri
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\AppxManifest.xml
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.winmd
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pdb
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pri
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\pc1\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\priconfig.xml.intermediate
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\layout.resfiles.intermediate
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\resources.resfiles.intermediate
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\pri.resfiles.intermediate
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\priconfig.xml
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\layout.resfiles
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\resources.resfiles
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\pri.resfiles
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\LanguageQualifiers.txt
+C:\Users\pc1\screensavings_push\ScreenSavings\bld\Debug\ProjectArchitectures.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\resources.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\AppxManifest.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\BackgroundTask.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\priconfig.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\layout.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\resources.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\pri.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\LanguageQualifiers.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\ProjectArchitectures.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\priconfig.xml.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\layout.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\resources.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\ScreenSavings\bld\Debug\pri.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\resources.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\ScreenSavings.build.appxrecipe
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\BackgroundTask.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\WCFClientRuntimeComponent.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\ScreenSavings.jsprojResolveAssemblyReference.cache
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\priconfig.xml.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\priconfig.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\layout.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\resources.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\LanguageQualifiers.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\ProjectArchitectures.txt

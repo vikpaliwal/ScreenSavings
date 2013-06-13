@@ -12,14 +12,15 @@ html{
 	overflow: hidden;
     padding: 0px;
     margin: 0px;
-    background-color: red;
-    /*text-align: left;*/
+    /*background-color: red;
+    border : 2px solid red;
+    text-align: left;*/
     background-repeat: no-repeat;
     background-position: top center;
     z-index: 25;
     width: 100%;
 	height: 100%;
-    border : 2px solid red;
+    
     //-ms-touch-action : pinch-zoom;  
 }
 #page-wrapper{
@@ -184,7 +185,7 @@ html{
   background-color: none;
  ////transition: all 500ms ease;
   transform: rotateX(180deg) translateZ(-200px) translateY(270px);
-  //border: 1px solid red;
+  /*border: 1px solid red;*/
   //opacity: .5;
 }
 
@@ -791,7 +792,7 @@ transform: rotateZ(-42.6deg);
 
 #overlays {
 display: block;
-background-color : red;
+/*background-color : red;*/
 }
 
 #date {
@@ -1053,4 +1054,201 @@ position: fixed;
 }
 .lineFive {
 	background-color: #00e8fd;
+}
+
+
+#Main {
+    width:100%;
+    height:100%;
+}
+
+
+/*Initial Screen Css*/
+
+#InitialSetupContainer 
+{
+    position:absolute;
+    width:100%;
+    height:100%;
+    visibility:hidden;
+    display: -ms-grid;
+    background-color:rgba(0,0,0,.7);
+    -ms-grid-columns: 1fr 7fr 1fr;
+    -ms-grid-rows: 1fr 5fr 1fr;
+    z-index:10;
+}
+
+#TopLeft {
+    background-color: green;
+    width:100%;
+    height:100%;
+    -ms-grid-column: 1;
+    -ms-grid-row: 1;
+}
+
+#TopRight
+{
+    position:relative;
+    background-color: green;
+    width:100%;
+    height:100%;
+    -ms-grid-column: 3;
+    -ms-grid-row: 1;
+    overflow:hidden;
+}
+
+#DropDownBox 
+{
+    position:relative;
+    top:-100%;
+    height:60%;
+    opacity:0;
+    transition:top .5s,opacity .5s;
+    background-color:purple;
+}
+
+
+#TopCenterBar 
+{
+    
+    background-color: yellow;
+    width:100%;
+    height:100%;
+    text-align:center;
+    -ms-grid-column: 2;
+    -ms-grid-row: 1;
+}
+
+#MiddleContent 
+{
+    background-color: yellowgreen;
+    width:100%;
+    height:100%;
+    -ms-grid-column: 2;
+    -ms-grid-row: 2;
+}
+#GridHolder 
+{
+    position:relative;
+    background-color: teal;
+}
+
+#FooterBar 
+{
+    background-color: purple;
+    width:100%;
+    height:100%;
+    -ms-grid-column: 2;
+    -ms-grid-row: 3;
+}
+
+.GridElement 
+{
+    position:absolute;
+    border:dotted 5px rgba(20,20,20,.1);
+    background-color: red;
+}
+
+.selectedGridElement 
+{
+    border:solid 5px rgba(16,255,0,1);
+}
+
+.selectedGridElement:after 
+{
+    content:url(images/GreenCheckMark.png);
+}
+
+
+#InitializationBindingDiv
+{
+    position: relative;
+    background-color:greenyellow;
+    width:100%;
+    height:100%;    
+}
+
+.PhaseDiv 
+{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display: -ms-grid;
+    -ms-grid-rows: 1fr 4fr 1fr;
+    -ms-grid-columns:1fr;
+    background-color:orange;
+}
+
+.PhaseTopDiv
+{
+    -ms-grid-row: 1;
+    width:100%;
+    height:100%;
+    background-color:antiquewhite;
+}
+
+.PhaseCenterDiv
+{
+    -ms-grid-row: 2;
+    width:100%;
+    background-color:aliceblue;
+}
+
+
+.PhaseBottomDiv
+{
+    -ms-grid-row: 3;
+    width:100%;
+    background-color:ActiveCaption;
+    display: -ms-grid;
+    -ms-grid-columns:2fr 1fr;
+}
+
+.PhaseBottomLeft 
+{
+    -ms-grid-column: 1;
+    width:100%;
+    height:100%;
+    background-color:AppWorkspace;
+}
+
+.PhaseBottomRight
+{
+    -ms-grid-column: 2;
+    display: -ms-grid;
+    -ms-grid-columns:1fr 3fr;
+    
+}
+
+
+
+
+.PhaseBottomRightRight
+{
+    -ms-grid-column: 2;
+    border:solid 4px green;
+    display: -ms-grid;
+    -ms-grid-rows:1fr 1fr 1fr;
+    -ms-grid-columns:1fr;
+}
+
+.PhaseBottomRightRightTop
+{
+    -ms-grid-row: 1;
+    background-color:WindowFrame;
+    border:  solid 2px gray;
+}
+
+.PhaseBottomRightRightCenter
+{
+    -ms-grid-row: 2;
+    background-color:blue;
+    border:  solid 2px gray;
+}
+
+.PhaseBottomRightRightBottom
+{
+    -ms-grid-row: 3;
+    background-color:blueviolet;
+    border:  solid 2px gray;
 }

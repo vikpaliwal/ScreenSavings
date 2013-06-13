@@ -96,14 +96,22 @@
     <Content Include="images\twitter_detail.png" />
     <Content Include="images\weather.png" />
     <Content Include="js\3dCard-min.js" />
+    <Content Include="js\AccountBinder.js" />
+    <Content Include="js\AuthenticateUser.js" />
+    <Content Include="js\DashMain.js" />
     <Content Include="js\default.js" />
     <Content Include="css\default.css" />
+    <Content Include="js\DefaultInterface.js" />
+    <Content Include="js\InitializationUI.js" />
     <Content Include="js\jquery.js" />
+    <Content Include="js\ListOfFuncs.js" />
+    <Content Include="js\PhaseSetup.js" />
+    <Content Include="js\SetUpUI.js" />
     <None Include="ScreenSavings_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="LiveSDKHTML, Version=5.0" />
-    <SDKReference Include="Microsoft.WinJS.1.0.RC, Version=1.0" />
+    <SDKReference Include="Microsoft.WinJS.1.0, Version=1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BackgroundTask\BackgroundTask.csproj" />
