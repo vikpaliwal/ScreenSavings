@@ -1,7 +1,7 @@
 ﻿/// <reference group="Dedicated Worker" />
 "use strict";
 
-var ForceNonBoundedDashServicesOnIntel = true;
+var ForceNonBoundedDashServicesOnIntel = false;
 function getBoundSocialNetworkData(comp, err, IntelAccountID)
 {
     /*
@@ -22,7 +22,20 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
                     Name: Jerome Biotidara
                     Plan: This section will have php scripts that go directly to Intel servers and downloads all currently bound dash service data;
                 */
-                SuccessInRetrievingAmbiguousDataFromIntelServersFunction("");
+                var LatterURLString = "/jerome/RetrieveBoundAccounts.php?UserServiceID=" + IntelAccountID.AccountID + "&DashGeneratedID=" + IntelAccountID.CacheId;
+                var fullUrlString = BASE_URL_TEST + LatterURLString;
+                WinJS.xhr({ url: fullUrlString }).done
+                (
+                    function SuccessfulConnection(DataRetrieved)
+                    {
+                        var DataRetrievedJsonUpdated = JSON.parse(DataRetrieved.responseText);
+                        SuccessInRetrievingAmbiguousDataFromIntelServersFunction(DataRetrievedJsonUpdated)
+                    },
+                    function FailedConnection(ConnectionError)
+                    {
+                        FailureInRetrievingAmbiguousDataFromIntelServersFunction(ConnectionError);
+                    }
+                );
             }
         )
         getCurrentlyBoundSocialAccountsPromise.done
@@ -31,7 +44,7 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
             {
                 if (isBoundedSocialNetworks(DataRetrieved))
                 {
-                    comp(DataRetrieved)
+                    comp(DataRetrieved);
                 }
                 else
                 {
@@ -63,7 +76,7 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
                             }
                             else
                             {
-                                err()
+                                err();
                             }
 
                         }
@@ -172,14 +185,27 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
             Name: Jerome Biotidara
             Description: function Tries to check if there are any Bounded Social services.
         */
-        var isThereData;
-
+        var isThereData=false;
         if (ForceNonBoundedDashServicesOnIntel)
         {
             isThereData = false;
+            return isThereData;
         }
 
-        return isThereData;
+        try
+        {
+            if ((BoundData.GrouponId != null) || (BoundData.FaceBookToken != null) || (BoundData.Email != null) || (BoundData.TwitterToken != null) || (BoundData.TwitterVerifier != null) || (BoundData.FlickrToken != null) || (BoundData.FlickrVerifier != null) || (BoundData.GmailToken != null) || (BoundData.GmailVerifier != null))
+            {
+                isThereData = true;
+                return isThereData;
+            }
+        }
+        catch (e)
+        {
+            return false;
+        }
+
+        return false;
     }
 
 }

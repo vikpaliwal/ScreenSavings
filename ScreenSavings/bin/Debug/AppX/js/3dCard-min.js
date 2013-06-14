@@ -101,47 +101,7 @@ function updateTime() {
     setTimeout(updateTime, 500);
 }
 
-function getLocation() {
-        var latitude, longitude;
-        var coord;
-        var geolocator = Windows.Devices.Geolocation.Geolocator();
-        promise = geolocator.getGeopositionAsync();
-        promise.done(
-        function (pos) {
-            openNotificationChannel();
-            coord = pos.coordinate;
-            latitude = coord.latitude;
-            longitude = coord.longitude;
-            Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done
-                (function success(result) {
-                    //store result in win_id global var to access win_id throughout the app.
-                    win_id = result;
-                    //send data to intelscreensavings server's register groupon page
-                    WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=groupon&win_id=" + userId + "&lat=" + latitude + "&lng=" + longitude }).done();
-    
-                   WinJS.xhr({ url: "http://maps.google.com/maps/geo?q="+latitude+","+longitude}).done(
-                   function success(result) {
-                      if (result.status === 200) {
-                          var data = JSON.parse(result.response);
-                          //weather_zipcode = data.Placemark[0].AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber;
-                         loadData();
-                      }
-                      else {
-                          loadData();
-                      }
-                  },
-                  function err(result) {
-                      loadData();
-                  }
-                  );
-                });
-              
-        },
-         function (err) {
-             loadData();
-             WinJS.log && WinJS.log(err.message, "sample", "error");
-         });  
-}
+
 
 function FaceBookLogin(SuccessFunction,FailureFunction)
 {

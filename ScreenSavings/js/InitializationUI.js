@@ -1,8 +1,10 @@
 ﻿/// <reference group="Dedicated Worker" />
 "use strict";
-var ForceShowYouAreLoggedInToIntelServersUsingAnySourceService = true;
-var ForceYouAreBoundSuccessfullyWithIntelServersUsingWindowsLive = true;
-var ForceSuccessfulSignInIntoMicrosoftWithoutNecessarilyBindingWithIntelServers = true;
+var ForceWindowsLiveLogout = false;
+var DisableGetLocation = true;
+var ForceShowYouAreLoggedInToIntelServersUsingAnySourceService = false;
+var ForceYouAreBoundSuccessfullyWithIntelServersUsingWindowsLive = false;
+var ForceSuccessfulSignInIntoMicrosoftWithoutNecessarilyBindingWithIntelServers = false;
 function StartIntelDash()
 {
     /*
@@ -95,7 +97,6 @@ function StartIntelDash()
     );
 }
 
-
 function NoAccountsVerifiedSetup(SuccessfullyBoundToIntelNetworkFunction, FailedToBindToIntelNetwork)
 {
     InitialSetupScreen_FirstTimeEver(SuccessfullyBoundToIntelNetworkFunction, FailedToBindToIntelNetwork);
@@ -172,12 +173,17 @@ function SelectSocialNetworkForSourcingIntelProfileInfo(comp, err)
                 break;
             }
     }
-    var IntelSourcedDataPromise = new WinJS.Promise(function (PopulateUsingSocialNetworkComplete, PopulateUsingSocialNetworkErr, prog) { PopulateIntelSourceUsingSocialNetwork(PopulateUsingSocialNetworkComplete, PopulateUsingSocialNetworkErr) });
+    var IntelSourcedDataPromise = new WinJS.Promise(function (PopulateUsingSocialNetworkComplete, PopulateUsingSocialNetworkErr, prog) { PopulateIntelSourceUsingSocialNetwork(PopulateUsingSocialNetworkComplete, PopulateUsingSocialNetworkErr, SocialNetworkIndex) });
     IntelSourcedDataPromise.done
     (
         function (IntelSourceData)
         {
+            userId = IntelSourceData.LoginID;
+            getLocation(IntelSourceData.LoginID);
+            ShowUpperRightMessage("Successfully Logged In" + userId);
             comp(IntelSourceData);
+            
+
         },
         function (IntelSourceDataError)
         {
@@ -194,29 +200,62 @@ function SelectSocialNetworkForSourcingIntelProfileInfo(comp, err)
     )
 }
 
-function PopulateIntelSourceAccountUsingTwitter(comp, err)
+function PopulateIntelSourceAccountUsingTwitter(comp, err, TypeIdentifier)
 { }
 
-function PopulateIntelSourceAccountUsingFacebook(comp, err)
+function PopulateIntelSourceAccountUsingFacebook(comp, err, TypeIdentifier)
 { }
 
-function PopulateIntelSourceAccountUsingGoogle(comp, err)
+function PopulateIntelSourceAccountUsingGoogle(comp, err, TypeIdentifier)
 { }
 
-function PopulateIntelSourceAccountUsingWindowsLive(comp, err)
+function PopulateIntelSourceAccountUsingWindowsLive(comp, err,TypeIdentifier)
 {
     WL.init({
         scope: ["wl.signin", "wl.basic"]
     });
-    WL.logout();//Will be deleted, just used to force log out of current user
-    WL.login().then
-        (
-            function (response)
+    if (ForceWindowsLiveLogout)
+    {
+        var LogOutPromise=WL.logout();//Will be deleted, just used to force log out of current user
+        LogOutPromise.then(
+            function SuccessfullyLoggedOut()
             {
-                if (response.status == 'connected')
-                {
-                    BindMicrosoftIDWithIntelServers(comp,err);
-                    ShowUpperRightMessage("Successfully Logged In");
+                WL.login().then
+                    (
+                        function (response) {
+                            if (response.status == 'connected')
+                            {
+                                BindMicrosoftIDWithIntelServers(comp, err, TypeIdentifier);
+                            }
+                            else
+                            {
+                                err("having connection issues")
+                                ShowUpperRightMessage("having connection issues");
+                            }
+                        },
+                        function (responseFailed) {
+                            if (ForceSuccessfulSignInIntoMicrosoftWithoutNecessarilyBindingWithIntelServers) {
+                                var Message = "False Sign Into microsoft. No. Did not attempt to bind"
+                                comp(Message);
+                                ShowUpperRightMessage(Message);
+                            }
+                            else {
+                                err("Unable To SignIn To Windows Live")
+                            }
+                        }
+                    );
+            }
+        )
+    }
+    else
+    {
+        WL.login().then
+        (
+            function (response) {
+                if (response.status == 'connected') {
+                    BindMicrosoftIDWithIntelServers(comp, err,TypeIdentifier);
+                    getLocation();
+                    ShowUpperRightMessage("Successfully Logged In" + userid);
                     comp(userid)
                 }
                 else {
@@ -224,20 +263,20 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err)
                 }
             },
             function (responseFailed) {
-                if (ForceSuccessfulSignInIntoMicrosoftWithoutNecessarilyBindingWithIntelServers)
-                {
+                if (ForceSuccessfulSignInIntoMicrosoftWithoutNecessarilyBindingWithIntelServers) {
                     var Message = "False Sign Into microsoft. No. Did not attempt to bind"
                     comp(Message);
                     ShowUpperRightMessage(Message);
                 }
-                else
-                {
+                else {
                     err("Unable To SignIn To Windows Live")
                 }
             }
         );
+    }
+    
 
-    var BindMicrosoftIDWithIntelServers = function (SuccessInBindingWithIntelFunction, FailureInBindingWithIntelFunction)
+    var BindMicrosoftIDWithIntelServers = function (SuccessInBindingWithIntelFunction, FailureInBindingWithIntelFunction, TypeIdentifier)
     {
         /*
             Description: This function is called after the user succesfully signs in with Windows Live ID. 
@@ -246,10 +285,37 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err)
             path: "me",
             method: "GET"
         }).then(
-            function (response) {
-                userId = response.id;
-                SuccessInBindingWithIntelFunction(userId);
-                getLocation();
+            function (response)
+            {
+                var LoginSuccess = new SignedInAccount(response.id, TypeIdentifier);
+                var RegisterWitRIntelPromise=RegisterAccountWithIntelServers(LoginSuccess);
+                RegisterWitRIntelPromise.done
+                (
+                    function SuccessWithAccessingIntelServers(ReturnData)
+                    {
+                        var DataRetrieved;
+                        try
+                        {
+                            DataRetrieved = JSON.parse(ReturnData.response);
+                            if ((DataRetrieved.LoginID != null) || (DataRetrieved.LoginID != "null"))
+                            {
+                                SuccessInBindingWithIntelFunction(DataRetrieved);
+                            }
+                            else
+                            {
+                                throw "Invalid Data After Sign in"
+                            }
+                        }
+                        catch (e)
+                        {
+                            FailureInBindingWithIntelFunction(e);
+                        }
+                    },
+                    function FailureInAccessingIntelServers(Error)
+                    {
+                        FailureInBindingWithIntelFunction("Sorry Failed To Sign you Up with Intel Servers")
+                    }
+                );                
             },
             function (responseFailed)
             {
@@ -260,13 +326,19 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err)
                 }
                 else
                 {
-                    FailureInBindingWithIntelFunction("Unable To Bind Account With Intel Servers");
+                    FailureInBindingWithIntelFunction("Unable To Retrieve Windows Live ID after LogIn");
                 }
             }
         );
     };
 
 
+}
+
+function SignedInAccount(AccountID, AccountType)
+{
+    this.Id = AccountID;
+    this.Type = AccountType;
 }
 
 function RetrieveLocalSaved(RetrievedFileSuccesCallBack, RetrievedFileFailureCallBack, RetrievedFileFailureProgreess)
@@ -305,19 +377,65 @@ function RetrieveLocalSaved(RetrievedFileSuccesCallBack, RetrievedFileFailureCal
     );
 }
 
+function RegisterAccountWithIntelServers(LoggedInServiceIdentification)
+{
+    /*
+        Name: Jerome Biotidara
+        Description: This is called only after the User ID has been retrived. It registers a user account with the Intel Servers. It also tries to bind retrived ID with the GeoLocation and Notification services
+    */
+    var LatterURLString="/jerome/SignUp_User.php?SignUpServiceID=" + LoggedInServiceIdentification.Id + "&TypeOfService=" + LoggedInServiceIdentification.Type;
+    return WinJS.xhr({ url: BASE_URL_TEST + LatterURLString });
+}
 
+function getLocation() {
+    /*
+        Name:Jerome Biotidara
+        Function: This gets the current location of the user and also registers to with the intel servers. The implementation was written by gaomin but updated by Jerome Biotidara by separting the code
+    */
 
-var getUserId = function () {
-    WL.api({
-        path: "me",
-        method: "GET"
-    }).then(
-        function (response) {
-            userId = response.id;
-            getLocation();
-        },
-        function (responseFailed) {
-            loginFailed(responseFailed.error);
-        }
-    );
-};
+    var latitude, longitude;
+    var coord;
+    var geolocator = Windows.Devices.Geolocation.Geolocator();
+    
+    if (DisableGetLocation)
+    {
+        return;
+    }
+    var promise = geolocator.getGeopositionAsync();
+    promise.done(
+    function (pos) {
+        openNotificationChannel();
+        coord = pos.coordinate;
+        latitude = coord.latitude;
+        longitude = coord.longitude;
+        Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done
+            (function success(result) {
+                //store result in win_id global var to access win_id throughout the app.
+                win_id = result;
+                //send data to intelscreensavings server's register groupon page
+                WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=groupon&win_id=" + userId + "&lat=" + latitude + "&lng=" + longitude }).done();
+
+                WinJS.xhr({ url: "http://maps.google.com/maps/geo?q=" + latitude + "," + longitude }).done(
+                function success(result) {
+                    if (result.status === 200) {
+                        var data = JSON.parse(result.response);
+                        //weather_zipcode = data.Placemark[0].AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber;
+                        loadData();
+                    }
+                    else {
+                        loadData();
+                    }
+                },
+               function err(result) {
+                   loadData();
+               }
+               );
+            }
+            );
+
+    },
+     function (err) {
+         loadData();
+         WinJS.log && WinJS.log(err.message, "sample", "error");
+     });
+}

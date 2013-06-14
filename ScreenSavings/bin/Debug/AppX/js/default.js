@@ -57,11 +57,13 @@ function ShowUpperRightMessage(Message, stayTime) {
         }
     }
     stayTime *= 1000;
-    var MyDisplayBox = document.getElementById("DropDownBox");
+    var MyDisplayBox = document.createElement("div");
+    MyDisplayBox.setAttribute("id", "DropDownBox");
     MyDisplayBox.innerHTML = Message;
     MyDisplayBox.style.opacity = 1; MyDisplayBox.style.top = "0%";
     setTimeout(function () {
         MyDisplayBox.style.opacity = 0; MyDisplayBox.style.top = "-100%";
+        //MyDisplayBox.removeNode(true);
     }, stayTime);
 }
 
