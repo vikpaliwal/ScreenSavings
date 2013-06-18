@@ -39,7 +39,7 @@ function StartIntelDash()
             (
                 function (IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction)
                 {
-                    $.ajax({type: "GET",url: "js/AuthenticateUser.js",dataType: "script",async: false});
+                    //$.ajax({type: "GET",url: "js/AuthenticateUser.js",dataType: "script",async: false});
                     AuthenticateAccount(IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction, CachedData.ID);
                 }
             );
@@ -63,12 +63,13 @@ function StartIntelDash()
                         },
                         function FailedToBindWithIntel(err)
                         {
-                            GoToDefaultScreen();
+                            if (err == undefined)
+                            { err = "Failed To Authenticate Saved Account With Intel Servers"; }
+                            GoToDefaultScreen(err);
                         }
                     )
-                    //Write Code For a LIVE SIGN IN call here...It'll be a promise
                 },
-                function AccountAuthenticationInProgress()
+                function AccountAuthenticationInProgress(progReport)
                 {
                     AccountAuthenticationProgressUI.Start();
                 }
@@ -77,7 +78,6 @@ function StartIntelDash()
         function CacheRetrievedFailure(err)
         {
             RetrieveInProgress.Stop();
-            alert(err);
             var InitialConfigurationPromise = new WinJS.Promise(NoAccountsVerifiedSetup);
             InitialConfigurationPromise.done
             (
@@ -86,7 +86,8 @@ function StartIntelDash()
                 },
                 function FailedToBindWithIntel(err)
                 {
-                    GoToDefaultScreen();
+                    err = "Failed To Read Cache File"
+                    GoToDefaultScreen(err);
                 }
             )
         },
@@ -136,9 +137,10 @@ function InitialSetupScreen_FirstTimeEver(comp, err)
 
 }
 
-function GoToDefaultScreen()
+function GoToDefaultScreen(DisplayMessage)
 {
-    $.ajax({ type: "GET", url: "js/DefaultInterface.js", dataType: "script", async: false }); LoadDefaultInterfaceUI();
+    $("#appcontainer").hide();
+    $.ajax({ type: "GET", url: "js/DefaultInterface.js", dataType: "script", async: false }); LoadDefaultInterfaceUI(DisplayMessage);
 }
 
 function SelectSocialNetworkForSourcingIntelProfileInfo(comp, err)
@@ -178,8 +180,8 @@ function SelectSocialNetworkForSourcingIntelProfileInfo(comp, err)
     (
         function (IntelSourceData)
         {
-            userId = IntelSourceData.LoginID;
-            getLocation(IntelSourceData.LoginID);
+            userId = IntelSourceData.AccountID;
+            getLocation(IntelSourceData.AccountID);
             ShowUpperRightMessage("Successfully Logged In" + userId);
             comp(IntelSourceData);
             
@@ -209,11 +211,16 @@ function PopulateIntelSourceAccountUsingFacebook(comp, err, TypeIdentifier)
 function PopulateIntelSourceAccountUsingGoogle(comp, err, TypeIdentifier)
 { }
 
-function PopulateIntelSourceAccountUsingWindowsLive(comp, err,TypeIdentifier)
+function PopulateIntelSourceAccountUsingWindowsLive(comp, err, TypeIdentifier, ForceWindowsLiveLogoutFlag)
 {
     WL.init({
         scope: ["wl.signin", "wl.basic"]
     });
+
+    if (ForceWindowsLiveLogoutFlag != undefined)
+    {
+        ForceWindowsLiveLogout = true;
+    }
     if (ForceWindowsLiveLogout)
     {
         var LogOutPromise=WL.logout();//Will be deleted, just used to force log out of current user
@@ -240,7 +247,7 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err,TypeIdentifier)
                                 ShowUpperRightMessage(Message);
                             }
                             else {
-                                err("Unable To SignIn To Windows Live")
+                                err("Windows Live is InAccessible At the moment!")
                             }
                         }
                     );
@@ -269,7 +276,7 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err,TypeIdentifier)
                     ShowUpperRightMessage(Message);
                 }
                 else {
-                    err("Unable To SignIn To Windows Live")
+                    err("Windows Live is InAccessible At the moment!")
                 }
             }
         );
@@ -326,7 +333,8 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err,TypeIdentifier)
                 }
                 else
                 {
-                    FailureInBindingWithIntelFunction("Unable To Retrieve Windows Live ID after LogIn");
+                    PopulateIntelSourceAccountUsingWindowsLive(comp, err, TypeIdentifier, true);
+                    //FailureInBindingWithIntelFunction("Unable To Retrieve Windows Live ID after LogIn");
                 }
             }
         );

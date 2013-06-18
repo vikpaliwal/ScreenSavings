@@ -36,7 +36,9 @@ function ProceedWithVerifiedAccount(AccountIdentification)
         {
             var BoundedData ="Just Data with Bounded Intel User Account"
             UpdateCacheFile(BoundedData);
-            GoToDefaultScreen();
+            if(err==undefined)
+            { err = "Could Not get Dash Service Accounts"; }
+            GoToDefaultScreen(err);
             //UpdateScreen(BoundedData);
             
         }

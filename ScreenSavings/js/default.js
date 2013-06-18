@@ -13,33 +13,76 @@ function alert(content, title) {//This implementation allows for alert boxes to 
     messageDialog.showAsync();
 }
 
-function InProgress(ProgressMessage) {
+function InProgress(ProgressMessage, EncasingDom) {
     "use strict";
+        /*
+            Name: Jerome Biotidara
+            Description: This is a class that generates an indeterminate progression icon. The object has both a start and stop functions. The former triggers the bar to show up while the stops the progression bar.
+        */
+
     var ProgressDOMElement = null;
     var ProgressImageElement = null;
+    var ProgressBackground = null;
+    this.Node = function ()
+    {
+        return ProgressDOMElement;
+    };
     this.Start = function () {
         InProgressManager(1, ProgressMessage, null);
     }
     this.Stop= function () {
         InProgressManager(0, "", ProgressDOMElement);
     }
-    function InProgressManager(StartOrEnd, DisplayText, DomElementToCancel) {
+    function InProgressManager(StartOrEnd, DisplayText, DomElementToCancel)
+    {
         if (StartOrEnd) {
+            ProgressBackground = document.createElement("div");
             ProgressDOMElement = document.createElement("label");
+            ProgressDOMElement.style.color = "rgba(200,200,200,1)"
+            ProgressBackground.style.textAlign = "center";
             ProgressImageElement = document.createElement("progress");
-            ProgressImageElement.setAttribute("class", "win-ring withText");
+            ProgressBackground.style.position = "absolute";
+            ProgressBackground.style.height = "100px";
+            ProgressBackground.style.width = "300px";
+            ProgressBackground.style.top = "50%"
+            ProgressBackground.style.left = "50%"
+            ProgressBackground.style.marginTop = "-50px"
+            ProgressBackground.style.marginLeft = "-150px"
+            ProgressBackground.style.background = "rgba(74,0,122,1)";
+            ProgressBackground.style.borderRadius = "3px";
+            ProgressBackground.style.boxShadow=" 0px 0px 7px #888888"
+            ProgressBackground.style.overflow = "hidden";
+            ProgressDOMElement.style.zIndex = 10;
+            ProgressImageElement.setAttribute("class", "win-ring");
+            ProgressImageElement.setAttribute("class", "withText");
             ProgressDOMElement.appendChild(ProgressImageElement);
+            ProgressBackground.appendChild(ProgressDOMElement);
             if (DisplayText == undefined) {
                 DisplayText = "...Loading";
             }
-            ProgressDOMElement.innerHTML += DisplayText;
+            ProgressBackground.innerHTML += DisplayText;
+            if (EncasingDom==undefined)
+            {
+                EncasingDom = document.createElement("div");
+                EncasingDom.setAttribute("class", "defaultProgressEncasingDiv");
+            }
+            var BodyDom = document.getElementById("Main");
+            BodyDom.appendChild(EncasingDom);
+            EncasingDom.appendChild(ProgressBackground);
+            ProgressDOMElement.style.visibility = "visible";
         }
-        else {
-            if (DomElementToCancel == null) {
+        else
+        {
+            if (DomElementToCancel == null)
+            {
+                $(EncasingDom).remove();
                 return;
             }
-            else {
+            else
+            {
+                $(EncasingDom).hide();
                 DomElementToCancel.removeNode(true)
+                $(EncasingDom).remove();
                 return;
             }
         }
@@ -237,7 +280,7 @@ function ShowUpperRightMessage(Message, stayTime) {
 
         var loginFailed = function (errorMessage) {
             $('#dump').text(errorMessage);
-            $.getScript("DefaultInterface.js", function () { });//gets script for default window with just Weather and news from BING:: Jerome Biotidara jeromebiotidara@gmail.com
+            //$.getScript("DefaultInterface.js", function () { });//gets script for default window with just Weather and news from BING:: Jerome Biotidara jeromebiotidara@gmail.com
             //probably exit from app with an error.
         }
 

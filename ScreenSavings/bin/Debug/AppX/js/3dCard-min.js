@@ -141,10 +141,19 @@ function FaceBookLogin(SuccessFunction,FailureFunction)
                         Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result)
                         {
                             //send data to intelscreensavings server
-                            WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=fb&win_id=" + userId + "&fb_token=" + accesstoken + "&fb_id=" + fb_id }).done(
-                                function (result) {
-                                    var results = result.responseData;
-                                }
+                            WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=fb&win_id=" + userId + "&fb_token=" + accesstoken + "&fb_id=" + fb_id }).done
+                                (
+                                    function (result)
+                                    {
+                                        var results = result.response;
+                                        FacebookLoginSuccess(results);
+
+                                    },
+                                    function (facebookError)
+                                    {
+                                        FacebookLoginFailure(facebookError);
+                                    }
+
                            );
                         });
                     }, function FailureAccessToken(err)
@@ -404,6 +413,45 @@ function FlickrLogin(SuccessFunction, FailureFunction)
     FlickrLoginPromise.done(function FlickrLoginSuccess(value) { if (SuccessFunction == undefined) { return}; SuccessFunction(value); }, function FlickrLoginFailure(value) { if (FailureFunction == undefined) { return}; FailureFunction(value)})
 }
 
+function join(separator1, separator2, arr, sort) {
+    var arrKeys = [];
+    for (var key in arr) {
+        arrKeys.push(key);
+    }
+    if (sort)
+        arrKeys.sort();
+
+    var newArr = [];
+    for (var i = 0; i < arrKeys.length; i++) {
+        if (separator2 != "") {
+            newArr.push(arrKeys[i] + separator2 + arr[arrKeys[i]]);
+        }
+        else {
+            newArr.push(arrKeys[i]);
+            newArr.push(arr[arrKeys[i]]);
+        }
+    }
+    return newArr.join(separator1);
+}
+
+function rfcEncoding(str) {
+    var tmp = encodeURIComponent(str);
+    tmp = tmp.replace('!', '%21');
+    tmp = tmp.replace('*', '%2A');
+    tmp = tmp.replace('(', '%28');
+    tmp = tmp.replace(')', '%29');
+    tmp = tmp.replace("'", '%27');
+    return tmp;
+}
+
+function normalizeParams(params) {
+    for (var key in params) {
+        if (key != "oauth_token")
+            params[key] = encodeURIComponent(params[key]);
+    }
+    return join("&", "=", params, true);
+}
+
 function GmailLogin(SuccessFunction, FailureFunction) {
     //oauth1 approach similar to twitter
     var gMailLoginPromise = new WinJS.Promise(function (gMailLoginSuccesCallBack, gMailLoginFailureCallBack, gMailLoginProgressCallBack){
@@ -518,16 +566,34 @@ function GmailLogin(SuccessFunction, FailureFunction) {
 
             Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                 //send data to intelscreensavings server
-                WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=gmail&win_id=" + userId + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com" }).done(
-                    function (result) {
+                var xhrUrl=BASE_URL_TEST + "/gaomin/register_user.php?service=gmail&win_id=" + userId + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com";
+                WinJS.xhr(
+                            { url: xhrUrl }
+                    ).done(
+                    function SuccessFromIntelServers(result) {
                         var results = result.responseData;
+                        SuccessFunction(result.responseData);
+                    }, function (errorFromIntelServers)
+                    {
+                        FailureFunction(errorFromIntelServers);
                     }
                );
             });
         }, function (err) {
             WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
         });})
-    gMailLoginPromise.done(function gMailLoginSuccess(value) { if (SuccessFunction == undefined) { return}; SuccessFunction(value) }, function gMailLoginFailure(value) { if (FailureFunction == undefined) { return}; FailureFunction(value) })
+    gMailLoginPromise.done(
+        function gMailLoginSuccess(value)
+        {
+            if (SuccessFunction == undefined)
+            { return }; SuccessFunction(value);
+        },
+        function gMailLoginFailure(value)
+        {
+            if (FailureFunction == undefined)
+            { return };
+            FailureFunction(value)
+        })
 }
 
 function YahooMailLogin(SuccessFunction, FailureFunction)
@@ -1039,44 +1105,11 @@ var ValidatedAccountLaunch= function (){
             WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
         }
     }
-    function normalizeParams(params) {
-        for (var key in params) {
-            if (key != "oauth_token")
-                params[key] = encodeURIComponent(params[key]);
-        }
-        return join("&", "=", params, true);
-    }
-    function join(separator1, separator2, arr, sort) {
-        var arrKeys = [];
-        for (var key in arr) {
-            arrKeys.push(key);
-        }
-        if (sort)
-            arrKeys.sort();
-
-        var newArr = [];
-        for (var i = 0; i < arrKeys.length; i++) {
-            if (separator2 != "") {
-                newArr.push(arrKeys[i] + separator2 + arr[arrKeys[i]]);
-            }
-            else {
-                newArr.push(arrKeys[i]);
-                newArr.push(arr[arrKeys[i]]);
-            }
-        }
-        return newArr.join(separator1);
-    }
+    
+    
 
     //encodes the special characters according to the RFC standard
-    function rfcEncoding(str) {
-        var tmp = encodeURIComponent(str);
-        tmp = tmp.replace('!', '%21');
-        tmp = tmp.replace('*', '%2A');
-        tmp = tmp.replace('(', '%28');
-        tmp = tmp.replace(')', '%29');
-        tmp = tmp.replace("'", '%27');
-        return tmp;
-    }
+    
 
     // Handler for transformation on gesture elements 
     function onGestureChange(e) {

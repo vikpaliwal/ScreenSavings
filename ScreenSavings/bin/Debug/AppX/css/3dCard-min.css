@@ -1074,7 +1074,7 @@ position: fixed;
     display: -ms-grid;
     background-color:rgba(0,0,0,.7);
     -ms-grid-columns: 1fr 7fr 1fr;
-    -ms-grid-rows: 1fr 5fr 1fr;
+    -ms-grid-rows: 2fr 7fr 1fr;
     z-index:10;
 }
 
@@ -1111,8 +1111,10 @@ position: fixed;
 #TopCenterBar 
 {
     
-    background-color: yellow;
+    background-color: rgba(255,43,85,1);
     width:100%;
+    border:solid 4px transparent;
+    border-bottom:solid 4px rgba(255,255,255,1);
     height:100%;
     text-align:center;
     -ms-grid-column: 2;
@@ -1121,7 +1123,9 @@ position: fixed;
 
 #MiddleContent 
 {
-    background-color: yellowgreen;
+    background-color: rgba(255,43,85,1);
+    border: solid 4px rgba(0,200,12,1);
+    text-align: center;
     width:100%;
     height:100%;
     -ms-grid-column: 2;
@@ -1251,4 +1255,44 @@ position: fixed;
     -ms-grid-row: 3;
     background-color:blueviolet;
     border:  solid 2px gray;
+}
+
+.defaultProgressEncasingDiv 
+{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-color:rgba(255,255,255,.8);
+}
+
+
+.InitialServiceBindWelcomeScreenContinueButton 
+{
+    position:absolute;
+    width : 10em;
+    height : 5em;   
+    top:100%;
+    margin-top:-13em;
+    left:100%;
+    margin-left: -23em;
+    border : solid 3px white;
+    background-color:rgba(20,20,20,0);
+    text-align: center;
+    color:white;
+}
+
+
+
+.InitialServiceBindWelcomeScreenContinueButton:hover {
+    background-color:rgba(20,20,20,.4);
+}
+
+.MiddleContentWelcomeContent
+{
+    position:absolute;
+    top:20%;
+    height:40%;
+    width:60%;
+    left:20%;
+    border : solid 3px green;
 }

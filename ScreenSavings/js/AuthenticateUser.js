@@ -13,13 +13,14 @@ function AuthenticateAccount(SuccessCallBack, FailureCallBack, AuthenticationPro
 
 
     "use strict";
+    AuthenticationProgress(1);
     var AuthenticationPromise = new WinJS.Promise(function (AuthenticationSuccessFunction, AuthenticationFailureFunction, AuthenticationProgressFunction) {
         /*
             Name: Jerome Biotidara
             Description: This content will have direct php scripts that'll try to verify accounts. They'll be wrapped in WinJS.xhr functions
         */
         //setTimeout(function () {; }, 300);
-        if (ForcePassAuthentication)
+        setTimeout( function(){if (ForcePassAuthentication)
         {
             AuthenticationSuccessFunction(true);
         }
@@ -27,6 +28,8 @@ function AuthenticateAccount(SuccessCallBack, FailureCallBack, AuthenticationPro
         {
             AuthenticationFailureFunction(false)
         }
+        }, 0);
+        
 
     });
     AuthenticationPromise.done
