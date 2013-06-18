@@ -2,6 +2,19 @@
 "use strict";
 
 var ForceNonBoundedDashServicesOnIntel = false;
+
+(function () {
+    if (typeof Object.prototype.uniqueId == "undefined") {
+        var id = 0;
+        Object.prototype.uniqueId = function () {
+            if (typeof this.__uniqueid == "undefined") {
+                this.__uniqueid = ++id;
+            }
+            return this.__uniqueid;
+        };
+    }
+})();
+
 function getBoundSocialNetworkData(comp, err, IntelAccountID)
 {
     /*
@@ -178,7 +191,7 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
             )
 
             function ContinueSelectedOnInitialBindingScreen(ContinueWithServiceBinding, CancelAccountBinding, MiddleContentDiv) {
-                GenerateUIForPhases(AllPhases, MiddleContentDiv, SuccessfulDashServiceBind, FailedDashServiceBind);
+                GenerateUIForPhases(AllPhases, MiddleContentDiv, ContinueWithServiceBinding, CancelAccountBinding);
             }
 
 
@@ -502,6 +515,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
         var BottomRightRightCenter;
         var BottomRightRightBottom;
         var CurrentBottomDiv = getAllChildNodesWithClassName("PhaseBottomDiv", ParentDom);//This gets all DOMS with the class Name
+        var haha=null;//THis is just used to identify unique function declaraitons
         if (CurrentBottomDiv.length > 0)//This checks if the BottomDIV has already been created and then assigns the DomELemnts their respective click events
         {
             BottomRightRightTop = document.getElementById(BottomRightRightTopID)
@@ -509,6 +523,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
             BottomRightRightBottom = document.getElementById(BottomRightRightBottomID)
             $(BottomRightRightTop).click(ContinueFunction);
             $(BottomRightRightCenter).click(SkipFunction);
+            haha = CancelFunction.uniqueId();
             $(BottomRightRightBottom).click(CancelFunction);
 
             return;
@@ -587,6 +602,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
         
         BottomRightRightBottom.setAttribute("id", BottomRightRightID);
         BottomRightRightBottom.setAttribute("class", "PhaseBottomRightRightBottom");
+        haha = CancelFunction.uniqueId();
         $(BottomRightRightBottom).click(CancelFunction);
         BottomRightRightBottom.innerHTML = "Cancel"
         BottomRightRight.appendChild(BottomRightRightBottom);
@@ -670,55 +686,24 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
         }
 
 
-        function getDomWithID(PhaseDom)//hackFunction
+        function TriggerServiceBinding(PhaseStartingIndex, ArrayOfPhases,PhaseDomElementsArray)
         {
-            var doc = PhaseDom;
-            var notes = null;
-            for (var i = 0; i < doc.childNodes.length; i++) {
-                if (doc.childNodes[i].className == "PhaseBottomDiv") {
-                    notes = doc.childNodes[i];
-                    break;
-                }
-            }
-            doc = notes;
-            for (var i = 0; i < doc.childNodes.length; i++) {
-                if (doc.childNodes[i].className == "PhaseBottomRight") {
-                    notes = doc.childNodes[i];
-                    break;
-                }
-            }
-
-            doc = notes;
-            for (var i = 0; i < doc.childNodes.length; i++) {
-                if (doc.childNodes[i].className == "PhaseBottomRightRight") {
-                    notes = doc.childNodes[i];
-                    break;
-                }
-            }
-
-
-            doc = notes;
-            for (var i = 0; i < doc.childNodes.length; i++) {
-                if (doc.childNodes[i].className == "PhaseBottomRightRightTop") {
-                    notes = doc.childNodes[i];
-                    break;
-                }
-            }
-
-            //alert(notes.innerHTML);
-            return notes;
-        }
-        //Toss this whole section into a function to enable loop back call*
-        function TriggerServiceBinding(PhaseStartingIndex) {
+            /*
+                Name: Jerome Biotdara
+                Description: This function is called when you want to trigger the UI o
+            */
             var BindingProcessPromise = new WinJS.Promise(function (BindingFinish, BindingCancelled) {
-                GoThoroughAllBindingPhases(AllPhases, ArrayOfPhaseDOMElements, PhaseStartingIndex, BindingFinish, BindingCancelled);
+                var haha=BindingCancelled.uniqueId();
+                GoThoroughAllBindingPhases(ArrayOfPhases, PhaseDomElementsArray, PhaseStartingIndex, BindingFinish, BindingCancelled);
             })
             BindingProcessPromise.done
                 (
                     function FinishedBinding(ReturnedValue) {
-                        ShowUpperRightMessage("Finished Setting Up Account"); BindingSuccessFullLoopBackFunction()
-                    },
-                    function IncompleteBinding(PhaseArrayIndexBeforeCancel) {
+                        ShowUpperRightMessage("Finished Setting Up Account");
+                        BindingSuccessFullLoopBackFunction()
+                    },  
+                    function IncompleteBinding(PhaseArrayIndexBeforeCancel)
+                    {
                         //alert("Are you sure you want to quit?");
                         var title = "Hmmm....!!!"
                         var content = "Do you really want to exit the service SignUp Page?"
@@ -735,15 +720,18 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
                         }
 
 
-                        messageDialog.showAsync().then
+                        messageDialog.showAsync().done
                         (
-                            function SettingUpNewAccounts(command) {
+                            function SettingUpNewAccounts(command)
+                            {
                                 ShowUpperRightMessage(command.id, 10);
-                                if (result == "Yes") {
+                                if (result == "Yes")
+                                {
                                     BindingCancelFullLoopBack();
                                 }
-                                else {
-                                    TriggerServiceBinding( PhaseArrayIndexBeforeCancel);
+                                else
+                                {
+                                    TriggerServiceBinding(PhaseArrayIndexBeforeCancel, ArrayOfPhases, PhaseDomElementsArray);
                                 }
 
                             }
@@ -753,7 +741,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
                 )
         }
 
-        TriggerServiceBinding(0);
+        TriggerServiceBinding(0, AllPhases, ArrayOfPhaseDOMElements);
         //Toss this whole section into a function to enable loop back call*
         function GoThoroughAllBindingPhases(PhaseArray, ArrayOfPhaseDoms, PhaseIndex, BindingProcessFinishFunction, BindingProcessCancelFunction) {
             /*
@@ -780,8 +768,10 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
                 $(ArrayOfPhaseDoms[i]).hide();
             }
             $(ArrayOfPhaseDoms[PhaseIndex]).show();//Displays/Unhides Only the pertinent phaseoOm
-            var PhaseLaunchPromise = new WinJS.Promise(function (onSkipOrContinueClick, onCancelOrBackCLick, onProgress) {
+            var PhaseLaunchPromise = new WinJS.Promise(function (onSkipOrContinueClick, onCancelOrBackCLick, onProgress)
+            {
 
+                var haha0 = onCancelOrBackCLick.uniqueId();
                 function ContinueFunction() {
                     onSkipOrContinueClick(1);
                 }
@@ -790,11 +780,15 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
                     onSkipOrContinueClick(0);
                 }
 
-                function CancelFunction() {
+                function CancelFunction()
+                {
+                    var haha2 = onCancelOrBackCLick.uniqueId();
                     onCancelOrBackCLick(0);
                 }
+                var haha1 = CancelFunction.uniqueId();
 
-                function BackFunction() {
+                function BackFunction()
+                {
                     onCancelOrBackCLick(1);
                 }
 
@@ -802,7 +796,8 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
             })
             PhaseLaunchPromise.done
             (
-                function (SkipOrContinueFlag) {
+                function (SkipOrContinueFlag)
+                {
                     if (SkipOrContinueFlag)//True means "continue" was selected false means skip was selected
                     {
                         LoadPhaseServicesSignUp();
@@ -878,13 +873,16 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
                     }
 
                 },
-                function (CancelOrBackFlag) {
+                function (CancelOrBackFlag)
+                {
                     if (CancelOrBackFlag)//True means "Back" was selected false means cancel Was selected
                     {
                         PhaseIndex--;
                         GoThoroughAllBindingPhases(PhaseArray, ArrayOfPhaseDoms, PhaseIndex, BindingProcessFinishFunction, BindingProcessCancelFunction);
                     }
-                    else {
+                    else
+                    {
+                        var haha=BindingProcessCancelFunction.uniqueId()
                         BindingProcessCancelFunction(PhaseIndex);
                     }
                 }
