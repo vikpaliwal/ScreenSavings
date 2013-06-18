@@ -163,9 +163,6 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
                         InitialBindScreen_ContinueButton.setAttribute("class", "InitialServiceBindWelcomeScreenContinueButton");
                         DomForSetupPhases = MiddleContentDiv;
                         $(InitialBindScreen_ContinueButton).click(ContinueSelectedFunction);
-
-
-
                     }
                 );
 
@@ -174,7 +171,8 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
                 function () {
                     ContinueSelectedOnInitialBindingScreen(SuccessfulDashServiceBind, FailedDashServiceBind, DomForSetupPhases);
                 },
-                function CancellInitialSetup(err) {
+                function CancellInitialSetup(err)
+                {
                     FailedDashServiceBind();
                 }
             )
@@ -272,7 +270,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
         var i = 0;
         for (; i < phaseSupportedService.length;i++)
         {
-            ClearAllUISelectedServices[i].SetSelectionFlag(false);
+            phaseSupportedService[i].SetSelectionFlag(false);
         }
     }
 }
@@ -469,7 +467,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
     }
 
 
-    var ContinueCouter = 0;
+    //var ContinueCouter = 0;
     function PopulateBottomSection(ParentDom, MyPhase, ContinueFunction, SkipFunction, CancelFunction, backFunction) {
         /*
             Name: Jerome Biotidara
@@ -484,24 +482,53 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
         */
 
         /*PhaseBottom DomElement Creation*/
+        
+        var winBackbutton = document.getElementById("win-backbutton");
         var idOfPhaseDiv = $(ParentDom).attr('id');
-        var PhaseBottom = document.createElement("div");
         var PhaseBottomID = idOfPhaseDiv + "Bottom";
+        var BottomLeftID = PhaseBottomID + "Left"
+        var BottomRightID = PhaseBottomID + "Right"
+        var BottomRightRightID = BottomRightID + "Right"
+        var BottomRightRightTopID = BottomRightRightID + "Top"
+        var BottomRightRightCenterID = BottomRightRightID + "Center"
+        var BottomRightRightBottomID = BottomRightRightID + "Bottom"
+        $(winBackbutton).click(backFunction);
+        var PhaseBottom;
+        var BottomDOM;
+        var BottomRight;
+        var BottomLeft;
+        var BottomRightRight;
+        var BottomRightRightTop;
+        var BottomRightRightCenter;
+        var BottomRightRightBottom;
+        var CurrentBottomDiv = getAllChildNodesWithClassName("PhaseBottomDiv", ParentDom);//This gets all DOMS with the class Name
+        if (CurrentBottomDiv.length > 0)//This checks if the BottomDIV has already been created and then assigns the DomELemnts their respective click events
+        {
+            BottomRightRightTop = document.getElementById(BottomRightRightTopID)
+            BottomRightRightCenter = document.getElementById(BottomRightRightCenterID)
+            BottomRightRightBottom = document.getElementById(BottomRightRightBottomID)
+            $(BottomRightRightTop).click(ContinueFunction);
+            $(BottomRightRightCenter).click(SkipFunction);
+            $(BottomRightRightBottom).click(CancelFunction);
+
+            return;
+        }
+        
+        PhaseBottom = document.createElement("div");
+        
         PhaseBottom.setAttribute("id", PhaseBottomID);
         PhaseBottom.setAttribute("class", "PhaseBottomDiv");
         ParentDom.appendChild(PhaseBottom)
-        var BottomDOM = PhaseBottom;
+        BottomDOM = PhaseBottom;
 
-        var BottomRight = document.createElement("div");
-        var BottomRightID = PhaseBottomID + "Right"
+        BottomRight = document.createElement("div");
+        
         BottomRight.setAttribute("id", BottomRightID);
         BottomRight.setAttribute("class", "PhaseBottomRight");
 
-        var winBackbutton = document.getElementById("win-backbutton");
-        $(winBackbutton).click(backFunction);
 
-        var BottomLeft = document.createElement("div");
-        var BottomLeftID = PhaseBottomID + "Left"
+        BottomLeft = document.createElement("div");
+        
         BottomLeft.setAttribute("id", BottomLeftID);
         BottomLeft.setAttribute("class", "PhaseBottomLeft");
         BottomLeft.innerHTML = "Description:" + MyPhase.Description;
@@ -511,8 +538,8 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
 
 
 
-        var BottomRightRight = document.createElement("div");
-        var BottomRightRightID = BottomRightID + "Right"
+        BottomRightRight = document.createElement("div");
+        
         BottomRightRight.setAttribute("id", BottomRightRightID);
         BottomRightRight.setAttribute("class", "PhaseBottomRightRight");
 
@@ -523,12 +550,12 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
 
 
 
-        var BottomRightRightTop = document.createElement("div");
-        var BottomRightRightTopID = BottomRightRightID + "Top"
+        BottomRightRightTop = document.createElement("div");
+        
         BottomRightRightTop.setAttribute("id", BottomRightRightTopID);
         BottomRightRightTop.setAttribute("class", "PhaseBottomRightRightTop");
-        BottomRightRightTop.innerHTML = "Continue" + ContinueCouter;
-        ContinueCouter++;
+        BottomRightRightTop.innerHTML = "Continue"// + ContinueCouter;
+        
         //BottomRightRightTop.style.visibility = "hidden";
         $(BottomRightRightTop).click(ContinueFunction);
         BottomRightRight.appendChild(BottomRightRightTop);
@@ -547,8 +574,8 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
 
 
 
-        var BottomRightRightCenter = document.createElement("div");
-        var BottomRightRightCenterID = BottomRightRightID + "Center"
+        BottomRightRightCenter = document.createElement("div");
+        
         BottomRightRightCenter.setAttribute("id", BottomRightRightCenterID);
         BottomRightRightCenter.setAttribute("class", "PhaseBottomRightRightCenter");
         BottomRightRightCenter.innerHTML = "Skip"
@@ -556,8 +583,8 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
         BottomRightRight.appendChild(BottomRightRightCenter);
 
 
-        var BottomRightRightBottom = document.createElement("div");
-        var BottomRightRightBottomID = BottomRightRight + "Bottom"
+        BottomRightRightBottom = document.createElement("div");
+        
         BottomRightRightBottom.setAttribute("id", BottomRightRightID);
         BottomRightRightBottom.setAttribute("class", "PhaseBottomRightRightBottom");
         $(BottomRightRightBottom).click(CancelFunction);
@@ -618,13 +645,13 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
             
             {setTimeout(function(){
                 var i = 0;
-                var notes = getDomWithID(PhaseDom);//This is a terrible hack that works based on the structure of the page
+                var notes = getAllChildNodesWithClassName("PhaseBottomRightRightTop",PhaseDom);//This is a terrible hack that works based on the structure of the page
                 for (; i < PhaseServices.length; i++)
                 {
                     if (PhaseServices[i].getSelectStatus())
                     {
                         //notes.style.visibility = "visible";
-                        $(notes).show();
+                        $(notes[0]).show();
                         /*notes.style.width = "200px";
                         notes.style.height = "80px";
                         notes.style.visibility = "visible";*/
@@ -633,7 +660,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
 
                     }
                 }
-                $(notes).hide();
+                $(notes[0]).hide();
                 //$(notes).hide();
             }, 100)
             }
@@ -681,22 +708,53 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
             //alert(notes.innerHTML);
             return notes;
         }
-        //alert(DomForUIGeneration.innerHTML);
-        var BindingProcessPromise = new WinJS.Promise(function (BindingFinish, BindingCancelled) {
-            GoThoroughAllBindingPhases(AllPhases, ArrayOfPhaseDOMElements, 0, BindingFinish, BindingCancelled);
-        })
-        BindingProcessPromise.done
-            (
-                function FinishedBinding(ReturnedValue)
-                {
-                    ShowUpperRightMessage("Finished Setting Up Account"); BindingSuccessFullLoopBackFunction()
-                },
-                function IncompleteBinding()
-                {
-                    ShowUpperRightMessage("Are you sure you want to quit?"); BindingCancelFullLoopBack();
-                }
-            )
+        //Toss this whole section into a function to enable loop back call*
+        function TriggerServiceBinding(PhaseStartingIndex) {
+            var BindingProcessPromise = new WinJS.Promise(function (BindingFinish, BindingCancelled) {
+                GoThoroughAllBindingPhases(AllPhases, ArrayOfPhaseDOMElements, PhaseStartingIndex, BindingFinish, BindingCancelled);
+            })
+            BindingProcessPromise.done
+                (
+                    function FinishedBinding(ReturnedValue) {
+                        ShowUpperRightMessage("Finished Setting Up Account"); BindingSuccessFullLoopBackFunction()
+                    },
+                    function IncompleteBinding(PhaseArrayIndexBeforeCancel) {
+                        //alert("Are you sure you want to quit?");
+                        var title = "Hmmm....!!!"
+                        var content = "Do you really want to exit the service SignUp Page?"
+                        var result, resultOptions = ["Yes", "No"];
+                        var cmd;
+                        var messageDialog = new Windows.UI.Popups.MessageDialog(content, title);
+                        for (var i = 0; i < resultOptions.length; i++) {
+                            cmd = new Windows.UI.Popups.UICommand();
+                            cmd.label = resultOptions[i];
+                            cmd.invoked = function (c) {
+                                result = c.label;
+                            }
+                            messageDialog.commands.append(cmd);
+                        }
 
+
+                        messageDialog.showAsync().then
+                        (
+                            function SettingUpNewAccounts(command) {
+                                ShowUpperRightMessage(command.id, 10);
+                                if (result == "Yes") {
+                                    BindingCancelFullLoopBack();
+                                }
+                                else {
+                                    TriggerServiceBinding( PhaseArrayIndexBeforeCancel);
+                                }
+
+                            }
+                        )
+
+                    }
+                )
+        }
+
+        TriggerServiceBinding(0);
+        //Toss this whole section into a function to enable loop back call*
         function GoThoroughAllBindingPhases(PhaseArray, ArrayOfPhaseDoms, PhaseIndex, BindingProcessFinishFunction, BindingProcessCancelFunction) {
             /*
                 Name: Jerome Biotidara
@@ -714,7 +772,7 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
             }
 
             if (PhaseIndex < 0) {
-                BindingProcessCancelFunction();
+                BindingProcessCancelFunction(0);
                 return;
             }
             for (; i < ArrayOfPhaseDoms.length; i++)//hides all possible phaseDoms
@@ -745,12 +803,13 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
             PhaseLaunchPromise.done
             (
                 function (SkipOrContinueFlag) {
-                    if (SkipOrContinueFlag)//True means "continue" was selected
+                    if (SkipOrContinueFlag)//True means "continue" was selected false means skip was selected
                     {
                         LoadPhaseServicesSignUp();
                     }
-                    else {
-                        PhaseArray[PhaseIndex].ClearAllUISelectedServices();
+                    else
+                    {
+                        resetSelectedPhaseUIAndServices(PhaseArray[PhaseIndex], ArrayOfPhaseDoms[PhaseIndex]);
                         PhaseIndex++;
                         GoThoroughAllBindingPhases(PhaseArray, ArrayOfPhaseDoms, PhaseIndex, BindingProcessFinishFunction, BindingProcessCancelFunction);
                     }
@@ -820,13 +879,13 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
 
                 },
                 function (CancelOrBackFlag) {
-                    if (CancelOrBackFlag)//True means "Back" was selected
+                    if (CancelOrBackFlag)//True means "Back" was selected false means cancel Was selected
                     {
                         PhaseIndex--;
                         GoThoroughAllBindingPhases(PhaseArray, ArrayOfPhaseDoms, PhaseIndex, BindingProcessFinishFunction, BindingProcessCancelFunction);
                     }
                     else {
-                        BindingProcessCancelFunction();
+                        BindingProcessCancelFunction(PhaseIndex);
                     }
                 }
             );
@@ -834,22 +893,72 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
         }
     }
 
-    function GetSupportedNewsServices() {
+    function resetSelectedPhaseUIAndServices(MyPhase, MyPhaseDom)
+    {
+        
+        ClearPhase(MyPhase);
+        ResetPhaseGridUI(MyPhaseDom);
+        function ClearPhase(passedPhase)
+        {
+            //resets all services in phase
+            passedPhase.ClearAllUISelectedServices();
+        }
+        
+        function ResetPhaseGridUI(PhaseDom)
+        {
+            //Resets the grid element
+            var RemoveClassName = "selectedGridElement";
+            var MyListOfDomsWithClassName = getAllChildNodesWithClassName("selectedGridElement", PhaseDom);
+            var i = 0;
+            for (; i < MyListOfDomsWithClassName.length; i++)
+            {
+                $(MyListOfDomsWithClassName[i]).removeClass(RemoveClassName);
+            }
+        }
 
     }
+    function getAllChildNodesWithClassName(ClassName,DomElement)
+    {
+        var i = 0;
+        var ArrayOfDomElements = new Array();
+        var MySplitClassNames =new Array();
+        if(DomElement.className!=undefined)
+        {
+            MySplitClassNames=DomElement.className.split(" ");
+        }
+        if (MySplitClassNames.indexOf(ClassName) > -1)
+        {
+            ArrayOfDomElements.push(DomElement);
+        }
 
-    function GetSupportedEmailServices() {
+        var ReturnArray = new Array();
+        for (; i < DomElement.childNodes.length; i++)
+        {
+            ReturnArray=ReturnArray.concat(getAllChildNodesWithClassName(ClassName, DomElement.childNodes[i]));
+        }
+
+        ArrayOfDomElements=ArrayOfDomElements.concat(ReturnArray);
+
+        return ArrayOfDomElements;
+
 
     }
+        function GetSupportedNewsServices() {
 
-    function GetSupportedSocialNetworkServices() {
+        }
 
-    }
+        function GetSupportedEmailServices() {
 
-    function GetSupportedDealsNetworkServices() {
+        }
 
-    }
+        function GetSupportedSocialNetworkServices() {
 
-    function GetSupportedPhotoSharingServices() {
+        }
 
-    }
+        function GetSupportedDealsNetworkServices() {
+
+        }
+
+        function GetSupportedPhotoSharingServices() {
+
+        }
