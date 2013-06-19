@@ -681,16 +681,16 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
                     EachRegisteredServiceDivElement.appendChild(generateGridForPhaseWithRegisteredService(PhaseswithRegisteredServices[i]));
                     PhaseArrayEncasingDom.appendChild(EachRegisteredServiceDivElement);
                 }
-                $(PhaseArrayEncasingDom).css("overflow", "Auto")
+                //$(PhaseArrayEncasingDom).css("overflow", "Auto");
                 SetDomObjectLocationInTableFormat(PhaseArrayEncasingDom, 2, 5, 20, 5, 10, 1, PhaseswithRegisteredServices.length);
-
+                EncasingDOMElement.appendChild(PhaseArrayEncasingDom);
                 function generateGridForPhaseWithRegisteredService(MyPhase)
                 {
                     var ArrayOfRegisteredServices = new Array();
                     var i=0;
                     for (; i < MyPhase.PhaseServices.length;i++)
                     {
-                        if (MyPhase.PhaseServices[i].DashServersUpdated)
+                        if (MyPhase.PhaseServices[i].isRegisteredWithDashServers())
                         {
                             ArrayOfRegisteredServices.push(MyPhase.PhaseServices[i])
                         }
@@ -703,9 +703,10 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
                     {
                         var MySelectedServicegDom = document.createElement("div");
                         MySelectedServicegDom.setAttribute("class", "SelectedPhaseServiceElement");
+                        MySelectedServicegDom.innerHTML = ArrayOfRegisteredServices[i].Name;
                         FinishPhaseEncasingDom.appendChild(MySelectedServicegDom);
                     }
-                    SetDomObjectLocationInTableFormat(FinishPhaseEncasingDom, 2, 10, 10, 5, 5, 4, 3);
+                    SetDomObjectLocationInTableFormat(FinishPhaseEncasingDom,2, 10, 10, 5, 5, 4, 2);
                     //MyEncasingDom.appendChild(FinishPhaseEncasingDom);
                     return FinishPhaseEncasingDom;
                 }

@@ -1296,3 +1296,29 @@ position: fixed;
     left:20%;
     border : solid 3px green;
 }
+
+
+/*FinishCss UI*/
+.RegisteredPhaseElemt
+{
+    position:absolute;
+    border:solid 3px red;
+    overflow:auto;
+}
+.EachRegisteredServiceCaseElement
+{
+    position:absolute;
+    border:solid 3px purple;
+}
+.FinishPhaseCase
+{
+    position:absolute;
+    border:solid 3px green;
+}
+
+.SelectedPhaseServiceElement
+{
+    position:absolute;
+    border:solid 3px pink;
+    background-color:teal;
+}
