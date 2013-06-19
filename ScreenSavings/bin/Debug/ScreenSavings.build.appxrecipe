@@ -28,6 +28,9 @@
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Live\v5.0\Windows Store app HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
       <PackagePath>LiveSDKHTML\js\wl.js</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\3dCard-min%28updatedWithInitalizationPath%29.css">
+      <PackagePath>css\3dCard-min%28updatedWithInitalizationPath%29.css</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
     </AppxPackagedFile>

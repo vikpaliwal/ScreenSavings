@@ -32,7 +32,7 @@ function ProceedWithVerifiedAccount(AccountIdentification)
             {
                 UpdateCacheFile(BoundDashServicesToIntelAccount);
                 UpdateScreen(BoundDashServicesToIntelAccount);
-                comp(BoundDashServicesToIntelAccount);
+                //comp(BoundDashServicesToIntelAccount);
             }
             else
             {
@@ -141,7 +141,8 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
         var DomForSetupPhases;
         var WelcomeScreenPromise = new WinJS.Promise
             (
-                function (ContinueSelectedFunction, BackSelectedFunction) {
+                function (ContinueSelectedFunction, BackSelectedFunction)
+                {
                     /*
                         Name: Jerome Biotidara
                         Description: This Essential shows you a Welcome Screen, Where you will be given an option to continue or cancel the initial setup
@@ -150,11 +151,13 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
                     TopCenterTitleDiv.innerHTML = "Welcome to the Dash Service Setup..."
                     var MiddleContentDiv = document.getElementById("MiddleContent");
                     var WelcomeScreenTextDiv = document.createElement("div");
+                    EmptyDOm(MiddleContentDiv);
                     WelcomeScreenTextDiv.innerHTML = "We will be walking you through the process of selecting a number of desired services that you want easy access to on your Intel Dash. Hit \"Continue\" to proceed with thwe setup or the back button to go back.";
                     WelcomeScreenTextDiv.setAttribute("class", "MiddleContentWelcomeContent");
                     MiddleContentDiv.appendChild(WelcomeScreenTextDiv);
-                    var WinBackButton = document.getElementById("win-backbutton");
-                    $(WinBackButton).click(BackSelectedFunction);//This is a hack it should first detect all current bound events and then save them before binding
+                    //var WinBackButton = document.getElementById("win-backbutton");
+                    ShowWinBackButton(BackSelectedFunction);
+                    //$(WinBackButton).click(BackSelectedFunction);//This is a hack it should first detect all current bound events and then save them before binding
                     var InitialBindScreen_ContinueButton = document.createElement("div");
                     InitialBindScreen_ContinueButton.innerHTML = "Continue";
                     MiddleContentDiv.appendChild(InitialBindScreen_ContinueButton);
@@ -171,7 +174,8 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
             {
                 ContinueSelectedOnInitialBindingScreen(SuccessfulDashServiceBind, FailedDashServiceBind, DomForSetupPhases);
             },
-            function CancellInitialSetup(err) {
+            function CancellInitialSetup(err)
+            {
                 FailedDashServiceBind();
             }
         )

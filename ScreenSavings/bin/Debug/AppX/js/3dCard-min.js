@@ -719,6 +719,11 @@ var ValidatedAccountLaunch= function (){
                         $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][1] + 'px)');
                     }
                 }
+
+                $('.bgOne').css({ "width": "190px", "margin-left": "10px" });
+                $('.bgFive').css({ "width": "190px", "margin-left": "-18px" });
+                $('.bgPerspective').css({ "transform": "rotateX(-85deg) translateZ(-118px)" });
+                $('.linePerspective').css({ "transform": "rotateX(-85deg) translateZ(-120px)" });
             },
             function (error) {
                 WinJS.log && WinJS.log(error, "sample", "error");
@@ -844,8 +849,11 @@ var ValidatedAccountLaunch= function (){
         }
         return x;
     }
+    BindSettingsSocialNetworkButton();
 
-    setTimeout(function () {
+    setTimeout(
+    function ()
+    {
         $('.bgOne').css({ "width": "190px", "margin-left": "10px" });
         $('.bgFive').css({ "width": "190px", "margin-left": "-18px" });
         $('.bgPerspective').css({ "transform": "rotateX(-85deg) translateZ(-118px)" });
@@ -1075,7 +1083,7 @@ var ValidatedAccountLaunch= function (){
         });        
     }, 3000);
     //setTimeout(refreshData, 25000);
-    BindSettingsSocialNetworkButton()
+    
     
 
 

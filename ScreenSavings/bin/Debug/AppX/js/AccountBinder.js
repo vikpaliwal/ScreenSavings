@@ -79,6 +79,32 @@ function getBoundSocialNetworkData(comp, err, IntelAccountID)
 }
 
 
+function HideWinBackButton()
+{
+    var WinBackButton = document.getElementById("win-backbutton");
+    $(WinBackButton).hide();
+}
+
+function ShowWinBackButton(event)
+{
+    var WinBackButton = document.getElementById("win-backbutton");
+    $(WinBackButton).show();
+    if (event != undefined)
+    {
+        $(WinBackButton).off();
+        $(WinBackButton).on("click", event);
+    }
+
+}
+
+function EmptyDOm(EncasingDomElement)
+{
+    while (EncasingDomElement.childNodes.length>0)
+    {
+        EncasingDomElement.childNodes[0].removeNode(true);
+    }
+}
+
 
 function InitializationPhase(name, phaseSupportedService, description, nextService, precedingService, PhaseIcon) {
     this.Name = name;
@@ -97,8 +123,8 @@ function InitializationPhase(name, phaseSupportedService, description, nextServi
     }
 }
 
-function Service(name, imageURL, authentication, RegisterWithIntel)
-{
+    function Service(name, imageURL, authentication, RegisterWithIntel)
+    {
         /*
             Name: Jerome Biotidara
             Description: THis is  responsible for building an object for each service. And Some of its display properties. It takes the names, Image URL and AuthenticationFunction as parameters.
@@ -251,7 +277,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
 
         ArrayOfTreeOfDoms.style.width = "100%";
         ArrayOfTreeOfDoms.style.height = "100%";
-        if (ArrayOfTreeOfDoms.childNodes.length < DomObjectPerLine)
+        if (ArrayOfTreeOfDoms.childNodes.length <= DomObjectPerLine)
         {
             RowsPerFullScreen = 1;
         }
@@ -489,6 +515,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
             *Date: 6/6/2013
             *Description: This handles the UI generation for the several phases. It makes a call to PopulateInitializationPhase which generates the UI for each phase. It takes The array of phase as its parameter.
         */
+        EmptyDOm(DomForUIGeneration);
         var MyBoundPhaseDiv = document.createElement("div");
         MyBoundPhaseDiv.setAttribute("id", "InitializationBindingDiv");
         DomForUIGeneration.appendChild(MyBoundPhaseDiv);
@@ -593,12 +620,26 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
                                 function (PhasesFinalized)
                                 {
                                     //EncasingDomElement = document.getElementById('FirstDiv');
-                                    while (EncasingDomElement.childNodes.length>0)
+                                    EmptyDOm(EncasingDomElement);
+                                    var FinishTextDomElement = document.createElement("div");
+                                    FinishTextDomElement.setAttribute("class", "FinishPhaseTextDomElement");
+                                    FinishTextDomElement.innerHTML = "Finished the Dash setup these are your currently registered services";
+                                    var DisplayRegisteredPhaseDomElement = document.createElement("div");
+                                    DisplayRegisteredPhaseDomElement.setAttribute("class", "DisplayRegisteredCasDiv");
+                                    EncasingDomElement.appendChild(FinishTextDomElement);
+                                    EncasingDomElement.appendChild(DisplayRegisteredPhaseDomElement);
+                                    var FinishButtonDomElement = document.createElement("button");
+                                    FinishButtonDomElement.setAttribute("Name", "FinishButton");
+                                    FinishButtonDomElement.innerHTML = "Finish"
+                                    $(FinishButtonDomElement).on("click", onFinishButtonClick);
+                                    EncasingDomElement.appendChild(FinishButtonDomElement);
+                                    DisplayFinishUI(PhasesFinalized, DisplayRegisteredPhaseDomElement);
+
+                                    function onFinishButtonClick()
                                     {
-                                        EncasingDomElement.childNodes[0].removeNode(true);
+                                        FinishServiceBindingLoopBackFunction(AllPhasesData);
                                     }
-                                    DisplayFinishUI(PhasesFinalized, EncasingDomElement);
-                                    //FinishServiceBindingLoopBackFunction(AllPhasesData);
+                                    
                                 },
                                 function ErrorInFinalizing()
                                 {
@@ -682,7 +723,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
                     PhaseArrayEncasingDom.appendChild(EachRegisteredServiceDivElement);
                 }
                 //$(PhaseArrayEncasingDom).css("overflow", "Auto");
-                SetDomObjectLocationInTableFormat(PhaseArrayEncasingDom, 2, 5, 20, 5, 10, 1, PhaseswithRegisteredServices.length);
+                SetDomObjectLocationInTableFormat(PhaseArrayEncasingDom, 2, 5, 20, 5, 10, 2, PhaseswithRegisteredServices.length);
                 EncasingDOMElement.appendChild(PhaseArrayEncasingDom);
                 function generateGridForPhaseWithRegisteredService(MyPhase)
                 {
@@ -706,7 +747,8 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
                         MySelectedServicegDom.innerHTML = ArrayOfRegisteredServices[i].Name;
                         FinishPhaseEncasingDom.appendChild(MySelectedServicegDom);
                     }
-                    SetDomObjectLocationInTableFormat(FinishPhaseEncasingDom,2, 10, 10, 5, 5, 4, 2);
+                    SetDomObjectLocationInTableFormat(FinishPhaseEncasingDom, 2, 10, 10, 5, 5, 4, 2);
+
                     //MyEncasingDom.appendChild(FinishPhaseEncasingDom);
                     return FinishPhaseEncasingDom;
                 }
@@ -725,7 +767,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
                 for (; i < AllPhases.length; i++)
                 {
                     j=0;
-                    for (; i < AllPhases[i].PhaseServices.length;i++)
+                    for (; j < AllPhases[i].PhaseServices.length;j++)
                     {
                         var MyServiceRegistrationPromise = new WinJS.Promise(function (SuccessInRegistering,FailureInRegistering)
                         {
@@ -891,7 +933,8 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
                     PhaseIndex--;
                     GoThoroughAllBindingPhases(PhaseArray, ArrayOfPhaseDoms, PhaseIndex, BindingProcessFinishFunction, BindingProcessCancelFunction);
                 }
-                else {
+                else
+                {
                     var haha = BindingProcessCancelFunction.uniqueId()
                     BindingProcessCancelFunction(PhaseIndex);
                 }
@@ -950,22 +993,22 @@ function Service(name, imageURL, authentication, RegisterWithIntel)
 
 
     }
-        function GetSupportedNewsServices() {
+    function GetSupportedNewsServices() {
 
-        }
+    }
 
-        function GetSupportedEmailServices() {
+    function GetSupportedEmailServices() {
 
-        }
+    }
 
-        function GetSupportedSocialNetworkServices() {
+    function GetSupportedSocialNetworkServices() {
 
-        }
+    }
 
-        function GetSupportedDealsNetworkServices() {
+    function GetSupportedDealsNetworkServices() {
 
-        }
+    }
 
-        function GetSupportedPhotoSharingServices() {
+    function GetSupportedPhotoSharingServices() {
 
-        }
+    }

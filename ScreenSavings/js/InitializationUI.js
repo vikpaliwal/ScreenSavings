@@ -110,6 +110,7 @@ function ResumeIntelDash()
         Name: Jerome Biotidara
         Description: Function is called when dash is woken from sleep, pause state
     */
+    alert("called resume");
 }
 
 function InitialSetupScreen_FirstTimeEver(comp, err)

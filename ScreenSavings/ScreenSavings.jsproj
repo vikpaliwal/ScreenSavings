@@ -50,6 +50,7 @@
     <AppxManifest Include="package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="css\3dCard-min%28updatedWithInitalizationPath%29.css" />
     <Content Include="css\3dCard-min.css" />
     <Content Include="default.html" />
     <Content Include="images\accounts.png" />

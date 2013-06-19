@@ -180,7 +180,8 @@ function ShowUpperRightMessage(Message, stayTime) {
             if (args.detail.kind === activation.ActivationKind.launch) {
                 if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
 
-                    StartIntelDash();
+                    ValidatedAccountLaunch();
+                    //StartIntelDash();
    
                 
                 } else {

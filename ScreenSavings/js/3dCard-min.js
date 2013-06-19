@@ -844,8 +844,11 @@ var ValidatedAccountLaunch= function (){
         }
         return x;
     }
+    BindSettingsSocialNetworkButton();
 
-    setTimeout(function () {
+    setTimeout(
+    function ()
+    {
         $('.bgOne').css({ "width": "190px", "margin-left": "10px" });
         $('.bgFive').css({ "width": "190px", "margin-left": "-18px" });
         $('.bgPerspective').css({ "transform": "rotateX(-85deg) translateZ(-118px)" });
@@ -1075,7 +1078,7 @@ var ValidatedAccountLaunch= function (){
         });        
     }, 3000);
     //setTimeout(refreshData, 25000);
-    BindSettingsSocialNetworkButton()
+    
     
 
 
