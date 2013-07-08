@@ -1,5 +1,5 @@
 ﻿/// <reference group="Dedicated Worker" />
-var ForcePassAuthentication = false;
+
 
 
 function AuthenticateAccount(SuccessCallBack, FailureCallBack, AuthenticationProgress, AccountIdentification)
@@ -19,16 +19,20 @@ function AuthenticateAccount(SuccessCallBack, FailureCallBack, AuthenticationPro
             Name: Jerome Biotidara
             Description: This content will have direct php scripts that'll try to verify accounts. They'll be wrapped in WinJS.xhr functions
         */
-        //setTimeout(function () {; }, 300);
-        setTimeout( function(){if (ForcePassAuthentication)
-        {
-            AuthenticationSuccessFunction(true);
-        }
-        else
-        {
-            AuthenticationFailureFunction(false)
-        }
-        }, 0);
+        var AuthenticateURL = BASE_URL_TEST + "/jerome/AuthenticateAccount.php?loginid=" + AccountIdentification.AccountID
+        WinJS.xhr({ url: AuthenticateURL }).done
+        (
+            function SuccessfulAccessToDashServers(ReceivedData)
+            {
+                AuthenticationSuccessFunction(ReceivedData.response);
+            },
+            function FailedAccesToDashServers()
+            {
+                AuthenticationFailureFunction("Unable To Access Dash Servers");
+            }
+
+        )
+        
         
 
     });
@@ -36,12 +40,18 @@ function AuthenticateAccount(SuccessCallBack, FailureCallBack, AuthenticationPro
     (
         function AuthenticationSuccess(UserProfileData)
         {
-            SuccessCallBack(UserProfileData)
+            if (UserProfileData !="0")
+            {
+                SuccessCallBack({ AccountID: UserProfileData, CacheId: UserProfileData })//Hack For WindowsID
+            }
+            else
+            {
+                FailureCallBack("Invalid Account")
+            }
         },
         function AuthenticationFailure(error)
         {
             FailureCallBack(error);
-
         }
     )
 }

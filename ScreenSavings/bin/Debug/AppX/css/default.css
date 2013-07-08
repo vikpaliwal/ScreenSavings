@@ -18,6 +18,32 @@ body {
     height: 768px;
     width: 1024px;
 }
+.win-appbar.DashAppBar button:hover {
+
+    color:rgb(100,100,100);
+    background-color:rgb(100,100,100);
+}
+
+
+#MessageFlyout 
+{
+    position:absolute;
+    top:0%;
+    left:100%;
+    border-radius:4px;
+    background-color:rgba(169,255,84,1);
+    border:none;
+    box-shadow:rgba(20,20,20,.4) 0px 0px 10px;
+    opacity:0;
+}
+
+
+.win-type-xx-large 
+{
+    font-size:500%;
+
+}
+
 
 @media screen and (-ms-view-state: fullscreen-landscape) {
 }

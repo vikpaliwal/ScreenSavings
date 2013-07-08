@@ -1,10 +1,48 @@
 ﻿/// <reference group="Dedicated Worker" />
 "use strict";
-var ForceWindowsLiveLogout = false;
-var DisableGetLocation = true;
+
+//Force Execution path flags**Start
+var DeleteAccount = false
 var ForceShowYouAreLoggedInToIntelServersUsingAnySourceService = false;
 var ForceYouAreBoundSuccessfullyWithIntelServersUsingWindowsLive = false;
 var ForceSuccessfulSignInIntoMicrosoftWithoutNecessarilyBindingWithIntelServers = false;
+var DeleteAllBoundAccounts = false;
+var ForcePassAuthentication = false;
+var ForceNonBoundedDashServicesOnIntel = false;
+var ForceRegistationSuccessuWithIntelServers = false;
+var ForceWindowsLiveLogout = false;
+var DisableGetLocation = false;
+//Force Execution path flags**End
+
+
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function (from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
+
+Array.prototype.last = function () {
+    var MyLength = this.length
+    if ((MyLength - 1) > 0)
+    {
+        return this[MyLength - 1];
+    }
+    return undefined;
+};
+
+
+
+
+function InitializeMainDivs()
+{
+    //var MainDiv = document.getElementById("Main");
+    //MainDiv.innerHTML = "";
+    //EmptyDom(MainDiv);
+  
+    //MainDiv.innerHTML = window.toStaticHTML("<div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\">HELLO HELLO</div>        <div class=\"fixedlayout\" id=\"appcontainer\">                                    <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div>       <span id=\"overlays\"><div class=\"overlay\"></div></span>            <div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\"></div>        <div class=\"TopRight\" id=\"TopRight\"></div>        <div class=\"fixedlayout\" id=\"appcontainer\">            <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div><span id=\"overlays\"><div class=\"overlay\"></div></span>        </div>        </div>");
+}
+
 function StartIntelDash()
 {
     /*
@@ -12,8 +50,19 @@ function StartIntelDash()
     Description: Function is called when dash is fully closed and opened
     */
     "use strict";
+
+    InitializeMainDivs();
     var RetrieveInProgress = new InProgress("...Loading");
     var FailedToAuthenticateRetrievedFile = null;
+    var SettingsDom = document.getElementById("SettingsDiv");
+    /*ShowUpperRightMessage(
+        $("#SettingsDiv").html()
+        )
+    ;
+    $("#SettingsDiv").hide();*/
+    $("#SettingsDiv").hide()
+    
+
     var RetrievedCachedFilePromise = new WinJS.Promise
     (
         function (RetrieveCachedFileSuccess, RetrieveCachedFileFailure, RetrievedCacheInProgress)
@@ -35,12 +84,13 @@ function StartIntelDash()
         {
             RetrieveInProgress.Stop();
             var AccountAuthenticationProgressUI = new InProgress("...Updating Account");
+            Global_CacheData = CachedData;
             var AuthenticateAccountWithIntelPromise = new WinJS.Promise
             (
                 function (IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction)
                 {
                     //$.ajax({type: "GET",url: "js/AuthenticateUser.js",dataType: "script",async: false});
-                    AuthenticateAccount(IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction, CachedData.ID);
+                    AuthenticateAccount(IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction, CachedData.Profile.UserID);
                 }
             );
             AuthenticateAccountWithIntelPromise.then
@@ -53,7 +103,7 @@ function StartIntelDash()
                 function AccountAuthenticationFailure(err)
                 {
                     AccountAuthenticationProgressUI.Stop();
-                    ShowUpperRightMessage("Your Account can't be authenticated\n Please LogIn with your Windows LiveID",3);
+                    ShowUpperRightMessage(err);
                     var InitialConfigurationPromise = new WinJS.Promise(NoAccountsVerifiedSetup);
                     InitialConfigurationPromise.done
                     (
@@ -79,9 +129,11 @@ function StartIntelDash()
         {
             RetrieveInProgress.Stop();
             var InitialConfigurationPromise = new WinJS.Promise(NoAccountsVerifiedSetup);
+            Global_CacheData = Global_CacheInitializationData;
             InitialConfigurationPromise.done
             (
-                function SuccessfullyBoundToIntelServers(ProofOfAuthentication) {
+                function SuccessfullyBoundToIntelServers(ProofOfAuthentication)
+                {
                     ProceedWithVerifiedAccount(ProofOfAuthentication);
                 },
                 function FailedToBindWithIntel(err)
@@ -96,6 +148,11 @@ function StartIntelDash()
             RetrieveInProgress.Start();
         }
     );
+}
+
+function WindowsLoggedInAccount(LoginStatus,UserID)
+{
+    
 }
 
 function NoAccountsVerifiedSetup(SuccessfullyBoundToIntelNetworkFunction, FailedToBindToIntelNetwork)
@@ -182,8 +239,9 @@ function SelectSocialNetworkForSourcingIntelProfileInfo(comp, err)
         function (IntelSourceData)
         {
             userId = IntelSourceData.AccountID;
-            getLocation(IntelSourceData.AccountID);
-            ShowUpperRightMessage("Successfully Logged In" + userId);
+            ShowUpperRightMessage("Successfully Logged In " + userId);
+            PopulateAppBar_ini()
+            
             comp(IntelSourceData);
             
 
@@ -203,6 +261,11 @@ function SelectSocialNetworkForSourcingIntelProfileInfo(comp, err)
     )
 }
 
+
+function PopulateAppBar_ini()
+{
+    PopulateWindowsLoginButton(document.getElementById("DashAppBar"), ToggleWindowsLogin)
+}
 function PopulateIntelSourceAccountUsingTwitter(comp, err, TypeIdentifier)
 { }
 
@@ -225,7 +288,8 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err, TypeIdentifier, F
     if (ForceWindowsLiveLogout)
     {
         var LogOutPromise=WL.logout();//Will be deleted, just used to force log out of current user
-        LogOutPromise.then(
+        LogOutPromise.then
+        (
             function SuccessfullyLoggedOut()
             {
                 WL.login().then
@@ -260,10 +324,9 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err, TypeIdentifier, F
         WL.login().then
         (
             function (response) {
-                if (response.status == 'connected') {
+                if (response.status == 'connected')
+                {
                     BindMicrosoftIDWithIntelServers(comp, err,TypeIdentifier);
-                    getLocation();
-                    ShowUpperRightMessage("Successfully Logged In" + userid);
                     comp(userid)
                 }
                 else {
@@ -302,11 +365,14 @@ function PopulateIntelSourceAccountUsingWindowsLive(comp, err, TypeIdentifier, F
                     function SuccessWithAccessingIntelServers(ReturnData)
                     {
                         var DataRetrieved;
+
+
                         try
                         {
                             DataRetrieved = JSON.parse(ReturnData.response);
-                            if ((DataRetrieved.LoginID != null) || (DataRetrieved.LoginID != "null"))
+                            if ((DataRetrieved.AccountID != null) || (DataRetrieved.AccountID != "null"))
                             {
+
                                 SuccessInBindingWithIntelFunction(DataRetrieved);
                             }
                             else
@@ -358,33 +424,84 @@ function RetrieveLocalSaved(RetrievedFileSuccesCallBack, RetrievedFileFailureCal
         *Date: 6/6/2013
         *Description:   This reads the User.DashProfile and goes on to parse the data into JSON format which is then used to retrieve validate account from IntelServers
     */
-
-    var CurrentLog = "User.DashProfile"
-    CurrentLog = "User.txt";
-    var cached_data = JSON.parse("[{\"1\":\"lmao\"}]");
-    Windows.Storage.KnownFolders.documentsLibrary.getFileAsync(CurrentLog).done
+    var ReadCacheDatPromise = new WinJS.Promise
+        (
+            function (Success, Failure, Progress)
+            {
+                Global_CacheIO.ReadCacheFile_ToText(Success, Failure, Progress);
+            }
+        )
+    ReadCacheDatPromise.done
     (
-        function FileFoundSuccess(file)
+        function (MyTextData)
         {
-            Windows.Storage.FileIO.readTextAsync(file).done(
-                function FileReadSuccess(fileContent)
-                {
-                    cached_data = JSON.parse(fileContent);
-                    RetrievedFileSuccesCallBack(cached_data);
-                },
-                function FileReadFailure(error)
-                {
-                    RetrievedFileFailureCallBack("!Could Not Read Settings File\n Possibly Corrupt")
-                    //WinJS.log && WinJS.log(error, "sample", "error");
-                });
-        },
-        function FileFoundFailure(err)
-        {
-            RetrievedFileFailureCallBack("Settings File Not Found or Inaccessible");
-        }
+            try
+            {
+                var CacheData_JSON = JSON.parse(MyTextData);
 
-    );
+                if (isFunction(RetrievedFileSuccesCallBack))
+                {
+                    RetrievedFileSuccesCallBack(CacheData_JSON);
+                }
+            }
+            catch (e)
+            {
+                //ar CacheData_JSON = JSON.parse(MyTextData);
+                var CallToInitializePromise = new WinJS.Promise
+                (
+                    function (success, failure, progress)
+                    {
+                        Global_CacheIO.InitializeFile(success, failure, progress);
+                    }
+                )
+                CallToInitializePromise.done
+                (
+                    function InitializationSuccess()
+                    {
+                        RetrieveLocalSaved(RetrievedFileSuccesCallBack, RetrievedFileFailureCallBack, RetrievedFileFailureProgreess)
+                    }, function InitializationFailure()
+                    {
+                        ShowUpperRightMessage("\nCannot Initialize Dash. Please Check Write Permissions");
+                        if (isFunction(RetrievedFileFailureCallBack))
+                        { RetrievedFileFailureCallBack("Corrupt Profile Data"); }
+                    }
+                )
+            }
+        },
+        function ()
+        {
+            var CallToInitializePromise = new WinJS.Promise
+                (
+                    function (success, failure, progress) {
+                        Global_CacheIO.InitializeFile(success, failure, progress);
+                    }
+                )
+            CallToInitializePromise.done
+            (
+                function InitializationSuccess() {
+                    RetrieveLocalSaved(RetrievedFileSuccesCallBack, RetrievedFileFailureCallBack, RetrievedFileFailureProgreess)
+                }, function InitializationFailure() {
+                    ShowUpperRightMessage("\nCannot Initialize Dash. Please Check Write Permissions");
+                    if (isFunction(RetrievedFileFailureCallBack))
+                    { RetrievedFileFailureCallBack("Corrupt Profile Data"); }
+                }
+            )
+        }
+    )
+
+
+    //CurrentLog = "User.txt";
+    //var cached_data = JSON.parse(CurrentLog);
+    
 }
+
+/*function InitializeDashCache(RetrieveLocalSaved,RetrievedFileSuccesCallBack, RetrievedFileFailureCallBack, RetrievedFileFailureProgreess)
+{
+
+    
+
+    
+}*/
 
 function RegisterAccountWithIntelServers(LoggedInServiceIdentification)
 {
@@ -396,7 +513,8 @@ function RegisterAccountWithIntelServers(LoggedInServiceIdentification)
     return WinJS.xhr({ url: BASE_URL_TEST + LatterURLString });
 }
 
-function getLocation() {
+function getLocation()
+{
     /*
         Name:Jerome Biotidara
         Function: This gets the current location of the user and also registers to with the intel servers. The implementation was written by gaomin but updated by Jerome Biotidara by separting the code
@@ -447,4 +565,14 @@ function getLocation() {
          loadData();
          WinJS.log && WinJS.log(err.message, "sample", "error");
      });
+}
+
+
+//utility function
+function isFunction(MyVar) {
+    return (typeof (MyVar) === "function")
+}
+
+function isString(MyVar) {
+    return (typeof (MyVar) === "string")
 }

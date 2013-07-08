@@ -101,7 +101,58 @@ function updateTime() {
     setTimeout(updateTime, 500);
 }
 
+function join(separator1, separator2, arr, sort) {
+    var arrKeys = [];
+    for (var key in arr) {
+        arrKeys.push(key);
+    }
+    if (sort)
+        arrKeys.sort();
 
+    var newArr = [];
+    for (var i = 0; i < arrKeys.length; i++) {
+        if (separator2 != "") {
+            newArr.push(arrKeys[i] + separator2 + arr[arrKeys[i]]);
+        }
+        else {
+            newArr.push(arrKeys[i]);
+            newArr.push(arr[arrKeys[i]]);
+        }
+    }
+    return newArr.join(separator1);
+}
+
+function rfcEncoding(str) {
+    var tmp = encodeURIComponent(str);
+    tmp = tmp.replace('!', '%21');
+    tmp = tmp.replace('*', '%2A');
+    tmp = tmp.replace('(', '%28');
+    tmp = tmp.replace(')', '%29');
+    tmp = tmp.replace("'", '%27');
+    return tmp;
+}
+
+function sendPostRequest(url, authzheader, params) {
+    try {
+        var request = new XMLHttpRequest();
+        request.open("POST", url, false);
+        request.setRequestHeader("Authorization", authzheader);
+        request.send(params);
+        return request.responseText;
+    } catch (err)
+    {
+        var tt = err;
+        WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
+    }
+}
+
+function normalizeParams(params) {
+    for (var key in params) {
+        if (key != "oauth_token")
+            params[key] = encodeURIComponent(params[key]);
+    }
+    return join("&", "=", params, true);
+}
 
 function FaceBookLogin(SuccessFunction,FailureFunction)
 {
@@ -174,12 +225,13 @@ function FaceBookLogin(SuccessFunction,FailureFunction)
         (
         function (passed)
         {
-            if (SuccessFunction == undefined) { return}
+            if (typeof (SuccessFunction) !== "function") { return }
             SuccessFunction(passed)
         },
         function (err)
         {
-            if (FailureFunction == undefined) { return}; FailureFunction(err);
+            if (typeof (FailureFunction) !== "function") { return };
+            FailureFunction(err);
             
         }
     )
@@ -272,10 +324,12 @@ function TwitterLogin(SuccessFunction, FailureFunction) {
                 var secret = response.substring(secretstartpos, secretendpos);
                 var user = response.substring(useridstartpos, useridendpos);
 
-                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
+                Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result)
+                {
                     //send data to intelscreensavings server
                     WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=twitter&win_id=" + userId + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
-                        function (result) {
+                        function (result)
+                        {
                             var results = result.responseData;
                         }
                    );
@@ -285,8 +339,19 @@ function TwitterLogin(SuccessFunction, FailureFunction) {
                 WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
             });
     })
-    TwitterLoginPromise.done(function TwitterLoginSuccess(value) { if (SuccessFunction == undefined) { return}; SuccessFunction(value); }, function TwitterLoginFailure(value) { if (FailureFunction == undefined) { return}; FailureFunction(value) })
+    TwitterLoginPromise.done(
+        function TwitterLoginSuccess(value)
+        {
+            if (typeof (SuccessFunction) !== "function") { return }; SuccessFunction(value);
+        },
+        function TwitterLoginFailure(value)
+        {
+            if (typeof (FailureFunction) !== "function") { return };
+            FailureFunction(value)
+        })
 }
+
+
 
 function FlickrLogin(SuccessFunction, FailureFunction)
 {
@@ -350,7 +415,8 @@ function FlickrLogin(SuccessFunction, FailureFunction)
 
         Windows.Security.Authentication.Web.WebAuthenticationBroker.authenticateAsync(
             Windows.Security.Authentication.Web.WebAuthenticationOptions.none, startURI, endURI)
-            .done(function (result) {
+            .done(function (result)
+            {
                 var value = result.responseData;
 
                 var startpos = value.indexOf("oauth_token") + 12;
@@ -401,56 +467,37 @@ function FlickrLogin(SuccessFunction, FailureFunction)
                 Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                     //send data to intelscreensavings server
                     WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=flickr&win_id=" + userId + "&oauth_token=" + token + "&oauth_verifier=" + secret }).done(
-                        function (result) {
+                        function (result)
+                        {
                             var results = result.responseData;
+                            FlickrLoginSuccesCallBack(result);
+                        }, function FailedToaccessDashServers(result)
+                        {
+                            FlickrLoginFailureCallBack(result);
                         }
                    );
                 });
             }, function (err) {
-                WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+                FlickrLoginFailureCallBack([err,"Failed To get Connection to flickr for authorization of access"]);
+                //WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
             });
     })
-    FlickrLoginPromise.done(function FlickrLoginSuccess(value) { if (SuccessFunction == undefined) { return}; SuccessFunction(value); }, function FlickrLoginFailure(value) { if (FailureFunction == undefined) { return}; FailureFunction(value)})
+    FlickrLoginPromise.done(
+        function FlickrLoginSuccess(value)
+        {
+            if (typeof (SuccessFunction) !== "function")
+            { return }; SuccessFunction(value);
+        },
+        function FlickrLoginFailure(value)
+        {
+            if (typeof (FailureFunction) !== "function")
+            { return };
+            FailureFunction(value)
+        })
 }
 
-function join(separator1, separator2, arr, sort) {
-    var arrKeys = [];
-    for (var key in arr) {
-        arrKeys.push(key);
-    }
-    if (sort)
-        arrKeys.sort();
 
-    var newArr = [];
-    for (var i = 0; i < arrKeys.length; i++) {
-        if (separator2 != "") {
-            newArr.push(arrKeys[i] + separator2 + arr[arrKeys[i]]);
-        }
-        else {
-            newArr.push(arrKeys[i]);
-            newArr.push(arr[arrKeys[i]]);
-        }
-    }
-    return newArr.join(separator1);
-}
 
-function rfcEncoding(str) {
-    var tmp = encodeURIComponent(str);
-    tmp = tmp.replace('!', '%21');
-    tmp = tmp.replace('*', '%2A');
-    tmp = tmp.replace('(', '%28');
-    tmp = tmp.replace(')', '%29');
-    tmp = tmp.replace("'", '%27');
-    return tmp;
-}
-
-function normalizeParams(params) {
-    for (var key in params) {
-        if (key != "oauth_token")
-            params[key] = encodeURIComponent(params[key]);
-    }
-    return join("&", "=", params, true);
-}
 
 function GmailLogin(SuccessFunction, FailureFunction) {
     //oauth1 approach similar to twitter
@@ -567,30 +614,34 @@ function GmailLogin(SuccessFunction, FailureFunction) {
             Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done(function success(result) {
                 //send data to intelscreensavings server
                 var xhrUrl=BASE_URL_TEST + "/gaomin/register_user.php?service=gmail&win_id=" + userId + "&oauth_token=" + decodeURIComponent(token) + "&oauth_verifier=" + decodeURIComponent(secret) + "&email=" + "dummy@gmail.com";
-                WinJS.xhr(
-                            { url: xhrUrl }
-                    ).done(
-                    function SuccessFromIntelServers(result) {
-                        var results = result.responseData;
-                        SuccessFunction(result.responseData);
-                    }, function (errorFromIntelServers)
+                WinJS.xhr({ url: xhrUrl }).done
+                    (
+                    function SuccessFromIntelServers(result)
                     {
-                        FailureFunction(errorFromIntelServers);
+                        var results = result.resonseText;
+                        gMailLoginSuccesCallBack(result.resonseText);
+                    },
+                    function (errorFromIntelServers)
+                    {
+                        gMailLoginFailureCallBack(errorFromIntelServers);
                     }
                );
             });
-        }, function (err) {
-            WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
+        }, function (err)
+        {
+            gMailLoginFailureCallBack("Error accessing google");
+            //WinJS.log("Error returned by WebAuth broker: " + err, "Web Authentication SDK Sample", "error");
         });})
     gMailLoginPromise.done(
         function gMailLoginSuccess(value)
         {
-            if (SuccessFunction == undefined)
-            { return }; SuccessFunction(value);
+            if (typeof(SuccessFunction)!== "function")
+            { return };
+            SuccessFunction(value);
         },
         function gMailLoginFailure(value)
         {
-            if (FailureFunction == undefined)
+            if (typeof (FailureFunction) !== "function")
             { return };
             FailureFunction(value)
         })
@@ -719,11 +770,6 @@ var ValidatedAccountLaunch= function (){
                         $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][1] + 'px)');
                     }
                 }
-
-                $('.bgOne').css({ "width": "190px", "margin-left": "10px" });
-                $('.bgFive').css({ "width": "190px", "margin-left": "-18px" });
-                $('.bgPerspective').css({ "transform": "rotateX(-85deg) translateZ(-118px)" });
-                $('.linePerspective').css({ "transform": "rotateX(-85deg) translateZ(-120px)" });
             },
             function (error) {
                 WinJS.log && WinJS.log(error, "sample", "error");
@@ -1008,6 +1054,7 @@ var ValidatedAccountLaunch= function (){
         });
         
         var container = document.getElementById('appcontainer');
+        $("#appcontainer").show();
         //listen to  the gesture start and gesture end on the body
         //find end and start points
         //find the angle,if it's < 20 deg make a pan else pass the event down
@@ -1082,7 +1129,7 @@ var ValidatedAccountLaunch= function (){
             $('#line2dContainerBg').css({ "transform": "translateY(350px)" });
         });        
     }, 3000);
-    //setTimeout(refreshData, 25000);
+    setTimeout(refreshData, 5000);
     
     
 
@@ -1102,17 +1149,6 @@ var ValidatedAccountLaunch= function (){
         $('#GMAIL_BUTTON').click(GmailLogin);
     }
     
-    function sendPostRequest(url, authzheader, params) {
-        try {
-            var request = new XMLHttpRequest();
-            request.open("POST", url, false);
-            request.setRequestHeader("Authorization", authzheader);
-            request.send(params);
-            return request.responseText;
-        } catch (err) {
-            WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
-        }
-    }
     
     
 
@@ -1204,7 +1240,8 @@ var ValidatedAccountLaunch= function (){
     }
 });}
 
-function loadData() {
+function loadData()
+{
     /*
     WinJS.xhr({ url: "http://google.com/ig/api?weather=" + weather_zipcode }).done(
         function fulfilled(result) {
@@ -1220,7 +1257,7 @@ function loadData() {
             }
         });
     */
-    WinJS.xhr({ url: "http://news.google.com/news?topic=h&output=rss" }).done(
+    /*WinJS.xhr({ url: "http://news.google.com/news?topic=h&output=rss" }).done(
         function fulfilled(result) {
             if (result.status === 200) {
                 var i;
@@ -1283,51 +1320,9 @@ function loadData() {
                 //$('#weatherIcon').attr('src', "http://www.google.com" + $(data).children().children('weather').children('current_conditions').children('icon').attr('data'));
                 //$('#temperature').text($(data).children().children('weather').children('current_conditions').children('temp_f').attr('data') + toStaticHTML("&deg;F"));
             }
-        });
+        });*/     
     
-    
-    WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/flickr_client.php?win_id=" + userId }).done(
-        function fulfilled(result) {
-            if (result.status === 200) {
-                var data = JSON.parse(result.response);
-                var i;
-                var lineNum = 1;
-                if (transitionComplete == 1) {
-                    for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
-                        // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
-                        var newCard = new Array(8);
-                        newCard[4] = "flickr";
-                        newCard[5] = "timestampTBD";
-                        newCard[6] = data.flickr_feed[i].user;
-                        newCard[7] = data.flickr_feed[i].photo + "b.jpg";
-                        pushNewDataCard(lineNum, newCard);
-                        //scrollCards(lineNum, -160);
-                    }
-                } else {
-                    $('body').bind('flickr', function () {
-
-                        setTimeout(function () {
-                            for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
-
-                                // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
-
-                                var newCard = new Array(8);
-                                newCard[4] = "flickr";
-                                newCard[5] = "timestampTBD";
-                                newCard[6] = data.flickr_feed[i].user;
-                                newCard[7] = data.flickr_feed[i].photo + "b.jpg";
-
-                                pushNewDataCard(lineNum, newCard);
-
-                                //scrollCards(lineNum, -160);
-                            }
-                        }, 500);
-                    });
-                }
-            }
-        });        
-    
-    WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userId }).done(
+    /*WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userId }).done(
         function fulfilled(result) {
             if (result.status === 200) {
                 var data = JSON.parse(result.response);
@@ -1384,9 +1379,9 @@ function loadData() {
                     });
                 }
             }
-        });
+        });*/
         
-    var fbPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/fb_json.php" });
+    /*var fbPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/fb_json.php" });
 
     var TwitPromise = WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/twitter_client.php?win_id=" + userId });    
     
@@ -1465,10 +1460,10 @@ function loadData() {
                 });
             }
             //console.log(FacebookData.status);
-        });
+        });*/
         
-    
-    WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/groupon_json.php" }).done(
+    var getGrouponDataURL = BASE_URL_LIVE + "/gaomin/client/groupon_json.php";
+    WinJS.xhr({ url: getGrouponDataURL }).done(
         function fulfilled(result) {
             if (result.status === 200) {
                 var data = JSON.parse(result.response);
@@ -1510,7 +1505,7 @@ function loadData() {
                                 //scrollCards(lineNum, -160);
 
                             }
-                        }, 500);
+                        }, 10000);
                     });
                 }
             }
@@ -1519,6 +1514,29 @@ function loadData() {
 }
 function pushNewDataCard(lineNum,newCard) {
     //console.log(lineNum);
+
+    if (typeof (lineNum) == "string")
+    {
+        lineNum=lineNum.toUpperCase()
+        switch (lineNum)
+        {
+            case "PHOTOS":
+                lineNum=1
+                break;
+            case "MAIL":
+                lineNum = 2
+                break;
+            case "DEALS":
+                lineNum = 3
+                break;
+            case "NEWS":
+                lineNum = 4
+                break;
+            case "SOCIAL":
+                lineNum = 5
+                break;
+        }
+    }
     var numCardsInLine = matrix[lineNum - 1].length;
     //var newCard = new Array(4);
     newCard[0] = cardCount;
@@ -1547,10 +1565,45 @@ function pushNewDataCard(lineNum,newCard) {
         } else if (matrix[lineNum - 1][0][4] == "twitter") {
             $('#card' + cardCount).html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][9] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
         }
-    } else if (lineNum == 3) {
+    } else if (lineNum == 3)
+    {
         $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + matrix[lineNum - 1][0][6] + '</span><span class="GROUPON_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
-    } else if (lineNum == 4) {
-        $('#card' + cardCount).html(toStaticHTML('<div class="NEWS_content"><img class="NEWS_PIC" src="' + matrix[lineNum - 1][0][6] + '"/><span class="NEWS_time">' + matrix[lineNum - 1][0][9] + '</span><span class="NEWS_source">' + matrix[lineNum - 1][0][11] + '</span><span class="NEWS_title">' + matrix[lineNum - 1][0][7] + '</span><span class="NEWS_message">' + matrix[lineNum - 1][0][8] + '</span><span class="hiddenData">' + toStaticHTML(matrix[lineNum - 1][0][10]) + '</span></div>'));
+    } else if (lineNum == 4)
+    {
+        var NewsImgURL;
+        var NewsTime;
+        var NewsSource;
+        var NewsTitle;
+        var NewsData;
+        var OtherData;
+        if (matrix[lineNum - 1][0][6])
+        {
+            NewsImgURL = matrix[lineNum - 1][0][6]
+            NewsTime = matrix[lineNum - 1][0][9];
+            NewsSource = matrix[lineNum - 1][0][11];
+            NewsTitle = matrix[lineNum - 1][0][7];
+            NewsData = matrix[lineNum - 1][0][8]
+            OtherData = matrix[lineNum - 1][0][10];
+        }
+        else
+        {
+            NewsImgURL = newCard.TitleImageURI
+            NewsTime = newCard.PostTime
+            NewsSource = newCard.DataURI
+            NewsTitle = newCard.Title
+            NewsData = newCard.Data
+            switch (newCard.NameOfService.toUpperCase())
+            {
+                case "GOOGLENEWS":
+                    OtherData = newCard.ScrubbedSource
+                    break;
+                default:
+                    OtherData = "";
+            }
+            
+        }
+        var HTMLString='<div class="NEWS_content"><img class="NEWS_PIC" src="' + NewsImgURL + '"/><span class="NEWS_time">' + NewsTime + '</span><span class="NEWS_source">' + NewsSource + '</span><span class="NEWS_title">' + NewsTitle + '</span><span class="NEWS_message">' + NewsData + '</span><span class="hiddenData">' + toStaticHTML(OtherData) + '</span></div>'
+        $('#card' + cardCount).html(toStaticHTML(HTMLString));
     }
     $('#card' + cardCount).fadeTo('fast', 1);
     $('.face').unbind();
@@ -1945,18 +1998,45 @@ function removeOverlay(zPos, newFace, cube, overlay, oldFace) {
         $(newFace).children().children('.NEWS_time').css({ "font-weight": "normal", "font-size": "50%" });
     }
 }
-function refreshData() {
-    refreshTwitter();
-    //refreshFB();
-    refreshGmail();
-    refreshNews();
-    setTimeout(refreshData, 60000);
+function refreshData()
+{
+    var i = 0;
+    var j = 0;
+    var TotalCounter = 0;
+    /*refreshTwitter();
+    refreshFB()
+    refreshGmail()
+    refreshGoogleNews
+    refreshFlickr()*/
+    for (; i < Global_AllDashServices.length;i++)
+    {
+        j = 0;
+        for (; j < Global_AllDashServices[i].PhaseServices.length; j++)
+        {
+            if (Global_AllDashServices[i].PhaseServices[j].isRegisteredWithDashServers())
+            {
+                setTimeout
+                (
+                    GenerateRefreshDataFunciton(Global_AllDashServices[i].Name,Global_AllDashServices[i].PhaseServices[j].refreshServiceData), (TotalCounter * 2000)
+                )
+            }
+        }
+    }
+    
+    Global_RefreshDataSetTimeOutValue= setTimeout(refreshData, 10000);
 }
-function refreshTwitter() {
+
+function GenerateRefreshDataFunciton(DashServiceType,MyFunction)
+{
+    return function () { MyFunction(DashServiceType) };
+}
+function refreshTwitter(userAccountId,LastUpdatedCardTime, UpdateSuccessCallback, UpdateFailureCallBack)
+{
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
-    var twitterPromise = WinJS.xhr({ url: BASE_URL_TEST + "/shilpa/client/twitter_client.php?win_id=" + userId });
+    var TwitterFeedURL = BASE_URL_TEST + "/jerome/twitter_client.php?win_id=" + userAccountId
+    var twitterPromise = WinJS.xhr({ url: TwitterFeedURL });
     var tempArray = new Array();
     var lineNum = 5;
     twitterPromise.done(
@@ -1964,14 +2044,19 @@ function refreshTwitter() {
         //add to the new json object
         //use the new objct to push card on the client
         //update the last_time
-         function fulfilled(result) {
-             if (result.status === 200) {
-                 try
-                 {
+         function fulfilled(result)
+         {
+             try
+             {
+             if (result.status === 200)
+             {
+                 
                      var newData = JSON.parse(result.response);
-                     for (i = (newData.twitter_feed.length - 1) ; i >= 0; i--) {
+                     for (i = (newData.twitter_feed.length - 1) ; i >= 0; i--)
+                     {
                          curTime = newData.twitter_feed[i].time;
-                         if (twitter_last_card_time < curTime) {
+                         //if (LastUpdatedCardTime < curTime)
+                         {
                              var time = parseFloat(newData.twitter_feed[i].time) * 1000;
                              var timeVal = new Date(time);
                              timeVal = convertTimeToString(timeVal);
@@ -1986,69 +2071,109 @@ function refreshTwitter() {
                          }
                          //console.log(newData.twitter_feed[i].subject);
                      }
-                     twitter_last_card_time = newData.twitter_feed[0].time;
-                     tempArray.sort(function (a, b) { return a[5] - b[5] });
-                     for (var i = 0; i < tempArray.length; i++) {
+                     //LastUpdatedCardTime = newData.twitter_feed[0].time;
+                     //tempArray.sort(function (a, b) { return a[5] - b[5] });
+                     /*if (!tempArray.length)
+                     {
+                         ShowUpperRightMessage("No new data from Twitter");
+                     }*/
+                     /*for (var i = 0; i < tempArray.length; i++) {
                          var card = tempArray[i];
                          pushNewDataCard(lineNum, tempArray[i]);
+
+                     }*/
+                     if (typeof (UpdateSuccessCallback) === "function") {
+                         UpdateSuccessCallback(tempArray);
                      }
+
                  }
-                 catch (e) {
-                 }
+                 
                                   
-             }
+         }
+        catch (e)
+        {
+            ShowUpperRightMessage("Twitter Not Loading, Check your Internet Connection");
+            if (typeof (UpdateFailureCallBack) === "function")
+            {
+                UpdateFailureCallBack(e);
+            }
+        }
          }
     );
 }
-function refreshFB() {
+function refreshFB(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback, UpdateFailureCallBack)
+{
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
-    var facebookPromise = WinJS.xhr({ url: BASE_URL_LIVE + "/gaomin/client/fb_json.php" });
+    var refreshFBUrl = BASE_URL_TEST + "/jerome/fb_json.php?win_id=" + userAccountId;
+    var facebookPromise = WinJS.xhr({ url: refreshFBUrl });
     var tempArray = new Array();
+    var CachedData = new Array();
     var lineNum = 5;
     facebookPromise.done(
         //get all data from server check with last_card_time if it is higher
         //add to the new json object
         //use the new objct to push card on the client
         //update the last_time
-         function fulfilled(result) {
-             if (result.status === 200) {
-                 var newData = JSON.parse(result.response);
-                 for (i = (newData.facebookPosts.length - 1) ; i >= 0; i--) {
-                     curTime = newData.facebookPosts[i].time;
-                     if (fb_last_card_time < curTime) {
-                         var time = parseFloat(newData.facebookPosts[i].time) * 1000;
-                         var timeVal = new Date(time);
-                         //console.log(timeVal);
-                         timeVal = convertTimeToString(timeVal);
-                         var newCard = new Array(11);
-                         newCard[4] = "facebook";
-                         newCard[5] = time;
-                         newCard[6] = newData.facebookPosts[i].posterName;
-                         newCard[7] = newData.facebookPosts[i].text;
-                         newCard[8] = newData.facebookPosts[i].link;
-                         newCard[9] = newData.facebookPosts[i].posterId;
-                         newCard[10] = timeVal;
-                         tempArray.push(newCard);
+         function fulfilled(result)
+         {
+             try
+             {
+                 if (result.status === 200)
+                 {
+                     var newData = JSON.parse(result.response);
+                     for (i = (newData.facebookPosts.length - 1) ; i >= 0; i--) {
+                         curTime = newData.facebookPosts[i].time;
+                         //if (LastUpdatedCardTime < curTime) {
+                             var time = parseFloat(newData.facebookPosts[i].time) * 1000;
+                             var timeVal = new Date(time);
+                             //console.log(timeVal);
+                             timeVal = convertTimeToString(timeVal);
+                             var newCard = new Array(11);
+                             newCard[4] = "facebook";
+                             newCard[5] = time;
+                             newCard[6] = newData.facebookPosts[i].posterName;
+                             newCard[7] = newData.facebookPosts[i].text;
+                             newCard[8] = newData.facebookPosts[i].link;
+                             newCard[9] = newData.facebookPosts[i].posterId;
+                             newCard[10] = timeVal;
+                             //var MyFacebook = new FacebookPost(newCard[6], newCard[7], newCard[5], newCard[8], newCard[9]);
+                           //  CachedData.push(MyFacebook);
+                             tempArray.push(newCard);
+                         //}
+                         //console.log(newData.twitter_feed[i].subject);
                      }
-                     //console.log(newData.twitter_feed[i].subject);
-                 }
-                 fb_last_card_time = newData.facebookPosts[0].time;
-                 tempArray.sort(function (a, b) { return a[5] - b[5] });
-                 for (var i = 0; i < tempArray.length; i++) {
-                     var card = tempArray[i];
-                     pushNewDataCard(lineNum, tempArray[i]);
-                 }
+                     //LastUpdatedCardTime = newData.facebookPosts[0].time;
+                     //tempArray.sort(function (a, b) { return a[5] - b[5] });
+                     /*if (!tempArray.length) {
+                         ShowUpperRightMessage("No new data from Facebook");
+                     }*/
+
+                     if (isFunction(UpdateSuccessCallback))
+                     {
+                         UpdateSuccessCallback(tempArray, LastUpdatedCardTime);
+                     }
+                     /*for (var i = 0; i < tempArray.length; i++) {
+                         var card = tempArray[i];
+                         pushNewDataCard(lineNum, tempArray[i]);
+                     }*/
+                     
+                }
+             }
+             catch (e)
+             {
+                 ShowUpperRightMessage("Facebook Not Loading, Check your Internet Connection");
              }
          }
     );
 }
-function refreshGmail() {
+function refreshGmail(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback, UpdateFailureCallBack)
+{
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
-    var gmailPromise = WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userId });
+    var gmailPromise = WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userAccountId });
     var tempArray = new Array();
     var lineNum = 2;
     gmailPromise.done(
@@ -2057,92 +2182,203 @@ function refreshGmail() {
         //use the new objct to push card on the client
         //update the last_time
          function fulfilled(result) {
-             if (result.status === 200) {
-                 //var JSONToBeParsed = "\n\r\n{\"gmail_feed\":[\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Sat, 18 Aug 2012 22:02:34 +0000\",\r\n\"subject\":\"Discover more on Twitter\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Twitter has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Mon, 20 Aug 2012 22:08:45 +0000\",\r\n\"subject\":\"Discover more on Flickr\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Flickr has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:50 +0000\",\r\n\"subject\":\"Discover more on Yahoo\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Yahoo has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:56 +0000\",\r\n\"subject\":\"Discover more on Facebook\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Facebook has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 20 Aug 2012 23:06:59 +0000\",\r\n\"subject\":\"Discover more on Picasa\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Picasa has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n}\r\n]}\r\n\r\n";
-                 //var newData = JSON.parse(JSONToBeParsed);
+             try {
+                 if (result.status === 200)
+                {
+                     //var JSONToBeParsed = "\n\r\n{\"gmail_feed\":[\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Sat, 18 Aug 2012 22:02:34 +0000\",\r\n\"subject\":\"Discover more on Twitter\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Twitter has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Mon, 20 Aug 2012 22:08:45 +0000\",\r\n\"subject\":\"Discover more on Flickr\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Flickr has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:50 +0000\",\r\n\"subject\":\"Discover more on Yahoo\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Yahoo has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:56 +0000\",\r\n\"subject\":\"Discover more on Facebook\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Facebook has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 20 Aug 2012 23:06:59 +0000\",\r\n\"subject\":\"Discover more on Picasa\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Picasa has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n}\r\n]}\r\n\r\n";
+                     //var newData = JSON.parse(JSONToBeParsed);
 
-                 var newData = JSON.parse(result.response);
-                 for (i = (newData.gmail_feed.length - 1) ; i >= 0; i--) {
-                     curTime = newData.gmail_feed[i].date;
-                     if (gmail_last_card_time < curTime) {
-                         var timeVal = new Date(newData.gmail_feed[i].date);
-                         timeVal = convertTimeToString(timeVal);
-                         var newCard = new Array(11);
-                         newCard[4] = "gmail";
-                         newCard[5] = timeVal;
-                         newCard[6] = newData.gmail_feed[i].from;
-                         newCard[7] = newData.gmail_feed[i].subject;
-                         newCard[8] = newData.gmail_feed[i].plain_text;
-                         newCard[9] = newData.gmail_feed[i].to;
-                         newCard[10] = newData.gmail_feed[i].truncated_text;
-                         tempArray.push(newCard);
+                     var newData = JSON.parse(result.response);
+                     for (i = (newData.gmail_feed.length - 1) ; i >= 0; i--) {
+                         curTime = newData.gmail_feed[i].date;
+                         if (LastUpdatedCardTime < curTime)
+                         {
+                             var timeVal = new Date(newData.gmail_feed[i].date);
+                             timeVal = convertTimeToString(timeVal);
+                             var newCard = new Array(11);
+                             newCard[4] = "gmail";
+                             newCard[5] = timeVal;
+                             newCard[6] = newData.gmail_feed[i].from;
+                             newCard[7] = newData.gmail_feed[i].subject;
+                             newCard[8] = newData.gmail_feed[i].plain_text;
+                             newCard[9] = newData.gmail_feed[i].to;
+                             newCard[10] = newData.gmail_feed[i].truncated_text;
+                             tempArray.push(newCard);
+                         }
+                         //console.log(newData.twitter_feed[i].subject);
                      }
-                     //console.log(newData.twitter_feed[i].subject);
+                     LastUpdatedCardTime = newData.gmail_feed[0].date;
+                     tempArray.sort(function (a, b) { return a[5] - b[5] });
+                     for (var i = 0; i < tempArray.length; i++) {
+                         var card = tempArray[i];
+                         pushNewDataCard(lineNum, tempArray[i]);
+                     }
+                     if (typeof (UpdateSuccessCallback) === "function") {
+                         UpdateSuccessCallback(tempArray);
+                     }
                  }
-                 gmail_last_card_time = newData.gmail_feed[0].date;
-                 tempArray.sort(function (a, b) { return a[5] - b[5] });
-                 for (var i = 0; i < tempArray.length; i++) {
-                     var card = tempArray[i];
-                     pushNewDataCard(lineNum, tempArray[i]);
+             }
+             catch(e)
+             {
+                 ShowUpperRightMessage("Ohoh Error with getting your gmail " + e)
+                 if (typeof (UpdateFailureCallBack) === "function") {
+                     UpdateFailureCallBack(e);
                  }
              }
          }
     );
 }
-function refreshNews() {
+function refreshGoogleNews(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback, UpdateFailureCallBack)
+{
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
     var newsPromise = WinJS.xhr({ url: "http://news.google.com/news?topic=h&output=rss" });
     var tempArray = new Array();
-    var lineNum = 3;
+    var lineNum = 4;
     newsPromise.done(
         //get all data from server check with last_card_time if it is higher
         //add to the new json object
         //use the new objct to push card on the client
         //update the last_time
-         function fulfilled(result) {
-             if (result.status === 200) {
-                 var i;
-                 var data = result.responseXML;
-                 var tempArray = new Array();
-                 jQuery.fn.reverse = [].reverse;
+         function fulfilled(result)
+         {
+             try
+             {
+                 if (result.status === 200)
+                 {
+                 
+                     var i;
+                     var data = result.responseXML;
+                     var tempArray = new Array();
+                     var CachedData = new Array();
+                     jQuery.fn.reverse = [].reverse;
 
-                 $(data).children('rss').children('channel').children('item').reverse().each(function () {
-                     var description = $(this).children('description').text();
-                     description = toStaticHTML(description);
-                     var newsImageURL = "http:" + $(description).children('tbody').children('tr').children('td').children('font').children('a').children('img').attr('src');
-                     newsImageURL = newsImageURL.replace("6.jpg", "1.jpg");
-                     var newsHeading = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('a').text();
-                     var newsAuthor = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font')[0].innerText;
-                     var newsData = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font')[1].innerText;
-                     var newsPubDate = $(this).children('pubDate').text();
-                     var time = new Date(newsPubDate);
-                     var newsURL = ($(this).children('link').text()).split("&url=");
-                     var newsSource = ($(this).children('title').text()).split(" - ");
-                     //var newsData = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font').text();
-                     timeVal = convertTimeToString(time);
-                     if (news_last_card_time < time) {
-                         var newCard = new Array(12);
-                         newCard[4] = "news";
-                         newCard[5] = time;
-                         newCard[6] = newsImageURL;
-                         newCard[7] = newsHeading;
-                         newCard[8] = newsData;
-                         newCard[9] = timeVal;
-                         newCard[10] = newsURL[1];
-                         newCard[11] = newsSource[1];
-                         //pushNewDataCard(lineNum, newCard);
-                         tempArray.push(newCard);
+                     $(data).children('rss').children('channel').children('item').reverse().each(function () {
+                         var description = $(this).children('description').text();
+                         description = toStaticHTML(description);
+                         var newsImageURL = "http:" + $(description).children('tbody').children('tr').children('td').children('font').children('a').children('img').attr('src');
+                         newsImageURL = newsImageURL.replace("6.jpg", "1.jpg");
+                         var newsHeading = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('a').text();
+                         var newsAuthor = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font')[0].innerText;
+                         var newsData = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font')[1].innerText;
+                         var newsPubDate = $(this).children('pubDate').text();
+                         var time = new Date(newsPubDate);
+                         var newsURL = ($(this).children('link').text()).split("&url=");
+                         var newsSource = ($(this).children('title').text()).split(" - ");
+                         //var newsData = $(description).children('tbody').children('tr').children('.j').children('font').children('.lh').children('font').text();
+                         timeVal = convertTimeToString(time);
+                         //if (LastUpdatedCardTime < time) {
+                             var newCard = new Array(12);
+                             newCard[4] = "news";
+                             newCard[5] = time;//time when news was poste
+                             newCard[6] = newsImageURL;
+                             newCard[7] = newsHeading;
+                             newCard[8] = newsData;
+                             newCard[9] = timeVal;//just time without date
+                             newCard[10] = newsURL[1];
+                             newCard[11] = newsSource[1];
+                             //pushNewDataCard(lineNum, newCard);
+                             //var MyGoogleNews = new GoogleNews(newsHeading, newsImageURL, time, newsData, newsURL[1], newsSource[1]);
+                             //CachedData.push(MyGoogleNews);
+                             tempArray.push(newCard);
+                         //}
+                     });
+
+                     if (!tempArray.length)
+                     {
+                         ShowUpperRightMessage("No new data from Google News");
                      }
-                 });
-                 tempArray.sort(function (a, b) { return a[5] - b[5] });
-                 if(tempArray.length !=0)
-                    news_last_card_time = tempArray[tempArray.length - 1][5];
-                 for (i = 0; i < tempArray.length; i++) {
-                       pushNewDataCard(lineNum, tempArray[i]);
-                 }
+                     tempArray.sort(function (a, b) { return a[5] - b[5] });
+                     //CachedData.sort(function (a, b) { return a.PostTime - b.PostTime })
+                     if (tempArray.length != 0)
+                     {
+                        //LastUpdatedCardTime = tempArray[tempArray.length - 1][5];
+                        //news_last_card_time = LastUpdatedCardTime;
+                    }
+                         /*Disabled the direct cal untill validation and storage in cache
+                         for (i = 0; i < tempArray.length; i++) {
+                                 pushNewDataCard(lineNum, tempArray[i]);
+                             }*/
+                    if (isFunction(UpdateSuccessCallback))
+                    {
+                        UpdateSuccessCallback(tempArray, LastUpdatedCardTime);
+                    }
+                    /*for (i = 0; i < tempArray.length; i++)//For pushes each updated card to the UI
+                    {
+                        pushNewDataCard(lineNum, tempArray[i]);
+                    }*/
+                     
+                 
+                }
              }
+             catch (e)
+                 {
+                     ShowUpperRightMessage("Google News Not Loading Check your Internet Connection");
+                     if (typeof (UpdateFailureCallBack) === "function")
+                     {
+                         UpdateFailureCallBack(e);
+                     }
+                 }
          }
     );
+}
+function refreshFlickr(userAccountId, LastRefreshTime, UpdateSuccessCallback, UpdateFailureCallBack)
+{
+    var FlickrGetDataURL = BASE_URL_TEST + "/shilpa/client/flickr_client.php?win_id=" + userAccountId;
+    WinJS.xhr({ url: FlickrGetDataURL }).done(
+        function fulfilled(result) {
+        try
+            {
+                if (result.status === 200) {
+                    var data = JSON.parse(result.response);
+                    var i;
+                    var lineNum = 1;
+                    //if (transitionComplete == 1) {
+                        for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
+                            // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
+                            var newCard = new Array(8);
+                            newCard[4] = "flickr";
+                            newCard[5] = "timestampTBD";
+                            newCard[6] = data.flickr_feed[i].user;
+                            newCard[7] = data.flickr_feed[i].photo + "b.jpg";
+                            pushNewDataCard(lineNum, newCard);
+                            //scrollCards(lineNum, -160);
+                        }
+                        if (typeof (UpdateSuccessCallback) === "function") {
+                            UpdateSuccessCallback(data.flickr_feed);
+                        }
+                   /* } else {
+                        $('body').bind('flickr', function () {
+
+                            setTimeout(function () {
+                                for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
+
+                                    // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
+
+                                    var newCard = new Array(8);
+                                    newCard[4] = "flickr";
+                                    newCard[5] = "timestampTBD";
+                                    newCard[6] = data.flickr_feed[i].user;
+                                    newCard[7] = data.flickr_feed[i].photo + "b.jpg";
+
+                                    pushNewDataCard(lineNum, newCard);
+
+                                    //scrollCards(lineNum, -160);
+                                }
+                            }, 500);
+                        });
+                    }*/
+                }
+            }
+            catch(e)
+            {
+                ShowUpperRightMessage("Hmmm...Unable To get flickr Images");
+                if (typeof (UpdateFailureCallBack) === "function")
+                {
+                    UpdateFailureCallBack(e);
+                }
+            }
+
+        });
 }

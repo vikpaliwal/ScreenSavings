@@ -5,7 +5,7 @@
     <WindowsUser>jbiotida</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>7BB6B61B772D2DF1F1AA74FC234C0D8ABD733C2BC1F62161345E54935203C7DE</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>2F86E59871EBF35F48E34C76162E38FBB4EE5B8C38FDFDC41C86A463106743A8</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
     <RegisteredPackageID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b</RegisteredPackageID>
@@ -16,7 +16,7 @@
     <AppXManifest Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-06-19T18:54:48.408</Modified>
+      <Modified>2013-07-06T00:06:00.777</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -46,15 +46,19 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
-      <Modified>2013-06-19T18:55:26.044</Modified>
+      <Modified>2013-06-28T07:24:09.252</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\ui-dark-editted.css">
+      <PackagePath>css\ui-dark-editted.css</PackagePath>
+      <Modified>2013-06-19T20:24:51.838</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\default.css">
       <PackagePath>css\default.css</PackagePath>
-      <Modified>2013-06-07T21:34:46.175</Modified>
+      <Modified>2013-06-26T17:25:03.493</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2013-06-19T18:42:43.543</Modified>
+      <Modified>2013-07-06T00:07:29.409</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
@@ -104,9 +108,17 @@
       <PackagePath>images\facebook.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\FacebookLogo.png">
+      <PackagePath>images\FacebookLogo.png</PackagePath>
+      <Modified>2013-06-27T08:48:51.346</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\facebook_detail.png">
       <PackagePath>images\facebook_detail.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\flickrLogo.png">
+      <PackagePath>images\flickrLogo.png</PackagePath>
+      <Modified>2013-06-27T08:56:54.747</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\flikr.png">
       <PackagePath>images\flikr.png</PackagePath>
@@ -120,22 +132,47 @@
       <PackagePath>images\gmail.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\GmailLogo.png">
+      <PackagePath>images\GmailLogo.png</PackagePath>
+      <Modified>2013-06-27T08:54:39.302</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\Gmail_detail.png">
       <PackagePath>images\Gmail_detail.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\GoogleNewsLogo.png">
+      <PackagePath>images\GoogleNewsLogo.png</PackagePath>
+      <Modified>2013-06-27T09:21:43.083</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\groupon.png">
       <PackagePath>images\groupon.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\GrouponLogo.png">
+      <PackagePath>images\GrouponLogo.png</PackagePath>
+      <Modified>2013-06-27T09:02:47.405</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\Groupon_detail.png">
       <PackagePath>images\Groupon_detail.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\InstagramLogo.png">
+      <PackagePath>images\InstagramLogo.png</PackagePath>
+      <Modified>2013-06-27T09:31:01.136</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\LivingSocialLogo.png">
+      <PackagePath>images\LivingSocialLogo.png</PackagePath>
+      <Modified>2013-06-27T09:20:23.848</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\logo.png">
       <PackagePath>images\logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2012-08-14T20:09:50.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\logo.scale-100.png">
+      <PackagePath>images\logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-02T00:07:22.893</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\mail1.png">
       <PackagePath>images\mail1.png</PackagePath>
@@ -161,6 +198,14 @@
       <PackagePath>images\news2.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\NewsBgroundIcon.png">
+      <PackagePath>images\NewsBgroundIcon.png</PackagePath>
+      <Modified>2013-06-23T15:27:04.550</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\NewsBgroundIcon_2rows.png">
+      <PackagePath>images\NewsBgroundIcon_2rows.png</PackagePath>
+      <Modified>2013-06-23T16:10:16.664</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\photo1.png">
       <PackagePath>images\photo1.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
@@ -172,6 +217,10 @@
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\settings.png">
       <PackagePath>images\settings.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\SettingsGears.png">
+      <PackagePath>images\SettingsGears.png</PackagePath>
+      <Modified>2013-06-21T18:29:27.552</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\setting_bg.png">
       <PackagePath>images\setting_bg.png</PackagePath>
@@ -208,6 +257,10 @@
       <PackagePath>images\sun.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\SunnewsLogo.png">
+      <PackagePath>images\SunnewsLogo.png</PackagePath>
+      <Modified>2013-06-27T08:49:59.756</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\time.png">
       <PackagePath>images\time.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
@@ -220,6 +273,10 @@
       <PackagePath>images\twitter.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\TwitterLogo.png">
+      <PackagePath>images\TwitterLogo.png</PackagePath>
+      <Modified>2013-06-27T09:26:30.004</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\twitter_detail.png">
       <PackagePath>images\twitter_detail.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
@@ -228,57 +285,73 @@
       <PackagePath>images\weather.png</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\YahooMailLogo.png">
+      <PackagePath>images\YahooMailLogo.png</PackagePath>
+      <Modified>2013-06-27T08:55:26.469</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\rose.jpg">
       <PackagePath>images\rose.jpg</PackagePath>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2013-06-19T18:50:03.360</Modified>
+      <Modified>2013-07-08T06:47:58.760</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AccountBinder.js">
       <PackagePath>js\AccountBinder.js</PackagePath>
-      <Modified>2013-06-19T17:46:09.452</Modified>
+      <Modified>2013-07-08T07:36:11.163</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AppBarControls.js">
+      <PackagePath>js\AppBarControls.js</PackagePath>
+      <Modified>2013-07-08T00:54:04.042</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AuthenticateUser.js">
       <PackagePath>js\AuthenticateUser.js</PackagePath>
-      <Modified>2013-06-17T07:37:50.014</Modified>
+      <Modified>2013-07-03T00:50:44.347</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\CacheManagement.js">
+      <PackagePath>js\CacheManagement.js</PackagePath>
+      <Modified>2013-07-06T00:23:56.879</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DashMain.js">
       <PackagePath>js\DashMain.js</PackagePath>
-      <Modified>2013-06-19T17:57:55.143</Modified>
+      <Modified>2013-07-08T02:17:57.344</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2013-06-19T18:31:58.962</Modified>
+      <Modified>2013-06-27T20:18:15.472</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DefaultInterface.js">
       <PackagePath>js\DefaultInterface.js</PackagePath>
       <Modified>2013-06-14T18:55:26.959</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\GrantDashAccessToUserAccount.js">
+      <PackagePath>js\GrantDashAccessToUserAccount.js</PackagePath>
+      <Modified>2013-07-01T05:08:53.518</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\InitializationUI.js">
       <PackagePath>js\InitializationUI.js</PackagePath>
-      <Modified>2013-06-19T18:42:27.383</Modified>
+      <Modified>2013-07-07T23:03:41.136</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
-      <Modified>2012-08-14T20:09:50.000</Modified>
+      <Modified>2013-06-26T20:43:24.912</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\ListOfFuncs.js">
       <PackagePath>js\ListOfFuncs.js</PackagePath>
       <Modified>2013-06-13T08:51:47.207</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\PhaseSetup.js">
-      <PackagePath>js\PhaseSetup.js</PackagePath>
-      <Modified>2011-12-13T05:06:08.000</Modified>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\SetUpUI.js">
       <PackagePath>js\SetUpUI.js</PackagePath>
       <Modified>2011-12-13T05:06:08.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\uieffects.js">
+      <PackagePath>js\uieffects.js</PackagePath>
+      <Modified>2013-06-27T09:12:19.783</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2013-06-19T18:54:47.435</Modified>
+      <Modified>2013-07-06T00:05:59.540</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

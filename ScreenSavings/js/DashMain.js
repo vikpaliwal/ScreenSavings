@@ -1,9 +1,7 @@
 ﻿"use strict";
 
-function UpdateCacheFile(UpdatedData)
-{
-    //THis will detect sign up changes
-}
+var Global_AllDashServices = new Array();;
+
 
 function ResetCacheFile()
 {
@@ -17,6 +15,12 @@ function ProceedWithVerifiedAccount(AccountIdentification)
         *Date: 6/6/2013
         *Description:   This tries to retrieve the social accounts bound to an intel account. If it cannot find an account it switches over to an interface to select social Network bimds
     */
+    Global_CacheData.Profile.UserID.AccountID = AccountIdentification.AccountID;
+    Global_CacheData.Profile.UserID.CacheID = AccountIdentification.CacheId;
+    Global_CacheData.Profile.LastLogInDateTime = new Date();
+    Global_CacheIO.WriteJSONToFile(Global_CacheData);
+    userId = Global_CacheData.Profile.UserID.AccountID;//this is a hack to cause initialization of userid
+    PopulateAppBar_ini();
     var BoundSocialNetworkToIntelAccountPromise = new WinJS.Promise
         (
             function (BoundSocialNetworkToIntelAccountComp, BoundSocialNetworkToIntelAccountErr, prog)
@@ -33,6 +37,52 @@ function ProceedWithVerifiedAccount(AccountIdentification)
                 UpdateCacheFile(BoundDashServicesToIntelAccount);
                 UpdateScreen(BoundDashServicesToIntelAccount);
                 //comp(BoundDashServicesToIntelAccount);
+                Global_AllDashServices = GenerateServiceArray(BoundDashServicesToIntelAccount);
+                
+                if (DeleteAllBoundAccounts)//Just tries to delete all accounts if DeleteAllBoundAccounts is set just for troubleshooting
+                {
+
+                    var title = "Delete All Dash Service Accounts :("
+                    var content = "Do you Want to Delete all Dash service accounts?"
+                    var result, resultOptions = ["Yes", "No"];
+                    var cmd;
+                    var messageDialog = new Windows.UI.Popups.MessageDialog(content, title);
+                    for (var i = 0; i < resultOptions.length; i++) {
+                        cmd = new Windows.UI.Popups.UICommand();
+                        cmd.label = resultOptions[i];
+                        cmd.invoked = function (c) {
+                            result = c.label;
+                        }
+                        messageDialog.commands.append(cmd);
+                    }
+
+
+                    messageDialog.showAsync().then
+                    (
+                        function SettingUpNewAccounts(command) {
+                            ShowUpperRightMessage(command.id, 10);
+                            if (result == "Yes") {
+                                var DeleteAccountsURL = BASE_URL_TEST + "/jerome/eraseAllAccounts.php?SignUpServiceID=" + AccountIdentification.AccountID;
+                                WinJS.xhr({ url: DeleteAccountsURL }).done(function () { }, function () { alert("Error in deleting accounts"); })
+                                SetupIntialServiceBindingPromise.done(
+                                    function () {
+                                        ProceedWithVerifiedAccount(AccountIdentification);
+                                    }
+                                )
+
+
+                            }
+                            else {
+
+                                return;
+
+                            }
+
+                        }
+                    )
+                    
+                }
+                getLocation();
             }
             else
             {
@@ -53,7 +103,8 @@ function ProceedWithVerifiedAccount(AccountIdentification)
 
                 messageDialog.showAsync().then
                 (
-                    function SettingUpNewAccounts(command) {
+                    function SettingUpNewAccounts(command)
+                    {
                         ShowUpperRightMessage(command.id, 10);
                         if (result == "Yes")
                         {
@@ -70,13 +121,17 @@ function ProceedWithVerifiedAccount(AccountIdentification)
 
                             
                         }
-                        else {
-                            err();
+                        else
+                        {
+                            
+                            GoToDefaultScreen("No Dash Services Found");
+
                         }
 
                     }
                 )
             }
+
         },
         function(err)
         {
@@ -98,11 +153,14 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
         *Date: 6/6/2013
         *Description:   This generates the UI  that allows a user to select and Bind multiple Social networks with the intel dash. 
     */
-    $("#appcontainer").css('visibility', 'hidden');
+    $("#appcontainer").hide();
     $("#InitialSetupContainer").css('visibility', 'visible');
+    $("#InitialSetupContainer").show();
     /*Social Services*/
-    var TwitterServiceInitialization = new Service("Twitter", "images/twitter", TwitterLogin);
+    //var TwitterServiceInitialization = new Service("Twitter", "images/twitter", TwitterLogin);
+    var TwitterServiceInitialization = new Service("Twitter", "images/TwitterLogo.png", TwitterAuthenticateAccess, RegisterTwitterAccountWithDash);
     var FacebookServiceInitialization = new Service("FaceBook", "images/facebook", FaceBookLogin);
+    //var FacebookServiceInitialization = new Service("FaceBook", "images/facebook",FacebookAuthenticateAccess, RegisterFacebookAccountWithDash)
     var SocialServices = new Array(TwitterServiceInitialization, FacebookServiceInitialization);
 
     /*News Services*/
@@ -111,12 +169,13 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
     var NewsServices = new Array(SunNewsServiceInitializarion, GoogleNewsServiceInitialization);
 
     /*Mail Services*/
-    var GoogleMailServiceInitialization = new Service("Google Mail", "images/gmail.png", GmailLogin);
+    var GoogleMailServiceInitialization = new Service("Google Mail", "images/gmail.png", GmailAuthenticateAccess, RegisterGoogleAccountWithDash);
     var YahooMailServiceInitialization = new Service("Yahoo Mail", "images/yahoo_mail.png", YahooMailLogin)
     var MailServices = new Array(GoogleMailServiceInitialization, YahooMailServiceInitialization);
 
     /*Picture Services*/
     var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrLogin);
+    //var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash);
     var InstagramLoginServiceInitialization = new Service("Instagram", "images/Instagram.png", YahooMailLogin)
     var PictureServices = new Array(FlickrServiceInitialization, InstagramLoginServiceInitialization);
 
@@ -135,6 +194,7 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
     SocialInitializaationPhase = new InitializationPhase("Social Network", SocialServices, "Add A Social Service", PictureInitializaationPhase, DealInitializationPhase, "images/social_network.png");
     DealInitializationPhase = new InitializationPhase("Deal", DealServices, "Add A Deal Seaching Service", SocialInitializaationPhase, null, "images/Deals_Icon.png");
     var AllPhases = new Array(NewsInitializaationPhase, MailInitializaationPhase, PictureInitializaationPhase, SocialInitializaationPhase, DealInitializationPhase);
+    Global_AllDashServices = AllPhases = GenerateServiceArray()
     var AllPhaseCopy = new DuplicateObject(AllPhases);
     var GenerateUIForPhasePromise = new WinJS.Promise(function InitialAccountBinding(SuccessfulDashServiceBind, FailedDashServiceBind)
     {
@@ -151,7 +211,7 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
                     TopCenterTitleDiv.innerHTML = "Welcome to the Dash Service Setup..."
                     var MiddleContentDiv = document.getElementById("MiddleContent");
                     var WelcomeScreenTextDiv = document.createElement("div");
-                    EmptyDOm(MiddleContentDiv);
+                    EmptyDom(MiddleContentDiv);
                     WelcomeScreenTextDiv.innerHTML = "We will be walking you through the process of selecting a number of desired services that you want easy access to on your Intel Dash. Hit \"Continue\" to proceed with thwe setup or the back button to go back.";
                     WelcomeScreenTextDiv.setAttribute("class", "MiddleContentWelcomeContent");
                     MiddleContentDiv.appendChild(WelcomeScreenTextDiv);
@@ -192,12 +252,14 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
         function FinishedInitialSetup()
         {
             AddedNewDashServiceCallBack();
+            $("#InitialSetupContainer").hide();
         },
 
         function CancelledInitalSetup()
         {
             ReverseAllPossibleChanges(AllPhaseCopy);
             AddedNewDashServiceCallBack();
+            $("#InitialSetupContainer").hide()
         }
     );
     function ReverseAllPossibleChanges(InitialPhaseArray) {
@@ -234,7 +296,7 @@ function isBoundedSocialNetworks(BoundData) {
     }
 
     try {
-        if ((BoundData.GrouponId != null) || (BoundData.FaceBookToken != null) || (BoundData.Email != null) || (BoundData.TwitterToken != null) || (BoundData.TwitterVerifier != null) || (BoundData.FlickrToken != null) || (BoundData.FlickrVerifier != null) || (BoundData.GmailToken != null) || (BoundData.GmailVerifier != null)) {
+        if ((BoundData.GrouponId != null) || (BoundData.FacebookToken != null) || (BoundData.FacebookId != null) || (BoundData.GoogleNews != 0) || (BoundData.GoogleNews != "0") || (BoundData.Email != null) || (BoundData.TwitterToken != null) || (BoundData.TwitterVerifier != null) || (BoundData.FlickrToken != null) || (BoundData.FlickrVerifier != null) || (BoundData.GmailToken != null) || (BoundData.GmailVerifier != null)) {
             isThereData = true;
             return isThereData;
         }
@@ -244,6 +306,62 @@ function isBoundedSocialNetworks(BoundData) {
     }
 
     return false;
+}
+
+function GenerateServiceArray(BoundData)
+{
+
+    /*Social Services*/
+    //var TwitterServiceInitialization = new Service("Twitter", "images/twitter", TwitterLogin);
+    var TwitterServiceInitialization = new Service("Twitter", "images/TwitterLogo.png", TwitterAuthenticateAccess, RegisterTwitterAccountWithDash, RegisteredWithTwitter, refreshTwitter);
+    //var FacebookServiceInitialization = new Service("FaceBook", "images/facebook", FaceBookLogin);
+    var FacebookServiceInitialization = new Service("FaceBook", "images/FacebookLogo.png", FacebookAuthenticateAccess, RegisterFacebookAccountWithDash, RegisteredWithFacebook, refreshFB)
+    var SocialServices = new Array(TwitterServiceInitialization, FacebookServiceInitialization);
+
+    /*News Services*/
+    var SunNewsServiceInitializarion = new Service("Sun News", "images/SunnewsLogo.png", SunNewsRSS);
+    var GoogleNewsServiceInitialization = new Service("Google News", "images/GoogleNewsLogo.png", GoogleNewsAuthenticateAccess, RegisterGoogleNewsWithDash, RegisteredWithGoogleNews, refreshGoogleNews);
+    var NewsServices = new Array(SunNewsServiceInitializarion, GoogleNewsServiceInitialization);
+
+    /*Mail Services*/
+    var GoogleMailServiceInitialization = new Service("Google Mail", "images/GmailLogo.png", GmailAuthenticateAccess, RegisterGoogleAccountWithDash, RegisteredWithGmail, refreshGmail);
+    var YahooMailServiceInitialization = new Service("Yahoo Mail", "images/YahooMailLogo.png", YahooMailLogin)
+    var MailServices = new Array(GoogleMailServiceInitialization, YahooMailServiceInitialization);
+
+    /*Picture Services*/
+    //var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrLogin);
+    var FlickrServiceInitialization = new Service("Flickr", "images/flickrLogo.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash, RegisteredWithFlickr, refreshFlickr);
+    var InstagramLoginServiceInitialization = new Service("Instagram", "images/InstagramLogo.png", InstagramLogin)
+    var PictureServices = new Array(FlickrServiceInitialization, InstagramLoginServiceInitialization);
+
+    /*Deals Services*/
+    var GrouponServiceInitialization = new Service("Groupon", "images/GrouponLogo.png", GrouponLogin);
+    var LivingSocialLoginServiceInitialization = new Service("Living Social", "images/LivingSocialLogo.png", LivingSocialLogin)
+    var DealServices = new Array(GrouponServiceInitialization, LivingSocialLoginServiceInitialization)
+    var NewsInitializaationPhase;
+    var MailInitializaationPhase;
+    var PictureInitializaationPhase;
+    var SocialInitializaationPhase;
+    var DealInitializationPhase;
+    NewsInitializaationPhase = new InitializationPhase("News", NewsServices, "Add A Social Service", null, MailInitializaationPhase, "images/news_Icon.png");
+    MailInitializaationPhase = new InitializationPhase("Mail", MailServices, "Add A Mail Service", NewsInitializaationPhase, PictureInitializaationPhase, "images/Email_Icon.png");
+    PictureInitializaationPhase = new InitializationPhase("Photos", PictureServices, "Add A Picture Media Service", MailInitializaationPhase, SocialInitializaationPhase, "images/Pictures_Icon.png");
+    SocialInitializaationPhase = new InitializationPhase("Social", SocialServices, "Add A Social Service", PictureInitializaationPhase, DealInitializationPhase, "images/social_network.png");
+    DealInitializationPhase = new InitializationPhase("Deals", DealServices, "Add A Deal Seaching Service", SocialInitializaationPhase, null, "images/Deals_Icon.png");
+
+    var AllPhases = new Array(NewsInitializaationPhase, MailInitializaationPhase, PictureInitializaationPhase, SocialInitializaationPhase, DealInitializationPhase);
+    var i = 0;
+    var j = 0;
+    for (; i < AllPhases.length; i++)
+    {
+        j = 0;
+        for (; j < AllPhases[i].PhaseServices.length; j++)
+        {
+            AllPhases[i].PhaseServices[j].checkIfRegistered(BoundData);
+        }
+
+    }
+    return AllPhases;
 }
 
 function UpdateScreen(Data)
@@ -256,3 +374,5 @@ function UpdateScreen(Data)
 
     ValidatedAccountLaunch();
 }
+
+

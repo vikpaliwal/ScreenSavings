@@ -38,6 +38,7 @@
             <DisplayName>text</DisplayName>
             <SupportedFileTypes>
               <FileType>.txt</FileType>
+              <FileType>.DashProfile</FileType>
             </SupportedFileTypes>
           </FileTypeAssociation>
         </Extension>

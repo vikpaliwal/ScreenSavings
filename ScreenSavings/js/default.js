@@ -92,7 +92,7 @@ function InProgress(ProgressMessage, EncasingDom) {
 
 function ShowUpperRightMessage(Message, stayTime) {
     if (stayTime == undefined) {
-        stayTime = 2;
+        stayTime = 4;
     }
     else {
         if (!(typeof (stayTime) == Number)) {
@@ -100,35 +100,22 @@ function ShowUpperRightMessage(Message, stayTime) {
         }
     }
     stayTime *= 1000;
-    var MyDisplayBox = document.createElement("div");
-    MyDisplayBox.setAttribute("id", "DropDownBox");
-    MyDisplayBox.innerHTML = Message;
-    MyDisplayBox.style.opacity = 1; MyDisplayBox.style.top = "0%";
-    setTimeout(function () {
-        MyDisplayBox.style.opacity = 0; MyDisplayBox.style.top = "-100%";
-        //MyDisplayBox.removeNode(true);
+    var MyDisplayBox = document.getElementById("MessageFlyout");
+    EmptyDom(MyDisplayBox);
+    var DropDownBox = document.createElement("div");
+    DropDownBox.innerHTML = Message;
+    MyDisplayBox.appendChild(DropDownBox);
+    //MyDisplayBox.innerHTML = Message;
+    var TopRightDom= document.getElementById("TopRight");
+    MyDisplayBox.winControl.show(TopRightDom, "top");
+    setTimeout(function ()
+    {
+        MyDisplayBox.winControl.hide();
     }, stayTime);
 }
 
     (function () {
         "use strict";
-        function ShowUpperRightMessage(Message, stayTime) {
-            if (stayTime == undefined) {
-                stayTime = 2;
-            }
-            else {
-                if (!(typeof (stayTime) == Number)) {
-                    stayTime = 1;
-                }
-            }
-            stayTime *= 1000;
-            var MyDisplayBox = document.getElementById("DropDownBox");
-            MyDisplayBox.innerHTML = Message;
-            MyDisplayBox.style.opacity = 1; MyDisplayBox.style.top = "0%";
-            setTimeout(function () {
-                MyDisplayBox.style.opacity = 0; MyDisplayBox.style.top = "-100%";
-            }, stayTime);
-        }
         var BackgroundTask = {
             "BackgroundTaskEntryPoint": "BackgroundTask.ScreenSavingsTask",
             "BackgroundTaskName": "ScreenSavingsTask",
@@ -180,20 +167,23 @@ function ShowUpperRightMessage(Message, stayTime) {
             if (args.detail.kind === activation.ActivationKind.launch) {
                 if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
 
-                    ValidatedAccountLaunch();
-                    //StartIntelDash();
-   
+                    //ValidatedAccountLaunch();
+                    //var MyIcon = new WinJS.UI.AppBarCommand.icon;
+                    //loginStatus();
+                    //InitalizeAppBar();
+                    StartIntelDash();
+                
                 
                 } else {
                     // TODO: This application has been reactivated from suspension.
                     // Restore application state here.
-                    ResumeIntelDash();
+                    StartIntelDash();
                 }
                 args.setPromise(WinJS.UI.processAll());
             }
         };
 
-    
+
     
         openNotificationChannel = function () {
             if (userId == null) {
@@ -262,6 +252,11 @@ function ShowUpperRightMessage(Message, stayTime) {
                                                     new Windows.ApplicationModel.Background.PushNotificationTrigger(),
                                                     null);
         };
+
+        function InitalizeAppBar()
+        {
+            
+        }
 
         var registerNotificationChannel = function (newChannel, newExpiration) {
             if (newChannel != channelUri) {

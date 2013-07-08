@@ -1061,6 +1061,7 @@ position: fixed;
     width:100%;
     height:100%;
 }
+/*Back butto controls*/
 
 
 /*Initial Screen Css*/
@@ -1084,16 +1085,23 @@ position: fixed;
     height:100%;
     -ms-grid-column: 1;
     -ms-grid-row: 1;
+    display: -ms-grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+    -ms-grid-rows: 1fr 1fr 1fr;
+}
+
+#win-backbutton 
+{
+    position:absolute;
+    -ms-grid-column: 2;
+    -ms-grid-row: 2;
 }
 
 #TopRight
 {
-    position:relative;
+    position:absolute;
     background-color: green;
-    width:100%;
-    height:100%;
-    -ms-grid-column: 3;
-    -ms-grid-row: 1;
+    left:100%;
     overflow:hidden;
 }
 
@@ -1133,8 +1141,9 @@ position: fixed;
 }
 #GridHolder 
 {
-    position:relative;
-    background-color: teal;
+    position:absolute;
+    background-color:rgb(60,35,230);
+    
 }
 
 #FooterBar 
@@ -1148,10 +1157,19 @@ position: fixed;
 
 .GridElement 
 {
+    
     position:absolute;
     border:dotted 5px rgba(20,20,20,.1);
     background-color: red;
+    font-size:500%;
+    font-weight:200;
+    font-stretch:ultra-condensed;
+    box-shadow: rgba(10,10,10,.3) 0 0 14px;
+    
 }
+
+
+
 
 .selectedGridElement 
 {
@@ -1177,33 +1195,39 @@ position: fixed;
     position:absolute;
     width:100%;
     height:100%;
-    display: -ms-grid;
+    /*display: -ms-grid;
     -ms-grid-rows: 1fr 4fr 1fr;
-    -ms-grid-columns:1fr;
-    background-color:orange;
+    -ms-grid-columns:1fr;*/
+    background-color:rgb(40,15,200);
 }
 
 .PhaseTopDiv
 {
-    -ms-grid-row: 1;
+    position: absolute;
     width:100%;
-    height:100%;
-    background-color:antiquewhite;
+    height:20%;
+    background-color:rgb(40,15,200);
+    box-shadow: rgba(20,20,20,.8) 0px 5px 5px; 
+    z-index:2;
 }
 
 .PhaseCenterDiv
 {
-    -ms-grid-row: 2;
+    position:absolute;
+    top:20%;
     width:100%;
-    background-color:aliceblue;
+    height:60%;
+    /*background-color:aliceblue;*/
 }
 
 
 .PhaseBottomDiv
 {
-    -ms-grid-row: 3;
+    position:absolute;
+    top:80%;
     width:100%;
-    background-color:ActiveCaption;
+    height:20%;
+    background-color:rgb(40,15,200);
     display: -ms-grid;
     -ms-grid-columns:2fr 1fr;
 }
@@ -1353,4 +1377,63 @@ button[name="FinishButton"]
     margin-top:-1em;
     top:100%;
     left:100%;
+}
+
+#SettingsDiv 
+{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-color:rgba(210,210,210,.7);
+    z-index:11;
+}
+
+#EditServiceDiv 
+{
+   position:absolute;
+   top:10%;
+   left:10%;
+   width:80%;
+   height:80%;
+   
+   box-shadow: rgba(25,25,25,.9) 0px 0px 25px;
+}
+
+.EditServiceInfoScreen 
+{
+    position:absolute;
+    top:0%;
+    width:100%;
+    height:100%;
+    background-color:pink;
+    border-radius:3px;
+}
+.EditServiceInfoScreenTop 
+{
+    position:absolute;
+    top:0%;
+    width:100%;
+    height:20%;
+    font-size:450%;
+    background-color:rgb(40,15,200);
+    color:#C6C6C6;
+}
+
+.EditServiceInfoScreenContent
+{
+    position:absolute;
+    width:100%;
+    top:20%;
+    height:79%;
+    color:#C6C6C6;
+    background-color:rgb(60,35,230);
+    font-size:200%;
+}
+
+.MovingBackground 
+{
+    position:absolute;
+    top:0%;
+    left:0%;
+    transition: top 6s, left 6s;
 }
