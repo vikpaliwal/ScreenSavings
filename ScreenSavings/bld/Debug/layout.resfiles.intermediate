@@ -71,6 +71,5 @@ js\DefaultInterface.js
 js\GrantDashAccessToUserAccount.js
 js\InitializationUI.js
 js\jquery.js
-js\ListOfFuncs.js
 js\SetUpUI.js
 js\uieffects.js

@@ -68,7 +68,6 @@ var Global_CacheInitializationData = {
     }
 };
 var Global_CacheData = null;
-var Global_NameOfCacheFile = "User.DashProfile";
 window.ShowMenuSettings = WinJS.UI.eventHandler(function ShowMenuSettings()
 {
     var AppBarDom = document.getElementById("DashAppBar");
@@ -148,7 +147,7 @@ function WindowsLogOutOfDash(CallBackFunction)
             cmd.label = 'Login';
             cmd.onclick = CallBackFunction;
             cmd.tooltip = "LogIn to Dash";
-            ResetCacheFile();
+            CacheDataAccess.resetCache();
             $("#appcontainer").hide();//this is a hack fix. The right fix willl be to deleete the DOM and upon reinitalization another dom will be created that maintain the structure
             CallBackFunction();
         },
@@ -211,6 +210,7 @@ function WindowsLoginToDash()
 function PopulateWindowsLoginButton(AppBarDom,LoginButtonFunctionName)
 {
     var LogInDom = document.getElementById("LogInLogOutButton");
+    AppBarDom.winControl.disabled = false;
     var cmd = LogInDom.winControl;
     cmd.icon = 'closepane';
     cmd.label = 'LogOut';
@@ -390,6 +390,7 @@ function HideSettingsSubElements()
 function EditService_OnClick()
 {
     var ArrayOfServices = Global_AllDashServices;
+    refreshData.pause = 1;
     var EditServiceButtons = [Global_DashAppBarNewsButton, Global_DashAppBarMailButton, Global_DashAppBarSocialButton, Global_DashAppBarFinanceButton]
     var EditServicePromise = new WinJS.Promise
     (
@@ -469,8 +470,8 @@ function EditService_OnClick()
         {
             var FinalizePhasesPromise = new WinJS.Promise
             (
-                function (Success, Failuremprogress) {
-
+                function (Success, Failuremprogress)
+                {
                     FinalizePhases(ArrayOfServices, Success, Failuremprogress);
                 }
             )
@@ -481,10 +482,12 @@ function EditService_OnClick()
             (
                 function (PhasesFinalized)
                 {
+                    refreshData.pause = 0
                     SettingsMenu_OnClick();
                 },
                 function ErrorInFinalizing()
                 {
+                    refreshData.pause = 0
                     SettingsMenu_OnClick();
                 }
 

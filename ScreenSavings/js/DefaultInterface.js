@@ -1,7 +1,8 @@
 ﻿function LoadDefaultInterfaceUI(DisplayMessage)
 {
+    CacheDataAccess.resetCache();
     alert("LOAD DEFAULT UI");
-
+    
     if (DisplayMessage != null) {
         var QuickMessage = new InProgress(DisplayMessage);
         QuickMessage.Start();

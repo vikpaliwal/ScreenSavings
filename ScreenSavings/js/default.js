@@ -107,7 +107,7 @@ function ShowUpperRightMessage(Message, stayTime) {
     MyDisplayBox.appendChild(DropDownBox);
     //MyDisplayBox.innerHTML = Message;
     var TopRightDom= document.getElementById("TopRight");
-    MyDisplayBox.winControl.show(TopRightDom, "top");
+    //MyDisplayBox.winControl.show(TopRightDom, "top");
     setTimeout(function ()
     {
         MyDisplayBox.winControl.hide();
@@ -203,7 +203,7 @@ function ShowUpperRightMessage(Message, stayTime) {
                     } else {
                         //user did not allow lock screen access. hence no push notification.
                     }
-                });
+                }, function () { ShowUpperRightMessage("My error")});
         };
         /*
         function getLocation() {

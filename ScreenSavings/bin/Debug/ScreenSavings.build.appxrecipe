@@ -252,9 +252,6 @@
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\ListOfFuncs.js">
-      <PackagePath>js\ListOfFuncs.js</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\SetUpUI.js">
       <PackagePath>js\SetUpUI.js</PackagePath>
     </AppxPackagedFile>

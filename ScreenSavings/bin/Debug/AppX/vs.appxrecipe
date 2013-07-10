@@ -5,7 +5,7 @@
     <WindowsUser>jbiotida</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>2F86E59871EBF35F48E34C76162E38FBB4EE5B8C38FDFDC41C86A463106743A8</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>3C5D0979C96FC7D000465A4D2F5F32EBD9596A2555DC0C95879E12C507DC3DE8</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
     <RegisteredPackageID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b</RegisteredPackageID>
@@ -16,7 +16,7 @@
     <AppXManifest Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-07-06T00:06:00.777</Modified>
+      <Modified>2013-07-08T19:19:00.327</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +58,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2013-07-06T00:07:29.409</Modified>
+      <Modified>2013-07-09T00:10:43.700</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\accounts.png">
       <PackagePath>images\accounts.png</PackagePath>
@@ -295,51 +295,47 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2013-07-08T06:47:58.760</Modified>
+      <Modified>2013-07-10T00:43:38.586</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AccountBinder.js">
       <PackagePath>js\AccountBinder.js</PackagePath>
-      <Modified>2013-07-08T07:36:11.163</Modified>
+      <Modified>2013-07-10T00:44:54.360</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AppBarControls.js">
       <PackagePath>js\AppBarControls.js</PackagePath>
-      <Modified>2013-07-08T00:54:04.042</Modified>
+      <Modified>2013-07-10T00:49:32.481</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AuthenticateUser.js">
       <PackagePath>js\AuthenticateUser.js</PackagePath>
-      <Modified>2013-07-03T00:50:44.347</Modified>
+      <Modified>2013-07-09T22:41:24.560</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\CacheManagement.js">
       <PackagePath>js\CacheManagement.js</PackagePath>
-      <Modified>2013-07-06T00:23:56.879</Modified>
+      <Modified>2013-07-09T22:26:56.521</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DashMain.js">
       <PackagePath>js\DashMain.js</PackagePath>
-      <Modified>2013-07-08T02:17:57.344</Modified>
+      <Modified>2013-07-10T01:04:51.679</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2013-06-27T20:18:15.472</Modified>
+      <Modified>2013-07-09T23:50:42.934</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DefaultInterface.js">
       <PackagePath>js\DefaultInterface.js</PackagePath>
-      <Modified>2013-06-14T18:55:26.959</Modified>
+      <Modified>2013-07-09T21:13:05.719</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\GrantDashAccessToUserAccount.js">
       <PackagePath>js\GrantDashAccessToUserAccount.js</PackagePath>
-      <Modified>2013-07-01T05:08:53.518</Modified>
+      <Modified>2013-07-10T00:53:29.323</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\InitializationUI.js">
       <PackagePath>js\InitializationUI.js</PackagePath>
-      <Modified>2013-07-07T23:03:41.136</Modified>
+      <Modified>2013-07-09T22:33:20.161</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
       <Modified>2013-06-26T20:43:24.912</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\ListOfFuncs.js">
-      <PackagePath>js\ListOfFuncs.js</PackagePath>
-      <Modified>2013-06-13T08:51:47.207</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\SetUpUI.js">
       <PackagePath>js\SetUpUI.js</PackagePath>
@@ -351,7 +347,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2013-07-06T00:05:59.540</Modified>
+      <Modified>2013-07-08T19:18:59.623</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

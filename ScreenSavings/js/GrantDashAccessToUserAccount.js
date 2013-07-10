@@ -781,7 +781,7 @@ function GoogleNewsDataAccess(isEnabled)
 function RegisterGoogleNewsWithDash(NewsDataAccess, LoopbackSuccess, LoopBackFailure)
 {
     var xhrUrl = BASE_URL_TEST + "/jerome/register_user.php?service=googlenews&win_id=" + userId + "&google_news=1";
-    if (!NewsDataAccess.Enabled)
+    if ((!NewsDataAccess.Enabled) || (NewsDataAccess.clearEntry))
     { xhrUrl = BASE_URL_TEST + "/jerome/register_user.php?service=googlenews&win_id=" + userId + "&google_news="; }
 
     WinJS.xhr({ url: xhrUrl }).done

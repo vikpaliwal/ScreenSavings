@@ -163,6 +163,10 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
     var DashServersUpdated = false;
     this.isRegisteredWithDashServers = function ()
     {
+        /*if (SelectedFlag)
+        {
+            return DashServersUpdated;
+        }*/
         Verified = DashServersUpdated;
         SelectedFlag = Verified;
         return DashServersUpdated;
@@ -395,6 +399,10 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
 
     this.refreshServiceData = function (ServiceType)
     {
+        if (refreshData.pause)
+        {
+            return;
+        }
         if (typeof(getDataFunction)==="function")
         {
             var RefreshDataPromise = new WinJS.Promise
@@ -411,7 +419,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
                     var dataChanges = UpdateRefreshedService(Data,ServicePhaseName,name,ServiceCacheData);
                     if(dataChanges.Data.length>0)
                     {
-                        UpdateCacheFile();
+                        new CacheDataAccess().UpdateCacheFile();
                     }
                     return;
                 },
@@ -816,7 +824,8 @@ function GenerateUIForPhases(AllPhases, DomForUIGeneration, BindingSuccessFullLo
                         (
                             function (Success, Failuremprogress)
                             {
-                                    
+                                var justChecking = AllPhasesData[0].PhaseServices[1].getVerifiedStatus();
+
                                 FinalizePhases(AllPhasesData, EncasingDomElement, Success, Failuremprogress);
                             }
                         )
@@ -826,8 +835,9 @@ function GenerateUIForPhases(AllPhases, DomForUIGeneration, BindingSuccessFullLo
                             function (PhasesFinalized)
                             {
                                 //EncasingDomElement = document.getElementById('FirstDiv');
+                                
                                 FinishServiceBindingLoopBackFunction(AllPhasesData);
-
+                                
                                 /*EmptyDom(EncasingDomElement);
                                 var FinishTextDomElement = document.createElement("div");
                                 FinishTextDomElement.setAttribute("class", "FinishPhaseTextDomElement");
@@ -849,9 +859,9 @@ function GenerateUIForPhases(AllPhases, DomForUIGeneration, BindingSuccessFullLo
                                 }*/
                                     
                             },
-                            function ErrorInFinalizing()
+                            function ErrorInFinalizing(error)
                             {
-
+                                error;
                             }
 
 
@@ -971,6 +981,7 @@ function GenerateUIForPhases(AllPhases, DomForUIGeneration, BindingSuccessFullLo
             */
             var i=0;
             var j = 0;
+            var justChecking = AllPhases[0].PhaseServices[1].getVerifiedStatus();
             var FlagsForRegistrationUpdate = new Array(AllPhases.length)
             for (; i < AllPhases.length; i++)
             {
@@ -1388,6 +1399,7 @@ function ValidateUpdatedDataForCache(Data,PhaseName,ServiceName, CurrentlyCached
                 for (i = 0; i < UpdatedData.Changes.length; i++)//For pushes each updated card to the UI
                 {
                     pushNewDataCard("NEWS", UpdatedData.Changes[i]);
+                    
                 }
                 return { Data: CurrentlyCachedData, Changes: UpdatedData.Changes };
             }
@@ -1435,13 +1447,14 @@ function ValidateNewsForCache(Data, Servicename, AllNews)
     {
         case "GOOGLENEWS":
             {
-                var GoogleNewsData = new Array();
-                Data.sort(function (a, b) { return a[5] - b[5] });
+                //var GoogleNewsData = new Array();
+                //Data.sort(function (a, b) { return a[5] - b[5] });
+                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
 
-                Data.forEach(function (MyData) {
+                /*Data.forEach(function (MyData) {
                     GoogleNewsData.push(new GoogleNews(MyData[7],MyData[6],MyData[5],MyData[8],MyData[10],MyData[11]));
-                });
-                Data = GoogleNewsData;
+                });*/
+                //Data = GoogleNewsData;
 
                 var cachedGoogleNews = AllNews;
                 var i = 0;
@@ -1474,25 +1487,11 @@ function ValidateNewsForCache(Data, Servicename, AllNews)
                     if (isWithinDateTimeRange(FormerDateTime, LatterDateTime, Data[i].PostTime))
                     {
                         ArrayOfNewArticlesWithinCachedTimeRange.push(Data[i]);
-                        
                     }
                     else
                     {
-                        /*if (isBeforeOrAfterTimeRange(FormerDateTime, LatterDateTime, Data[i].PostTime))
-                        {
-                            //cachedGoogleNews.Data.push(Data[i]);
-                            cachedGoogleNews.LatterIdentifyingValue = Data[i].PostTime;
-                        }
-                        else
-                        {
-                            //cachedGoogleNews.Data.unshift(Data[i]);
-                            cachedGoogleNews.FormerIdentifyingValue = Data[i].PostTime;
-                        }
-                        */
                         ArrayOfNewArticlesOutsideCachedTimeRange.push(Data[i]);
                     }
-                    //cachedGoogleNews.Data = (FormerElements.concat(cachedGoogleNews.Data)).concat(LatterElements)
-                    
                 }
                 UpdatedData=ArrayOfNewArticlesOutsideCachedTimeRange.concat(ArrayOfNewArticlesWithinCachedTimeRange)
                 cachedGoogleNews.Data=cachedGoogleNews.Data.concat(UpdatedData);
@@ -1503,16 +1502,12 @@ function ValidateNewsForCache(Data, Servicename, AllNews)
 
                 UpdatedData.forEach(function (MyGoogleData)
                 {
-                    var newCard = new Array(12);
-                    newCard[4] = "news";
-                    newCard[5] = MyGoogleData.PostTime;//time when news was poste
-                    newCard[6] = MyGoogleData.TitleImageURI;
-                    newCard[7] = MyGoogleData.Title;
-                    newCard[8] = MyGoogleData.NewsData;
-                    newCard[9] = MyGoogleData.PostTime;//just time without date
-                    newCard[10] = MyGoogleData.DataURI;
-                    newCard[11] = MyGoogleData.ScrubbedSource;
-                    updatedDataFormattedasArray.push(newCard);
+                    MyGoogleData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
+                    updatedDataFormattedasArray.push(MyGoogleData.toDisplayArray());
+
+                    if (isFunction(MyGoogleData.getotherDownloadabledata)) {
+                        MyGoogleData.getotherDownloadabledata();
+                    }
                     /*
                     News.prototype.Title = Title;
                     News.prototype.TitleImageURI = TitleImgURI;
@@ -1536,12 +1531,25 @@ function ValidateNewsForCache(Data, Servicename, AllNews)
 
 function News(Title,TitleImgURI,NewsPostTime,NewsData, NewsURL)
 {
+    //Title = { Load: Title };
+    TitleImgURI = { Load: TitleImgURI };
+//    Title = { Load: Title };
+  //  Title = { Load: Title };
+    //Title = { Load: Title };
+
+
     News.prototype.Title = Title;
     News.prototype.TitleImageURI = TitleImgURI;
     News.prototype.PostTime = new Date(NewsPostTime);
     News.prototype.Data = NewsData;
     News.prototype.DataURI = NewsURL;
     News.prototype.TypeOfPhase = "News";
+    var ServiceID = { ID: null }
+    News.prototype.ServiceID = ServiceID;
+    News.prototype.setServiceID = function (passedServiceID)
+    { ServiceID = passedServiceID };
+    
+    //News.prototype.CacheDatAccess = new CacheDataAccess();
     News.prototype.isNewsNew=function (OlderData)
     {
         if (PostTime > OlderData.LatestTime)
@@ -1552,10 +1560,10 @@ function News(Title,TitleImgURI,NewsPostTime,NewsData, NewsURL)
     }
 }
 
-
 function GoogleNews(Title, TitleImgURI, NewsPostTime, NewsData, NewsURL, NewsScrubbedSource)
 {
     News.call(this, Title, TitleImgURI, NewsPostTime, NewsData, NewsURL);
+    TitleImgURI = this.TitleImageURI;
     var NewsPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));//this gets the prototype of the parent object
     var NewsProperties = Object.getOwnPropertyNames(NewsPrototype);//this gets the properties of parent object
     var i = 0;
@@ -1563,7 +1571,58 @@ function GoogleNews(Title, TitleImgURI, NewsPostTime, NewsData, NewsURL, NewsScr
     {
         Object.defineProperty(this, NewsProperties[i], { value: this[NewsProperties[i]], writable: true, enumerable: true, configurable: true })//Generates a property for this object without looking up inheritance tree. Doing this because JSON.stringify doesnt go through inherited objects
     }
-    
+    var ServiceID = this.ServiceID;
+    this.getotherDownloadabledata = function ()
+    {
+        WinJS.xhr({ url: TitleImgURI.Load, headers: { "Content-Type": "image/jpeg" } }).done
+        (
+            function SuccessfulAccessToRemoteResource(result)
+            {
+                var NameOfFile = "DloadCache" + ServiceID.ID+".jpg";
+                var MyDownloadedData = result.response;
+                Windows.Storage.KnownFolders.documentsLibrary.createFileAsync(NameOfFile, Windows.Storage.CreationCollisionOption.replaceExisting).done
+                (
+                    function CreatedFileSuccessfully(FileIO)
+                    {
+                        Windows.Storage.FileIO.writeTextAsync(FileIO, MyDownloadedData).then
+                        (
+                            function WriteToFileSuccess()
+                            {
+                                //TitleImgURI.Load = NameOfFile;
+                            },
+                            function WriteToFileFailure()
+                            {
+                                ShowUpperRightMessage("failed To create quick Cache for " + NameOfFile);
+                            }
+                        )
+
+                    },
+                    function CreatedFileFailure(error)
+                    {
+                        ShowUpperRightMessage("failed To create quick Cache for " + NameOfFile);
+                    }
+                    
+                )
+            },
+            function failedAccessToRemoteResource()
+            {
+                ShowUpperRightMessage("Remote cacheable data inaccessible ");
+            }
+        )
+    }
+    this.toDisplayArray = function ()
+    {
+        var newCard = new Array(12);
+        newCard[4] = "news";
+        newCard[5] = this.PostTime;//time when news was poste
+        newCard[6] = this.TitleImageURI.Load;
+        newCard[7] = this.Title;
+        newCard[8] = this.Data;
+        newCard[9] = this.PostTime;//just time without date
+        newCard[10] = this.DataURI;
+        newCard[11] = this.ScrubbedSource;
+        return newCard;
+    }
     this.ScrubbedSource = NewsScrubbedSource;
     this.NameOfService = "GoogleNews";
     
@@ -1582,23 +1641,16 @@ function SunNews(Title, TitleImgURI, NewsPostTime, NewsData, NewsURL)
 
     this.NameOfService = "SunNews";
 }
-
 SunNews.prototype = new News;
 
-//News Cache
-
-/*
-    Twitter:
-    user, tweet, photo, time
-    facebook:
-    PosterName, text, link, posterid, time
-*/
 
 function SocialPost(User,PostData,PostTime)
 {
     SocialPost.prototype.User = User;
     SocialPost.prototype.Data = PostData;
     SocialPost.prototype.PostTime = PostTime;
+    var ServiceID = { ID: null }
+    SocialPost.prototype.ServiceID = ServiceID;
 }
 
 function FacebookPost(PosterName,Text,PostTime,Link,PosterID)
@@ -1612,7 +1664,18 @@ function FacebookPost(PosterName,Text,PostTime,Link,PosterID)
         Object.defineProperty(this, SocialPostProperties[i], { value: this[SocialPostProperties[i]], writable: true, enumerable: true, configurable: true })//Generates a property for this object without looking up inheritance tree. Doing this because JSON.stringify doesnt go through inherited objects
     }
 
-    
+    this.toDisplayArray = function ()
+    {
+        var newCard = new Array(11);
+        newCard[4] = "facebook";
+        newCard[5] = this.PostTime;//time when Posts was poste
+        newCard[6] = this.User;
+        newCard[7] = this.Data;
+        newCard[8] = this.DataURI;
+        newCard[9] = this.PosterID;//just time without date
+        newCard[10] = this.PostTime;
+        return newCard;
+    }
     this.DataURI = Link;
     this.PosterID = PosterID;
     this.NameOfService = "FACEBOOK";
@@ -1630,6 +1693,17 @@ function TwitterPost(User, PostData, PostTime,Photo)
     {
         Object.defineProperty(this, SocialPostProperties[i], { value: this[SocialPostProperties[i]], writable: true, enumerable: true, configurable: true })//Generates a property for this object without looking up inheritance tree. Doing this because JSON.stringify doesnt go through inherited objects
     }
+    this.toDisplayArray = function () {
+        var newCard = new Array(10);
+        newCard[4] = "twitter";
+        newCard[5] = this.PostTime;//time when Posts was poste
+        newCard[6] = this.User;
+        newCard[7] = this.Data;
+        newCard[8] = this.Photo;
+        newCard[9] = this.PostTime;
+        return newCard;
+    }
+
     this.Photo = Photo;
     this.NameOfService = "TWITTER";
 }
@@ -1648,14 +1722,7 @@ function ValidateSocialForCache(Data, Servicename, AllPosts)
     switch (Servicename) {
         case "FACEBOOK":
             {
-                var FacebookPostData = new Array();
-                Data.sort(function (a, b) { return a[5] - b[5] });
-                Data.forEach(function (MyData) {
-                    FacebookPostData.push(
-                        new FacebookPost(MyData[6], MyData[7], MyData[5], MyData[8], MyData[9])
-                        );
-                });
-                Data = FacebookPostData;
+                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
                 var cachedFacebookPost = AllPosts;
                 var LatterDateTime = new Date(cachedFacebookPost.LatterIdentifyingValue);
                 var FormerDateTime = new Date(cachedFacebookPost.FormerIdentifyingValue);
@@ -1675,23 +1742,10 @@ function ValidateSocialForCache(Data, Servicename, AllPosts)
                 cachedFacebookPost.LatterIdentifyingValue = cachedFacebookPost.Data.last().PostTime;
                 var updatedDataFormattedasArray = new Array();
 
-                UpdatedData.forEach(function (MyFacebookData) {
-                    var newCard = new Array(11);
-                    newCard[4] = "facebook";
-                    newCard[5] = MyFacebookData.PostTime;//time when Posts was poste
-                    newCard[6] = MyFacebookData.User;
-                    newCard[7] = MyFacebookData.Data;
-                    newCard[8] = MyFacebookData.DataURI;
-                    newCard[9] = MyFacebookData.PosterID;//just time without date
-                    newCard[10] = MyFacebookData.PostTime;
-                    updatedDataFormattedasArray.push(newCard);
-                    /*
-                    Posts.prototype.Title = Title;
-                    Posts.prototype.TitleImageURI = TitleImgURI;
-                    Posts.prototype.PostTime = new Date(PostsPostTime);
-                    Posts.prototype.Data = PostsData;
-                    Posts.prototype.DataURI = PostsURL;
-                    Posts.prototype.TypeOfPhase = "Posts";*/
+                UpdatedData.forEach(function (MyFacebookData)
+                {
+                    MyFacebookData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
+                    updatedDataFormattedasArray.push(MyFacebookData.toDisplayArray());
                 });
                 return { Data: AllPosts, Changes: updatedDataFormattedasArray };
                 //AllPosts.UpdateCache();
@@ -1699,14 +1753,15 @@ function ValidateSocialForCache(Data, Servicename, AllPosts)
             break;
         case "TWITTER":
             {
-                var TwitterPostData = new Array();
-                Data.sort(function (a, b) { return a[5] - b[5] });
-                Data.forEach(function (MyData) {
+                //var TwitterPostData = new Array();
+                //Data.sort(function (a, b) { return a[5] - b[5] });
+                /*Data.forEach(function (MyData) {
                     TwitterPostData.push(
                         new TwitterPost(MyData[6],MyData[7],MyData[5],MyData[8])
                         );
-                });
-                Data = TwitterPostData;
+                });*/
+                //Data = TwitterPostData;
+                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
                 var cachedTwitterPost = AllPosts;
                 var LatterDateTime = new Date(cachedTwitterPost.LatterIdentifyingValue);
                 var FormerDateTime = new Date(cachedTwitterPost.FormerIdentifyingValue);
@@ -1724,22 +1779,11 @@ function ValidateSocialForCache(Data, Servicename, AllPosts)
                 cachedTwitterPost.LatterIdentifyingValue = cachedTwitterPost.Data.last().PostTime;
                 var updatedDataFormattedasArray = new Array();
 
-                UpdatedData.forEach(function (MyTwitterData) {
-                    var newCard = new Array(10);
-                    newCard[4] = "twitter";
-                    newCard[5] = MyTwitterData.PostTime;//time when Posts was poste
-                    newCard[6] = MyTwitterData.User;
-                    newCard[7] = MyTwitterData.Data;
-                    newCard[8] = MyTwitterData.Photo;
-                    newCard[9] = MyTwitterData.PostTime;//just time without date
-                    updatedDataFormattedasArray.push(newCard);
-                    /*
-                    Posts.prototype.Title = Title;
-                    Posts.prototype.TitleImageURI = TitleImgURI;
-                    Posts.prototype.PostTime = new Date(PostsPostTime);
-                    Posts.prototype.Data = PostsData;
-                    Posts.prototype.DataURI = PostsURL;
-                    Posts.prototype.TypeOfPhase = "Posts";*/
+                UpdatedData.forEach(function (MyTwitterData)
+                {
+                    
+                    MyTwitterData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
+                    updatedDataFormattedasArray.push(MyTwitterData.toDisplayArray());
                 });
                 return { Data: AllPosts, Changes: updatedDataFormattedasArray };
                 //AllPosts.UpdateCache();

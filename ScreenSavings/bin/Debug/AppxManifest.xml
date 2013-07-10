@@ -39,6 +39,7 @@
             <SupportedFileTypes>
               <FileType>.txt</FileType>
               <FileType>.DashProfile</FileType>
+              <FileType>.jpg</FileType>
             </SupportedFileTypes>
           </FileTypeAssociation>
         </Extension>

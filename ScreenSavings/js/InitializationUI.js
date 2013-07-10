@@ -14,6 +14,8 @@ var ForceWindowsLiveLogout = false;
 var DisableGetLocation = false;
 //Force Execution path flags**End
 
+new CacheDataAccess();//To force initialization of static propertie/methods in class
+
 
 // Array Remove - By John Resig (MIT Licensed)
 Array.prototype.remove = function (from, to) {
@@ -43,6 +45,18 @@ function InitializeMainDivs()
     //MainDiv.innerHTML = window.toStaticHTML("<div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\">HELLO HELLO</div>        <div class=\"fixedlayout\" id=\"appcontainer\">                                    <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div>       <span id=\"overlays\"><div class=\"overlay\"></div></span>            <div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\"></div>        <div class=\"TopRight\" id=\"TopRight\"></div>        <div class=\"fixedlayout\" id=\"appcontainer\">            <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div><span id=\"overlays\"><div class=\"overlay\"></div></span>        </div>        </div>");
 }
 
+function isInternet()
+{
+    /*
+        Name: Jerome Biotidara
+        Description: Function checks to see if there's internet access;
+    */
+    var myNetworkinfo = Windows.Networking.Connectivity.NetworkInformation;
+    var myConnectionProfile = myNetworkinfo.getInternetConnectionProfile();
+    return ((myConnectionProfile != null) && ((myConnectionProfile.getNetworkConnectivityLevel()==Windows.Networking.Connectivity.NetworkConnectivityLevel.internetAccess)))
+}
+
+
 function StartIntelDash()
 {
     /*
@@ -51,106 +65,268 @@ function StartIntelDash()
     */
     "use strict";
 
-    InitializeMainDivs();
-    var RetrieveInProgress = new InProgress("...Loading");
-    var FailedToAuthenticateRetrievedFile = null;
-    var SettingsDom = document.getElementById("SettingsDiv");
-    /*ShowUpperRightMessage(
-        $("#SettingsDiv").html()
-        )
-    ;
-    $("#SettingsDiv").hide();*/
-    $("#SettingsDiv").hide()
-    
+    var CheckIfCacheHasValidUserPromise = new WinJS.Promise(function (success, fail, progress)
+        {
+            new CacheDataAccess.isValidUser(success, fail, progress);
+        }
 
-    var RetrievedCachedFilePromise = new WinJS.Promise
+    )
+    CheckIfCacheHasValidUserPromise.done
     (
-        function (RetrieveCachedFileSuccess, RetrieveCachedFileFailure, RetrievedCacheInProgress)
+        function (validUserStatus)
         {
-            try
-            {
-                RetrieveLocalSaved(RetrieveCachedFileSuccess, RetrieveCachedFileFailure, RetrievedCacheInProgress);
-                FailedToAuthenticateRetrievedFile = RetrieveCachedFileFailure;//this is a hack to fix failure to authenticate cache file
+            if (validUserStatus) {
+                if (!isInternet()) {
+                    $("#SettingsDiv").hide()//this is a hack for hiding the initial settings greyed out case
+                    DisplayDataInCache();
+                    ShowUpperRightMessage("Dash is having issues connecting to the Web")
+                    return;
+                }
+                else {
+                    ValidUserFoundPath()
+                }
             }
-            catch (e)
+            else
             {
-                RetrieveCachedFileFailure(e);
+                ValidUserFoundPath();
             }
         }
-    );
-    RetrievedCachedFilePromise.then
-    (
-        function CacheRetrievedSuccess(CachedData)
-        {
-            RetrieveInProgress.Stop();
-            var AccountAuthenticationProgressUI = new InProgress("...Updating Account");
-            Global_CacheData = CachedData;
-            var AuthenticateAccountWithIntelPromise = new WinJS.Promise
-            (
-                function (IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction)
-                {
-                    //$.ajax({type: "GET",url: "js/AuthenticateUser.js",dataType: "script",async: false});
-                    AuthenticateAccount(IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction, CachedData.Profile.UserID);
+    )
+
+
+    function ValidUserFoundPath()
+    {
+        InitializeMainDivs();
+        var RetrieveInProgress = new InProgress("...Loading");
+        var FailedToAuthenticateRetrievedFile = null;
+        var SettingsDom = document.getElementById("SettingsDiv");
+
+
+
+        $("#SettingsDiv").hide()//this is a hack for hiding the initial settings greyed out case
+
+
+        var RetrievedCachedFilePromise = new WinJS.Promise
+        (
+            function (RetrieveCachedFileSuccess, RetrieveCachedFileFailure, RetrievedCacheInProgress) {
+                try {
+                    RetrieveLocalSaved(RetrieveCachedFileSuccess, RetrieveCachedFileFailure, RetrievedCacheInProgress);
+                    FailedToAuthenticateRetrievedFile = RetrieveCachedFileFailure;//this is a hack to fix failure to authenticate cache file
                 }
-            );
-            AuthenticateAccountWithIntelPromise.then
-            (
-                function AccountAuthenticated(ProofOfAuthentication)
-                {
-                    AccountAuthenticationProgressUI.Stop();
-                    ProceedWithVerifiedAccount(ProofOfAuthentication);
-                },
-                function AccountAuthenticationFailure(err)
-                {
-                    AccountAuthenticationProgressUI.Stop();
-                    ShowUpperRightMessage(err);
-                    var InitialConfigurationPromise = new WinJS.Promise(NoAccountsVerifiedSetup);
-                    InitialConfigurationPromise.done
-                    (
-                        function SuccessfullyBoundToIntelServers(ProofOfAuthentication)
-                        {
-                            ProceedWithVerifiedAccount(ProofOfAuthentication);
-                        },
-                        function FailedToBindWithIntel(err)
-                        {
-                            if (err == undefined)
-                            { err = "Failed To Authenticate Saved Account With Intel Servers"; }
-                            GoToDefaultScreen(err);
-                        }
-                    )
-                },
-                function AccountAuthenticationInProgress(progReport)
-                {
-                    AccountAuthenticationProgressUI.Start();
+                catch (e) {
+                    RetrieveCachedFileFailure(e);
                 }
-            );
-        },
-        function CacheRetrievedFailure(err)
-        {
-            RetrieveInProgress.Stop();
-            var InitialConfigurationPromise = new WinJS.Promise(NoAccountsVerifiedSetup);
-            Global_CacheData = Global_CacheInitializationData;
-            InitialConfigurationPromise.done
-            (
-                function SuccessfullyBoundToIntelServers(ProofOfAuthentication)
-                {
-                    ProceedWithVerifiedAccount(ProofOfAuthentication);
-                },
-                function FailedToBindWithIntel(err)
-                {
-                    err = "Failed To Read Cache File"
-                    GoToDefaultScreen(err);
-                }
-            )
-        },
-        function CacheRetrieveInProgress()
-        {
-            RetrieveInProgress.Start();
-        }
-    );
+            }
+        );
+        RetrievedCachedFilePromise.then
+        (
+            function CacheRetrievedSuccess(CachedData) {
+                RetrieveInProgress.Stop();
+                var AccountAuthenticationProgressUI = new InProgress("...Updating Account");
+                Global_CacheData = CachedData;
+                var AuthenticateAccountWithIntelPromise = new WinJS.Promise
+                (
+                    function (IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction) {
+                        //$.ajax({type: "GET",url: "js/AuthenticateUser.js",dataType: "script",async: false});
+                        AuthenticateAccount(IntelAccountAuthenticationSuccessFunction, IntelAccountAuthenticationFailedFunction, IntelAccountAuthenticationInProgressFunction, CachedData.Profile.UserID);
+                    }
+                );
+                AuthenticateAccountWithIntelPromise.then
+                (
+                    function AccountAuthenticated(ProofOfAuthentication) {
+                        AccountAuthenticationProgressUI.Stop();
+                        ProceedWithVerifiedAccount(ProofOfAuthentication);
+                    },
+                    function AccountAuthenticationFailure(err) {
+                        AccountAuthenticationProgressUI.Stop();
+                        ShowUpperRightMessage(err);
+                        var InitialConfigurationPromise = new WinJS.Promise(NoAccountsVerifiedSetup);
+                        InitialConfigurationPromise.done
+                        (
+                            function SuccessfullyBoundToIntelServers(ProofOfAuthentication) {
+                                ProceedWithVerifiedAccount(ProofOfAuthentication);
+                            },
+                            function FailedToBindWithIntel(err) {
+                                if (err == undefined)
+                                { err = "Failed To Authenticate Saved Account With Intel Servers"; }
+                                GoToDefaultScreen(err);
+                            }
+                        )
+                    },
+                    function AccountAuthenticationInProgress(progReport) {
+                        AccountAuthenticationProgressUI.Start();
+                    }
+                );
+            },
+            function CacheRetrievedFailure(err) {
+                RetrieveInProgress.Stop();
+                var InitialConfigurationPromise = new WinJS.Promise(NoAccountsVerifiedSetup);
+                Global_CacheData = Global_CacheInitializationData;
+                InitialConfigurationPromise.done
+                (
+                    function SuccessfullyBoundToIntelServers(ProofOfAuthentication) {
+                        ProceedWithVerifiedAccount(ProofOfAuthentication);
+                    },
+                    function FailedToBindWithIntel(err) {
+                        err = "Failed To Read Cache File"
+                        GoToDefaultScreen(err);
+                    }
+                )
+            },
+            function CacheRetrieveInProgress() {
+                RetrieveInProgress.Start();
+            }
+        );
+    }
+    
 }
 
-function WindowsLoggedInAccount(LoginStatus,UserID)
+function DisplayDataInCache()
+{
+    var MyCacheData;
+    var waitingForReadPromise = new WinJS.Promise(function (Success, failure)
+    {
+        MyCacheData = new CacheDataAccess().getProfile(Success,failure);
+    }).done
+    (
+        function (Profile)
+        {
+            MyCacheData = Profile;
+            if (!Profile.UserID.AccountID)
+            {
+                return;
+            }
+            else
+            {
+                Populate(MyCacheData); 
+            }
+            },
+            function ()
+            {
+                ShowUpperRightMessage("No cache data")
+            }
+        )
+    
+    
+
+    function Populate(MyCacheData)
+    {
+        var Phases = new Array();
+        ValidatedAccountLaunch();
+        Phases = Object.getOwnPropertyNames(MyCacheData.Phases);
+        if (Phases != undefined) {
+            Phases.forEach
+            (
+                function (MyPhaseName) {
+                    MyPhaseName = MyPhaseName.toUpperCase()
+                    switch (MyPhaseName) {
+                        case "NEWS":
+                            {
+                                var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                CacheServiceNames.forEach
+                                (
+                                    function (ServiceName) {
+                                        ServiceName = ServiceName.toUpperCase()
+                                        switch (ServiceName) {
+                                            case "GOOGLENEWS":
+                                                {
+                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                    (
+                                                        function (MyGoogleData) {
+                                                            var newCard = new Array(12);
+                                                            newCard[4] = "news";
+                                                            newCard[5] = MyGoogleData.PostTime;//time when news was poste
+                                                            newCard[6] = MyGoogleData.TitleImageURI.Load;
+                                                            newCard[7] = MyGoogleData.Title;
+                                                            newCard[8] = MyGoogleData.Data;
+                                                            newCard[9] = MyGoogleData.PostTime;//just time without date
+                                                            newCard[10] = MyGoogleData.DataURI;
+                                                            newCard[11] = MyGoogleData.ScrubbedSource;
+                                                            pushNewDataCard(MyPhaseName, newCard);
+                                                        }
+                                                    )
+                                                }
+                                                break;
+                                            case "SUNNEWS":
+                                                {
+
+                                                }
+                                                break;
+                                            default:
+                                                ShowUpperRightMessage("unknown Cache Service");
+
+                                        }
+
+                                    }
+                                )
+                            }
+                            break;
+                        case "SOCIAL":
+                            {
+                                var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                CacheServiceNames.forEach
+                                (
+                                    function (ServiceName) {
+                                        ServiceName = ServiceName.toUpperCase()
+                                        switch (ServiceName) {
+                                            case "FACEBOOK":
+                                                {
+                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                    (
+                                                        function (MyFacebook) {
+                                                            var newCard = new Array(11);
+                                                            newCard[4] = "facebook";
+                                                            newCard[5] = MyFacebook.PostTime;//time when Posts was poste
+                                                            newCard[6] = MyFacebook.User;
+                                                            newCard[7] = MyFacebook.Data;
+                                                            newCard[8] = MyFacebook.DataURI;
+                                                            newCard[9] = MyFacebook.PosterID;//just time without date
+                                                            newCard[10] = MyFacebook.PostTime;
+                                                            pushNewDataCard(MyPhaseName, newCard);
+                                                        }
+                                                    )
+                                                }
+                                                break;
+                                            case "TWITTER":
+                                                {
+                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                    (
+                                                        function (MyTwitter) {
+                                                            var newCard = new Array(10);
+                                                            newCard[4] = "twitter";
+                                                            newCard[5] = MyTwitter.PostTime;//time when Posts was poste
+                                                            newCard[6] = MyTwitter.User;
+                                                            newCard[7] = MyTwitter.Data;
+                                                            newCard[8] = MyTwitter.Photo;
+                                                            newCard[9] = MyTwitter.PostTime;
+                                                            pushNewDataCard(MyPhaseName, newCard);
+                                                        }
+                                                    )
+                                                }
+                                                break;
+                                            default:
+                                                ShowUpperRightMessage("unknown Cache Service");
+
+                                        }
+
+                                    }
+                                )
+                            }
+                            break;
+                        case "MAIL":
+                            break;
+                        case "PHOTOS":
+                            break;
+                        case "FINANCE":
+                            break;
+                    }
+                }
+            )
+        }
+    }
+}
+
+function WindowsLoggedInAccount(LoginStatus, UserID)
 {
     
 }
@@ -180,6 +356,7 @@ function InitialSetupScreen_FirstTimeEver(comp, err)
         *               It'll request user to go on to select some social network from which to tie the other social networks(Currently using Windows Live because of ease). In other words setting up an intel account.
     */
     //var UserProfileData = SelectSocialNetworkForSourcingProfileInfo(comp, err);
+    CacheDataAccess.resetCache();
     var SelectSocialNetworkForSourcingProfileInfoPromise = new WinJS.Promise(function (SelectSocialNetworkComplete, SelectSocialNetworkErr, prog) { SelectSocialNetworkForSourcingIntelProfileInfo(SelectSocialNetworkComplete, SelectSocialNetworkErr) });
     SelectSocialNetworkForSourcingProfileInfoPromise.then(
         function SuccessfullySignedIn(UserProfileData)

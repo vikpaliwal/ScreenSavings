@@ -142,7 +142,7 @@ function sendPostRequest(url, authzheader, params) {
     } catch (err)
     {
         var tt = err;
-        WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
+        //WinJS.log("Error sending request: " + err, "Web Authentication SDK Sample", "error");
     }
 }
 
@@ -753,17 +753,136 @@ function sendGetRequest(url) {
 
 
 
+function createCardArray(d1, d2, d3)
+{
+    /*
+        Description: Function triggers perspective clayout of Dash screen.
+    */
+    var x = new Array(d1);
+    for (var i = 0; i < d1; i++) {
+        x[i] = new Array(d2);
+    }
+    for (var i = 0; i < d1; i++) {
+        for (var j = 0; j < d2; j++) {
+            if (i == 0)
+                d3 = 8;
+            if (i == 1)
+                d3 = 11;
+            if (i == 2)
+                d3 = 11;
+            if (i == 3)
+                d3 = 11;
+            if (i == 4)
+                d3 = 11;
+            x[i][j] = new Array(d3);
+            x[i][j][0] = cardCount;
+            if (j == 0) {
+                x[i][j][1] = TwoDTranslateYStartingPos;
+                x[i][j][2] = ThreeDTranslateYStartingPos;
+                x[i][j][3] = ThreeDTranslateZStartingPos;
+            } else {
+                x[i][j][1] = x[i][j - 1][1] - TwoDYDelta;
+                x[i][j][2] = ThreeDTranslateYStartingPos;
+                x[i][j][3] = x[i][j - 1][3] - ThreeDZDelta;
+            }
+            var myGenericCard = document.createElement("div");
+            //var myTwitContent = makeTwitterCard();
+            myGenericCard.setAttribute("id", "card" + cardCount);
+            myGenericCard.setAttribute("class", "row" + (i + 1) + " face");
+            myGenericCard.setAttribute("style", "z-index: " + -(j + 1) + ";");
+            if (i == 0) {
+                myGenericCard.innerHTML = '<div class="FLICKR_content"><img class="FLICKR_PIC" src="images/rose.jpg"/><span class="FLICKR_time">11:11</span><span class="FLICKR_title">New @Reply from Levonmaa</span> </div>';
+            } else if (i == 1) {
+                myGenericCard.innerHTML = '<img src="images/mail1.png" class="card"/>';
+            } else if (i == 4) {
+                myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src=""/><span class="FB_time">11:11</span><span class="FB_title">New @Reply from Levonmaa</span><span class="FB_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
+            } else if (i == 2) {
+                myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src=""/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">New @Reply from Levonmaa</span><span class="GROUPON_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
+            } else if (i == 3) {
+                myGenericCard.innerHTML = '<img src="images/news2.png" class="card"/>';
+            }
+            /*Comment applied by Jerome Biotidara. 7/8/2013
+            if (i == 0) {      
+                // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);                            
+                x[i][j][4] = "flickr";
+                x[i][j][5] = "timestampTBD";
+                x[i][j][6] = cached_data.flickr_feed[j].user;
+                x[i][j][7] = cached_data.flickr_feed[j].photo + "b.jpg";
+                myGenericCard.innerHTML='<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + x[i][j][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + x[i][j][6] + '</span> </div>';
+            }
+            else if (i == 1) {
+                var timeVal = new Date(cached_data.gmail_feed[i].date);
+                timeVal = convertTimeToString(timeVal);
+                x[i][j][4] = "gmail";
+                x[i][j][5] = timeVal;
+                x[i][j][6] = cached_data.gmail_feed[j].from;
+                x[i][j][7] = cached_data.gmail_feed[j].subject;
+                x[i][j][8] = cached_data.gmail_feed[j].plain_text;
+                x[i][j][9] = cached_data.gmail_feed[j].to;
+                x[i][j][10] = cached_data.gmail_feed[j].truncated_text;
+                myGenericCard.innerHTML = '<div class="GM_content"><span class="GM_time">' + toStaticHTML(x[i][j][5]) + '</span><span class="GM_From">From: ' + toStaticHTML(x[i][j][6]) + '</span><span class="GM_subject">Subject: ' + x[i][j][7] + '</span><span class="GM_message">' + toStaticHTML(x[i][j][10]) + '</span> <span class="hiddenData">' + toStaticHTML(x[i][j][8]) + '</span> </div>';
+            }
+            else if (i == 2) {
+                x[i][j][4] = "groupon";
+                x[i][j][5] = "timestampTBD";
+                x[i][j][6] = cached_data.deals[j].title;
+                x[i][j][7] = cached_data.deals[j].highlightsHtml;
+                x[i][j][8] = cached_data.deals[j].largeImageUrl;
+                myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + x[i][j][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + x[i][j][6] + '</span><span class="GROUPON_message">' + x[i][j][7] + '</span> </div>';
+            }
+            else if (i == 4) {
+                //  if (matrix[lineNum - 1][0][4] == "facebook") {
+                var time = parseFloat(cached_data.facebookPosts[j].time) * 1000;
+                var timeVal = new Date(time);
+                //console.log(timeVal);
+                timeVal = convertTimeToString(timeVal);
+                x[i][j][4] = "facebook";
+                x[i][j][5] = time;
+                x[i][j][6] = cached_data.facebookPosts[j].posterName;
+                x[i][j][7] = cached_data.facebookPosts[j].text;
+                x[i][j][8] = cached_data.facebookPosts[j].link;
+                x[i][j][9] = cached_data.facebookPosts[j].posterId;
+                x[i][j][10] = timeVal;
+                myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + x[i][j][9] + '/picture?type=large"/><span class="FB_time">' + x[i][j][10] + '</span><span class="FB_title">' + x[i][j][6] + '</span><span class="FB_message">' + x[i][j][7] + '</span> </div>';
+                // }
+                //else if (matrix[lineNum - 1][0][4] == "twitter") {
+                //   myGenericCard.html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][9] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
+                //}
+            } /*else if (i == 3) {
+                
+                timeVal = convertTimeToString(time);
+                x[i][j][4] = "news";
+                x[i][j][5] = time;
+                x[i][j][6] = newsImageURL;
+                x[i][j][7] = newsHeading;
+                x[i][j][8] = newsData;
+                x[i][j][9] = timeVal;
+                x[i][j][10] = newsURL[1];
+                x[i][j][11] = newsSource[1];
+                myGenericCard.innerHTML = toStaticHTML('<div class="NEWS_content"><img class="NEWS_PIC" src="' + x[i][j][6] + '"/><span class="NEWS_time">' + x[i][j][9] + '</span><span class="NEWS_source">' + x[i][j][11] + '</span><span class="NEWS_title">' + x[i][j][7] + '</span><span class="NEWS_message">' + x[i][j][8] + '</span><span class="hiddenData">' + toStaticHTML(x[i][j][10]) + '</span></div>');
+            
+            }*/
+            /*Comment applied by Jerome Biotidara. 7/8/2013
+            document.getElementById("element" + (i + 1)).appendChild(myGenericCard);
+            cardCount++;*/
+        }
+    }
+    return x;
+}
+
+matrix = createCardArray(5, 4, 4);
+
 var ValidatedAccountLaunch= function (){
     $(document).ready(function () {
     updateTime();
     
-    
+    //matrix = createCardArray(5, 4, 4);
     Windows.Storage.KnownFolders.documentsLibrary.getFileAsync(cache_filename).done(
         function (file) {
             Windows.Storage.FileIO.readTextAsync(file).done(function (fileContent) {
                 cached_data = JSON.parse(fileContent);
-                matrix = new Array();
-                matrix = createCardArray(5, 4, 4);
+                //matrix = new Array();
+                //matrix = createCardArray(5, 4, 4);
                 //loadData();
                 for (var i = 0; i < matrix.length; i++) {
                     for (var j = 0; j < matrix[i].length; j++) {
@@ -785,116 +904,7 @@ var ValidatedAccountLaunch= function (){
         }
     }
     */
-    function createCardArray(d1, d2, d3){
-        var x = new Array(d1);
-        for (var i = 0; i < d1; i++) {
-            x[i] = new Array(d2);
-        }
-        for (var i = 0; i < d1; i++) {
-            for (var j = 0; j < d2; j++) {
-                if (i == 0)
-                    d3 = 8;                
-                if (i == 1)
-                    d3 = 11;
-                if (i == 2)
-                    d3 = 11;
-                if (i == 3)
-                    d3 = 11;
-                if (i == 4)
-                    d3 = 11;                    
-                x[i][j] = new Array(d3);               
-                x[i][j][0] = cardCount;
-                if (j == 0) {
-                    x[i][j][1] = TwoDTranslateYStartingPos;
-                    x[i][j][2] = ThreeDTranslateYStartingPos;
-                    x[i][j][3] = ThreeDTranslateZStartingPos;
-                } else {
-                    x[i][j][1] = x[i][j - 1][1] - TwoDYDelta;
-                    x[i][j][2] = ThreeDTranslateYStartingPos;
-                    x[i][j][3] = x[i][j - 1][3] - ThreeDZDelta;
-                }                    
-                var myGenericCard = document.createElement("div");
-                //var myTwitContent = makeTwitterCard();
-                myGenericCard.setAttribute("id", "card" + cardCount);
-                myGenericCard.setAttribute("class", "row" + (i + 1) + " face");
-                myGenericCard.setAttribute("style", "z-index: " + -(j + 1) + ";");
-                if (i == 0) {
-                    myGenericCard.innerHTML = '<div class="FLICKR_content"><img class="FLICKR_PIC" src="images/rose.jpg"/><span class="FLICKR_time">11:11</span><span class="FLICKR_title">New @Reply from Levonmaa</span> </div>';
-                } else if (i == 1) {
-                    myGenericCard.innerHTML = '<img src="images/mail1.png" class="card"/>';
-                } else if (i == 4) {
-                    myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src=""/><span class="FB_time">11:11</span><span class="FB_title">New @Reply from Levonmaa</span><span class="FB_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
-                } else if (i == 2) {
-                    myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src=""/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">New @Reply from Levonmaa</span><span class="GROUPON_message">levonmaa: @korhan_b Nice concept... todo<br>list (imo) however is not the coolest domain to</span> </div>';
-                } else if (i == 3) {
-                    myGenericCard.innerHTML = '<img src="images/news2.png" class="card"/>';
-                }
-                if (i == 0) {      
-                    // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);                            
-                    x[i][j][4] = "flickr";
-                    x[i][j][5] = "timestampTBD";
-                    x[i][j][6] = cached_data.flickr_feed[j].user;
-                    x[i][j][7] = cached_data.flickr_feed[j].photo + "b.jpg";
-                    myGenericCard.innerHTML='<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + x[i][j][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + x[i][j][6] + '</span> </div>';
-                }
-                else if (i == 1) {
-                    var timeVal = new Date(cached_data.gmail_feed[i].date);
-                    timeVal = convertTimeToString(timeVal);
-                    x[i][j][4] = "gmail";
-                    x[i][j][5] = timeVal;
-                    x[i][j][6] = cached_data.gmail_feed[j].from;
-                    x[i][j][7] = cached_data.gmail_feed[j].subject;
-                    x[i][j][8] = cached_data.gmail_feed[j].plain_text;
-                    x[i][j][9] = cached_data.gmail_feed[j].to;
-                    x[i][j][10] = cached_data.gmail_feed[j].truncated_text;
-                    myGenericCard.innerHTML = '<div class="GM_content"><span class="GM_time">' + toStaticHTML(x[i][j][5]) + '</span><span class="GM_From">From: ' + toStaticHTML(x[i][j][6]) + '</span><span class="GM_subject">Subject: ' + x[i][j][7] + '</span><span class="GM_message">' + toStaticHTML(x[i][j][10]) + '</span> <span class="hiddenData">' + toStaticHTML(x[i][j][8]) + '</span> </div>';
-                }
-                else if (i == 2) {
-                    x[i][j][4] = "groupon";
-                    x[i][j][5] = "timestampTBD";
-                    x[i][j][6] = cached_data.deals[j].title;
-                    x[i][j][7] = cached_data.deals[j].highlightsHtml;
-                    x[i][j][8] = cached_data.deals[j].largeImageUrl;
-                    myGenericCard.innerHTML = '<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + x[i][j][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + x[i][j][6] + '</span><span class="GROUPON_message">' + x[i][j][7] + '</span> </div>';
-                }
-                else if (i == 4) {
-                    //  if (matrix[lineNum - 1][0][4] == "facebook") {
-                    var time = parseFloat(cached_data.facebookPosts[j].time) * 1000;
-                    var timeVal = new Date(time);
-                    //console.log(timeVal);
-                    timeVal = convertTimeToString(timeVal);
-                    x[i][j][4] = "facebook";
-                    x[i][j][5] = time;
-                    x[i][j][6] = cached_data.facebookPosts[j].posterName;
-                    x[i][j][7] = cached_data.facebookPosts[j].text;
-                    x[i][j][8] = cached_data.facebookPosts[j].link;
-                    x[i][j][9] = cached_data.facebookPosts[j].posterId;
-                    x[i][j][10] = timeVal;
-                    myGenericCard.innerHTML = '<div class="FB_content"><img class="FB_PIC" src="http://graph.facebook.com/' + x[i][j][9] + '/picture?type=large"/><span class="FB_time">' + x[i][j][10] + '</span><span class="FB_title">' + x[i][j][6] + '</span><span class="FB_message">' + x[i][j][7] + '</span> </div>';
-                    // }
-                    //else if (matrix[lineNum - 1][0][4] == "twitter") {
-                    //   myGenericCard.html('<div class="TWIT_content"><img class="TWIT_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="TWIT_time">' + matrix[lineNum - 1][0][9] + '</span><span class="TWIT_title">' + matrix[lineNum - 1][0][6] + '</span><span class="TWIT_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
-                    //}
-                } else if (i == 3) {
-                    /*
-                    timeVal = convertTimeToString(time);
-                    x[i][j][4] = "news";
-                    x[i][j][5] = time;
-                    x[i][j][6] = newsImageURL;
-                    x[i][j][7] = newsHeading;
-                    x[i][j][8] = newsData;
-                    x[i][j][9] = timeVal;
-                    x[i][j][10] = newsURL[1];
-                    x[i][j][11] = newsSource[1];
-                    myGenericCard.innerHTML = toStaticHTML('<div class="NEWS_content"><img class="NEWS_PIC" src="' + x[i][j][6] + '"/><span class="NEWS_time">' + x[i][j][9] + '</span><span class="NEWS_source">' + x[i][j][11] + '</span><span class="NEWS_title">' + x[i][j][7] + '</span><span class="NEWS_message">' + x[i][j][8] + '</span><span class="hiddenData">' + toStaticHTML(x[i][j][10]) + '</span></div>');
-                */
-                }
-                document.getElementById("element" + (i + 1)).appendChild(myGenericCard);
-                cardCount++;            
-            }
-        }
-        return x;
-    }
+    
     BindSettingsSocialNetworkButton();
 
     setTimeout(
@@ -1576,32 +1586,17 @@ function pushNewDataCard(lineNum,newCard) {
         var NewsTitle;
         var NewsData;
         var OtherData;
-        if (matrix[lineNum - 1][0][6])
-        {
+        
+        
             NewsImgURL = matrix[lineNum - 1][0][6]
             NewsTime = matrix[lineNum - 1][0][9];
             NewsSource = matrix[lineNum - 1][0][11];
             NewsTitle = matrix[lineNum - 1][0][7];
             NewsData = matrix[lineNum - 1][0][8]
             OtherData = matrix[lineNum - 1][0][10];
-        }
-        else
-        {
-            NewsImgURL = newCard.TitleImageURI
-            NewsTime = newCard.PostTime
-            NewsSource = newCard.DataURI
-            NewsTitle = newCard.Title
-            NewsData = newCard.Data
-            switch (newCard.NameOfService.toUpperCase())
-            {
-                case "GOOGLENEWS":
-                    OtherData = newCard.ScrubbedSource
-                    break;
-                default:
-                    OtherData = "";
-            }
+        
             
-        }
+        
         var HTMLString='<div class="NEWS_content"><img class="NEWS_PIC" src="' + NewsImgURL + '"/><span class="NEWS_time">' + NewsTime + '</span><span class="NEWS_source">' + NewsSource + '</span><span class="NEWS_title">' + NewsTitle + '</span><span class="NEWS_message">' + NewsData + '</span><span class="hiddenData">' + toStaticHTML(OtherData) + '</span></div>'
         $('#card' + cardCount).html(toStaticHTML(HTMLString));
     }
@@ -2008,6 +2003,11 @@ function refreshData()
     refreshGmail()
     refreshGoogleNews
     refreshFlickr()*/
+    if (refreshData.pause)//this is a hack to disable refresh of data
+    {
+        Global_RefreshDataSetTimeOutValue = setTimeout(refreshData, 10000);
+        return;
+    }
     for (; i < Global_AllDashServices.length;i++)
     {
         j = 0;
@@ -2025,6 +2025,7 @@ function refreshData()
     
     Global_RefreshDataSetTimeOutValue= setTimeout(refreshData, 10000);
 }
+refreshData.pause = 0;
 
 function GenerateRefreshDataFunciton(DashServiceType,MyFunction)
 {
@@ -2037,6 +2038,7 @@ function refreshTwitter(userAccountId,LastUpdatedCardTime, UpdateSuccessCallback
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
     var TwitterFeedURL = BASE_URL_TEST + "/jerome/twitter_client.php?win_id=" + userAccountId
     var twitterPromise = WinJS.xhr({ url: TwitterFeedURL });
+    var CachedData = new Array();
     var tempArray = new Array();
     var lineNum = 5;
     twitterPromise.done(
@@ -2067,6 +2069,8 @@ function refreshTwitter(userAccountId,LastUpdatedCardTime, UpdateSuccessCallback
                              newCard[7] = newData.twitter_feed[i].tweet;
                              newCard[8] = (newData.twitter_feed[i].photo).replace("_normal", "");
                              newCard[9] = timeVal;
+                             var MyTwitterPost = new TwitterPost(newData.twitter_feed[i].user, newData.twitter_feed[i].tweet, time, (newData.twitter_feed[i].photo).replace("_normal", ""));
+                             CachedData.push(MyTwitterPost);
                              tempArray.push(newCard);
                          }
                          //console.log(newData.twitter_feed[i].subject);
@@ -2083,7 +2087,7 @@ function refreshTwitter(userAccountId,LastUpdatedCardTime, UpdateSuccessCallback
 
                      }*/
                      if (typeof (UpdateSuccessCallback) === "function") {
-                         UpdateSuccessCallback(tempArray);
+                         UpdateSuccessCallback(CachedData);
                      }
 
                  }
@@ -2138,8 +2142,8 @@ function refreshFB(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback, Up
                              newCard[8] = newData.facebookPosts[i].link;
                              newCard[9] = newData.facebookPosts[i].posterId;
                              newCard[10] = timeVal;
-                             //var MyFacebook = new FacebookPost(newCard[6], newCard[7], newCard[5], newCard[8], newCard[9]);
-                           //  CachedData.push(MyFacebook);
+                             var MyFacebook = new FacebookPost(newData.facebookPosts[i].posterName, newData.facebookPosts[i].text, time, newData.facebookPosts[i].link, newData.facebookPosts[i].posterId);
+                             CachedData.push(MyFacebook);
                              tempArray.push(newCard);
                          //}
                          //console.log(newData.twitter_feed[i].subject);
@@ -2152,7 +2156,7 @@ function refreshFB(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback, Up
 
                      if (isFunction(UpdateSuccessCallback))
                      {
-                         UpdateSuccessCallback(tempArray, LastUpdatedCardTime);
+                         UpdateSuccessCallback(CachedData, LastUpdatedCardTime);
                      }
                      /*for (var i = 0; i < tempArray.length; i++) {
                          var card = tempArray[i];
@@ -2279,17 +2283,17 @@ function refreshGoogleNews(userAccountId, LastUpdatedCardTime, UpdateSuccessCall
                              newCard[10] = newsURL[1];
                              newCard[11] = newsSource[1];
                              //pushNewDataCard(lineNum, newCard);
-                             //var MyGoogleNews = new GoogleNews(newsHeading, newsImageURL, time, newsData, newsURL[1], newsSource[1]);
-                             //CachedData.push(MyGoogleNews);
-                             tempArray.push(newCard);
+                             var MyGoogleNews = new GoogleNews(newsHeading, newsImageURL, time, newsData, newsURL[1], newsSource[1]);
+                             CachedData.push(MyGoogleNews);
+                             //tempArray.push(newCard);
                          //}
                      });
 
-                     if (!tempArray.length)
+                     /*if (!tempArray.length)
                      {
                          ShowUpperRightMessage("No new data from Google News");
-                     }
-                     tempArray.sort(function (a, b) { return a[5] - b[5] });
+                     }*/
+                     //tempArray.sort(function (a, b) { return a[5] - b[5] });
                      //CachedData.sort(function (a, b) { return a.PostTime - b.PostTime })
                      if (tempArray.length != 0)
                      {
@@ -2302,7 +2306,7 @@ function refreshGoogleNews(userAccountId, LastUpdatedCardTime, UpdateSuccessCall
                              }*/
                     if (isFunction(UpdateSuccessCallback))
                     {
-                        UpdateSuccessCallback(tempArray, LastUpdatedCardTime);
+                        UpdateSuccessCallback(CachedData, LastUpdatedCardTime);
                     }
                     /*for (i = 0; i < tempArray.length; i++)//For pushes each updated card to the UI
                     {

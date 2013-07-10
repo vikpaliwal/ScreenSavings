@@ -25,6 +25,7 @@ function AuthenticateAccount(SuccessCallBack, FailureCallBack, AuthenticationPro
             function SuccessfulAccessToDashServers(ReceivedData)
             {
                 AuthenticationSuccessFunction(ReceivedData.response);
+                //AuthenticationSuccessFunction(true);
             },
             function FailedAccesToDashServers()
             {

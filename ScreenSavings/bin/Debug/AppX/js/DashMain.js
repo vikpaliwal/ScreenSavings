@@ -3,10 +3,6 @@
 var Global_AllDashServices = new Array();;
 
 
-function ResetCacheFile()
-{
-
-}
 
 function ProceedWithVerifiedAccount(AccountIdentification)
 {
@@ -34,9 +30,10 @@ function ProceedWithVerifiedAccount(AccountIdentification)
         {
             if (isBoundedSocialNetworks(BoundDashServicesToIntelAccount))
             {
-                UpdateCacheFile(BoundDashServicesToIntelAccount);
+                new CacheDataAccess().UpdateCacheFile(BoundDashServicesToIntelAccount);
                 UpdateScreen(BoundDashServicesToIntelAccount);
                 //comp(BoundDashServicesToIntelAccount);
+                DisplayDataInCache();
                 Global_AllDashServices = GenerateServiceArray(BoundDashServicesToIntelAccount);
                 
                 if (DeleteAllBoundAccounts)//Just tries to delete all accounts if DeleteAllBoundAccounts is set just for troubleshooting
@@ -86,6 +83,7 @@ function ProceedWithVerifiedAccount(AccountIdentification)
             }
             else
             {
+                new CacheDataAccess.resetCache();
                 var title = "No Accounts Found :("
                 var content = "Dash Could Not Find Any Bound Accounts\n Do you Want to Setup an Account?"
                 var result, resultOptions = ["Yes", "No"];
@@ -136,7 +134,7 @@ function ProceedWithVerifiedAccount(AccountIdentification)
         function(err)
         {
             var BoundedData ="Just Data with Bounded Intel User Account"
-            UpdateCacheFile(BoundedData);
+            new CacheDataAccess().UpdateCacheFile(BoundedData);
             if(err==undefined)
             { err = "Could Not get Dash Service Accounts"; }
             GoToDefaultScreen(err);
@@ -158,41 +156,41 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
     $("#InitialSetupContainer").show();
     /*Social Services*/
     //var TwitterServiceInitialization = new Service("Twitter", "images/twitter", TwitterLogin);
-    var TwitterServiceInitialization = new Service("Twitter", "images/TwitterLogo.png", TwitterAuthenticateAccess, RegisterTwitterAccountWithDash);
-    var FacebookServiceInitialization = new Service("FaceBook", "images/facebook", FaceBookLogin);
-    //var FacebookServiceInitialization = new Service("FaceBook", "images/facebook",FacebookAuthenticateAccess, RegisterFacebookAccountWithDash)
+    var TwitterServiceInitialization = new Service("Twitter", "images/TwitterLogo.png", TwitterAuthenticateAccess, RegisterTwitterAccountWithDash, RegisteredWithTwitter, refreshTwitter);
+    //var FacebookServiceInitialization = new Service("FaceBook", "images/facebook", FaceBookLogin);
+    var FacebookServiceInitialization = new Service("FaceBook", "images/FacebookLogo.png", FacebookAuthenticateAccess, RegisterFacebookAccountWithDash, RegisteredWithFacebook, refreshFB)
     var SocialServices = new Array(TwitterServiceInitialization, FacebookServiceInitialization);
 
     /*News Services*/
-    var SunNewsServiceInitializarion = new Service("Sun News", "images/sun.png", SunNewsRSS);
-    var GoogleNewsServiceInitialization = new Service("Google News", "images/google_news.png", GoogleNewsRss);
+    var SunNewsServiceInitializarion = new Service("Sun News", "images/SunnewsLogo.png", SunNewsRSS);
+    var GoogleNewsServiceInitialization = new Service("Google News", "images/GoogleNewsLogo.png", GoogleNewsAuthenticateAccess, RegisterGoogleNewsWithDash, RegisteredWithGoogleNews, refreshGoogleNews);
     var NewsServices = new Array(SunNewsServiceInitializarion, GoogleNewsServiceInitialization);
 
     /*Mail Services*/
-    var GoogleMailServiceInitialization = new Service("Google Mail", "images/gmail.png", GmailAuthenticateAccess, RegisterGoogleAccountWithDash);
-    var YahooMailServiceInitialization = new Service("Yahoo Mail", "images/yahoo_mail.png", YahooMailLogin)
+    var GoogleMailServiceInitialization = new Service("GMAIL", "images/GmailLogo.png", GmailAuthenticateAccess, RegisterGoogleAccountWithDash, RegisteredWithGmail, refreshGmail);
+    var YahooMailServiceInitialization = new Service("Yahoo Mail", "images/YahooMailLogo.png", YahooMailLogin)
     var MailServices = new Array(GoogleMailServiceInitialization, YahooMailServiceInitialization);
 
     /*Picture Services*/
-    var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrLogin);
-    //var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash);
-    var InstagramLoginServiceInitialization = new Service("Instagram", "images/Instagram.png", YahooMailLogin)
+    //var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrLogin);
+    var FlickrServiceInitialization = new Service("Flickr", "images/flickrLogo.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash, RegisteredWithFlickr, refreshFlickr);
+    var InstagramLoginServiceInitialization = new Service("Instagram", "images/InstagramLogo.png", InstagramLogin)
     var PictureServices = new Array(FlickrServiceInitialization, InstagramLoginServiceInitialization);
 
     /*Deals Services*/
-    var GrouponServiceInitialization = new Service("Groupon", "images/groupon.png", FlickrLogin);
-    var LivingSocialLoginServiceInitialization = new Service("Living Social", "images/Living_Social.png", YahooMailLogin)
+    var GrouponServiceInitialization = new Service("Groupon", "images/GrouponLogo.png", GrouponLogin);
+    var LivingSocialLoginServiceInitialization = new Service("Living Social", "images/LivingSocialLogo.png", LivingSocialLogin)
     var DealServices = new Array(GrouponServiceInitialization, LivingSocialLoginServiceInitialization)
     var NewsInitializaationPhase;
     var MailInitializaationPhase;
     var PictureInitializaationPhase;
     var SocialInitializaationPhase;
     var DealInitializationPhase;
-    NewsInitializaationPhase = new InitializationPhase("News", NewsServices, "Add A Social Service", null, MailInitializaationPhase, "images/news_Icon.png");
-    MailInitializaationPhase = new InitializationPhase("Mails", MailServices, "Add A Mail Service", NewsInitializaationPhase, PictureInitializaationPhase, "images/Email_Icon.png");
-    PictureInitializaationPhase = new InitializationPhase("Picture", PictureServices, "Add A Picture Media Service", MailInitializaationPhase, SocialInitializaationPhase, "images/Pictures_Icon.png");
-    SocialInitializaationPhase = new InitializationPhase("Social Network", SocialServices, "Add A Social Service", PictureInitializaationPhase, DealInitializationPhase, "images/social_network.png");
-    DealInitializationPhase = new InitializationPhase("Deal", DealServices, "Add A Deal Seaching Service", SocialInitializaationPhase, null, "images/Deals_Icon.png");
+    NewsInitializaationPhase = new InitializationPhase("NEWS", NewsServices, "Add A Social Service", null, MailInitializaationPhase, "images/news_Icon.png");
+    MailInitializaationPhase = new InitializationPhase("Mail", MailServices, "Add A Mail Service", NewsInitializaationPhase, PictureInitializaationPhase, "images/Email_Icon.png");
+    PictureInitializaationPhase = new InitializationPhase("PHOTOS", PictureServices, "Add A Picture Media Service", MailInitializaationPhase, SocialInitializaationPhase, "images/Pictures_Icon.png");
+    SocialInitializaationPhase = new InitializationPhase("Social", SocialServices, "Add A Social Service", PictureInitializaationPhase, DealInitializationPhase, "images/social_network.png");
+    DealInitializationPhase = new InitializationPhase("DEALS", DealServices, "Add A Deal Seaching Service", SocialInitializaationPhase, null, "images/Deals_Icon.png");
     var AllPhases = new Array(NewsInitializaationPhase, MailInitializaationPhase, PictureInitializaationPhase, SocialInitializaationPhase, DealInitializationPhase);
     Global_AllDashServices = AllPhases = GenerateServiceArray()
     var AllPhaseCopy = new DuplicateObject(AllPhases);
