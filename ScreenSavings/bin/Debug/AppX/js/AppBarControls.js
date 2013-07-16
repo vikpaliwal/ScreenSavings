@@ -26,8 +26,18 @@ var Global_CacheInitializationData = {
                 },
             MAIL:
                 {
-                    YAHOOMAIL: "",
-                    GMAIL:""
+                    YAHOOMAIL:
+                        {
+                            FormerIdentifyingValue: 0,
+                            LatterIdentifyingValue: 1,
+                            Data: []
+                        },
+                    GOOGLEMAIL:
+                        {
+                            FormerIdentifyingValue: 0,
+                            LatterIdentifyingValue: 1,
+                            Data: []
+                        }
                 },
             DEALS:
                 {
@@ -490,7 +500,6 @@ function EditService_OnClick()
                     refreshData.pause = 0
                     SettingsMenu_OnClick();
                 }
-
 
             );
         },

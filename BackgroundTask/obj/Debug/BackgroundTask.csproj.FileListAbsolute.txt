@@ -134,3 +134,15 @@ C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\resources.resfiles
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\pri.resfiles
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\screensavings_push\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pri
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmd
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.winmdobj
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.compile.pdb
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\priconfig.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\layout.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\LanguageQualifiers.txt

@@ -17,7 +17,7 @@ function GmailAuthenticateAccess(SuccessFunction, FailureFunction) {
                     var clientSecret = "p1_QaRDYcgZXdB_kC8scaINW";
                     var timestamp = Math.round(new Date().getTime() / 1000.0);
                     var nonce = (new Date()).getTime();
-                    var params = [];
+                    var params = new Array();
                     params["oauth_callback"] = encodeURI(callbackUrl);
                     params["oauth_consumer_key"] = clientID;
                     params["oauth_timestamp"] = timestamp;
@@ -586,8 +586,8 @@ function TwitterAuthenticateAccess(SuccessFunction, FailureFunction)
                 // Get all the parameters from the user
                 var clientID = "hk7hZzZVSGMd6nJNztYw";
                 var clientSecret = "HqoWMS3qvKh0kb2qigzz9DSE8rzXZ9gnxdPEu2ZMXU";
-                var callbackURL = "http://198.101.207.173/shilpa/callback.php";
-
+                //var callbackURL = "http://198.101.207.173/shilpa/callback.php";
+                var callbackURL = "http://198.101.207.173/jerome/twittercallback.php"
                 // Acquiring a request token
                 var timestamp = Math.round(new Date().getTime() / 1000.0);
                 var nonce = Math.random();
@@ -678,6 +678,7 @@ function TwitterAuthenticateAccess(SuccessFunction, FailureFunction)
             }
             catch (e)
             {
+                ShowUpperRightMessage("Error Connecting To Twitter");
                 FailureToAccessTwitter([[e, "Error Connecting To Twitter"], FailureFunction]);
             }
         }

@@ -2023,7 +2023,7 @@ function refreshData()
         }
     }
     
-    Global_RefreshDataSetTimeOutValue= setTimeout(refreshData, 10000);
+    Global_RefreshDataSetTimeOutValue= setTimeout(refreshData, 45000);
 }
 refreshData.pause = 0;
 
@@ -2179,6 +2179,7 @@ function refreshGmail(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback,
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
     var gmailPromise = WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userAccountId });
     var tempArray = new Array();
+    var CachedData = new Array();
     var lineNum = 2;
     gmailPromise.done(
         //get all data from server check with last_card_time if it is higher
@@ -2193,9 +2194,10 @@ function refreshGmail(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback,
                      //var newData = JSON.parse(JSONToBeParsed);
 
                      var newData = JSON.parse(result.response);
-                     for (i = (newData.gmail_feed.length - 1) ; i >= 0; i--) {
+                     for (i = (newData.gmail_feed.length - 1) ; i >= 0; i--)
+                     {
                          curTime = newData.gmail_feed[i].date;
-                         if (LastUpdatedCardTime < curTime)
+                         //if (LastUpdatedCardTime < curTime)
                          {
                              var timeVal = new Date(newData.gmail_feed[i].date);
                              timeVal = convertTimeToString(timeVal);
@@ -2209,16 +2211,18 @@ function refreshGmail(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback,
                              newCard[10] = newData.gmail_feed[i].truncated_text;
                              tempArray.push(newCard);
                          }
+                         var MyGoogleMailPost = new GoogleMail(decodeURIComponent(newData.gmail_feed[i].from), decodeURIComponent(newData.gmail_feed[i].to), decodeURIComponent(newData.gmail_feed[i].subject), newData.gmail_feed[i].date, (newData.gmail_feed[i].plain_text), (newData.gmail_feed[i].truncated_text));
+                         CachedData.push(MyGoogleMailPost)
                          //console.log(newData.twitter_feed[i].subject);
                      }
-                     LastUpdatedCardTime = newData.gmail_feed[0].date;
-                     tempArray.sort(function (a, b) { return a[5] - b[5] });
-                     for (var i = 0; i < tempArray.length; i++) {
+                     //LastUpdatedCardTime = newData.gmail_feed[0].date;
+                     //tempArray.sort(function (a, b) { return a[5] - b[5] });
+                     /*for (var i = 0; i < tempArray.length; i++) {
                          var card = tempArray[i];
-                         pushNewDataCard(lineNum, tempArray[i]);
-                     }
+                         pushNewDataCard(lineNum, CachedData[i]);
+                     }*/
                      if (typeof (UpdateSuccessCallback) === "function") {
-                         UpdateSuccessCallback(tempArray);
+                         UpdateSuccessCallback(CachedData);
                      }
                  }
              }

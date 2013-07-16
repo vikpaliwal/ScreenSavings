@@ -22,8 +22,8 @@
   </Resources>
   <Applications>
     <Application Id="App" StartPage="default.html">
-      <VisualElements DisplayName="ScreenSavings" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="ScreenSavings" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
-        <LockScreen Notification="badge" BadgeLogo="images\badgelogo-sdk.png" />
+      <VisualElements DisplayName="ScreenSavings" Logo="images\intelDashLogo_150.png" SmallLogo="images\smalllogo.png" Description="ScreenSavings" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
+        <LockScreen Notification="badge" BadgeLogo="images\intelDashLogo_150.png" />
         <DefaultTile ShowName="allLogos" WideLogo="images\blueWide.scale-100.png" />
         <SplashScreen Image="images\splashscreen.png" />
       </VisualElements>
@@ -31,6 +31,7 @@
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTask.ScreenSavingsTask">
           <BackgroundTasks>
             <Task Type="pushNotification" />
+            <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
         <Extension Category="windows.fileTypeAssociation">
@@ -39,7 +40,7 @@
             <SupportedFileTypes>
               <FileType>.txt</FileType>
               <FileType>.DashProfile</FileType>
-              <FileType>.jpg</FileType>
+              <FileType>.bmp</FileType>
             </SupportedFileTypes>
           </FileTypeAssociation>
         </Extension>
@@ -67,7 +68,7 @@
     <build:Item Name="VisualStudio" Version="11.0" />
     <build:Item Name="VisualStudioEdition" Value="Microsoft Visual Studio Express 2012 for Windows 8" />
     <build:Item Name="OperatingSystem" Version="6.2.9200.16384 (win8_rtm.120725-1247)" />
-    <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="11.0.60315.1" />
+    <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="11.0.60610.1" />
     <build:Item Name="LiveSDKHTML" Version="5.0" />
     <build:Item Name="MakePri.exe" Version="6.2.9200.16384 (win8_rtm.120725-1247)" />
   </build:Metadata>

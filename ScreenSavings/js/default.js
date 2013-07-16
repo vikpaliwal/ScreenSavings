@@ -107,7 +107,7 @@ function ShowUpperRightMessage(Message, stayTime) {
     MyDisplayBox.appendChild(DropDownBox);
     //MyDisplayBox.innerHTML = Message;
     var TopRightDom= document.getElementById("TopRight");
-    //MyDisplayBox.winControl.show(TopRightDom, "top");
+    MyDisplayBox.winControl.show(TopRightDom, "top");
     setTimeout(function ()
     {
         MyDisplayBox.winControl.hide();
@@ -121,10 +121,12 @@ function ShowUpperRightMessage(Message, stayTime) {
             "BackgroundTaskName": "ScreenSavingsTask",
 
             "registerBackgroundTask": function (taskEntryPoint, taskName, trigger, condition) {
+                ShowUpperRightMessage("Register task called");
                 var builder = new Windows.ApplicationModel.Background.BackgroundTaskBuilder();
 
                 builder.name = taskName;
                 builder.taskEntryPoint = taskEntryPoint;
+                ShowUpperRightMessage(trigger);
                 builder.setTrigger(trigger);
 
                 if (condition !== null) {
@@ -143,6 +145,7 @@ function ShowUpperRightMessage(Message, stayTime) {
                 // Loop through all background tasks and unregister any with SampleBackgroundTaskName or
                 // SampleBackgroundTaskWithConditionName or timeTriggerTaskName.
                 //
+                //ShowUpperRightMessage("HMMM UNRegister task called");
                 var iter = Windows.ApplicationModel.Background.BackgroundTaskRegistration.allTasks.first();
                 var hascur = iter.hasCurrent;
                 while (hascur) {
@@ -187,6 +190,7 @@ function ShowUpperRightMessage(Message, stayTime) {
     
         openNotificationChannel = function () {
             if (userId == null) {
+                ShowUpperRightMessage("not ables to launch notification")
                 loginFailed('user not cunnected');
                 return;
             }
@@ -198,12 +202,17 @@ function ShowUpperRightMessage(Message, stayTime) {
                         Windows.Networking.PushNotifications.PushNotificationChannelManager
                             .createPushNotificationChannelForApplicationAsync().then(
                                 function (channelOperation) {
+                                    ShowUpperRightMessage("before channel registration" + channelOperation.expirationTime);
                                     registerNotificationChannel(channelOperation.uri, channelOperation.expirationTime);
+                                }, function (error)
+                                {
+                                    ShowUpperRightMessage("possible error with notification channel creation0");
                                 });
                     } else {
+                        ShowUpperRightMessage("possible error with notification channel creation1");
                         //user did not allow lock screen access. hence no push notification.
                     }
-                }, function () { ShowUpperRightMessage("My error")});
+                }, function () { ShowUpperRightMessage("possible error with notification channel creation3"); });
         };
         /*
         function getLocation() {
@@ -249,19 +258,17 @@ function ShowUpperRightMessage(Message, stayTime) {
             BackgroundTask.unregisterBackgroundTasks(BackgroundTask.BackgroundTaskName);
             BackgroundTask.registerBackgroundTask(BackgroundTask.BackgroundTaskEntryPoint,
                                                     BackgroundTask.BackgroundTaskName,
-                                                    new Windows.ApplicationModel.Background.PushNotificationTrigger(),
+                                                    new Windows.ApplicationModel.Background.TimeTrigger(15,false),
+                                                    //new Windows.ApplicationModel.Background.PushNotificationTrigger(),
                                                     null);
         };
 
-        function InitalizeAppBar()
-        {
-            
-        }
 
         var registerNotificationChannel = function (newChannel, newExpiration) {
             if (newChannel != channelUri) {
+                
                 registerBackgroundTask();
-
+                
                 WCFClientRuntimeComponent.WCFServiceCaller.registerNotificationChannelAsync(userId, newChannel, newExpiration).then(
                     function (result) {
                         if (result == 'Success') {
@@ -271,6 +278,9 @@ function ShowUpperRightMessage(Message, stayTime) {
                                 + "\n\nChannel:" + channelUri);
                         }
                     });
+            }
+            else {
+                ShowUpperRightMessage("TOok Else route")
             }
         };
 

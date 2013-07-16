@@ -18,20 +18,42 @@ new CacheDataAccess();//To force initialization of static propertie/methods in c
 
 
 // Array Remove - By John Resig (MIT Licensed)
-Array.prototype.remove = function (from, to) {
+/*Array.prototype.remove = function (from, to) {
     var rest = this.slice((to || from) + 1 || this.length);
     this.length = from < 0 ? this.length + from : from;
     return this.push.apply(this, rest);
-};
+};*/
 
-Array.prototype.last = function () {
-    var MyLength = this.length
-    if ((MyLength - 1) > 0)
-    {
-        return this[MyLength - 1];
-    }
-    return undefined;
-};
+Object.defineProperty(  Array.prototype,
+                        "remove",
+                        {
+                            value: (function (from, to) {
+                                var rest = this.slice((to || from) + 1 || this.length);
+                                this.length = from < 0 ? this.length + from : from;
+                                return this.push.apply(this, rest);
+                            }),
+                            enumerable: false
+                        }
+)
+
+
+
+Object.defineProperty(  Array.prototype,
+                        "last",
+                        {
+                            value: (function () {
+                                    var MyLength = this.length
+                                    if ((MyLength - 1) > 0)
+                                    {
+                                        return this[MyLength - 1];
+                                    }
+                                    return undefined;
+                                    }),
+                            enumerable: false
+                        }
+)
+
+//Array.prototype.last = 
 
 
 
@@ -235,11 +257,11 @@ function DisplayDataInCache()
                                                         function (MyGoogleData) {
                                                             var newCard = new Array(12);
                                                             newCard[4] = "news";
-                                                            newCard[5] = MyGoogleData.PostTime;//time when news was poste
+                                                            newCard[5] = new Date(MyGoogleData.PostTime);//time when news was poste
                                                             newCard[6] = MyGoogleData.TitleImageURI.Load;
                                                             newCard[7] = MyGoogleData.Title;
                                                             newCard[8] = MyGoogleData.Data;
-                                                            newCard[9] = MyGoogleData.PostTime;//just time without date
+                                                            newCard[9] = new Date(MyGoogleData.PostTime);//just time without date
                                                             newCard[10] = MyGoogleData.DataURI;
                                                             newCard[11] = MyGoogleData.ScrubbedSource;
                                                             pushNewDataCard(MyPhaseName, newCard);
@@ -276,12 +298,12 @@ function DisplayDataInCache()
                                                         function (MyFacebook) {
                                                             var newCard = new Array(11);
                                                             newCard[4] = "facebook";
-                                                            newCard[5] = MyFacebook.PostTime;//time when Posts was poste
+                                                            newCard[5] = new Date(MyFacebook.PostTime);//time when Posts was poste
                                                             newCard[6] = MyFacebook.User;
                                                             newCard[7] = MyFacebook.Data;
                                                             newCard[8] = MyFacebook.DataURI;
                                                             newCard[9] = MyFacebook.PosterID;//just time without date
-                                                            newCard[10] = MyFacebook.PostTime;
+                                                            newCard[10] = new Date(MyFacebook.PostTime);
                                                             pushNewDataCard(MyPhaseName, newCard);
                                                         }
                                                     )
@@ -294,11 +316,11 @@ function DisplayDataInCache()
                                                         function (MyTwitter) {
                                                             var newCard = new Array(10);
                                                             newCard[4] = "twitter";
-                                                            newCard[5] = MyTwitter.PostTime;//time when Posts was poste
+                                                            newCard[5] = new Date(MyTwitter.PostTime);//time when Posts was poste
                                                             newCard[6] = MyTwitter.User;
                                                             newCard[7] = MyTwitter.Data;
                                                             newCard[8] = MyTwitter.Photo;
-                                                            newCard[9] = MyTwitter.PostTime;
+                                                            newCard[9] = new Date(MyTwitter.PostTime);
                                                             pushNewDataCard(MyPhaseName, newCard);
                                                         }
                                                     )
@@ -314,6 +336,56 @@ function DisplayDataInCache()
                             }
                             break;
                         case "MAIL":
+                            {
+                                var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                CacheServiceNames.forEach
+                                (
+                                    function (ServiceName) {
+                                        ServiceName = ServiceName.toUpperCase()
+                                        switch (ServiceName) {
+                                            case "GOOGLEMAIL":
+                                                {
+                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                    (
+                                                        function (MyGoogleMail) {
+                                                            var newCard = new Array(11);
+                                                            newCard[4] = "gmail";
+                                                            newCard[5] = new Date(MyGoogleMail.PostTime);
+                                                            newCard[6] = MyGoogleMail.From;
+                                                            newCard[7] = MyGoogleMail.Subject;
+                                                            newCard[8] = MyGoogleMail.EmailContext;
+                                                            newCard[9] = MyGoogleMail.To;
+                                                            newCard[10] = MyGoogleMail.TruncatedText;
+                                                            pushNewDataCard(MyPhaseName, newCard);
+                                                        }
+                                                    )
+                                                }
+                                                break;
+                                            case "YAHOOMAIL":
+                                                {
+                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                    (
+                                                        function (MyTwitter) {
+                                                            var newCard = new Array(10);
+                                                            newCard[4] = "twitter";
+                                                            newCard[5] = new Date(MyTwitter.PostTime);//time when Posts was poste
+                                                            newCard[6] = MyTwitter.User;
+                                                            newCard[7] = MyTwitter.Data;
+                                                            newCard[8] = MyTwitter.Photo;
+                                                            newCard[9] = new Date(MyTwitter.PostTime);
+                                                            pushNewDataCard(MyPhaseName, newCard);
+                                                        }
+                                                    )
+                                                }
+                                                break;
+                                            default:
+                                                ShowUpperRightMessage("unknown Cache Service");
+
+                                        }
+
+                                    }
+                                )
+                            }
                             break;
                         case "PHOTOS":
                             break;

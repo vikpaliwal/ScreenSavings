@@ -112,7 +112,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
+    <None Include="Properties\ServiceReferences.Designer.ClientConfig">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ScreenSavingsServiceReference\PushNotificationService.wsdl">
       <SubType>Designer</SubType>
     </None>

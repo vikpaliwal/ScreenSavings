@@ -5,7 +5,7 @@
     <WindowsUser>jbiotida</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>3C5D0979C96FC7D000465A4D2F5F32EBD9596A2555DC0C95879E12C507DC3DE8</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>7CB40182F94694DB44C18EE410BFD1478E53C0135E0A71712A4C5EC3D20D69FF</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_1.0.0.0_neutral__q98hwb7rk7x3a</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b_q98hwb7rk7x3a!App</RegisteredUserModeAppID>
     <RegisteredPackageID>BUILD.f827d276-40c9-49ec-aa0f-c9630adfc73b</RegisteredPackageID>
@@ -16,25 +16,25 @@
     <AppXManifest Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-07-08T19:19:00.327</Modified>
+      <Modified>2013-07-16T18:01:36.097</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.winmd">
       <PackagePath>BackgroundTask.winmd</PackagePath>
-      <Modified>2013-06-10T16:15:39.257</Modified>
+      <Modified>2013-07-16T18:01:35.044</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.winmd">
       <PackagePath>WCFClientRuntimeComponent.winmd</PackagePath>
-      <Modified>2013-06-04T01:03:53.270</Modified>
+      <Modified>2013-07-15T19:37:53.838</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\BackgroundTask.pdb">
       <PackagePath>BackgroundTask.pdb</PackagePath>
-      <Modified>2013-06-10T16:15:39.257</Modified>
+      <Modified>2013-07-16T18:01:35.044</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\WCFClientRuntimeComponent\bin\Debug\WCFClientRuntimeComponent.pdb">
       <PackagePath>WCFClientRuntimeComponent.pdb</PackagePath>
-      <Modified>2013-06-04T01:03:53.270</Modified>
+      <Modified>2013-07-15T19:37:53.837</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Live\v5.0\Windows Store app HTML\Redist\Debug\neutral\LiveSDKHTML\js\wl.js">
       <PackagePath>LiveSDKHTML\js\wl.js</PackagePath>
@@ -166,12 +166,10 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\logo.png">
       <PackagePath>images\logo.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2012-08-14T20:09:50.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\logo.scale-100.png">
       <PackagePath>images\logo.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2013-07-02T00:07:22.893</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\images\mail1.png">
@@ -295,15 +293,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2013-07-10T00:43:38.586</Modified>
+      <Modified>2013-07-16T17:35:37.664</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AccountBinder.js">
       <PackagePath>js\AccountBinder.js</PackagePath>
-      <Modified>2013-07-10T00:44:54.360</Modified>
+      <Modified>2013-07-15T19:13:28.637</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AppBarControls.js">
       <PackagePath>js\AppBarControls.js</PackagePath>
-      <Modified>2013-07-10T00:49:32.481</Modified>
+      <Modified>2013-07-13T00:45:10.872</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AuthenticateUser.js">
       <PackagePath>js\AuthenticateUser.js</PackagePath>
@@ -319,7 +317,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2013-07-09T23:50:42.934</Modified>
+      <Modified>2013-07-15T20:55:27.625</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DefaultInterface.js">
       <PackagePath>js\DefaultInterface.js</PackagePath>
@@ -327,11 +325,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\GrantDashAccessToUserAccount.js">
       <PackagePath>js\GrantDashAccessToUserAccount.js</PackagePath>
-      <Modified>2013-07-10T00:53:29.323</Modified>
+      <Modified>2013-07-12T23:52:49.422</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\InitializationUI.js">
       <PackagePath>js\InitializationUI.js</PackagePath>
-      <Modified>2013-07-09T22:33:20.161</Modified>
+      <Modified>2013-07-15T19:20:15.287</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\jquery.js">
       <PackagePath>js\jquery.js</PackagePath>
@@ -347,7 +345,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2013-07-08T19:18:59.623</Modified>
+      <Modified>2013-07-15T21:35:30.510</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

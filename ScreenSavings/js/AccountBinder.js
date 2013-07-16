@@ -408,7 +408,12 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
             var RefreshDataPromise = new WinJS.Promise
             (function (RefreshDataSuccess, RefreshFailure, RefreshProgress)
                 {
-                    getDataFunction(userId, ServiceCacheData.LatterIdentifyingValue, RefreshDataSuccess, RefreshFailure);
+                try
+                {getDataFunction(userId, ServiceCacheData.LatterIdentifyingValue, RefreshDataSuccess, RefreshFailure);}
+                catch (e)
+                {
+                    getDataFunction(userId, 0, RefreshDataSuccess, RefreshFailure);
+                }
                 }
             )
             RefreshDataPromise.done
@@ -1370,7 +1375,7 @@ function UpdateRefreshedService(Data,PhaseName,ServiceName,ServiceCacheData)
     var MyUpdatedService = ValidateUpdatedDataForCache(Data, PhaseName, ServiceName, ServiceCacheData);
     if (MyUpdatedService.Changes.length<=0)
     {
-        ShowUpperRightMessage("No new data from " + ServiceName);
+        //ShowUpperRightMessage("No new data from " + ServiceName);
     }
 
     Global_CacheData.Profile.Phases[PhaseName][ServiceName] = MyUpdatedService.Data;
@@ -1417,7 +1422,16 @@ function ValidateUpdatedDataForCache(Data,PhaseName,ServiceName, CurrentlyCached
             }
             break;
         case "MAIL":
-            { }
+            {
+                var UpdatedData = ValidateMailForCache(Data, ServiceName, CurrentlyCachedData);
+                CurrentlyCachedData = UpdatedData.Data;
+                var i = 0;
+                for (i = 0; i < UpdatedData.Changes.length; i++)//For pushes each updated card to the UI
+                {
+                    pushNewDataCard("MAIL", UpdatedData.Changes[i]);
+                }
+                return { Data: CurrentlyCachedData, Changes: UpdatedData.Changes };
+            }
             break;
         case "PHOTOS":
             { }
@@ -1433,111 +1447,10 @@ function ValidateUpdatedDataForCache(Data,PhaseName,ServiceName, CurrentlyCached
 }
 
 //News Cache
-function ValidateNewsForCache(Data, Servicename, AllNews)
-{
-    var UpdatedData = new Array();
-    Servicename = Servicename.replace(" ", "");
-    Servicename = Servicename.toUpperCase();
-    
-    var LatterElements = new Array();
-    var FormerElements = new Array();
-    var ArrayOfNewArticlesWithinCachedTimeRange = new Array()
-    var ArrayOfNewArticlesOutsideCachedTimeRange = new Array();
-    switch (Servicename)
-    {
-        case "GOOGLENEWS":
-            {
-                //var GoogleNewsData = new Array();
-                //Data.sort(function (a, b) { return a[5] - b[5] });
-                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
-
-                /*Data.forEach(function (MyData) {
-                    GoogleNewsData.push(new GoogleNews(MyData[7],MyData[6],MyData[5],MyData[8],MyData[10],MyData[11]));
-                });*/
-                //Data = GoogleNewsData;
-
-                var cachedGoogleNews = AllNews;
-                var i = 0;
-                var j=0;
-                for (i = 0; i < Data.length; i++)
-                {
-                    if (Data.length == 2) 
-                    {
-                        i;
-                    }
-                    for (j = 0;j < cachedGoogleNews.Data.length; j++)
-                    {
-                        if (cachedGoogleNews.Data[j].DataURI == Data[i].DataURI) {
-                            Data.splice(i, 1);
-                            --i
-                            break;
-                        }
-                    }
-                }
-                if (Data.length == 1) {
-                    i;
-                }
-
-
-                var LatterDateTime = new Date(cachedGoogleNews.LatterIdentifyingValue);
-                var FormerDateTime = new Date(cachedGoogleNews.FormerIdentifyingValue);
-                i = 0;
-                for (; i < Data.length;i++)
-                {
-                    if (isWithinDateTimeRange(FormerDateTime, LatterDateTime, Data[i].PostTime))
-                    {
-                        ArrayOfNewArticlesWithinCachedTimeRange.push(Data[i]);
-                    }
-                    else
-                    {
-                        ArrayOfNewArticlesOutsideCachedTimeRange.push(Data[i]);
-                    }
-                }
-                UpdatedData=ArrayOfNewArticlesOutsideCachedTimeRange.concat(ArrayOfNewArticlesWithinCachedTimeRange)
-                cachedGoogleNews.Data=cachedGoogleNews.Data.concat(UpdatedData);
-                cachedGoogleNews.Data.sort(function (a, b) { return a.PostTime - b.PostTime })
-                cachedGoogleNews.FormerIdentifyingValue = cachedGoogleNews.Data[0].PostTime;
-                cachedGoogleNews.LatterIdentifyingValue = cachedGoogleNews.Data.last().PostTime;
-                var updatedDataFormattedasArray = new Array();
-
-                UpdatedData.forEach(function (MyGoogleData)
-                {
-                    MyGoogleData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
-                    updatedDataFormattedasArray.push(MyGoogleData.toDisplayArray());
-
-                    if (isFunction(MyGoogleData.getotherDownloadabledata)) {
-                        MyGoogleData.getotherDownloadabledata();
-                    }
-                    /*
-                    News.prototype.Title = Title;
-                    News.prototype.TitleImageURI = TitleImgURI;
-                    News.prototype.PostTime = new Date(NewsPostTime);
-                    News.prototype.Data = NewsData;
-                    News.prototype.DataURI = NewsURL;
-                    News.prototype.TypeOfPhase = "News";*/
-                });
-                return { Data: AllNews, Changes: updatedDataFormattedasArray };
-                //AllNews.UpdateCache();
-            }
-            break;
-        case "SUNNEWS":
-            {
-                
-            }
-            break;
-    }
-}
-
-
 function News(Title,TitleImgURI,NewsPostTime,NewsData, NewsURL)
 {
     //Title = { Load: Title };
     TitleImgURI = { Load: TitleImgURI };
-//    Title = { Load: Title };
-  //  Title = { Load: Title };
-    //Title = { Load: Title };
-
-
     News.prototype.Title = Title;
     News.prototype.TitleImageURI = TitleImgURI;
     News.prototype.PostTime = new Date(NewsPostTime);
@@ -1574,7 +1487,7 @@ function GoogleNews(Title, TitleImgURI, NewsPostTime, NewsData, NewsURL, NewsScr
     var ServiceID = this.ServiceID;
     this.getotherDownloadabledata = function ()
     {
-        WinJS.xhr({ url: TitleImgURI.Load, headers: { "Content-Type": "image/jpeg" } }).done
+        /*WinJS.xhr({ url: TitleImgURI.Load, headers: { "Content-Type": "image/jpeg" } }).done
         (
             function SuccessfulAccessToRemoteResource(result)
             {
@@ -1608,7 +1521,7 @@ function GoogleNews(Title, TitleImgURI, NewsPostTime, NewsData, NewsURL, NewsScr
             {
                 ShowUpperRightMessage("Remote cacheable data inaccessible ");
             }
-        )
+        )*/
     }
     this.toDisplayArray = function ()
     {
@@ -1643,7 +1556,92 @@ function SunNews(Title, TitleImgURI, NewsPostTime, NewsData, NewsURL)
 }
 SunNews.prototype = new News;
 
+function ValidateNewsForCache(Data, Servicename, AllNews) {
+    var UpdatedData = new Array();
+    Servicename = Servicename.replace(" ", "");
+    Servicename = Servicename.toUpperCase();
 
+    var LatterElements = new Array();
+    var FormerElements = new Array();
+    var ArrayOfNewArticlesWithinCachedTimeRange = new Array()
+    var ArrayOfNewArticlesOutsideCachedTimeRange = new Array();
+    switch (Servicename) {
+        case "GOOGLENEWS":
+            {
+                //var GoogleNewsData = new Array();
+                //Data.sort(function (a, b) { return a[5] - b[5] });
+                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
+
+                /*Data.forEach(function (MyData) {
+                    GoogleNewsData.push(new GoogleNews(MyData[7],MyData[6],MyData[5],MyData[8],MyData[10],MyData[11]));
+                });*/
+                //Data = GoogleNewsData;
+
+                var cachedGoogleNews = AllNews;
+                var i = 0;
+                var j = 0;
+                for (i = 0; i < Data.length; i++) {
+                    if (Data.length == 2) {
+                        i;
+                    }
+                    for (j = 0; j < cachedGoogleNews.Data.length; j++) {
+                        if (cachedGoogleNews.Data[j].DataURI == Data[i].DataURI) {
+                            Data.splice(i, 1);
+                            --i
+                            break;
+                        }
+                    }
+                }
+                if (Data.length == 1) {
+                    i;
+                }
+
+
+                var LatterDateTime = new Date(cachedGoogleNews.LatterIdentifyingValue);
+                var FormerDateTime = new Date(cachedGoogleNews.FormerIdentifyingValue);
+                i = 0;
+                for (; i < Data.length; i++) {
+                    if (isWithinDateTimeRange(FormerDateTime, LatterDateTime, Data[i].PostTime)) {
+                        ArrayOfNewArticlesWithinCachedTimeRange.push(Data[i]);
+                    }
+                    else {
+                        ArrayOfNewArticlesOutsideCachedTimeRange.push(Data[i]);
+                    }
+                }
+                UpdatedData = ArrayOfNewArticlesOutsideCachedTimeRange.concat(ArrayOfNewArticlesWithinCachedTimeRange)
+                cachedGoogleNews.Data = cachedGoogleNews.Data.concat(UpdatedData);
+                cachedGoogleNews.Data.sort(function (a, b) { return a.PostTime - b.PostTime })
+                cachedGoogleNews.FormerIdentifyingValue = cachedGoogleNews.Data[0].PostTime;
+                cachedGoogleNews.LatterIdentifyingValue = cachedGoogleNews.Data.last().PostTime;
+                var updatedDataFormattedasArray = new Array();
+
+                UpdatedData.forEach(function (MyGoogleData) {
+                    MyGoogleData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
+                    updatedDataFormattedasArray.push(MyGoogleData.toDisplayArray());
+
+                    if (isFunction(MyGoogleData.getotherDownloadabledata)) {
+                        MyGoogleData.getotherDownloadabledata();
+                    }
+                    /*
+                    News.prototype.Title = Title;
+                    News.prototype.TitleImageURI = TitleImgURI;
+                    News.prototype.PostTime = new Date(NewsPostTime);
+                    News.prototype.Data = NewsData;
+                    News.prototype.DataURI = NewsURL;
+                    News.prototype.TypeOfPhase = "News";*/
+                });
+                return { Data: AllNews, Changes: updatedDataFormattedasArray };
+                //AllNews.UpdateCache();
+            }
+            break;
+        case "SUNNEWS":
+            {
+
+            }
+            break;
+    }
+}
+//Social Cache
 function SocialPost(User,PostData,PostTime)
 {
     SocialPost.prototype.User = User;
@@ -1700,7 +1698,7 @@ function TwitterPost(User, PostData, PostTime,Photo)
         newCard[6] = this.User;
         newCard[7] = this.Data;
         newCard[8] = this.Photo;
-        newCard[9] = this.PostTime;
+        newCard[9] = new Date(this.PostTime);
         return newCard;
     }
 
@@ -1794,7 +1792,142 @@ function ValidateSocialForCache(Data, Servicename, AllPosts)
 
 }
 
+//Mail Cache
+function Mail(From, To, Subject, Time, EmailContext)
+{
+    Mail.prototype.From = From;
+    Mail.prototype.To = To;
+    Mail.prototype.Subject = Subject;
+    Mail.prototype.PostTime = Time;
+    Mail.prototype.EmailContext = EmailContext;
+    var ServiceID = { ID: null }
+    Mail.prototype.ServiceID = ServiceID;
+    Mail.prototype.setServiceID = function (passedServiceID)
+    { ServiceID = passedServiceID };
+}
 
+function GoogleMail(From, To, Subject, Time, EmailContext,TruncatedText)
+{
+    Mail.call(this, From, To, Subject, Time, EmailContext);
+    var MailPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));//this gets the prototype of the parent object
+    var MailProperties = Object.getOwnPropertyNames(MailPrototype);//this gets the properties of parent object
+    var i = 0;
+    for (; i < MailProperties.length; i++)//For loop loops through properties of parent
+    {
+        Object.defineProperty(this, MailProperties[i], { value: this[MailProperties[i]], writable: true, enumerable: true, configurable: true })//Generates a property for this object without looking up inheritance tree. Doing this because JSON.stringify doesnt go through inherited objects
+    }
+    
+    GoogleMail.prototype.TruncatedText = TruncatedText;
+    this.toDisplayArray = function () {
+        var newCard = new Array(11);
+        newCard[4] = "gmail";
+        newCard[5] = new Date(this.PostTime);
+        newCard[6] = this.From;
+        newCard[7] = this.Subject;
+        newCard[8] = this.EmailContext;
+        newCard[9] = this.To;
+        newCard[10] = this.TruncatedText;
+        return newCard;
+    }
+}
+GoogleMail.prototype = new Mail;
+
+function yahooMail(From, To, Subject, Time, EmailContext)
+{
+    Mail.prototype.Mail = From;
+    Mail.prototype.To = To;
+    Mail.prototype.Subject = Subject;
+    Mail.prototype.PostTime = Time;
+}
+yahooMail.prototype = new Mail;
+
+
+function ValidateMailForCache(Data, Servicename, AllMail) {
+    var UpdatedData = new Array();
+    Servicename = Servicename.replace(" ", "");
+    Servicename = Servicename.toUpperCase();
+
+    var LatterElements = new Array();
+    var FormerElements = new Array();
+    var ArrayOfNewArticlesWithinCachedTimeRange = new Array()
+    var ArrayOfNewArticlesOutsideCachedTimeRange = new Array();
+    switch (Servicename) {
+        case "GOOGLEMAIL":
+            {
+                //var GoogleMailData = new Array();
+                //Data.sort(function (a, b) { return a[5] - b[5] });
+                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
+
+                /*Data.forEach(function (MyData) {
+                    GoogleMailData.push(new GoogleMail(MyData[7],MyData[6],MyData[5],MyData[8],MyData[10],MyData[11]));
+                });*/
+                //Data = GoogleMailData;
+
+                var cachedGoogleMail = AllMail;
+                var i = 0;
+                var j = 0;
+                /*for (i = 0; i < Data.length; i++) {
+                    if (Data.length == 2) {
+                        i;
+                    }
+                    for (j = 0; j < cachedGoogleMail.Data.length; j++) {
+                        if (cachedGoogleMail.Data[j].DataURI == Data[i].DataURI) {
+                            Data.splice(i, 1);
+                            --i
+                            break;
+                        }
+                    }
+                }
+                if (Data.length == 1) {
+                    i;
+                }*/
+
+
+                var LatterDateTime = new Date(cachedGoogleMail.LatterIdentifyingValue);
+                var FormerDateTime = new Date(cachedGoogleMail.FormerIdentifyingValue);
+                i = 0;
+                for (; i < Data.length; i++) {
+                    if (isWithinDateTimeRange(FormerDateTime, LatterDateTime, new Date(Data[i].PostTime))) {
+                        //ArrayOfNewArticlesWithinCachedTimeRange.push(Data[i]);
+                        i;
+                    }
+                    else {
+                        ArrayOfNewArticlesOutsideCachedTimeRange.push(Data[i]);
+                    }
+                }
+                UpdatedData = ArrayOfNewArticlesOutsideCachedTimeRange.concat(ArrayOfNewArticlesWithinCachedTimeRange)
+                cachedGoogleMail.Data = cachedGoogleMail.Data.concat(UpdatedData);
+                cachedGoogleMail.Data.sort(function (a, b) { return a.PostTime - b.PostTime })
+                cachedGoogleMail.FormerIdentifyingValue = cachedGoogleMail.Data[0].PostTime;
+                cachedGoogleMail.LatterIdentifyingValue = cachedGoogleMail.Data.last().PostTime;
+                var updatedDataFormattedasArray = new Array();
+
+                UpdatedData.forEach(function (MyGoogleData) {
+                    MyGoogleData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
+                    updatedDataFormattedasArray.push(MyGoogleData.toDisplayArray());
+
+                    if (isFunction(MyGoogleData.getotherDownloadabledata)) {
+                        MyGoogleData.getotherDownloadabledata();
+                    }
+                    /*
+                    Mail.prototype.Title = Title;
+                    Mail.prototype.TitleImageURI = TitleImgURI;
+                    Mail.prototype.PostTime = new Date(MailPostTime);
+                    Mail.prototype.Data = MailData;
+                    Mail.prototype.DataURI = MailURL;
+                    Mail.prototype.TypeOfPhase = "Mail";*/
+                });
+                return { Data: AllMail, Changes: updatedDataFormattedasArray };
+                //AllMail.UpdateCache();
+            }
+            break;
+        case "YAHOOMAIL":
+            {
+
+            }
+            break;
+    }
+}
 
 function isWithinDateTimeRange(From, To, Comaparison)
 {
@@ -1811,22 +1944,22 @@ function isWithinDateTimeRange(From, To, Comaparison)
     }
 }
 
-function isBeforeOrAfterTimeRange(From, To, Comaparison)
-{
-    var FromDiff = Comaparison - From;
-    var ToDiff = To - Comaparison;
-
-    if (FromDiff < 0)
+    function isBeforeOrAfterTimeRange(From, To, Comaparison)
     {
-        return false
+        var FromDiff = Comaparison - From;
+        var ToDiff = To - Comaparison;
+
+        if (FromDiff < 0)
+        {
+            return false
+        }
+        if (ToDiff<0)
+        {
+            return true;
+        }
+
+
+        ShowUpperRightMessage("invalid Input for isBeforeOrAfterTimeRange function")
+        throw "invalid Input for isBeforeOrAfterTimeRange"
+
     }
-    if (ToDiff<0)
-    {
-        return true;
-    }
-
-
-    ShowUpperRightMessage("invalid Input for isBeforeOrAfterTimeRange function")
-    throw "invalid Input for isBeforeOrAfterTimeRange"
-
-}
