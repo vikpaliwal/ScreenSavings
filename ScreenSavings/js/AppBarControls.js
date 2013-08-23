@@ -1,83 +1,6 @@
 ﻿"use strict";
 
-var Global_DashAppBarWinjSControl;
-var Global_DashAppBarBackButton;
-var Global_DashAppBarEditServiceButton;
-var Global_DashAppBarSettingsButton;
-var Global_DashAppBarNewsButton;
-var Global_DashAppBarSocialButton;
-var Global_DashAppBarFinanceButton;
-var Global_DashAppBarMailButton;
-var Global_DashAppBarPhotosButton;
-var Global_DashAppBarLeftSeparator;
-var Global_DashAppBarRightSeparator;
-var Global_DashAppBarCancelButton;
-var Global_DashAppBarUpdateServiceButton;
-var Global_DashAppBarLogInLogOutButton;
-var Global_RefreshDataSetTimeOutValue;
-var Global_CacheIO = new CacheDataIO();
-var Global_CacheInitializationData = {
-    Profile: {
-        UserID: { AccountID: "", CacheID: "" }, LoggedInName: "", LastLogInDateTime: "", LastSavedDateTime: "", DashSavedScreenFileName: "", Phases: {
-            PHOTOS:
-                {
-                    FLICKR: "",
-                    INSTAGRAM: ""
-                },
-            MAIL:
-                {
-                    YAHOOMAIL:
-                        {
-                            FormerIdentifyingValue: 0,
-                            LatterIdentifyingValue: 1,
-                            Data: []
-                        },
-                    GOOGLEMAIL:
-                        {
-                            FormerIdentifyingValue: 0,
-                            LatterIdentifyingValue: 1,
-                            Data: []
-                        }
-                },
-            DEALS:
-                {
-                    GROUPON:"",
-                    LIVINGSOCIAL:""
-                },
-            NEWS:
-                {
-                    GOOGLENEWS: 
-                        {
-                            FormerIdentifyingValue: 0,
-                            LatterIdentifyingValue: 1,
-                            Data:[]
-                        },
-                    SUNNEWS:
-                        {
-                            FormerIdentifyingValue: 0,
-                            LatterIdentifyingValue: 1,
-                            Data: []
-                        },
-                },
-            SOCIAL:
-                {
-                    TWITTER:
-                        {
-                            FormerIdentifyingValue: 0,
-                            LatterIdentifyingValue: 1,
-                            Data: []
-                        },
-                    FACEBOOK:
-                        {
-                            FormerIdentifyingValue: 0,
-                            LatterIdentifyingValue: 1,
-                            Data: []
-                        }
-                }
-        }
-    }
-};
-var Global_CacheData = null;
+
 window.ShowMenuSettings = WinJS.UI.eventHandler(function ShowMenuSettings()
 {
     var AppBarDom = document.getElementById("DashAppBar");
@@ -128,14 +51,18 @@ function ToggleWindowsLogin()
     (
         function (response) {
             if (response.status == "connected") {
+                //location.reload();
                 WindowsLogOutOfDash(StartIntelDash);
             }
-            else {
+            else
+            {
+                //location.reload();
                 WindowsLoginToDash()
             }
         }
         ,
         function () {
+            //location.reload();
             WindowsLogOutOfDash(StartIntelDash)
         }
     );
@@ -143,35 +70,47 @@ function ToggleWindowsLogin()
 
 function WindowsLogOutOfDash(CallBackFunction)
 {
-    /*var AppBar = document.getElementById("LogInLogOutButton");
-    EmptyDom(AppBar)*/
     var LogInDom = document.getElementById("LogInLogOutButton");
+    ApplicationCleanup();
     var LogOutPromise = WL.logout();
     LogOutPromise.then
     (
         function SuccessfullyLoggedOut(response)
         {
-            ApplicationCleanup()
             var cmd = LogInDom.winControl;
             cmd.icon = 'openpane';
             cmd.label = 'Login';
-            cmd.onclick = CallBackFunction;
+            cmd.onclick = loadLoginUI;
             cmd.tooltip = "LogIn to Dash";
-            CacheDataAccess.resetCache();
-            $("#appcontainer").hide();//this is a hack fix. The right fix willl be to deleete the DOM and upon reinitalization another dom will be created that maintain the structure
-            CallBackFunction();
+            Global_DashAppBarWinjSControl.winControl.showOnlyCommands([LogInDom]);
+            //$("#appcontainer").hide();//this is a hack fix. The right fix willl be to deleete the DOM and upon reinitalization another dom will be created that maintain the structure
+            loadLoginUI();
         },
         function UnSuccessfullyLoggedOut(errorResponse)
         {
-            ApplicationCleanup();
             var cmd = LogInDom.winControl;
             cmd.icon = 'openpane';
             cmd.label = 'Login';
-            cmd.onclick = CallBackFunction;
+            cmd.onclick = loadLoginUI;
             cmd.tooltip = "LogIn to Dash"
-            ResetCacheFile();
-            $("#appcontainer").hide();//this is a hack fix. The right fix willl be to deleete the DOM and upon reinitalization another dom will be created that maintain the structure
-            CallBackFunction();
+            Global_DashAppBarWinjSControl.winControl.showOnlyCommands([LogInDom]);
+            //$("#appcontainer").hide();//this is a hack fix. The right fix willl be to deleete the DOM and upon reinitalization another dom will be created that maintain the structure
+            loadLoginUI()
+        }
+    )
+}
+
+function loadLoginUI()
+{
+    var LoginPromise = WL.login({ scope: ["wl.signin"] });
+    LoginPromise.then(
+        function (data)
+        {
+            StartIntelDash();
+        },
+        function (error)
+        {
+            loadLoginUI();
         }
     )
 }
@@ -179,21 +118,13 @@ function WindowsLogOutOfDash(CallBackFunction)
 function ApplicationCleanup()
 {
     cardCount = 0;
+    CacheDataAccess.resetCache();
     var MainDiv = document.getElementById("Main");
-    MainDiv.innerHTML = "";
-    clearTimeout(Global_RefreshDataSetTimeOutValue);
-    var MyArrayOfFaces = getAllChildNodesWithClassName("face", MainDiv);
-
-    var i = 0;
-    for (; i < MyArrayOfFaces.length; i++) {
-        MyArrayOfFaces[i].removeNode(true);
-        MyArrayOfFaces[i].innerHTML = ""; //(true);
-    }
+    MainDiv.style.visibility = "hidden";
+    //MainDiv.innerHTML = "";
+    var JustCoverScreen = document.createElement("div");
     
-    var MyInnerHTMLString = "<div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\">HELLO HELLO</div>        <div class=\"fixedlayout\" id=\"appcontainer\">                                    <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div>       <span id=\"overlays\"><div class=\"overlay\"></div></span>            <div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\"></div>        <div class=\"TopRight\" id=\"TopRight\"></div>        <div class=\"fixedlayout\" id=\"appcontainer\">            <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div><span id=\"overlays\"><div class=\"overlay\"></div></span>        </div>        </div>";
-    //$(MainDiv).html(MyInnerHTMLString);
-
-    WinJS.Utilities.setInnerHTMLUnsafe(MainDiv, MyInnerHTMLString);
+    clearTimeout(Global_RefreshDataSetTimeOutValue);
 }
 
 
@@ -578,6 +509,7 @@ function FinalizePhases(AllPhases, FinalCompletionLoopBackSuccess, FinalCompleti
 
         if (!NotFinishedRegisteringAllPhases) {
             FinalCompletionLoopBackSuccess(AllPhases);
+            new CacheDataAccess().UpdateCacheFile();//Call to update Cache File
         }
     }
 
@@ -665,12 +597,12 @@ function GenerateFunctionForEditServicesClick(AllServicesDoms, AllServices, Serv
                 Global_DashAppBarNewsButton.winControl.onclick = GenerateEditServiceFullFunction(Global_DashAppBarNewsButton, ServiceFunction);
             }
             break;
-        case "DEAL":
+        case "DEALS":
             {
                 Global_DashAppBarFinanceButton.winControl.onclick = GenerateEditServiceFullFunction(Global_DashAppBarFinanceButton, ServiceFunction);
             }
             break;
-        case "PHOTO":
+        case "PHOTOS":
             {
                 Global_DashAppBarPhotosButton.winControl.onclick = GenerateEditServiceFullFunction(Global_DashAppBarPhotosButton, ServiceFunction);
             }

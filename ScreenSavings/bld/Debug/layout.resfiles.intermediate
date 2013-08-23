@@ -1,8 +1,8 @@
-css\3dCard-min(updatedWithInitalizationPath).css
 css\3dCard-min.css
 css\default.css
 css\ui-dark-editted.css
 default.html
+grouponAuthenticate.html
 images\accounts.png
 images\add_new.png
 images\blueWide.scale-100.png
@@ -27,6 +27,7 @@ images\GoogleNewsLogo.png
 images\groupon.png
 images\Groupon_detail.png
 images\GrouponLogo.png
+images\grouponPage.png
 images\InstagramLogo.png
 images\LivingSocialLogo.png
 images\logo.png
@@ -67,9 +68,15 @@ js\AuthenticateUser.js
 js\CacheManagement.js
 js\DashMain.js
 js\default.js
+js\DefaultDeclarations.js
 js\DefaultInterface.js
 js\GrantDashAccessToUserAccount.js
 js\InitializationUI.js
 js\jquery.js
+js\MobileServices.intellisense.js
+js\MobileServices.js
+js\MobileServices.min.js
+js\MobileServices.pri
 js\SetUpUI.js
 js\uieffects.js
+packages.config

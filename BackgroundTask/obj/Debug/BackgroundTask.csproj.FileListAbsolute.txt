@@ -146,3 +146,10 @@ C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\Backg
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\LanguageQualifiers.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\Newtonsoft.Json.dll
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\bin\Debug\Newtonsoft.Json.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\BackgroundTask.csprojResolveAssemblyReference.cache
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\priconfig.xml.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\layout.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\resources.resfiles.intermediate
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\BackgroundTask\obj\Debug\pri.resfiles.intermediate

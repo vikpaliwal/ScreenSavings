@@ -156,6 +156,9 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
     */
 
     this.Name = name;
+
+    var CacheAccess = new CacheDataAccess();
+    var ServicePhaseName = "";
     this.Image = imageURL;
     var AuthenticationData = new Object();
     var SelectedFlag = false;
@@ -163,10 +166,6 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
     var DashServersUpdated = false;
     this.isRegisteredWithDashServers = function ()
     {
-        /*if (SelectedFlag)
-        {
-            return DashServersUpdated;
-        }*/
         Verified = DashServersUpdated;
         SelectedFlag = Verified;
         return DashServersUpdated;
@@ -175,10 +174,10 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
     {
         return SelectedFlag;
     }
-    this.getServiceCacheData = function () { return ServiceCacheData;};
+    //this.getServiceCacheData = function () { return ServiceCacheData;};
     this.setPhaseName = setPhaseName;
     this.getPhaseName = getPhaseName;
-    var ServicePhaseName = "";
+    
     function getPhaseName()
     {
         return ServicePhaseName;
@@ -206,6 +205,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
             $('#' + MyDomElementID).removeClass("selectedGridElement");
             Verified = false;
             SelectedFlag = false;
+            ClearUILineOfunregisteredElements(Global_PhaseEnumerator[ServicePhaseName.toUpperCase()], name.toLowerCase());//removes all entry from UI
         }
         else
         {
@@ -274,7 +274,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
                 DashServersUpdated = false;
                 Verified = false;
                 SelectedFlag = false;
-                RegistrationFailure("undefined Function To Register with Dash Servers")
+                RegistrationFailure("undefined Function To Register with Dash Servers");
             }
         }
         else
@@ -294,6 +294,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
                     {
                         if (!Verified)
                         {
+                            CacheAccess.ClearService(ServicePhaseName, name.replace(" ", "").toUpperCase());//clears the entry in the cache memory
                             AuthenticationData.clearEntry = true;
                         }
                         RegisterServiceAccountWithIntelServer(AuthenticationData, RegistrationSuccess, RegistrationFailure);
@@ -313,6 +314,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
                         DashServersUpdated = false;
                         Verified = false;
                         SelectedFlag = false;
+                        CacheAccess.ClearService(ServicePhaseName,name.replace(" ","").toUpperCase());//clears the entry in the cache memory
                         RegistrationFailure(Err);
                     }
                 )
@@ -394,7 +396,8 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
 
     function InitializeServiceCacheData(PhaseName)
     {
-        ServiceCacheData = new CacheDataAccess().getService(PhaseName, name.replace(" ",""));
+        //ServiceCacheData = new CacheDataAccess().getService(PhaseName, name.replace(" ",""));
+        ServiceCacheData=CacheAccess.getService(PhaseName, name.replace(" ", ""));
     }
 
     this.refreshServiceData = function (ServiceType)
@@ -1351,21 +1354,34 @@ function RegisteredWithGmail(MyData)
     }
 }
 
+/*function RegisteredwithGroupon(MyData)
+{
+    try {
+        if ((MyData.Groupon != null) && (MyData != null)) {
+            return new GrouponDataAccess(MyData.Groupon == true);
+        }
+
+        return false
+    }
+    catch (e) {
+        return false;
+    }
+}*/
 
 function RegisteredWithGoogleNews(MyData)
 {
     try{
         if ((MyData.GoogleNews != null) && (MyData != null))
-    {
-            return new GoogleNewsDataAccess(MyData.GoogleNews == true);
-    }
+        {
+                return new GoogleNewsDataAccess(MyData.GoogleNews == true);
+        }
 
-    return false
-}
+            return false
+        }
     catch (e)
-{
-    return false;
-}
+    {
+        return false;
+    }
 }
 
 
@@ -1434,10 +1450,28 @@ function ValidateUpdatedDataForCache(Data,PhaseName,ServiceName, CurrentlyCached
             }
             break;
         case "PHOTOS":
-            { }
+            {
+                var UpdatedData = ValidatePhotosForCache(Data, ServiceName, CurrentlyCachedData);
+                CurrentlyCachedData = UpdatedData.Data;
+                var i = 0;
+                for (i = 0; i < UpdatedData.Changes.length; i++)//For pushes each updated card to the UI
+                {
+                    pushNewDataCard("PHOTOS", UpdatedData.Changes[i]);
+                }
+                return { Data: CurrentlyCachedData, Changes: UpdatedData.Changes };
+            }
             break;
-        case "FINANCE":
-            { }
+        case "DEALS":
+            {
+                var UpdatedData = ValidateDealsForCache(Data, ServiceName, CurrentlyCachedData);
+                CurrentlyCachedData = UpdatedData.Data;
+                var i = 0;
+                for (i = 0; i < UpdatedData.Changes.length; i++)//For pushes each updated card to the UI
+                {
+                    pushNewDataCard("DEALS", UpdatedData.Changes[i]);
+                }
+                return { Data: CurrentlyCachedData, Changes: UpdatedData.Changes };
+            }
             break;
         default:
             {
@@ -1526,7 +1560,7 @@ function GoogleNews(Title, TitleImgURI, NewsPostTime, NewsData, NewsURL, NewsScr
     this.toDisplayArray = function ()
     {
         var newCard = new Array(12);
-        newCard[4] = "news";
+        newCard[4] = "google news";
         newCard[5] = this.PostTime;//time when news was poste
         newCard[6] = this.TitleImageURI.Load;
         newCard[7] = this.Title;
@@ -1666,12 +1700,12 @@ function FacebookPost(PosterName,Text,PostTime,Link,PosterID)
     {
         var newCard = new Array(11);
         newCard[4] = "facebook";
-        newCard[5] = this.PostTime;//time when Posts was poste
+        newCard[5] = new Date(this.PostTime);//time when Posts was poste
         newCard[6] = this.User;
         newCard[7] = this.Data;
         newCard[8] = this.DataURI;
         newCard[9] = this.PosterID;//just time without date
-        newCard[10] = this.PostTime;
+        newCard[10] = new Date(this.PostTime);
         return newCard;
     }
     this.DataURI = Link;
@@ -1694,7 +1728,7 @@ function TwitterPost(User, PostData, PostTime,Photo)
     this.toDisplayArray = function () {
         var newCard = new Array(10);
         newCard[4] = "twitter";
-        newCard[5] = this.PostTime;//time when Posts was poste
+        newCard[5] = new Date(this.PostTime);//time when Posts was poste
         newCard[6] = this.User;
         newCard[7] = this.Data;
         newCard[8] = this.Photo;
@@ -1817,7 +1851,7 @@ function GoogleMail(From, To, Subject, Time, EmailContext,TruncatedText)
         Object.defineProperty(this, MailProperties[i], { value: this[MailProperties[i]], writable: true, enumerable: true, configurable: true })//Generates a property for this object without looking up inheritance tree. Doing this because JSON.stringify doesnt go through inherited objects
     }
     
-    GoogleMail.prototype.TruncatedText = TruncatedText;
+    this.TruncatedText = TruncatedText;
     this.toDisplayArray = function () {
         var newCard = new Array(11);
         newCard[4] = "gmail";
@@ -1840,7 +1874,6 @@ function yahooMail(From, To, Subject, Time, EmailContext)
     Mail.prototype.PostTime = Time;
 }
 yahooMail.prototype = new Mail;
-
 
 function ValidateMailForCache(Data, Servicename, AllMail) {
     var UpdatedData = new Array();
@@ -1928,6 +1961,243 @@ function ValidateMailForCache(Data, Servicename, AllMail) {
             break;
     }
 }
+
+//Photos Cache
+function Photos(Uri, PostTime, User)
+{
+    Photos.prototype.Uri = Uri;
+    Photos.prototype.PostTime = PostTime;
+    Photos.prototype.User = User;
+    var ServiceID = { ID: null }
+    Photos.prototype.ServiceID = ServiceID;
+    Photos.prototype.setServiceID = function (passedServiceID)
+    { ServiceID = passedServiceID };
+}
+
+function FlickrPhotos(Uri, PostTime, User)
+{
+    Photos.call(this, Uri, PostTime, User);
+    var PhotosPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));//this gets the prototype of the parent object
+    var PhotosProperties = Object.getOwnPropertyNames(PhotosPrototype);//this gets the properties of parent object
+    var i = 0;
+    for (; i < PhotosProperties.length; i++)//For loop loops through properties of parent
+    {
+        Object.defineProperty(this, PhotosProperties[i], { value: this[PhotosProperties[i]], writable: true, enumerable: true, configurable: true })//Generates a property for this object without looking up inheritance tree. Doing this because JSON.stringify doesnt go through inherited objects
+    }
+
+    this.toDisplayArray = function () {
+        var newCard = new Array(8);
+        newCard[4] = "flickr photo";
+        newCard[5] = new Date(this.PostTime);
+        newCard[6] = this.User;
+        newCard[7] = this.Uri;
+        return newCard;
+    }
+
+}
+FlickrPhotos.prototype = new Photos;
+
+function ValidatePhotosForCache(Data, Servicename, AllPhoto)
+{
+    var UpdatedData = new Array();
+    Servicename = Servicename.replace(" ", "");
+    Servicename = Servicename.toUpperCase();
+
+    var LatterElements = new Array();
+    var FormerElements = new Array();
+    var ArrayOfNewArticlesWithinCachedTimeRange = new Array()
+    var ArrayOfNewArticlesOutsideCachedTimeRange = new Array();
+    switch (Servicename) {
+        case "FLICKRPHOTO":
+            {
+                //var FlickrPhotoData = new Array();
+                //Data.sort(function (a, b) { return a[5] - b[5] });
+                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
+
+                /*Data.forEach(function (MyData) {
+                    FlickrPhotoData.push(new FlickrPhoto(MyData[7],MyData[6],MyData[5],MyData[8],MyData[10],MyData[11]));
+                });*/
+                //Data = FlickrPhotoData;
+
+                var cachedFlickrPhoto = AllPhoto;
+                var i = 0;
+                var j = 0;
+                /*for (i = 0; i < Data.length; i++) {
+                    if (Data.length == 2) {
+                        i;
+                    }
+                    for (j = 0; j < cachedFlickrPhoto.Data.length; j++) {
+                        if (cachedFlickrPhoto.Data[j].DataURI == Data[i].DataURI) {
+                            Data.splice(i, 1);
+                            --i
+                            break;
+                        }
+                    }
+                }
+                if (Data.length == 1) {
+                    i;
+                }*/
+
+
+                var LatterDateTime = new Date(cachedFlickrPhoto.LatterIdentifyingValue);
+                var FormerDateTime = new Date(cachedFlickrPhoto.FormerIdentifyingValue);
+                i = 0;
+                for (; i < Data.length; i++) {
+                    if (isWithinDateTimeRange(FormerDateTime, LatterDateTime, new Date(Data[i].PostTime))) {
+                        //ArrayOfNewArticlesWithinCachedTimeRange.push(Data[i]);
+                        i;
+                    }
+                    else {
+                        ArrayOfNewArticlesOutsideCachedTimeRange.push(Data[i]);
+                    }
+                }
+                UpdatedData = ArrayOfNewArticlesOutsideCachedTimeRange.concat(ArrayOfNewArticlesWithinCachedTimeRange)
+                cachedFlickrPhoto.Data = cachedFlickrPhoto.Data.concat(UpdatedData);
+                cachedFlickrPhoto.Data.sort(function (a, b) { return a.PostTime - b.PostTime })
+                cachedFlickrPhoto.FormerIdentifyingValue = cachedFlickrPhoto.Data[0].PostTime;
+                cachedFlickrPhoto.LatterIdentifyingValue = cachedFlickrPhoto.Data.last().PostTime;
+                var updatedDataFormattedasArray = new Array();
+
+                UpdatedData.forEach(function (MyFlickrData) {
+                    MyFlickrData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
+                    updatedDataFormattedasArray.push(MyFlickrData.toDisplayArray());
+
+                    if (isFunction(MyFlickrData.getotherDownloadabledata)) {
+                        MyFlickrData.getotherDownloadabledata();
+                    }
+                });
+                return { Data: AllPhoto, Changes: updatedDataFormattedasArray };
+                //AllPhoto.UpdateCache();
+            }
+            break;
+        case "INSTAGRAMPHOTO":
+            {
+
+            }
+            break;
+    }
+}
+
+
+//Deals Cache
+function Deals(Uri, expiryDate, Title,Location) {
+    Deals.prototype.PostTime = expiryDate;
+    Deals.prototype.DealURI = Uri;
+    Deals.prototype.Title = Title;
+    Deals.prototype.Location = Location;
+    var ServiceID = { ID: null }
+    Deals.prototype.ServiceID = ServiceID;
+    Deals.prototype.setServiceID = function (passedServiceID)
+    { ServiceID = passedServiceID };
+}
+
+function GrouponDeals(Uri, expiryDate, Title, Location, highlightsHTML, largeImageURL)
+{
+    Deals.call(this, Uri, expiryDate, Title, Location);
+    var GrouponPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));
+    var dealsProperties = Object.getOwnPropertyNames(GrouponPrototype);
+    this.highlightsHTML = highlightsHTML;
+    this.largeImageURL = largeImageURL;
+    var i = 0;
+    for (; i < dealsProperties.length; i++)//For loop loops through properties of parent
+    {
+        Object.defineProperty(this, dealsProperties[i], { value: this[dealsProperties[i]], writable: true, enumerable: true, configurable: true })//Generates a property for this object without looking up inheritance tree. Doing this because JSON.stringify doesnt go through inherited objects
+    }
+    this.toDisplayArray = function () {
+        var newCard = new Array(11);
+        newCard[4] = "groupon";
+        newCard[5] = new Date(this.PostTime);
+        newCard[6] = this.Title;
+        newCard[7] = this.highlightsHTML;
+        newCard[8] = this.largeImageURL;
+        newCard[9] = this.DealURI;
+        newCard[10] = this.Location;
+        return newCard;
+    }
+}
+
+GrouponDeals.prototype = new Deals;
+
+function ValidateDealsForCache(Data, Servicename, AllDeal) {
+    var UpdatedData = new Array();
+    Servicename = Servicename.replace(" ", "");
+    Servicename = Servicename.toUpperCase();
+
+    var LatterElements = new Array();
+    var FormerElements = new Array();
+    var ArrayOfNewArticlesWithinCachedTimeRange = new Array()
+    var ArrayOfNewArticlesOutsideCachedTimeRange = new Array();
+    switch (Servicename) {
+        case "GROUPON":
+            {
+                //var GrouponDealData = new Array();
+                //Data.sort(function (a, b) { return a[5] - b[5] });
+                Data.sort(function (a, b) { return a.PostTime - b.PostTime });
+
+                /*Data.forEach(function (MyData) {
+                    GrouponDealData.push(new GrouponDeal(MyData[7],MyData[6],MyData[5],MyData[8],MyData[10],MyData[11]));
+                });*/
+                //Data = GrouponDealData;
+
+                var cachedGrouponDeal = AllDeal;
+                var i = 0;
+                var j = 0;
+                /*for (i = 0; i < Data.length; i++) {
+                    if (Data.length == 2) {
+                        i;
+                    }
+                    for (j = 0; j < cachedGrouponDeal.Data.length; j++) {
+                        if (cachedGrouponDeal.Data[j].DataURI == Data[i].DataURI) {
+                            Data.splice(i, 1);
+                            --i
+                            break;
+                        }
+                    }
+                }
+                if (Data.length == 1) {
+                    i;
+                }*/
+
+
+                var LatterDateTime = new Date(cachedGrouponDeal.LatterIdentifyingValue);
+                var FormerDateTime = new Date(cachedGrouponDeal.FormerIdentifyingValue);
+                i = 0;
+                for (; i < Data.length; i++) {
+                    if (isWithinDateTimeRange(FormerDateTime, LatterDateTime, new Date(Data[i].PostTime))) {
+                        //ArrayOfNewArticlesWithinCachedTimeRange.push(Data[i]);
+                        i;
+                    }
+                    else {
+                        ArrayOfNewArticlesOutsideCachedTimeRange.push(Data[i]);
+                    }
+                }
+                UpdatedData = ArrayOfNewArticlesOutsideCachedTimeRange.concat(ArrayOfNewArticlesWithinCachedTimeRange)
+                cachedGrouponDeal.Data = cachedGrouponDeal.Data.concat(UpdatedData);
+                cachedGrouponDeal.Data.sort(function (a, b) { return a.PostTime - b.PostTime })
+                cachedGrouponDeal.FormerIdentifyingValue = cachedGrouponDeal.Data[0].PostTime;
+                cachedGrouponDeal.LatterIdentifyingValue = cachedGrouponDeal.Data.last().PostTime;
+                var updatedDataFormattedasArray = new Array();
+
+                UpdatedData.forEach(function (MyGrouponData) {
+                    MyGrouponData.ServiceID.ID = new CacheDataAccess().getServiceObjectIndex();
+                    updatedDataFormattedasArray.push(MyGrouponData.toDisplayArray());
+
+                    if (isFunction(MyGrouponData.getotherDownloadabledata)) {
+                        MyGrouponData.getotherDownloadabledata();
+                    }
+                });
+                return { Data: AllDeal, Changes: updatedDataFormattedasArray };
+                //AllDeal.UpdateCache();
+            }
+            break;
+        case "LIVINGSOCIAL":
+            {
+
+            }
+            break;
+    }
+}
+
 
 function isWithinDateTimeRange(From, To, Comaparison)
 {

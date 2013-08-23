@@ -1,6 +1,6 @@
 ﻿function CacheDataIO() {
 
-    var NameOfCacheFile = "User.DashProfile";
+    var NameOfCacheFile = "IntelDash\\User.DashProfile";
     var CacheFile = null;
     this.CreateCacheFile = CreateCacheFile
     var WriteRequest = new Array();
@@ -42,7 +42,7 @@
     }
     this.InitializeFile = InitializeFile;
     function InitializeFile(CallBackSuccess, CallBackFailure, InProgress) {
-        var InitializationString = "{ \"Profile\":{ \"UserID\":{\"AccountID\": \"\", \"CacheID\": \"\"}, \"LoggedInName\":\"\", \"LastLogInDateTime\":\"\", \"LastSavedDateTime\":\"\", \"DashSavedScreenFileName\":\"\", \"Phases\":{ \"PHOTOS\":[{}], \"MAIL\":[{}], \"DEALS\":[{}], \"NEWS\":[{}], \"SOCIAL\":[{}] } } }"
+        var InitializationString;
         InitializationString = JSON.stringify(Global_CacheInitializationData);
         var CreateFilePromise = new WinJS.Promise
         (
@@ -151,8 +151,10 @@ function CacheDataAccess()
     CacheDataAccess.ServiceObjectIndex;
     var CacheIOHandler = new CacheDataIO();
     CacheDataAccess.resetCache = resetCache;
-    CacheDataAccess.CacheData = Global_CacheData;
+    CacheDataAccess.InitializationData = Global_CacheInitializationData;
+    CacheDataAccess.CacheData = Global_CacheData;//hack you need to tweak this from the global data
     CacheDataAccess.isValidUser = isValidUser;
+    //CacheDataAccess.UpdateCacheFile = UpdateCacheFile;
     this.getServiceObjectIndex = function getServiceObjectIndex()
     {
         if (CacheDataAccess.ServiceObjectIndex == undefined) {
@@ -181,8 +183,9 @@ function CacheDataAccess()
         return;
     }
 
-    this.UpdateCacheFile=function UpdateCacheFile() {
-        CacheIOHandler.WriteJSONToFile(Global_CacheData);
+    this.UpdateCacheFile = UpdateCacheFile;
+    function UpdateCacheFile(Success,Failure) {
+        CacheIOHandler.WriteJSONToFile(CacheDataAccess.CacheData, Success, Failure);
     }
     this.getProfile = getProfile;
 
@@ -227,15 +230,13 @@ function CacheDataAccess()
     {
         if (!CacheDataAccess.CacheData)
         {
-            var getMyProfilePromise = new WinJS.Promise(function (success, failure, progress)
-                {
-                    getProfile(success,failure,progress)
-                }
+            var getMyProfilePromise = new WinJS.Promise(function (success, failure, progress) {
+                getProfile(success, failure, progress)
+            }
             )
             getMyProfilePromise.done
             (
-                function getProfileSuccess(Profile)
-                {
+                function getProfileSuccess(Profile) {
                     if (!Profile.UserID.AccountID)
                     { success(false) }
                     else
@@ -243,12 +244,31 @@ function CacheDataAccess()
                         success(true)
                     }
                 },
-                function getProfileFailure()
-                {
+                function getProfileFailure() {
                     success(false);
                 }
             )
-            
+
+        }
+        else
+        {
+            success(false);
         }
     }
+
+
+    this.ClearService = ClearService;
+    function ClearService(PhaseName, ServiceName)
+    {
+        if ((!PhaseName) || (!ServiceName))
+        {
+            return null;
+        }
+
+        CacheDataAccess.CacheData.Profile.Phases[PhaseName][ServiceName] = CacheDataAccess.InitializationData.Profile.Phases[PhaseName][ServiceName];
+        UpdateCacheFile();
+    }
+
+    
 }
+

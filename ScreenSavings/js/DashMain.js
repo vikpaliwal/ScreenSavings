@@ -16,7 +16,6 @@ function ProceedWithVerifiedAccount(AccountIdentification)
     Global_CacheData.Profile.LastLogInDateTime = new Date();
     Global_CacheIO.WriteJSONToFile(Global_CacheData);
     userId = Global_CacheData.Profile.UserID.AccountID;//this is a hack to cause initialization of userid
-    PopulateAppBar_ini();
     var BoundSocialNetworkToIntelAccountPromise = new WinJS.Promise
         (
             function (BoundSocialNetworkToIntelAccountComp, BoundSocialNetworkToIntelAccountErr, prog)
@@ -79,7 +78,7 @@ function ProceedWithVerifiedAccount(AccountIdentification)
                     )
                     
                 }
-                getLocation();
+                //getLocation();
             }
             else
             {
@@ -173,12 +172,12 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
 
     /*Picture Services*/
     //var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrLogin);
-    var FlickrServiceInitialization = new Service("Flickr", "images/flickrLogo.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash, RegisteredWithFlickr, refreshFlickr);
+    var FlickrServiceInitialization = new Service("flickr photo", "images/flickrLogo.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash, RegisteredWithFlickr, refreshFlickr);
     var InstagramLoginServiceInitialization = new Service("Instagram", "images/InstagramLogo.png", InstagramLogin)
     var PictureServices = new Array(FlickrServiceInitialization, InstagramLoginServiceInitialization);
 
     /*Deals Services*/
-    var GrouponServiceInitialization = new Service("Groupon", "images/GrouponLogo.png", GrouponLogin);
+    var GrouponServiceInitialization = new Service("Groupon", "images/GrouponLogo.png", GrouponAuthenticateAccess, RegisterGrouponWithDash, RegisteredWithGroupon, refreshGroupon);
     var LivingSocialLoginServiceInitialization = new Service("Living Social", "images/LivingSocialLogo.png", LivingSocialLogin)
     var DealServices = new Array(GrouponServiceInitialization, LivingSocialLoginServiceInitialization)
     var NewsInitializaationPhase;
@@ -230,6 +229,45 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
         (
             function ()
             {
+                var getLocationPromise = new WinJS.Promise
+                (
+                    function (Success, Failure)
+                    {
+                        getLocation(Success, Failure);
+                    }
+                )
+                getLocationPromise.done
+                (
+                    function(data)
+                    {
+                        registerdefaultLocationWithIntel(data);
+                        var MyCacheaccess = new CacheDataAccess();
+                        var getProfilePromise = new WinJS.Promise(
+                            function (success, failure, Progress)
+                            {
+                                MyCacheaccess.getProfile(success,failure,progress);
+                            }
+                        )
+                        getProfilePromise.done
+                        (
+                            function (Data)
+                            {
+                                Data.Location = Locationdata.convertforCache(Data);
+                                MyCacheaccess.UpdateCacheFile();
+                            },
+                            function (error)
+                            {
+                                return;
+                            }
+                        )
+                        
+
+                    },
+                    function (error)
+                    {
+                        registerdefaultLocationWithIntel(new Locationdata());
+                    }
+                )
                 ContinueSelectedOnInitialBindingScreen(SuccessfulDashServiceBind, FailedDashServiceBind, DomForSetupPhases);
             },
             function CancellInitialSetup(err)
@@ -328,12 +366,12 @@ function GenerateServiceArray(BoundData)
 
     /*Picture Services*/
     //var FlickrServiceInitialization = new Service("Flickr", "images/flikr.png", FlickrLogin);
-    var FlickrServiceInitialization = new Service("Flickr", "images/flickrLogo.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash, RegisteredWithFlickr, refreshFlickr);
-    var InstagramLoginServiceInitialization = new Service("Instagram", "images/InstagramLogo.png", InstagramLogin)
+    var FlickrServiceInitialization = new Service("Flickr Photo", "images/flickrLogo.png", FlickrAuthenticateAccess, RegisterFlickrAccountWithDash, RegisteredWithFlickr, refreshFlickr);
+    var InstagramLoginServiceInitialization = new Service("Instagram Photo", "images/InstagramLogo.png", InstagramLogin)
     var PictureServices = new Array(FlickrServiceInitialization, InstagramLoginServiceInitialization);
 
     /*Deals Services*/
-    var GrouponServiceInitialization = new Service("Groupon", "images/GrouponLogo.png", GrouponLogin);
+    var GrouponServiceInitialization = new Service("Groupon", "images/GrouponLogo.png", GrouponAuthenticateAccess, RegisterGrouponWithDash, RegisteredWithGroupon, refreshGroupon);
     var LivingSocialLoginServiceInitialization = new Service("Living Social", "images/LivingSocialLogo.png", LivingSocialLogin)
     var DealServices = new Array(GrouponServiceInitialization, LivingSocialLoginServiceInitialization)
     var NewsInitializaationPhase;

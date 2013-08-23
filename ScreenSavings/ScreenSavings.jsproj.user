@@ -2,5 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReferenceCachePath>C:\Users\jbiotida\AppData\Local\Temp\lul0fodz_ScreenSavings_refcache</ReferenceCachePath>
+    <AppxShowAllApps>False</AppxShowAllApps>
   </PropertyGroup>
 </Project>

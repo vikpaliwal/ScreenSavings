@@ -151,6 +151,7 @@ html{
   perspective-origin: -25% -25%;
   text-align: left;
   position: absolute;
+  /*background-color:yellow;*/
 }
 #element5{
   -ms-touch-action : pinch-zoom;  
@@ -522,26 +523,6 @@ html{
 }
 
 
-.row1 {
- margin-left: -270px;
- //float: left;
- //left: -300px;
-}
-.row2 {
- margin-left: -140px;
-}
-.row3 {
- margin-left: -10px;
- //display: none;
-}
-.row4 {
- margin-left: 130px;
- //display: none;
-}
-.row5 {
- margin-left: 270px;
-}
-
 
 
 .bgOne {
@@ -570,6 +551,44 @@ margin-left: 8px;
 width: 152px;
 margin-left: -4px;
 }
+
+
+
+#ServiceLineNames {
+    position:absolute;
+    top:100%;
+    margin-top:-3em;
+    height:2em;
+    width:100%;
+}
+
+
+
+
+
+
+.row1 {
+ margin-left: -270px;
+ //float: left;
+ //left: -300px;
+}
+.row2 {
+ margin-left: -140px;
+}
+.row3 {
+ margin-left: -10px;
+ //display: none;
+}
+.row4 {
+ margin-left: 130px;
+ //display: none;
+}
+.row5 {
+ margin-left: 270px;
+}
+
+
+
 
 .name1-2d {
 position: absolute;
@@ -951,6 +970,7 @@ position: fixed;
 	width: 100%;
 	z-index: 11;
 	bottom: -550px;
+    visibility:hidden;
     left: 0px;
 	background-image: url('../images/setting_bg.png');
 	transition: all 500ms linear;
@@ -1115,6 +1135,10 @@ position: fixed;
     background-color:purple;
 }
 
+.rowName 
+{
+    border:solid 2px red;
+}
 
 #TopCenterBar 
 {
@@ -1219,6 +1243,7 @@ position: fixed;
     height:60%;
     /*background-color:aliceblue;*/
 }
+
 
 
 .PhaseBottomDiv

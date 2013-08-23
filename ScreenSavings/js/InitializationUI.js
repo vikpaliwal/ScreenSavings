@@ -53,18 +53,12 @@ Object.defineProperty(  Array.prototype,
                         }
 )
 
-//Array.prototype.last = 
 
 
 
 
 function InitializeMainDivs()
 {
-    //var MainDiv = document.getElementById("Main");
-    //MainDiv.innerHTML = "";
-    //EmptyDom(MainDiv);
-  
-    //MainDiv.innerHTML = window.toStaticHTML("<div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\">HELLO HELLO</div>        <div class=\"fixedlayout\" id=\"appcontainer\">                                    <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div>       <span id=\"overlays\"><div class=\"overlay\"></div></span>            <div id=\"InitialSetupContainer\" >            <div id=\"TopLeft\">                <button class=\"win-backbutton\" id=\"win-backbutton\" aria-label=\"Back\"></button>            </div>            <div id=\"TopCenterBar\"></div>            <div id=\"MiddleContent\"></div>            <div id=\"FooterBar\"></div>        </div>        <div id=\"SettingsDiv\"></div>        <div class=\"TopRight\" id=\"TopRight\"></div>        <div class=\"fixedlayout\" id=\"appcontainer\">            <div id=\"time\"><span id=\"date\"></span><span id=\"hrsMins\"></span></div>            <img src=\"images/weather.png\" id=\"settings\"/><div id=\"weather\"><span id=\"location\">portland</span><img src=\"\" id=\"weatherIcon\" /><span id=\"temperature\">78</span></div>    <div id=\"page-wrapper\">        <span id=\"elements\">  <div id=\"element1\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgOne\"></div><div id=\"line1id\" class=\"linePerspective line1\"></div>                <div class=\"row1 face name1-2d\"><span claloginFailedss=\"name1\">PHOTOS</span></div>  </div>  <div id=\"element2\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgTwo\"></div><div id=\"line2id\" class=\"linePerspective line2\"></div>                            <div class=\"row2 face name2-2d\"><span class=\"name2\">MAIL</span></div>  </div>  <div id=\"element3\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgThree\"></div><div id=\"line3id\" class=\"linePerspective line3\"></div>                                         <div class=\"row3 face name3-2d\"><span class=\"name3\">DEALS</span></div>  </div>  <div id=\"element4\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFour\"></div><div id=\"line4id\" class=\"linePerspective line4\"></div>                            <div class=\"row4 face name4-2d\"><span class=\"name4\">NEWS</span></div>  </div>  <div id=\"element5\" class=\"parentCanvas serviceLine\"><div class=\"bgPerspective bgFive\"></div><div id=\"line5id\" class=\"linePerspective line5\"></div>            <div class=\"row5 face name5-2d\"><span class=\"name5\">SOCIAL</span></div>  </div></span>            <div id=\"settingsMenu\"><img src=\"images/settings.png\" id=\"settingsIcon\" /><img src=\"images/accounts.png\" id=\"accounts\" />        <div id =\"FB_BUTTON\">FB LOGIN</div>        <div id =\"TWITTER_BUTTON\">TWT LOGIN</div>        <div id =\"FLICKR_BUTTON\">FLICKR LOGIN</div>        <div id =\"GMAIL_BUTTON\">GMAIL LOGIN</div><img src=\"images/add_new.png\" id=\"addNew\" /><img src=\"images/trashcan.png\" id=\"trashcanIcon\" /></div><div id=\"line2dContainerBg\"><div id=\"lineContainer\"><div id=\"element1_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineOne\"></div><div class=\"serviceContainer\">                <img src=\"images/circle_purple.png\" class=\"circle\" />                <img src=\"images/flikr.png\" class=\"serviceLabel\" /></div></div><div id=\"element2_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineTwo\"></div><div class=\"serviceContainer\"><img src=\"images/circle_pink.png\" class=\"circle\" /><img src=\"images/gmail.png\" class=\"serviceLabel\" /></div></div><div id=\"element3_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineThree\"></div><div class=\"serviceContainer\"><img src=\"images/circle_green.png\" class=\"circle\" />               <img src=\"images/groupon.png\" class=\"serviceLabel\" /></div></div><div id=\"element4_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFour\"></div><div class=\"serviceContainer\"><img src=\"images/circle_yellow.png\" class=\"circle\" />                <img src=\"images/sun.png\" class=\"serviceLabel\" /><img src=\"images/ft.png\" class=\"serviceLabel\" /></div></div><div id=\"element5_2d\" class=\"parentCanvas2d\"><div class=\"line2d lineFive\"></div><div class=\"serviceContainer\"><img src=\"images/circle_blue.png\" class=\"circle\" />                 <img src=\"images/facebook.png\" class=\"serviceLabel\" /><img src=\"images/twitter.png\" class=\"serviceLabel\" /></div></div></div></div>  </div>       <div class=\"pans parentCanvas\">        <div class=\"panLeft pan\"></div>        <div class=\"panRight pan\"></div>    </div><span id=\"overlays\"><div class=\"overlay\"></div></span>        </div>        </div>");
 }
 
 function isInternet()
@@ -86,20 +80,26 @@ function StartIntelDash()
     Description: Function is called when dash is fully closed and opened
     */
     "use strict";
-
-    var CheckIfCacheHasValidUserPromise = new WinJS.Promise(function (success, fail, progress)
+    InitializeUI();
+    var MainDiv = document.getElementById("Main");
+    MainDiv.style.visibility = "visible";
+    var CheckIfCacheHasValidUserPromise = new WinJS.Promise(function (success, fail,progress)
         {
             new CacheDataAccess.isValidUser(success, fail, progress);
         }
 
     )
+    
     CheckIfCacheHasValidUserPromise.done
     (
         function (validUserStatus)
         {
             if (validUserStatus) {
-                if (!isInternet()) {
-                    $("#SettingsDiv").hide()//this is a hack for hiding the initial settings greyed out case
+                $("#SettingsDiv").hide()//this is a hack for hiding the initial settings greyed out case
+                if (!isInternet())
+                {
+                    
+
                     DisplayDataInCache();
                     ShowUpperRightMessage("Dash is having issues connecting to the Web")
                     return;
@@ -112,9 +112,211 @@ function StartIntelDash()
             {
                 ValidUserFoundPath();
             }
+        },
+        function (error)
+        {
+            alert(error);
+        },
+        function ()
+        {
+            var MyProgress = new InProgress("checking for Interwebs");
+            MyProgress.Start();
+            setTimeout(function () { MyProgress.Stop() }, 3000);
+
+
         }
+
     )
 
+
+    function updateAzurewithChannelAndAccount(data, Success, Failure, Progress)
+    {
+        var MobileServiceclient = new WindowsAzure.MobileServiceClient(
+                "https://screensavingsapp.azure-mobile.net/",
+                "klcxMZLzWaptAGKhiZXpAKbEMFfrUH22"
+        );
+        var DashAccountsTable = MobileServiceclient.getTable('DashAccounts');
+        var todoItems = new WinJS.Binding.List();
+        update(data);
+
+        function update(Data)
+        {
+            var MyNumb=(Number)(data.Expiration)/1;
+            var MyData = {
+                AccountID: data.AccountID,
+                ChannelURI: data.Channel,
+                ChannelExpiration: MyNumb
+            }
+
+            //var checkdataQuery = DashAccountsTable.select({ AccountID: 911});
+            //var checkdataQuery = DashAccountsTable.select(SuccessTableRead);
+            var checkdataQuery = DashAccountsTable.where({ AccountID: MyData.AccountID.toString() }).read()
+            .done
+            (
+                CreateSuccessAccessToAzureTable(DashAccountsTable, MyData, Success, Failure), function (e) { Failure(e) }
+            );
+            /*checkdataQuery.where(
+                    {
+                        success: SuccessTableRead
+                    }
+                )*/
+
+
+            
+
+            
+
+            
+        }
+    }
+
+
+    function CreateSuccessAccessToAzureTable(Table, MyData, Success, Failure)
+    {
+        function SuccessTableRead(Data)
+        {
+            //console.log(Data);
+            if (Data.length > 0) {
+                MyData.id = Data[0].id;
+                Table.update(MyData).done
+                (
+                    function (data) {
+                        Success(data);
+                    },
+                    function (error) {
+                        Failure(error);
+                    }
+                );
+            }
+            else
+            {
+                Table.insert(MyData).done
+                (
+                    function (data)
+                    {
+                        Success(data);
+                    },
+                    function (error)
+                    {
+                        Failure(error);
+                    }
+                );
+            }
+        }
+
+        return SuccessTableRead;
+    }
+    
+
+
+    function initializeBackgroundProcess(AccountData, callbackSuccess, callbackFailure)
+    {
+        var getNotificationChannelPromise = new WinJS.Promise(function (success, failure, progress)
+        {
+            getPushNotifcationChannel(success, failure);
+        });
+
+        getNotificationChannelPromise.done
+        (
+            function (channelURI)
+            {
+                var updateAzurewithChannelAndAccountPromise = new WinJS.Promise(function (success, failure, progress)
+                {
+                    var Data = { AccountID: AccountData, Channel: channelURI.uri, Expiration: channelURI.expirationTime };
+                    updateAzurewithChannelAndAccount(Data, success, failure, progress);
+                })
+                updateAzurewithChannelAndAccountPromise.done
+                (
+                    function (data)
+                    {
+                        createbackgroundProcess(callbackSuccess, callbackFailure);
+                    },
+                    function ()
+                    {
+                        return;
+                    }
+                )
+                
+            },
+            function (error)
+            {
+                if (isFunction(callbackFailure))
+                {
+                    callbackFailure(error);
+                }
+            }
+        )
+    }
+
+    function createbackgroundProcess(callbackSuccess,callbackFailure)
+    {
+        var BackgroundTask = {
+            "BackgroundTaskEntryPoint": "BackgroundTask.ScreenSavingsTask",
+            "BackgroundTaskName": "ScreenSavingsTask",
+
+            "registerBackgroundTask": function (taskEntryPoint, taskName, trigger, condition) {
+                ShowUpperRightMessage("Register task called");
+                var builder = new Windows.ApplicationModel.Background.BackgroundTaskBuilder();
+
+                builder.name = taskName;
+                builder.taskEntryPoint = taskEntryPoint;
+                builder.setTrigger(trigger);
+                if (condition !== null) {
+                    builder.addCondition(condition);
+                }
+
+                var task = builder.register();
+                ShowUpperRightMessage("Register task finished");
+            },
+
+            //
+            // Unregister all background tasks with given name.
+            //
+            "unregisterBackgroundTasks": function (taskName) {
+                //
+                // Loop through all background tasks and unregister any with SampleBackgroundTaskName or
+                // SampleBackgroundTaskWithConditionName or timeTriggerTaskName.
+                //
+                //ShowUpperRightMessage("HMMM UNRegister task called");
+                var iter = Windows.ApplicationModel.Background.BackgroundTaskRegistration.allTasks.first();
+                var hascur = iter.hasCurrent;
+                while (hascur) {
+                    var cur = iter.current.value;
+                    if (cur.name === taskName) {
+                        cur.unregister(true);
+                    }
+                    hascur = iter.moveNext();
+                }
+            },
+
+        };
+
+        
+        
+
+        Windows.ApplicationModel.Background.BackgroundExecutionManager.requestAccessAsync().then
+            (
+                function (backgroundStatus)
+                {
+                    if (backgroundStatus != Windows.ApplicationModel.Background.BackgroundAccessStatus.denied && backgroundStatus != Windows.ApplicationModel.Background.BackgroundAccessStatus.unspecified)
+                    {
+                        BackgroundTask.unregisterBackgroundTasks(BackgroundTask.BackgroundTaskName);//unregisters current background process
+                        BackgroundTask.registerBackgroundTask(BackgroundTask.BackgroundTaskEntryPoint,
+                                                                    BackgroundTask.BackgroundTaskName,
+                                                                    //new Windows.ApplicationModel.Background.TimeTrigger(15,false),
+                                                                    new Windows.ApplicationModel.Background.PushNotificationTrigger(),
+                                                                    null);
+                        callbackSuccess();
+                    }
+                    else
+                    {
+                        callbackFailure("user did not allow lock screen access. hence no push notification.");
+                        ShowUpperRightMessage("user did not allow lock screen access. hence no push notification.");
+                        //user did not allow lock screen access. hence no push notification.
+                    }
+                }
+            );
+        }
 
     function ValidUserFoundPath()
     {
@@ -125,7 +327,7 @@ function StartIntelDash()
 
 
 
-        $("#SettingsDiv").hide()//this is a hack for hiding the initial settings greyed out case
+        $("#SettingsDiv").hide()//this is a hack for hiding the initial settings greyed out div
 
 
         var RetrievedCachedFilePromise = new WinJS.Promise
@@ -158,6 +360,13 @@ function StartIntelDash()
                     function AccountAuthenticated(ProofOfAuthentication) {
                         AccountAuthenticationProgressUI.Stop();
                         ProceedWithVerifiedAccount(ProofOfAuthentication);
+                        var initializeBackgroundProcessPromise = new WinJS.Promise(function (Success, Failure, progress)
+                        {
+                            initializeBackgroundProcess(ProofOfAuthentication.AccountID, Success, Failure);
+                        })
+                        initializeBackgroundProcessPromise.done
+                        ();
+                        
                     },
                     function AccountAuthenticationFailure(err) {
                         AccountAuthenticationProgressUI.Stop();
@@ -206,6 +415,7 @@ function StartIntelDash()
 function DisplayDataInCache()
 {
     var MyCacheData;
+    PopulateAppBar_ini();
     var waitingForReadPromise = new WinJS.Promise(function (Success, failure)
     {
         MyCacheData = new CacheDataAccess().getProfile(Success,failure);
@@ -222,11 +432,11 @@ function DisplayDataInCache()
             {
                 Populate(MyCacheData); 
             }
-            },
-            function ()
-            {
-                ShowUpperRightMessage("No cache data")
-            }
+        },
+        function ()
+        {
+            ShowUpperRightMessage("No cache data")
+        }
         )
     
     
@@ -236,165 +446,241 @@ function DisplayDataInCache()
         var Phases = new Array();
         ValidatedAccountLaunch();
         Phases = Object.getOwnPropertyNames(MyCacheData.Phases);
-        if (Phases != undefined) {
-            Phases.forEach
-            (
-                function (MyPhaseName) {
-                    MyPhaseName = MyPhaseName.toUpperCase()
-                    switch (MyPhaseName) {
-                        case "NEWS":
-                            {
-                                var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
-                                CacheServiceNames.forEach
-                                (
-                                    function (ServiceName) {
-                                        ServiceName = ServiceName.toUpperCase()
-                                        switch (ServiceName) {
-                                            case "GOOGLENEWS":
-                                                {
-                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
-                                                    (
-                                                        function (MyGoogleData) {
-                                                            var newCard = new Array(12);
-                                                            newCard[4] = "news";
-                                                            newCard[5] = new Date(MyGoogleData.PostTime);//time when news was poste
-                                                            newCard[6] = MyGoogleData.TitleImageURI.Load;
-                                                            newCard[7] = MyGoogleData.Title;
-                                                            newCard[8] = MyGoogleData.Data;
-                                                            newCard[9] = new Date(MyGoogleData.PostTime);//just time without date
-                                                            newCard[10] = MyGoogleData.DataURI;
-                                                            newCard[11] = MyGoogleData.ScrubbedSource;
-                                                            pushNewDataCard(MyPhaseName, newCard);
+        setTimeout(
+            function ()
+            {
+                if (Phases != undefined)
+                {
+                    Phases.forEach
+                    (
+                        function (MyPhaseName) {
+                            MyPhaseName = MyPhaseName.toUpperCase()
+                            switch (MyPhaseName) {
+                                case "NEWS":
+                                    {
+                                        var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                        CacheServiceNames.forEach
+                                        (
+                                            function (ServiceName) {
+                                                ServiceName = ServiceName.toUpperCase()
+                                                switch (ServiceName) {
+                                                    case "GOOGLENEWS":
+                                                        {
+                                                            MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                            (
+                                                                function (MyGoogleData) {
+                                                                    var newCard = new Array(12);
+                                                                    newCard[4] = "google news";
+                                                                    newCard[5] = new Date(MyGoogleData.PostTime);//time when news was poste
+                                                                    newCard[6] = MyGoogleData.TitleImageURI.Load;
+                                                                    newCard[7] = MyGoogleData.Title;
+                                                                    newCard[8] = MyGoogleData.Data;
+                                                                    newCard[9] = new Date(MyGoogleData.PostTime);//just time without date
+                                                                    newCard[10] = MyGoogleData.DataURI;
+                                                                    newCard[11] = MyGoogleData.ScrubbedSource;
+                                                                    pushNewDataCard(MyPhaseName, newCard);
+                                                                }
+                                                            )
                                                         }
-                                                    )
-                                                }
-                                                break;
-                                            case "SUNNEWS":
-                                                {
+                                                        break;
+                                                    case "SUNNEWS":
+                                                        {
+
+                                                        }
+                                                        break;
+                                                    default:
+                                                        ShowUpperRightMessage("unknown Cache Service");
 
                                                 }
-                                                break;
-                                            default:
-                                                ShowUpperRightMessage("unknown Cache Service");
 
-                                        }
-
+                                            }
+                                        )
                                     }
-                                )
-                            }
-                            break;
-                        case "SOCIAL":
-                            {
-                                var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
-                                CacheServiceNames.forEach
-                                (
-                                    function (ServiceName) {
-                                        ServiceName = ServiceName.toUpperCase()
-                                        switch (ServiceName) {
-                                            case "FACEBOOK":
-                                                {
-                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
-                                                    (
-                                                        function (MyFacebook) {
-                                                            var newCard = new Array(11);
-                                                            newCard[4] = "facebook";
-                                                            newCard[5] = new Date(MyFacebook.PostTime);//time when Posts was poste
-                                                            newCard[6] = MyFacebook.User;
-                                                            newCard[7] = MyFacebook.Data;
-                                                            newCard[8] = MyFacebook.DataURI;
-                                                            newCard[9] = MyFacebook.PosterID;//just time without date
-                                                            newCard[10] = new Date(MyFacebook.PostTime);
-                                                            pushNewDataCard(MyPhaseName, newCard);
+                                    break;
+                                case "SOCIAL":
+                                    {
+                                        var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                        CacheServiceNames.forEach
+                                        (
+                                            function (ServiceName) {
+                                                ServiceName = ServiceName.toUpperCase()
+                                                switch (ServiceName) {
+                                                    case "FACEBOOK":
+                                                        {
+                                                            MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                            (
+                                                                function (MyFacebook) {
+                                                                    var newCard = new Array(11);
+                                                                    newCard[4] = "facebook";
+                                                                    newCard[5] = new Date(MyFacebook.PostTime);//time when Posts was poste
+                                                                    newCard[6] = MyFacebook.User;
+                                                                    newCard[7] = MyFacebook.Data;
+                                                                    newCard[8] = MyFacebook.DataURI;
+                                                                    newCard[9] = MyFacebook.PosterID;//just time without date
+                                                                    newCard[10] = new Date(MyFacebook.PostTime);
+                                                                    pushNewDataCard(MyPhaseName, newCard);
+                                                                }
+                                                            )
                                                         }
-                                                    )
-                                                }
-                                                break;
-                                            case "TWITTER":
-                                                {
-                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
-                                                    (
-                                                        function (MyTwitter) {
-                                                            var newCard = new Array(10);
-                                                            newCard[4] = "twitter";
-                                                            newCard[5] = new Date(MyTwitter.PostTime);//time when Posts was poste
-                                                            newCard[6] = MyTwitter.User;
-                                                            newCard[7] = MyTwitter.Data;
-                                                            newCard[8] = MyTwitter.Photo;
-                                                            newCard[9] = new Date(MyTwitter.PostTime);
-                                                            pushNewDataCard(MyPhaseName, newCard);
+                                                        break;
+                                                    case "TWITTER":
+                                                        {
+                                                            MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                            (
+                                                                function (MyTwitter) {
+                                                                    var newCard = new Array(10);
+                                                                    newCard[4] = "twitter";
+                                                                    newCard[5] = new Date(MyTwitter.PostTime);//time when Posts was poste
+                                                                    newCard[6] = MyTwitter.User;
+                                                                    newCard[7] = MyTwitter.Data;
+                                                                    newCard[8] = MyTwitter.Photo;
+                                                                    newCard[9] = new Date(MyTwitter.PostTime);
+                                                                    pushNewDataCard(MyPhaseName, newCard);
+                                                                }
+                                                            )
                                                         }
-                                                    )
+                                                        break;
+                                                    default:
+                                                        ShowUpperRightMessage("unknown Cache Service");
+
                                                 }
-                                                break;
-                                            default:
-                                                ShowUpperRightMessage("unknown Cache Service");
 
-                                        }
-
+                                            }
+                                        )
                                     }
-                                )
-                            }
-                            break;
-                        case "MAIL":
-                            {
-                                var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
-                                CacheServiceNames.forEach
-                                (
-                                    function (ServiceName) {
-                                        ServiceName = ServiceName.toUpperCase()
-                                        switch (ServiceName) {
-                                            case "GOOGLEMAIL":
-                                                {
-                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
-                                                    (
-                                                        function (MyGoogleMail) {
-                                                            var newCard = new Array(11);
-                                                            newCard[4] = "gmail";
-                                                            newCard[5] = new Date(MyGoogleMail.PostTime);
-                                                            newCard[6] = MyGoogleMail.From;
-                                                            newCard[7] = MyGoogleMail.Subject;
-                                                            newCard[8] = MyGoogleMail.EmailContext;
-                                                            newCard[9] = MyGoogleMail.To;
-                                                            newCard[10] = MyGoogleMail.TruncatedText;
-                                                            pushNewDataCard(MyPhaseName, newCard);
+                                    break;
+                                case "MAIL":
+                                    {
+                                        var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                        CacheServiceNames.forEach
+                                        (
+                                            function (ServiceName) {
+                                                ServiceName = ServiceName.toUpperCase()
+                                                switch (ServiceName) {
+                                                    case "GOOGLEMAIL":
+                                                        {
+                                                            MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                            (
+                                                                function (MyGoogleMail) {
+                                                                    var newCard = new Array(11);
+                                                                    newCard[4] = "gmail";
+                                                                    newCard[5] = new Date(MyGoogleMail.PostTime);
+                                                                    newCard[6] = MyGoogleMail.From;
+                                                                    newCard[7] = MyGoogleMail.Subject;
+                                                                    newCard[8] = MyGoogleMail.EmailContext;
+                                                                    newCard[9] = MyGoogleMail.To;
+                                                                    newCard[10] = MyGoogleMail.TruncatedText;
+                                                                    pushNewDataCard(MyPhaseName, newCard);
+                                                                }
+                                                            )
                                                         }
-                                                    )
-                                                }
-                                                break;
-                                            case "YAHOOMAIL":
-                                                {
-                                                    MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
-                                                    (
-                                                        function (MyTwitter) {
-                                                            var newCard = new Array(10);
-                                                            newCard[4] = "twitter";
-                                                            newCard[5] = new Date(MyTwitter.PostTime);//time when Posts was poste
-                                                            newCard[6] = MyTwitter.User;
-                                                            newCard[7] = MyTwitter.Data;
-                                                            newCard[8] = MyTwitter.Photo;
-                                                            newCard[9] = new Date(MyTwitter.PostTime);
-                                                            pushNewDataCard(MyPhaseName, newCard);
+                                                        break;
+                                                    case "YAHOOMAIL":
+                                                        {
+                                                            MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                            (
+                                                                function (MyTwitter) {
+                                                                    var newCard = new Array(10);
+                                                                    newCard[4] = "twitter";
+                                                                    newCard[5] = new Date(MyTwitter.PostTime);//time when Posts was poste
+                                                                    newCard[6] = MyTwitter.User;
+                                                                    newCard[7] = MyTwitter.Data;
+                                                                    newCard[8] = MyTwitter.Photo;
+                                                                    newCard[9] = new Date(MyTwitter.PostTime);
+                                                                    pushNewDataCard(MyPhaseName, newCard);
+                                                                }
+                                                            )
                                                         }
-                                                    )
+                                                        break;
+                                                    default:
+                                                        ShowUpperRightMessage("unknown Cache Service");
+
                                                 }
-                                                break;
-                                            default:
-                                                ShowUpperRightMessage("unknown Cache Service");
 
-                                        }
-
+                                            }
+                                        )
                                     }
-                                )
+                                    break;
+                                case "PHOTOS":
+                                    {
+                                        var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                        CacheServiceNames.forEach
+                                        (
+                                            function (ServiceName) {
+                                                ServiceName = ServiceName.toUpperCase()
+                                                switch (ServiceName) {
+                                                    case "FLICKRPHOTO":
+                                                        {
+                                                            MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                            (
+                                                                function (MyFlickrPhoto) {
+                                                                    var newCard = new Array(8);
+                                                                    newCard[4] = "flickr photo";
+                                                                    newCard[5] = new Date(MyFlickrPhoto.PostTime);
+                                                                    newCard[6] = MyFlickrPhoto.User;
+                                                                    newCard[7] = MyFlickrPhoto.Uri;
+                                                                    pushNewDataCard(MyPhaseName, newCard);
+                                                                }
+                                                            )
+                                                        }
+                                                        break;
+                                                    case "INSTAGRAMPHOTO":
+                                                        {
+                                                        }
+                                                        break;
+                                                    default:
+                                                        ShowUpperRightMessage("unknown Cache Service");
+
+                                                }
+
+                                            }
+                                        )
+                                    }
+                                    break;
+                                case "DEALS":
+                                    {
+                                        var CacheServiceNames = Object.getOwnPropertyNames(MyCacheData.Phases[MyPhaseName]);
+                                        CacheServiceNames.forEach
+                                        (
+                                            function (ServiceName) {
+                                                ServiceName = ServiceName.toUpperCase()
+                                                switch (ServiceName) {
+                                                    case "GROUPON":
+                                                        {
+                                                            MyCacheData.Phases[MyPhaseName][ServiceName].Data.forEach
+                                                            (
+                                                                function (MyGrouponData) {
+                                                                    var newCard = new Array(11);
+                                                                    newCard[4] = "groupon";
+                                                                    newCard[5] = new Date(MyGrouponData.PostTime);
+                                                                    newCard[6] = MyGrouponData.Title;
+                                                                    newCard[7] = MyGrouponData.highlightsHTML;
+                                                                    newCard[8] = MyGrouponData.largeImageURL;
+                                                                    newCard[9] = MyGrouponData.DealURI;
+                                                                    newCard[10] = MyGrouponData.Location;
+                                                                    pushNewDataCard(MyPhaseName, newCard);
+                                                                }
+                                                            )
+                                                        }
+                                                        break;
+                                                    case "LIVINGSOCIAL":
+                                                        {
+                                                        }
+                                                        break;
+                                                    default:
+                                                        ShowUpperRightMessage("unknown Cache Service");
+
+                                                }
+
+                                            }
+                                        )
+                                    }
+                                    break;
                             }
-                            break;
-                        case "PHOTOS":
-                            break;
-                        case "FINANCE":
-                            break;
-                    }
+                        }
+                    )
                 }
-            )
-        }
+            }, UIReadyTime)
     }
 }
 
@@ -489,7 +775,7 @@ function SelectSocialNetworkForSourcingIntelProfileInfo(comp, err)
         {
             userId = IntelSourceData.AccountID;
             ShowUpperRightMessage("Successfully Logged In " + userId);
-            PopulateAppBar_ini()
+            
             
             comp(IntelSourceData);
             
@@ -762,59 +1048,9 @@ function RegisterAccountWithIntelServers(LoggedInServiceIdentification)
     return WinJS.xhr({ url: BASE_URL_TEST + LatterURLString });
 }
 
-function getLocation()
-{
-    /*
-        Name:Jerome Biotidara
-        Function: This gets the current location of the user and also registers to with the intel servers. The implementation was written by gaomin but updated by Jerome Biotidara by separting the code
-    */
 
-    var latitude, longitude;
-    var coord;
-    var geolocator = Windows.Devices.Geolocation.Geolocator();
-    
-    if (DisableGetLocation)
-    {
-        return;
-    }
-    var promise = geolocator.getGeopositionAsync();
-    promise.done(
-    function (pos) {
-        openNotificationChannel();
-        coord = pos.coordinate;
-        latitude = coord.latitude;
-        longitude = coord.longitude;
-        Windows.System.UserProfile.UserInformation.getDisplayNameAsync().done
-            (function success(result) {
-                //store result in win_id global var to access win_id throughout the app.
-                win_id = result;
-                //send data to intelscreensavings server's register groupon page
-                WinJS.xhr({ url: BASE_URL_TEST + "/gaomin/register_user.php?service=groupon&win_id=" + userId + "&lat=" + latitude + "&lng=" + longitude }).done();
 
-                WinJS.xhr({ url: "http://maps.google.com/maps/geo?q=" + latitude + "," + longitude }).done(
-                function success(result) {
-                    if (result.status === 200) {
-                        var data = JSON.parse(result.response);
-                        //weather_zipcode = data.Placemark[0].AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber;
-                        loadData();
-                    }
-                    else {
-                        loadData();
-                    }
-                },
-               function err(result) {
-                   loadData();
-               }
-               );
-            }
-            );
 
-    },
-     function (err) {
-         loadData();
-         WinJS.log && WinJS.log(err.message, "sample", "error");
-     });
-}
 
 
 //utility function

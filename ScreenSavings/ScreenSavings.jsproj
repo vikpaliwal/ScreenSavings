@@ -44,16 +44,17 @@
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <TargetPlatformVersion>8.0</TargetPlatformVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <PackageCertificateKeyFile>ScreenSavings_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>ScreenSavings_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>680A3884D16DEDB6D5AB560FE2A05314D5029A28</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="css\3dCard-min%28updatedWithInitalizationPath%29.css" />
     <Content Include="css\3dCard-min.css" />
     <Content Include="css\ui-dark-editted.css" />
     <Content Include="default.html" />
+    <Content Include="grouponAuthenticate.html" />
     <Content Include="images\accounts.png" />
     <Content Include="images\add_new.png" />
     <Content Include="images\blueWide.scale-100.png" />
@@ -77,6 +78,7 @@
     <Content Include="images\GoogleNewsLogo.png" />
     <Content Include="images\groupon.png" />
     <Content Include="images\GrouponLogo.png" />
+    <Content Include="images\grouponPage.png" />
     <Content Include="images\Groupon_detail.png" />
     <Content Include="images\InstagramLogo.png" />
     <Content Include="images\LivingSocialLogo.png" />
@@ -119,12 +121,20 @@
     <Content Include="js\DashMain.js" />
     <Content Include="js\default.js" />
     <Content Include="css\default.css" />
+    <Content Include="js\DefaultDeclarations.js" />
     <Content Include="js\DefaultInterface.js" />
     <Content Include="js\GrantDashAccessToUserAccount.js" />
     <Content Include="js\InitializationUI.js" />
     <Content Include="js\jquery.js" />
+    <Content Include="js\MobileServices.intellisense.js" />
+    <Content Include="js\MobileServices.js" />
+    <Content Include="js\MobileServices.min.js" />
+    <Content Include="js\MobileServices.pri" />
     <Content Include="js\SetUpUI.js" />
     <Content Include="js\uieffects.js" />
+    <None Include="ScreenSavings_StoreKey.pfx" />
+    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="packages.config" />
     <None Include="ScreenSavings_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

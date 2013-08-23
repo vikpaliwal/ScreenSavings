@@ -13,6 +13,34 @@ function alert(content, title) {//This implementation allows for alert boxes to 
     messageDialog.showAsync();
 }
 
+function getPushNotifcationChannel(callBackSuccess, CallBackFailure) {
+    //Function defines Global_notificationChannel. Call this only during all after startIntelDash
+    try
+    {
+        var channelOperation = Windows.Networking.PushNotifications
+            .PushNotificationChannelManager
+            .createPushNotificationChannelForApplicationAsync()
+            .then(function (newChannel) {
+                Global_notificationChannel = newChannel;
+                callBackSuccess(Global_notificationChannel);
+            },
+            function (e)
+            {
+                Global_notificationChannel = undefined;
+                CallBackFailure(e);
+            }
+            );
+    }
+    catch (e)
+    {
+        CallBackFailure(e);
+    }
+
+
+    //section added by
+
+}
+
 function InProgress(ProgressMessage, EncasingDom) {
     "use strict";
         /*
@@ -164,6 +192,7 @@ function ShowUpperRightMessage(Message, stayTime) {
         var channelUri = null;
         var channelExpiration = null;
 
+
         WinJS.strictProcessing();
 
         app.onactivated = function (args) {
@@ -172,10 +201,24 @@ function ShowUpperRightMessage(Message, stayTime) {
 
                     //ValidatedAccountLaunch();
                     //var MyIcon = new WinJS.UI.AppBarCommand.icon;
-                    //loginStatus();
-                    //InitalizeAppBar();
+                    //$("#SettingsDiv").hide();
+                    
+
+                    /*var TestDiv = document.getElementById("TestContent");
+                    TestDiv.addEventListener("click", function () {
+                        insertTodoItem({
+                            text: TestDiv.innerHTML,
+                            complete: false,
+                            channel: Global_notificationChannel.uri,
+                            date:Date.now()
+                        });
+                    });*/
+
+                    
+                    
+                    
                     StartIntelDash();
-                
+                    
                 
                 } else {
                     // TODO: This application has been reactivated from suspension.
@@ -183,17 +226,39 @@ function ShowUpperRightMessage(Message, stayTime) {
                     StartIntelDash();
                 }
                 args.setPromise(WinJS.UI.processAll());
+                /*var channelOperation = Windows.Networking.PushNotifications
+                    .PushNotificationChannelManager
+                    .createPushNotificationChannelForApplicationAsync()
+                    .then(function (newChannel) {
+                        Global_notificationChannel = newChannel;
+                    });
+
+                var insertTodoItem = function (todoItem) {
+                    // This code inserts a new TodoItem into the database. When the operation completes
+                    // and Mobile Services has assigned an id, the item is added to the Binding List
+                    todoTable.insert(todoItem).done(function (item) {
+                        todoItems.push(item);
+                        document.getElementById("TopLeft").innerHTML="hahah";
+                    });
+                };
+
+                
+                var todoTable = Global_MobileServicclient.getTable('TodoItem');
+                var todoItems = new WinJS.Binding.List();*/
             }
         };
+
+
+        
 
 
     
         openNotificationChannel = function () {
             if (userId == null) {
-                ShowUpperRightMessage("not ables to launch notification")
-                loginFailed('user not cunnected');
+                loginFailed('user not connected');
                 return;
             }
+            
             Windows.ApplicationModel.Background.BackgroundExecutionManager
                 .requestAccessAsync().then(function (backgroundStatus) {
                     if (backgroundStatus != Windows.ApplicationModel.Background.BackgroundAccessStatus.denied
@@ -202,7 +267,6 @@ function ShowUpperRightMessage(Message, stayTime) {
                         Windows.Networking.PushNotifications.PushNotificationChannelManager
                             .createPushNotificationChannelForApplicationAsync().then(
                                 function (channelOperation) {
-                                    ShowUpperRightMessage("before channel registration" + channelOperation.expirationTime);
                                     registerNotificationChannel(channelOperation.uri, channelOperation.expirationTime);
                                 }, function (error)
                                 {
@@ -258,26 +322,34 @@ function ShowUpperRightMessage(Message, stayTime) {
             BackgroundTask.unregisterBackgroundTasks(BackgroundTask.BackgroundTaskName);
             BackgroundTask.registerBackgroundTask(BackgroundTask.BackgroundTaskEntryPoint,
                                                     BackgroundTask.BackgroundTaskName,
-                                                    new Windows.ApplicationModel.Background.TimeTrigger(15,false),
-                                                    //new Windows.ApplicationModel.Background.PushNotificationTrigger(),
+                                                    //new Windows.ApplicationModel.Background.TimeTrigger(15,false),
+                                                    new Windows.ApplicationModel.Background.PushNotificationTrigger(),
                                                     null);
         };
 
 
         var registerNotificationChannel = function (newChannel, newExpiration) {
             if (newChannel != channelUri) {
-                
                 registerBackgroundTask();
                 
                 WCFClientRuntimeComponent.WCFServiceCaller.registerNotificationChannelAsync(userId, newChannel, newExpiration).then(
-                    function (result) {
+                    function (result)
+                    {
+                        ShowUpperRightMessage("Some possible Registration JEROME!!!");
                         if (result == 'Success') {
+                            ShowUpperRightMessage("Succes in registering JEROME!!!");
                             channelUri = newChannel;
                             channelExpiration = newExpiration;
                             $('#dump').text("UserId:" + userId
                                 + "\n\nChannel:" + channelUri);
                         }
-                    });
+                    },
+                    function (error)
+                    {
+                        ShowUpperRightMessage("Failed to Register");
+                    }
+
+                );
             }
             else {
                 ShowUpperRightMessage("TOok Else route")

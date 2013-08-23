@@ -12,7 +12,7 @@ var cumulativeX = 0;
 var cumulativeY = 0;
 var BASE_URL_TEST = "http://198.101.207.173";
 var BASE_URL_TEST2 = "http://198.101.234.220";
-
+var UIReadyTime=3000;
 var BASE_URL_LIVE = "http://50.56.189.202";
 var weather_zipcode = 97124;
 var HORIZONTAL_DRAG_RATIO = 0.30;
@@ -28,6 +28,8 @@ var twitter_last_card_time = 0;
 var fb_last_card_time = 0;
 var gmail_last_card_time = 0;
 var news_last_card_time = 0;
+
+
 
 function convertTimeToString(timeVal) {
     if (timeVal.getHours() > 12) {
@@ -709,21 +711,9 @@ function InstagramLogin(SuccessFunction, FailureFunction)
     InstagramTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
 }
 
-function GrouponLogin(SuccessFunction, FailureFunction)
-{
-    var GrouponTest = true;
-    var GrouponTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
 
-        if (GrouponTest) {
-            Success(true);
-        }
-        else {
-            Failure(false)
-        }
-    });
-    GrouponTestPromise.done(function () { if (SuccessFunction == undefined) { return}; SuccessFunction() }, function () { if (FailureFunction == undefined) { return}; FailureFunction() })
-    
-}
+
+
 
 function LivingSocialLogin(SuccessFunction, FailureFunction)
 {
@@ -757,6 +747,9 @@ function createCardArray(d1, d2, d3)
 {
     /*
         Description: Function triggers perspective clayout of Dash screen.
+        d1: number of supported columns in dash
+        
+        d3: values are not really used. They are all dependednt on the data content of the card for a column. So for example social takes facebook and twitter which has a datastructure of an array of max 11 elements
     */
     var x = new Array(d1);
     for (var i = 0; i < d1; i++) {
@@ -870,51 +863,35 @@ function createCardArray(d1, d2, d3)
     return x;
 }
 
-matrix = createCardArray(5, 4, 4);
+function InitializeUI()
+{
+    matrix = createCardArray(5, 0, 4);
+    cardCount = 0;
+    var MainDiv = document.getElementById("Main");
+    var MyArrayOfcards = getAllChildNodesWithClassName("serviceCard", MainDiv);
+    MyArrayOfcards.forEach(function (mycard)
+    {
+        mycard.removeNode(true);
+    })
+}
 
-var ValidatedAccountLaunch= function (){
+var ValidatedAccountLaunch = function () {
     $(document).ready(function () {
+        
+    var UI = document.getElementById("elements");
     updateTime();
-    
-    //matrix = createCardArray(5, 4, 4);
-    Windows.Storage.KnownFolders.documentsLibrary.getFileAsync(cache_filename).done(
-        function (file) {
-            Windows.Storage.FileIO.readTextAsync(file).done(function (fileContent) {
-                cached_data = JSON.parse(fileContent);
-                //matrix = new Array();
-                //matrix = createCardArray(5, 4, 4);
-                //loadData();
-                for (var i = 0; i < matrix.length; i++) {
-                    for (var j = 0; j < matrix[i].length; j++) {
-                        $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][1] + 'px)');
-                    }
-                }
-            },
-            function (error) {
-                WinJS.log && WinJS.log(error, "sample", "error");
-            });    
-        });
-
-    /*
-    for (var i = 0; i < matrix.length; i++) {
-        for (var j = 0; j < matrix[i].length; j++) {
-            for (var k = 0; k < matrix[i][j].length; k++) {
-                console.log("[" + i + ", " + j + ", " + k + "] = " + matrix[i][j][k]);
-            }
-        }
-    }
-    */
-    
     BindSettingsSocialNetworkButton();
-
     setTimeout(
     function ()
     {
+        InitializeUI();
         $('.bgOne').css({ "width": "190px", "margin-left": "10px" });
         $('.bgFive').css({ "width": "190px", "margin-left": "-18px" });
         $('.bgPerspective').css({ "transform": "rotateX(-85deg) translateZ(-118px)" });
-        $('.linePerspective').css({ "transform": "rotateX(-85deg) translateZ(-120px)" });
-
+        $('.linePerspective').css({ "transform": "rotateX(-85deg) translateZ(-120px)" });//Commented by jerome
+        /*$('.bgPerspective').css({ "transform": "rotateX(-85deg)" });
+        $('.linePerspective').css({ "transform": "rotateX(-85deg)" });*/
+        
         for (var i = 0; i < matrix.length; i++) {
             for (var j = 0; j < matrix[i].length; j++) {
                 $('#card' + matrix[i][j][0]).css('transform', 'translateY(' + matrix[i][j][2] + 'px) translateZ(' + matrix[i][j][3] + 'px)');
@@ -1138,7 +1115,7 @@ var ValidatedAccountLaunch= function (){
             $('#settingsMenu').css({ "transform": "translateX(250px)" });
             $('#line2dContainerBg').css({ "transform": "translateY(350px)" });
         });        
-    }, 3000);
+    }, UIReadyTime);
     setTimeout(refreshData, 5000);
     
     
@@ -1152,7 +1129,6 @@ var ValidatedAccountLaunch= function (){
             *Date: 6/7/2013
             *Description:   This function makes sereral Jquery calls that bind functions the click of the social network buttons in the settings menu.
         */
-                
         $('#FB_BUTTON').click(FaceBookLogin);
         $('#TWITTER_BUTTON').click(TwitterLogin)
         $('#FLICKR_BUTTON').click(FlickrLogin);
@@ -1472,87 +1448,94 @@ function loadData()
             //console.log(FacebookData.status);
         });*/
         
-    var getGrouponDataURL = BASE_URL_LIVE + "/gaomin/client/groupon_json.php";
-    WinJS.xhr({ url: getGrouponDataURL }).done(
-        function fulfilled(result) {
-            if (result.status === 200) {
-                var data = JSON.parse(result.response);
-                var i;
-
-                var lineNum = 3;
-
-                if (transitionComplete == 1) {
-                    for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
-
-                        //                                $('#dump').text($('#dump').val() + " ---- " + data.deals[i].user);
-
-                        var newCard = new Array(9);
-                        newCard[4] = "groupon";
-                        newCard[5] = "timestampTBD";
-                        newCard[6] = data.deals[i].title;
-                        newCard[7] = data.deals[i].highlightsHtml;
-                        newCard[8] = data.deals[i].largeImageUrl;
-
-                        pushNewDataCard(lineNum, newCard);
-
-                        //scrollCards(lineNum, -160);
-
-                    }
-                } else {
-                    $('body').bind('groupon', function () {
-                        setTimeout(function () {
-                            for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
-
-                                //                                $('#dump').text($('#dump').val() + " ---- " + data.deals[i].user);
-
-                                var newCard = new Array(9);
-                                newCard[4] = "groupon";
-                                newCard[5] = "timestampTBD";
-                                newCard[6] = data.deals[i].title;
-                                newCard[7] = data.deals[i].highlightsHtml;
-                                newCard[8] = data.deals[i].largeImageUrl;
-                                pushNewDataCard(lineNum, newCard);
-                                //scrollCards(lineNum, -160);
-
-                            }
-                        }, 10000);
-                    });
-                }
-            }
-        });
+    
         
 }
+
+function ClearUILineOfunregisteredElements(LineNumb, NameOfService, Data)
+{
+    var UI = document.getElementById("elements");
+    if (Data == undefined)
+    {
+        Data = matrix;
+    }
+    var LineData = Data[LineNumb - 1];
+    var MytempData = null;
+
+    for (var i = 0; ((i>=0)&&(i < LineData.length));i++)
+    {
+        MytempData = LineData[i];
+        if (EraseDiv(MytempData))
+        {
+            LineData.remove(i);
+            --i;
+        }
+    }
+    if (LineData.length)
+    {
+        var ReferenceZPixel = LineData[0][3];
+        for (i = 0; ((i >= 0) && (i < LineData.length)) ; i++) {
+            LineData[i][3] = ReferenceZPixel + (-80 * i);
+        }
+        UpdatePositionInUI(LineNumb, Data);
+    }
+
+    function EraseDiv(MyData)
+    {
+        if (MyData[4].toLowerCase() == NameOfService.toLowerCase())
+        {
+            var CardCount = MyData[0];
+            var divId = "card" + CardCount
+            document.getElementById(divId).removeNode(true);
+            return true;
+        }
+
+        return false;
+    }
+    
+}
+
+function UpdatePositionInUI(LineNumb, CardMatrix)
+{
+    var MyArrayOfPositions = new Array();
+
+    for (var i = 0; i < CardMatrix[LineNumb - 1].length; i++) {
+        MyArrayOfPositions.push(CardMatrix[LineNumb - 1][i][3]);
+        
+    }
+    MyArrayOfPositions.sort(function (a, b) { return a - b });
+    CardMatrix[LineNumb - 1].sort(function (a, b) { return a[5] - b[5] })
+
+    for (i = 0; i < CardMatrix[LineNumb - 1].length; i++)
+    {
+        CardMatrix[LineNumb - 1][i][3] = MyArrayOfPositions[i];
+    }
+    CardMatrix[LineNumb - 1].reverse();
+    return CardMatrix;
+}
+
+
+
 function pushNewDataCard(lineNum,newCard) {
     //console.log(lineNum);
 
     if (typeof (lineNum) == "string")
     {
-        lineNum=lineNum.toUpperCase()
-        switch (lineNum)
-        {
-            case "PHOTOS":
-                lineNum=1
-                break;
-            case "MAIL":
-                lineNum = 2
-                break;
-            case "DEALS":
-                lineNum = 3
-                break;
-            case "NEWS":
-                lineNum = 4
-                break;
-            case "SOCIAL":
-                lineNum = 5
-                break;
-        }
+        lineNum = lineNum.toUpperCase();
+        lineNum = Global_PhaseEnumerator[lineNum];//hack....possible error generated if object doesnt exist
     }
     var numCardsInLine = matrix[lineNum - 1].length;
     //var newCard = new Array(4);
-    newCard[0] = cardCount;
+    /*newCard[0] = cardCount;
     newCard[1] = matrix[lineNum - 1][0][1];
     newCard[2] = matrix[lineNum - 1][0][2];
-    newCard[3] = matrix[lineNum - 1][0][3];
+    newCard[3] = matrix[lineNum - 1][0][3];*/
+
+    newCard[0] = cardCount;
+    newCard[1] = TwoDTranslateYStartingPos;
+    newCard[2] = ThreeDTranslateYStartingPos;
+    newCard[3] = ThreeDTranslateZStartingPos;
+
     scrollCards(lineNum, -80);
     matrix[lineNum - 1].unshift(newCard);
 
@@ -1562,9 +1545,9 @@ function pushNewDataCard(lineNum,newCard) {
     myGenericCard.setAttribute("class", "row" + lineNum + " position0");
     myGenericCard.setAttribute('style', 'transition: all 500ms ease;');
     document.getElementById("element" + lineNum).appendChild(myGenericCard);
-    $('#card' + cardCount).addClass('face');
+    $('#card' + cardCount).addClass('face serviceCard');
     if (lineNum == 1) {
-        $('#card' + cardCount).html('<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + matrix[lineNum - 1][0][7] + '"/><span id="Span13" class="FLICKR_time">11:11</span><span id="Span14" class="FLICKR_title">' + matrix[lineNum - 1][0][6] + '</span> </div>');
+        $('#card' + cardCount).html('<div class="FLICKR_content"><img id="profilePic" class="FLICKR_PIC" src="' + matrix[lineNum - 1][0][7] + '"/><span id="Span13" class="FLICKR_time">' + matrix[lineNum - 1][0][5] + '</span><span id="Span14" class="FLICKR_title">' + matrix[lineNum - 1][0][6] + '</span> </div>');
     } else if (lineNum == 2) {
         var text = ('<div class="GM_content"><span class="GM_time">' + (matrix[lineNum - 1][0][5]) + '</span><span class="GM_From">From: ' + (matrix[lineNum - 1][0][6]) + '</span><span class="GM_subject">Subject: ' + toStaticHTML(matrix[lineNum - 1][0][7]) + '</span><span class="GM_message">' + (matrix[lineNum - 1][0][10]) + '</span> <span class="hiddenData">' + (matrix[lineNum - 1][0][8]) + '</span> </div>');
         WinJS.Utilities.setInnerHTMLUnsafe(myGenericCard, text);
@@ -1577,7 +1560,7 @@ function pushNewDataCard(lineNum,newCard) {
         }
     } else if (lineNum == 3)
     {
-        $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="GROUPON_time">11:11</span><span class="GROUPON_title">' + matrix[lineNum - 1][0][6] + '</span><span class="GROUPON_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
+        $('#card' + cardCount).html('<div class="GROUPON_content"><img class="GROUPON_PIC" src="' + matrix[lineNum - 1][0][8] + '"/><span class="GROUPON_time">' + matrix[lineNum - 1][0][5] + '</span><span class="GROUPON_title">' + matrix[lineNum - 1][0][6] + '</span><span class="GROUPON_message">' + matrix[lineNum - 1][0][7] + '</span> </div>');
     } else if (lineNum == 4)
     {
         var NewsImgURL;
@@ -1606,6 +1589,7 @@ function pushNewDataCard(lineNum,newCard) {
     // $('#card' + cardCount).css({'transition':'all 500ms ease', 'transform':'translateY(' + (matrix[lineNum - 1][0][2]) + 'px) translateZ(' + (matrix[lineNum - 1][0][3]) + 'px)'});
     //
     cardCount++;
+    matrix=UpdatePositionInUI(lineNum, matrix);
     setTimeout(function () {
         scrollCards(lineNum, 0);
     }, 1);
@@ -1614,10 +1598,13 @@ function scrollCards(lineNum, pixels) {
     // $('.face').unbind();
     var currentCard;
     var numCardsInLine = matrix[lineNum - 1].length;
+    var zindex=numCardsInLine;
     for (var i = 0; i < numCardsInLine; i++) {
         matrix[lineNum - 1][i][3] += pixels;
         currentCard = '#card' + matrix[lineNum - 1][i][0];
         $(currentCard).css('transform', 'translateY(' + matrix[lineNum - 1][i][2] + 'px) translateZ(' + matrix[lineNum - 1][i][3] + 'px)');
+        $(currentCard).css('z-index', (zindex-i));
+
     }
 
     $(currentCard).bind('transitionend', function () {
@@ -1678,7 +1665,7 @@ function bindKeys() {
         var key = event.keyCode - 48;
         var elementId = "element" + key;
         if (key > 0 && key < 5) {
-            pushNewCard(key);
+            //pushNewCard(key);//commented out by Jerome
             arrowKeyLock = 1;
 
         } else if (key == -8) {
@@ -2036,7 +2023,7 @@ function refreshTwitter(userAccountId,LastUpdatedCardTime, UpdateSuccessCallback
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
-    var TwitterFeedURL = BASE_URL_TEST + "/jerome/twitter_client.php?win_id=" + userAccountId
+    var TwitterFeedURL = BASE_URL_TEST + "/jerome/twitter/twitter_client.php?win_id=" + userAccountId
     var twitterPromise = WinJS.xhr({ url: TwitterFeedURL });
     var CachedData = new Array();
     var tempArray = new Array();
@@ -2110,7 +2097,7 @@ function refreshFB(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback, Up
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
-    var refreshFBUrl = BASE_URL_TEST + "/jerome/fb_json.php?win_id=" + userAccountId;
+    var refreshFBUrl = BASE_URL_TEST + "/jerome/facebook/fb_json.php?win_id=" + userAccountId;
     var facebookPromise = WinJS.xhr({ url: refreshFBUrl });
     var tempArray = new Array();
     var CachedData = new Array();
@@ -2177,7 +2164,9 @@ function refreshGmail(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback,
     //check if any new data is there for twitter
     //using timestamp
     //make a WinJS.xhr call to twitter_client.php and match the latest timestam with one already present
-    var gmailPromise = WinJS.xhr({ url: BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userAccountId });
+    //var GmailUrl = BASE_URL_TEST2 + "/jerome/gmail_client.php?win_id=" + userAccountId;
+    var GmailUrl = BASE_URL_TEST + "/jerome/gmail/gmail_client.php?win_id=" + userAccountId;
+    var gmailPromise = WinJS.xhr({ url: GmailUrl });
     var tempArray = new Array();
     var CachedData = new Array();
     var lineNum = 2;
@@ -2187,14 +2176,16 @@ function refreshGmail(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback,
         //use the new objct to push card on the client
         //update the last_time
          function fulfilled(result) {
-             try {
+             try
+             {
                  if (result.status === 200)
                 {
                      //var JSONToBeParsed = "\n\r\n{\"gmail_feed\":[\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Sat, 18 Aug 2012 22:02:34 +0000\",\r\n\"subject\":\"Discover more on Twitter\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Twitter has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Mon, 20 Aug 2012 22:08:45 +0000\",\r\n\"subject\":\"Discover more on Flickr\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Flickr has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:50 +0000\",\r\n\"subject\":\"Discover more on Yahoo\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Yahoo has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 22 Aug 2012 22:09:56 +0000\",\r\n\"subject\":\"Discover more on Facebook\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Facebook has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n},\r\n{\r\n\"from\":\"inteldash@gmail.com\",\r\n\"to\":\"screensavingsapp <screensavingsapp@gmail.com>\",\r\n\"date\":\"Wed, 20 Aug 2012 23:06:59 +0000\",\r\n\"subject\":\"Discover more on Picasa\",\r\n\"plain_text\":\"Hey screensavingsapp (@screensavingsap), Picasa has suggestions for you.Please look at them!\",\r\n\"truncated_text\":\"Hey screensavingsapp (@screensavingsap)\"\r\n}\r\n]}\r\n\r\n";
                      //var newData = JSON.parse(JSONToBeParsed);
 
                      var newData = JSON.parse(result.response);
-                     for (i = (newData.gmail_feed.length - 1) ; i >= 0; i--)
+                     var i = (newData.gmail_feed.length - 1)
+                     for (i ; i >= 0; i--)
                      {
                          curTime = newData.gmail_feed[i].date;
                          //if (LastUpdatedCardTime < curTime)
@@ -2211,7 +2202,9 @@ function refreshGmail(userAccountId, LastUpdatedCardTime, UpdateSuccessCallback,
                              newCard[10] = newData.gmail_feed[i].truncated_text;
                              tempArray.push(newCard);
                          }
-                         var MyGoogleMailPost = new GoogleMail(decodeURIComponent(newData.gmail_feed[i].from), decodeURIComponent(newData.gmail_feed[i].to), decodeURIComponent(newData.gmail_feed[i].subject), newData.gmail_feed[i].date, (newData.gmail_feed[i].plain_text), (newData.gmail_feed[i].truncated_text));
+                         var MyDate= new Date(newData.gmail_feed[i].date.replace(" 0000","+0000"));//hack to fix time string issue
+                         //var AnotherDate = Date("Wed, 17 Jul 2013 14:57:08  -0000");
+                         var MyGoogleMailPost = new GoogleMail(decodeURIComponent(newData.gmail_feed[i].from), decodeURIComponent(newData.gmail_feed[i].to), decodeURIComponent(newData.gmail_feed[i].subject), MyDate, (newData.gmail_feed[i].plain_text), (newData.gmail_feed[i].truncated_text));
                          CachedData.push(MyGoogleMailPost)
                          //console.log(newData.twitter_feed[i].subject);
                      }
@@ -2333,7 +2326,7 @@ function refreshGoogleNews(userAccountId, LastUpdatedCardTime, UpdateSuccessCall
 }
 function refreshFlickr(userAccountId, LastRefreshTime, UpdateSuccessCallback, UpdateFailureCallBack)
 {
-    var FlickrGetDataURL = BASE_URL_TEST + "/shilpa/client/flickr_client.php?win_id=" + userAccountId;
+    var FlickrGetDataURL = BASE_URL_TEST + "/jerome/flickr/flickr_client.php?win_id=" + userAccountId;
     WinJS.xhr({ url: FlickrGetDataURL }).done(
         function fulfilled(result) {
         try
@@ -2341,20 +2334,22 @@ function refreshFlickr(userAccountId, LastRefreshTime, UpdateSuccessCallback, Up
                 if (result.status === 200) {
                     var data = JSON.parse(result.response);
                     var i;
+                    var CachedData = new Array();
                     var lineNum = 1;
                     //if (transitionComplete == 1) {
                         for (i = data.flickr_feed.length - 1; i >= 0 ; i--) {
                             // $('#dump').text($('#dump').val() + " ---- " + data.flickr_feed[i].user);
                             var newCard = new Array(8);
-                            newCard[4] = "flickr";
-                            newCard[5] = "timestampTBD";
-                            newCard[6] = data.flickr_feed[i].user;
-                            newCard[7] = data.flickr_feed[i].photo + "b.jpg";
-                            pushNewDataCard(lineNum, newCard);
-                            //scrollCards(lineNum, -160);
+                            newCard[4] = "flickr photo";
+                            var TimeString=data.flickr_feed[i].dateupload
+                            var PostTime = new Date((Number(TimeString)*1000));
+                            var User = data.flickr_feed[i].user;
+                            var PhotoUrl = data.flickr_feed[i].photo + "b.jpg";
+                            CachedData.push(new FlickrPhotos(PhotoUrl, PostTime, User));
+                            //pushNewDataCard(lineNum, newCard);
                         }
                         if (typeof (UpdateSuccessCallback) === "function") {
-                            UpdateSuccessCallback(data.flickr_feed);
+                            UpdateSuccessCallback(CachedData);
                         }
                    /* } else {
                         $('body').bind('flickr', function () {
@@ -2388,5 +2383,65 @@ function refreshFlickr(userAccountId, LastRefreshTime, UpdateSuccessCallback, Up
                 }
             }
 
+        });
+}
+function refreshGroupon(userAccountId, LastRefreshTime, UpdateSuccessCallback, UpdateFailureCallBack)
+{
+    var getGrouponDataURL = BASE_URL_TEST + "/jerome/groupon/groupon_client.php?win_id=" + userId;
+    WinJS.xhr({ url: getGrouponDataURL }).done(
+        function fulfilled(result)
+        {
+            try{
+                if (result.status === 200) {
+                    var data = JSON.parse(result.response);
+
+                    var i;
+
+                    var lineNum = 3;
+                    var TempArray = new Array();
+                    //if (transitionComplete == 1) {
+                        for (i = (data.grouponPosts.deals.length - 1) ; i >= 0 ; i--) {
+                            var newCard = new Array(9);
+                            newCard[4] = "groupon";
+                            newCard[5] = new Date(data.grouponPosts.deals[i].endAt);
+                            newCard[6] = data.grouponPosts.deals[i].title;
+                            newCard[7] = data.grouponPosts.deals[i].highlightsHtml;
+                            newCard[8] = data.grouponPosts.deals[i].largeImageUrl;
+                            //pushNewDataCard(lineNum, newCard);
+                            TempArray.push(new GrouponDeals(data.grouponPosts.deals[i].dealUrl, new Date(data.grouponPosts.deals[i].endAt), data.grouponPosts.deals[i].title, data.grouponPosts.deals[i].displayOptions.name, data.grouponPosts.deals[i].highlightsHtml, data.grouponPosts.deals[i].largeImageUrl));
+                            
+
+                            //scrollCards(lineNum, -160);
+
+                        }
+                        UpdateSuccessCallback(TempArray);
+                    //}
+                    /*else {
+                        $('body').bind('groupon', function () {
+                            setTimeout(function () {
+                                for (i = (data.deals.length - 1) ; i >= 0 ; i--) {
+                                    var newCard = new Array(9);
+                                    newCard[4] = "groupon";
+                                    newCard[5] = "timestampTBD";
+                                    newCard[6] = data.deals[i].title;
+                                    newCard[7] = data.deals[i].highlightsHtml;
+                                    newCard[8] = data.deals[i].largeImageUrl;
+                                    pushNewDataCard(lineNum, newCard);
+                                    //scrollCards(lineNum, -160);
+
+                                }
+                            }, 10000);
+                        });
+                    }*/
+                }
+            }
+            catch (e)
+            {
+                UpdateFailureCallBack(e);
+            }
+        },
+        function (error)
+        {
+            UpdateFailureCallBack(error);
         });
 }

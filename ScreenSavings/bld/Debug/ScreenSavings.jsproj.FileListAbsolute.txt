@@ -156,3 +156,7 @@ C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\Scree
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\pri.resfiles
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\LanguageQualifiers.txt
 C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\ProjectArchitectures.txt
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\MobileServices.pri.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\Newtonsoft.Json.dll
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\Newtonsoft.Json.xml
+C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bld\Debug\ScreenSavings.jsproj.GenerateResource.Cache
