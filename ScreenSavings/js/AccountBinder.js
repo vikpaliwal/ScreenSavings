@@ -161,6 +161,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
     var ServicePhaseName = "";
     this.Image = imageURL;
     var AuthenticationData = new Object();
+    this.AuthenticationData = AuthenticationData;
     var SelectedFlag = false;
     var RegisterServiceAccountWithIntelServer = RegisterWithIntel;
     var DashServersUpdated = false;
@@ -260,6 +261,7 @@ function Service(name, imageURL, authentication, RegisterWithIntel, CheckIfRegis
             RegistrationFailure("Not Selected");
             return;
         }*/
+        
         if (!RegisterServiceAccountWithIntelServer)//checks if there is a RegisterServiceAccountWithIntelServer function
         {
             if (ForceRegistationSuccessuWithIntelServers)
@@ -490,8 +492,17 @@ function ServiceAuthentication(authentificationFunction) {
         this.AuthentifyAccountPromise = new WinJS.Promise(function (VerificationSuccess, VerificationFail, VerificationProgress) {
             Authentication(VerificationSuccess, VerificationFail);
         })
-        this.AuthentifyAccountPromise.done(
-            function (SuccessMessage) { SuccessFunction(SuccessMessage) }, function (FailureMessage) { FailureFunction(FailureMessage) });
+        this.AuthentifyAccountPromise.done
+        (
+            function (SuccessMessage)
+            {
+                SuccessFunction(SuccessMessage)
+            },
+            function (FailureMessage)
+            {
+                FailureFunction(FailureMessage)
+            }
+        );
     }
 
 }
@@ -1294,7 +1305,8 @@ function RegisteredWithGroupon(MyData)
     try{
     if (MyData.GrouponId != null)
     {
-        return true;
+        return new GrouponDataAccess(new Locationdata(MyData.GrouponId.Latitude, MyData.GrouponId.Longitude));
+            //TwitterAccess(MyData.TwitterToken, MyData.TwitterVerifier);
     }
 
     return false;
@@ -1354,26 +1366,13 @@ function RegisteredWithGmail(MyData)
     }
 }
 
-/*function RegisteredwithGroupon(MyData)
-{
-    try {
-        if ((MyData.Groupon != null) && (MyData != null)) {
-            return new GrouponDataAccess(MyData.Groupon == true);
-        }
-
-        return false
-    }
-    catch (e) {
-        return false;
-    }
-}*/
-
 function RegisteredWithGoogleNews(MyData)
 {
     try{
-        if ((MyData.GoogleNews != null) && (MyData != null))
+        if ((MyData.GoogleNews != null) && (MyData != null) && (MyData.GoogleNews != "0"))
         {
-                return new GoogleNewsDataAccess(MyData.GoogleNews == true);
+            var myObj=new GoogleNewsDataAccess(MyData.GoogleNews == true);
+            return myObj.isValid();
         }
 
             return false

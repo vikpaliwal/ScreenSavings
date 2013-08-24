@@ -1100,7 +1100,7 @@ position: fixed;
 }
 
 #TopLeft {
-    background-color: green;
+    background-color: rgba(1,1,1,.1);
     width:100%;
     height:100%;
     -ms-grid-column: 1;
@@ -1143,11 +1143,13 @@ position: fixed;
 #TopCenterBar 
 {
     
-    background-color: rgba(255,43,85,1);
+    background-color: rgba(150,150,150,1);
     width:100%;
-    border:solid 4px transparent;
+    padding-top:.5em;
     border-bottom:solid 4px rgba(255,255,255,1);
     height:100%;
+    font-size:300%;
+    border-bottom:solid 5px rgb(20,20,20);
     text-align:center;
     -ms-grid-column: 2;
     -ms-grid-row: 1;
@@ -1155,8 +1157,7 @@ position: fixed;
 
 #MiddleContent 
 {
-    background-color: rgba(255,43,85,1);
-    border: solid 4px rgba(0,200,12,1);
+    background-color: rgba(200,200,200,1);
     text-align: center;
     width:100%;
     height:100%;
@@ -1166,13 +1167,13 @@ position: fixed;
 #GridHolder 
 {
     position:absolute;
-    background-color:rgb(60,35,230);
+    background-color:rgb(200,200,200);
     
 }
 
 #FooterBar 
 {
-    background-color: purple;
+    background-color: rgba(150,150,150,1);
     width:100%;
     height:100%;
     -ms-grid-column: 2;
@@ -1184,7 +1185,9 @@ position: fixed;
     
     position:absolute;
     border:dotted 5px rgba(20,20,20,.1);
-    background-color: red;
+    background-color:rgb(80,80,80);
+    overflow:hidden;
+    text-overflow: ellipsis;
     font-size:500%;
     font-weight:200;
     font-stretch:ultra-condensed;
@@ -1222,15 +1225,16 @@ position: fixed;
     /*display: -ms-grid;
     -ms-grid-rows: 1fr 4fr 1fr;
     -ms-grid-columns:1fr;*/
-    background-color:rgb(40,15,200);
+    background-color:rgb(200,200,200);
 }
 
 .PhaseTopDiv
 {
     position: absolute;
+    font-size:50%;
     width:100%;
     height:20%;
-    background-color:rgb(40,15,200);
+    background-color:rgb(200,200,200);
     box-shadow: rgba(20,20,20,.8) 0px 5px 5px; 
     z-index:2;
 }
@@ -1252,7 +1256,7 @@ position: fixed;
     top:80%;
     width:100%;
     height:20%;
-    background-color:rgb(40,15,200);
+    background-color:rgb(200,200,200);
     display: -ms-grid;
     -ms-grid-columns:2fr 1fr;
 }
@@ -1262,7 +1266,7 @@ position: fixed;
     -ms-grid-column: 1;
     width:100%;
     height:100%;
-    background-color:AppWorkspace;
+    background-color:rgb(200,200,200);
 }
 
 .PhaseBottomRight
@@ -1288,7 +1292,8 @@ position: fixed;
 .PhaseBottomRightRightTop
 {
     -ms-grid-row: 1;
-    background-color:WindowFrame;
+    background-color:rgb(200,200,200);
+    font-size:100%;
     border:  solid 2px gray;
 }
 
@@ -1302,7 +1307,7 @@ position: fixed;
 .PhaseBottomRightRightBottom
 {
     -ms-grid-row: 3;
-    background-color:blueviolet;
+    background-color:rgb(200,200,200);
     border:  solid 2px gray;
 }
 
@@ -1319,22 +1324,28 @@ position: fixed;
 {
     position:absolute;
     width : 10em;
-    height : 5em;   
+    height : 4em;   
     top:100%;
     margin-top:-13em;
     left:100%;
     margin-left: -23em;
-    border : solid 3px white;
-    background-color:rgba(20,20,20,0);
+    border : solid 3px grey;
+    background-color:rgba(240,240,240,1);
     text-align: center;
-    color:white;
+    padding-top:2em;
+    font-weight:bolder;
+    font-weight:300;
+    color:grey;
 }
 
 
 
 .InitialServiceBindWelcomeScreenContinueButton:hover {
     background-color:rgba(20,20,20,.4);
+    color:rgb(200,200,200);
 }
+
+
 
 .MiddleContentWelcomeContent
 {
@@ -1343,7 +1354,9 @@ position: fixed;
     height:40%;
     width:60%;
     left:20%;
-    border : solid 3px green;
+    
+    font-size:x-large;
+    color:rgb(100,100,100)
 }
 
 

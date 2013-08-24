@@ -134,6 +134,7 @@
     <Content Include="js\uieffects.js" />
     <None Include="ScreenSavings_StoreKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="js\WeatherHandler.js" />
     <Content Include="packages.config" />
     <None Include="ScreenSavings_TemporaryKey.pfx" />
   </ItemGroup>

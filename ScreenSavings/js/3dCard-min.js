@@ -873,6 +873,60 @@ function InitializeUI()
     {
         mycard.removeNode(true);
     })
+    intializeLocation();
+    var MyCacheaccess = new CacheDataAccess();
+    var getLocationPromise = new WinJS.Promise(
+        function (success, failure)
+        {
+            getLocation(success, failure, true)
+        })
+    getLocationPromise.done
+    (
+        function(data)
+        {
+            PopulateWeatherDataForMyLocation(data);
+        }, function (e)
+        {
+            return;
+        }
+    )
+}
+
+function intializeLocation()
+{
+    var getLocationPromise = new WinJS.Promise
+                (
+                    function (Success, Failure) {
+                        getLocation(Success, Failure);
+                    }
+                )
+    getLocationPromise.done
+    (
+        function (data) {
+            registerdefaultLocationWithIntel(data);
+            var MyCacheaccess = new CacheDataAccess();
+            var getProfilePromise = new WinJS.Promise(
+                function (success, failure, Progress) {
+                    MyCacheaccess.getProfile(success, failure, progress);
+                }
+            )
+            getProfilePromise.done
+            (
+                function (Data) {
+                    Data.Location = Locationdata.convertforCache(Data);
+                    MyCacheaccess.UpdateCacheFile();
+                },
+                function (error) {
+                    return;
+                }
+            )
+
+
+        },
+        function (error) {
+            registerdefaultLocationWithIntel(new Locationdata());
+        }
+    )
 }
 
 var ValidatedAccountLaunch = function () {
@@ -1990,6 +2044,7 @@ function refreshData()
     refreshGmail()
     refreshGoogleNews
     refreshFlickr()*/
+    //refreshData.pause = 0;
     if (refreshData.pause)//this is a hack to disable refresh of data
     {
         Global_RefreshDataSetTimeOutValue = setTimeout(refreshData, 10000);

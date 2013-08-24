@@ -274,6 +274,9 @@
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\uieffects.js">
       <PackagePath>js\uieffects.js</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\WeatherHandler.js">
+      <PackagePath>js\WeatherHandler.js</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\WCFClientRuntimeComponent\js\MobileServices.intellisense.js">
       <PackagePath>WCFClientRuntimeComponent\js\MobileServices.intellisense.js</PackagePath>
     </AppxPackagedFile>

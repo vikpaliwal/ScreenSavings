@@ -229,45 +229,7 @@ function BindSocialNetworksWithIntelUserAccount(AddedNewDashServiceCallBack, Fai
         (
             function ()
             {
-                var getLocationPromise = new WinJS.Promise
-                (
-                    function (Success, Failure)
-                    {
-                        getLocation(Success, Failure);
-                    }
-                )
-                getLocationPromise.done
-                (
-                    function(data)
-                    {
-                        registerdefaultLocationWithIntel(data);
-                        var MyCacheaccess = new CacheDataAccess();
-                        var getProfilePromise = new WinJS.Promise(
-                            function (success, failure, Progress)
-                            {
-                                MyCacheaccess.getProfile(success,failure,progress);
-                            }
-                        )
-                        getProfilePromise.done
-                        (
-                            function (Data)
-                            {
-                                Data.Location = Locationdata.convertforCache(Data);
-                                MyCacheaccess.UpdateCacheFile();
-                            },
-                            function (error)
-                            {
-                                return;
-                            }
-                        )
-                        
-
-                    },
-                    function (error)
-                    {
-                        registerdefaultLocationWithIntel(new Locationdata());
-                    }
-                )
+                intializeLocation();
                 ContinueSelectedOnInitialBindingScreen(SuccessfulDashServiceBind, FailedDashServiceBind, DomForSetupPhases);
             },
             function CancellInitialSetup(err)

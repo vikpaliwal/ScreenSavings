@@ -79,4 +79,5 @@ js\MobileServices.min.js
 js\MobileServices.pri
 js\SetUpUI.js
 js\uieffects.js
+js\WeatherHandler.js
 packages.config

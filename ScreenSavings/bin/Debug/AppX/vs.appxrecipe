@@ -16,7 +16,7 @@
     <AppXManifest Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-08-23T22:01:35.185</Modified>
+      <Modified>2013-08-24T05:25:15.645</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +46,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\3dCard-min.css">
       <PackagePath>css\3dCard-min.css</PackagePath>
-      <Modified>2013-08-23T22:39:51.756</Modified>
+      <Modified>2013-08-24T09:16:12.760</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\css\ui-dark-editted.css">
       <PackagePath>css\ui-dark-editted.css</PackagePath>
@@ -58,7 +58,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2013-08-23T22:37:56.259</Modified>
+      <Modified>2013-08-24T05:37:05.428</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\grouponAuthenticate.html">
       <PackagePath>grouponAuthenticate.html</PackagePath>
@@ -301,15 +301,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\3dCard-min.js">
       <PackagePath>js\3dCard-min.js</PackagePath>
-      <Modified>2013-08-23T22:50:19.873</Modified>
+      <Modified>2013-08-24T06:35:20.772</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AccountBinder.js">
       <PackagePath>js\AccountBinder.js</PackagePath>
-      <Modified>2013-08-22T11:41:26.002</Modified>
+      <Modified>2013-08-24T03:42:59.641</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AppBarControls.js">
       <PackagePath>js\AppBarControls.js</PackagePath>
-      <Modified>2013-08-23T21:52:12.888</Modified>
+      <Modified>2013-08-24T01:40:52.636</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\AuthenticateUser.js">
       <PackagePath>js\AuthenticateUser.js</PackagePath>
@@ -321,7 +321,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\DashMain.js">
       <PackagePath>js\DashMain.js</PackagePath>
-      <Modified>2013-08-23T23:09:46.514</Modified>
+      <Modified>2013-08-24T05:41:50.990</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\default.js">
       <PackagePath>js\default.js</PackagePath>
@@ -337,7 +337,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\GrantDashAccessToUserAccount.js">
       <PackagePath>js\GrantDashAccessToUserAccount.js</PackagePath>
-      <Modified>2013-08-23T23:14:58.688</Modified>
+      <Modified>2013-08-24T06:32:14.208</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\InitializationUI.js">
       <PackagePath>js\InitializationUI.js</PackagePath>
@@ -367,6 +367,10 @@
       <PackagePath>js\uieffects.js</PackagePath>
       <Modified>2013-06-27T09:12:19.783</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\js\WeatherHandler.js">
+      <PackagePath>js\WeatherHandler.js</PackagePath>
+      <Modified>2013-08-24T06:25:58.746</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\WCFClientRuntimeComponent\js\MobileServices.intellisense.js">
       <PackagePath>WCFClientRuntimeComponent\js\MobileServices.intellisense.js</PackagePath>
       <Modified>2013-08-09T22:57:33.265</Modified>
@@ -385,7 +389,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\jbiotida\Documents\Visual Studio 2012\Projects\dash\ScreenSavings\ScreenSavings\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2013-08-23T22:01:32.742</Modified>
+      <Modified>2013-08-24T05:25:13.001</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

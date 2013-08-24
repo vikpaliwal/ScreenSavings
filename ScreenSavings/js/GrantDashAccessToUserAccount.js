@@ -800,7 +800,7 @@ function RegisterGoogleNewsWithDash(NewsDataAccess, LoopbackSuccess, LoopBackFai
 
 //Groupon Authentication and Registration
 function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
-    var GrouponTest = true;
+    //var GrouponTest = true;
 
     var GrouponTestPromise = new WinJS.Promise(function (Success, Failure, Prog) {
         try{
@@ -923,8 +923,8 @@ function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
                 (
                     function (Success, Failure)
                     {
-                        //getLocation(Success, Failure);
-                        Success(new Locationdata(1,1));
+                        getLocation(Success, Failure);
+                        //Success(new Locationdata(1,1));
                     }
                 )
                 getLocationPromise.done
@@ -934,7 +934,8 @@ function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
                         try
                         {
                             DarkBackground.removeNode(true);
-                            SuccessFunction(new GrouponDataAccess(data));}
+                            SuccessFunction(new GrouponDataAccess(data));
+                        }
                         catch (e)
                         {
                             DarkBackground.removeNode(true);
@@ -944,7 +945,8 @@ function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
                     function (e)
                     {
                         DarkBackground.removeNode(true);
-                        FailureFunction(e)
+                        SuccessFunction(new GrouponDataAccess(new Locationdata(1,1)));
+                        //FailureFunction(e)
                     }
                 );
 
@@ -965,6 +967,7 @@ function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
                                     var EncasingForMultipleAddresses = document.createElement("div");
                                     SelectionDiv.appendChild(EncasingForMultipleAddresses);
                                     EncasingForMultipleAddresses.style.position = "absolute";
+                                    EncasingForMultipleAddresses.style.overflow = "hidden";
                                     //EncasingForMultipleAddresses.style.top = "10%"
                                     //EncasingForMultipleAddresses.style.left = "10%"
 
@@ -972,23 +975,30 @@ function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
                                     EncasingForMultipleAddresses.style.width = "100%"
                                     EncasingForMultipleAddresses.style.height = "100%"
                                     EncasingForMultipleAddresses.style.borderRadius = "4px";
-                                    EncasingForMultipleAddresses.style.backgroundColor="violet"
+                                    EncasingForMultipleAddresses.style.backgroundColor = "rgb(123,165,68)"
 
                                     var EncasingForMultipleAddressesTitle = document.createElement("div");
                                     EncasingForMultipleAddresses.appendChild(EncasingForMultipleAddressesTitle)
                                     EncasingForMultipleAddressesTitle.innerHTML = "Please Verify the address below: ";
-                                    EncasingForMultipleAddressesTitle.style.borderBottom = "solid 2px rgba(20,20,20,1)";
+                                    EncasingForMultipleAddressesTitle.style.borderBottom = "solid 2px brown";
                                     EncasingForMultipleAddressesTitle.style.height = "10%";
+                                    EncasingForMultipleAddressesTitle.style.borderRadius = "6px";
+                                    EncasingForMultipleAddressesTitle.style.textAlign="center";
+                                    EncasingForMultipleAddressesTitle.style.backgroundColor = "rgba(10, 10, 10, 1)";
                                     var EncasingForMultipleAddressesBottom = document.createElement("div");
                                     EncasingForMultipleAddresses.appendChild(EncasingForMultipleAddressesBottom)
                                     EncasingForMultipleAddressesBottom.style.position = "absolute";
-                                    EncasingForMultipleAddressesBottom.style.width="98%"
+                                    EncasingForMultipleAddressesBottom.style.width="100%"
                                     EncasingForMultipleAddressesBottom.style.top = "80%";
+                                    EncasingForMultipleAddressesBottom.style.height = "20%";
+                                    EncasingForMultipleAddressesBottom.style.backgroundColor = "rgba(10, 10, 10, 1)";
                                     var EncasingForMultipleAddressesDoneButton = document.createElement("button");
                                     EncasingForMultipleAddressesDoneButton.innerHTML="done"
                                     EncasingForMultipleAddressesDoneButton.disabled = true;
                                     EncasingForMultipleAddressesDoneButton.style.position = "absolute";
                                     EncasingForMultipleAddressesDoneButton.style.width = "20%";
+                                    EncasingForMultipleAddressesDoneButton.style.height = "80%";
+                                    EncasingForMultipleAddressesDoneButton.style.top = "10%";
                                     EncasingForMultipleAddressesDoneButton.style.left = "100%"
                                     EncasingForMultipleAddressesDoneButton.style.marginLeft = "-7em"
                                     EncasingForMultipleAddressesDoneButton.style.width = "20%";
@@ -997,6 +1007,9 @@ function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
                                     EncasingForMultipleAddressesCancelButton.position="absolute"
                                     EncasingForMultipleAddressesCancelButton.innerHTML = "Cancel";
                                     EncasingForMultipleAddressesCancelButton.style.position = "absolute";
+                                    EncasingForMultipleAddressesCancelButton.style.height = "80%";
+                                    EncasingForMultipleAddressesCancelButton.style.top = "10%";
+                                    EncasingForMultipleAddressesCancelButton.style.left = "5%";
 
                                     EncasingForMultipleAddressesBottom.appendChild(EncasingForMultipleAddressesDoneButton);
                                     EncasingForMultipleAddressesBottom.appendChild(EncasingForMultipleAddressesCancelButton);
@@ -1087,7 +1100,7 @@ function GrouponAuthenticateAccess(SuccessFunction, FailureFunction) {
 
 function generateFunctionForEachAddressEntry(MyDomElement, DoneButtonDOM, SelectedDataObject, LatAndLongData, SuccessLoopBack, FailureLoopback) {
     function CallBackFunction() {
-        MyDomElement.style.backgroundColor = "blue";
+        setTimeout(function () { MyDomElement.style.backgroundColor = "blue"; }, 1);
         SelectedDataObject.LongLat = new Locationdata(LatAndLongData.lat, LatAndLongData.lng);
         DoneButtonDOM.disabled = false;
     }
@@ -1123,8 +1136,13 @@ function RegisterGrouponWithDash(GrouponDataAccess, LoopBacksuccess, LoopBackFai
     var xhrUrl = BASE_URL_TEST + "/jerome/register_user.php?service=groupon&win_id=" + userId + "&grouponEnable=";
     var zipcode = GrouponDataAccess.zipcode;
     
-    if ((GrouponDataAccess.isValid()) && (!GrouponDataAccess.clearEntry) && GrouponDataAccess)
-    { xhrUrl = BASE_URL_TEST + "/jerome/register_user.php?service=groupon&win_id=" + userId + "&grouponEnable=1&LongLat=" + GrouponDataAccess.getLongitude() + "," + GrouponDataAccess.getLatitude(); }
+    
+    if ((GrouponDataAccess.isValid()) && (!GrouponDataAccess.clearEntry))
+    {
+        xhrUrl = BASE_URL_TEST + "/jerome/register_user.php?service=groupon&win_id=" + userId + "&grouponEnable=1&LongLat=" + GrouponDataAccess.getLongitude() + "," + GrouponDataAccess.getLatitude();
+    }
+
+    xhrUrl = encodeURI(xhrUrl);
 
     WinJS.xhr({ url: xhrUrl }).done
     (
@@ -1132,7 +1150,7 @@ function RegisterGrouponWithDash(GrouponDataAccess, LoopBacksuccess, LoopBackFai
             var results = result.resonseText;
             if (isFunction(LoopBacksuccess))
             {
-                LoopBacksuccess(result.resonseText);
+                LoopBacksuccess();
             }
         },
         function (errorFromIntelServers) {
@@ -1143,7 +1161,7 @@ function RegisterGrouponWithDash(GrouponDataAccess, LoopBacksuccess, LoopBackFai
 }
 
 //Location Authentication
-function getLocation(SuccessFunction, FailureFunction)
+function getLocation(SuccessFunction, FailureFunction,getFromCache)
 {
     /*
         Name:Jerome Biotidara
@@ -1153,11 +1171,57 @@ function getLocation(SuccessFunction, FailureFunction)
     {
         var latitude, longitude;
         var coord;
-        var geolocator = Windows.Devices.Geolocation.Geolocator();
-        if (DisableGetLocation) {
-            return;
+        
+        if (getFromCache===true)
+        {
+            var MyCacheaccess = new CacheDataAccess();
+            var getProfilePromise = new WinJS.Promise(
+                function (success, failure, Progress) {
+                    MyCacheaccess.getProfile(success, failure, Progress);
+                }
+            )
+            getProfilePromise.done
+            (
+                function (Data) {
+                    var MyLocation = new Locationdata();
+                    try {
+                        MyLocation = new Locationdata(Data.Location.Longitude, Data.Location, Latitude);
+                        SuccessFunction(MyLocation)
+                    }
+                    catch (e) {
+                        usegeoLocator();
+                    }
+
+                },
+                function (error) {
+                    FailureFunction(error)
+                }
+            )
+        }
+        else
+        {
+            usegeoLocator();
         }
 
+        /*if (DisableGetLocation) {
+            return;
+        }*/
+
+        //function getCurrentLocation()
+
+
+    }
+    catch(e)
+    {
+        if(isFunction(FailureFunction))
+        {
+            FailureFunction([err, "Failed To access Location 0"]);
+        }
+    }
+
+    function usegeoLocator()
+    {
+        var geolocator = Windows.Devices.Geolocation.Geolocator();
         var promise = geolocator.getGeopositionAsync();
         promise.done(
         function (pos) {
@@ -1179,7 +1243,7 @@ function getLocation(SuccessFunction, FailureFunction)
             catch (e)
             {
                 if (isFunction(FailureFunction)) {
-                    FailureFunction([e, "Failed To access Location"])
+                    FailureFunction([e, "Failed To access Location 1"])
                 }
             }
             
@@ -1195,17 +1259,10 @@ function getLocation(SuccessFunction, FailureFunction)
          {
              //loadData();
              if (isFunction(FailureFunction))
-             { FailureFunction([err, "Failed To access Location"]); }
+             { FailureFunction([err, "Failed To access Location 2"]); }
 
 
          });
-    }
-    catch(e)
-    {
-        if(isFunction(FailureFunction))
-        {
-            FailureFunction([err, "Failed To access Location"]);
-        }
     }
 }
 
